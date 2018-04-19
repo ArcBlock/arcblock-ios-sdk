@@ -6,7 +6,7 @@
 //
 //
 
-#import "PMXDataStoreViewMappings.h"
+#import "PMXViewMappings.h"
 #import "YapDatabase.h"
 #import "YapDatabaseView.h"
 #import "PMXDataStore.h"
@@ -14,29 +14,29 @@
 #import "YapDatabaseSearchResultsView.h"
 #import "YapDatabaseFilteredView.h"
 
-@interface PMXDataStoreViewMappings ()
+@interface PMXViewMappings ()
 
 @property (nonatomic, strong) YapDatabaseView *databaseView;
 @property (nonatomic, strong) YapDatabaseViewMappings *mappings;
 @property (nonatomic, strong) YapDatabaseViewGrouping *grouping;
 @property (nonatomic, strong) YapDatabaseViewSorting *sorting;
-@property (nonatomic, strong) YapDatabaseFullTextSearchHandler *ftsHandler;
 @property (nonatomic, strong) YapDatabaseViewFiltering *filtering;
+@property (nonatomic, strong) YapDatabaseFullTextSearchHandler *ftsHandler;
 
 @end
 
-@implementation PMXDataStoreViewMappings
+@implementation PMXViewMappings
 
 # pragma mark - basics
 
-- (id)initWithViewName:(NSString*)viewName sections:(NSArray*)sections grouping:(PMXDataStoreViewGroupingBlock)groupingBlock sorting:(PMXDataStoreViewSortingBlock)sortingBlock
+- (id)initWithViewName:(NSString*)viewName sections:(NSArray*)sections grouping:(PMXViewGroupingBlock)groupingBlock sorting:(PMXViewSortingBlock)sortingBlock
 {
     self = [super init];
     if (self) {
         _viewName = viewName;
         _sections = sections;
-//        _grouping = [YapDatabaseViewGrouping withObjectBlock:groupingBlock];
-//        _sorting = [YapDatabaseViewSorting withObjectBlock:sortingBlock];
+        _grouping = [YapDatabaseViewGrouping withObjectBlock:groupingBlock];
+        _sorting = [YapDatabaseViewSorting withObjectBlock:sortingBlock];
     }
     return self;
 }
@@ -121,7 +121,7 @@
         _parentViewName = parentViewName;
         _viewName = viewName;
         _sections = sections;
-//        _filtering = [YapDatabaseViewFiltering withObjectBlock:block];
+        _filtering = [YapDatabaseViewFiltering withObjectBlock:block];
     }
     return self;
 }
@@ -133,17 +133,17 @@
     [_mappings setIsReversed:isReverse forGroup:group];
 }
 
-- (PMXDataStoreViewRangePosition)rangePositionForGroup:(NSString*)group
+- (PMXViewRangePosition)rangePositionForGroup:(NSString*)group
 {
     YapDatabaseViewRangePosition rangePosition = [_mappings rangePositionForGroup:group];
-    return (PMXDataStoreViewRangePosition){
+    return (PMXViewRangePosition){
         .offsetFromBeginning = rangePosition.offsetFromBeginning,
         .offsetFromEnd = rangePosition.offsetFromEnd,
         .length = rangePosition.length
     };
 }
 
-- (void)setFlexibleRangeOptions:(NSUInteger)length offset:(NSUInteger)offset from:(PMXDataStoreViewPin)viewPin maxLength:(NSUInteger)maxLength growOption:(PMXDataStoreViewGrowOptions)growOptions forGroup:(NSString *)group
+- (void)setFlexibleRangeOptions:(NSUInteger)length offset:(NSUInteger)offset from:(PMXViewPin)viewPin maxLength:(NSUInteger)maxLength growOption:(PMXViewGrowOptions)growOptions forGroup:(NSString *)group
 {
     if (length > 0) {
         YapDatabaseViewRangeOptions *rangeOpts = [YapDatabaseViewRangeOptions flexibleRangeWithLength:length offset:offset from:(YapDatabaseViewPin)viewPin];

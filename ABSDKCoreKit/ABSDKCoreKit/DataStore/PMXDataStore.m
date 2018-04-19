@@ -7,13 +7,9 @@
 //
 
 #import "PMXDataStore.h"
-
-#import "YapDatabaseView.h"
 #import <FBKVOController.h>
-#import <YapDatabaseSearchResultsView.h>
 
 NSString *const PMXDataStoreModifiedNotification = @"PMXDataStoreModifiedNotification";
-NSString *const PMXDataStoreCustomKey = @"custom";
 
 typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     PMXDataStoreTypeNone        = 0,
@@ -23,14 +19,11 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
 
 @interface PMXDataStore ()
 
-@property (nonatomic, strong) YapDatabaseConnection *searchConnection;
+@property (nonatomic, strong) YapDatabase *database;
 @property (nonatomic, strong) YapDatabaseConnection *writeConnection;
-@property (nonatomic, strong) YapDatabaseConnection *readConnection;
-@property (nonatomic, strong) YapDatabaseConnection *enumerateConnection;
-@property (nonatomic, strong) YapDatabaseSearchQueue *searchQueue;
 @property (nonatomic, strong) FBKVOController *kvoController;
 @property (nonatomic, strong) NSMutableDictionary *tempDataStore;
-@property (nonatomic, strong) NSString *filePath;
+@property (nonatomic, strong) NSString *dbFileName;
 
 @end
 
@@ -53,23 +46,9 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     if (self) {
         _collectionsInMemory = [NSMutableArray array];
         _collectionsInDatabase = [NSMutableArray array];
-        [self setupDatabase];
         _kvoController = [FBKVOController controllerWithObserver:self];
-        __weak typeof(self) wself = self;
-//        [_kvoController observe:[PMXAuth sharedInstance] keyPath:CURREENT_USERID_KEY_PATH options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-//            NSLog(@"%@", change);
-//            [wself currentUserChanged];
-//        }];
     }
     return self;
-}
-
-- (void)currentUserChanged
-{
-    if (_database) {
-        [self quitDatabase];
-    }
-    [self setupDatabase];
 }
 
 - (void)dealloc
@@ -77,30 +56,24 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setupDatabase
+- (void)setupDataStore:(NSString*)dbFileName
 {
     if (_database) {
         return;
     }
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
-//    if ([PMXAuth sharedInstance].userId.length) {
-//        _filePath = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@.sqlite", [PMXAuth sharedInstance].userId, CURRENT_DB_VERSION]];
-//    }
-//    else {
-//        _filePath = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"unauthorized-%@.sqlite", CURRENT_DB_VERSION]];
-//    }
-    _database = [[YapDatabase alloc] initWithPath:_filePath];
+    _dbFileName = dbFileName;
+    if (!_dbFileName) {
+        _dbFileName = @"tmp";
+    }
+    _database = [[YapDatabase alloc] initWithPath:[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", _dbFileName]]];
 
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yapDatabaseModified:) name:YapDatabaseModifiedNotification object:_database];
     _writeConnection = [_database newConnection];
-    _enumerateConnection = [_database newConnection];
-    _searchConnection = [_database newConnection];
     
     _readConnection = [_database newConnection];
     [_readConnection beginLongLivedReadTransaction];
-    _searchQueue = [[YapDatabaseSearchQueue alloc] init];
     
     _tempDataStore = [NSMutableDictionary dictionary];
     
@@ -108,21 +81,15 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     _dataStoreDidUpdateBlocks = [NSMutableDictionary dictionary];
     _dataStoreDidRemoveBlocks = [NSMutableDictionary dictionary];
     
-    self.databaseReady = YES;
+    self.dataStoreReady = YES;
 }
 
-- (void)quitDatabase
+- (void)quitDataStore
 {
-//    if (([_filePath containsString:@"unauthorized"] && ![PMXAuth sharedInstance].userId.length) || ([PMXAuth sharedInstance].userId && [_filePath containsString:[PMXAuth sharedInstance].userId])) {
-//        return;
-//    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _database = nil;
     _writeConnection = nil;
     _readConnection = nil;
-    _searchConnection = nil;
-    _enumerateConnection = nil;
-    _searchQueue = nil;
     
     _tempDataStore = nil;
     
@@ -130,12 +97,7 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     _dataStoreDidUpdateBlocks = nil;
     _dataStoreDidRemoveBlocks = nil;
     
-    self.databaseReady = NO;
-}
-
-- (void)beginLongLivedReadTransaction
-{
-    [_readConnection beginLongLivedReadTransaction];
+    self.dataStoreReady = NO;
 }
 
 - (void)yapDatabaseModified:(NSNotification *)notification
@@ -159,6 +121,16 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     }
     
     return PMXDataStoreTypeNone;
+}
+
+- (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock
+{
+    [_database asyncRegisterExtension:extension withName:name completionBlock:completionBlock];
+}
+
+- (void)unregisterExtensionWithName:(NSString*)name
+{
+    [_database asyncUnregisterExtensionWithName:name completionBlock:nil];
 }
 
 - (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection
@@ -188,10 +160,11 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
         }
     }
     else if (type == PMXDataStoreInDatabase) {
+        __weak typeof(self) wself = self;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             id oldObject = [transaction objectForKey:key inCollection:collection];
             
-            PMXDataStoreWillUpdateBlock willUpdateBlock = [_dataStoreWillUpdateBlocks objectForKey:collection];
+            PMXDataStoreWillUpdateBlock willUpdateBlock = [wself.dataStoreWillUpdateBlocks objectForKey:collection];
             id objectToUpdate;
             if (willUpdateBlock) {
                 objectToUpdate = willUpdateBlock(collection, key, object);
@@ -208,7 +181,7 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
             [transaction setObject:objectToUpdate forKey:key inCollection:collection];
         } completionBlock:^{
             // perform post-update actions in data store level
-            PMXDataStoreDidUpdateBlock didUpdateBlock = [_dataStoreDidUpdateBlocks objectForKey:collection];
+            PMXDataStoreDidUpdateBlock didUpdateBlock = [wself.dataStoreDidUpdateBlocks objectForKey:collection];
             if (didUpdateBlock) {
                 didUpdateBlock(collection, key, object);
             }
@@ -232,6 +205,7 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
         }
     }
     else if (type == PMXDataStoreInDatabase) {
+        __weak typeof(self) wself = self;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             if ([transaction objectForKey:key inCollection:collection]) {
                 if ([collection isEqualToString:@"message"]) {
@@ -241,7 +215,7 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
                 [transaction removeObjectForKey:key inCollection:collection];
             }
         } completionBlock:^{
-            PMXDataStoreDidRemoveBlock didRemoveBlock = [_dataStoreDidRemoveBlocks objectForKey:collection];
+            PMXDataStoreDidRemoveBlock didRemoveBlock = [wself.dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
             }
@@ -274,7 +248,7 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
         [collectionDictionary enumerateKeysAndObjectsUsingBlock:block];
     }
     else if (type == PMXDataStoreInDatabase) {
-	[_enumerateConnection asyncReadWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+	[_readConnection asyncReadWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
             [transaction enumerateKeysAndObjectsInCollection:collection usingBlock:block];
         }];
     }
@@ -297,55 +271,9 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     return result;
 }
 
-- (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock
-{
-    [_database asyncRegisterExtension:extension withName:name completionBlock:completionBlock];
-}
-
-- (void)unregisterExtensionWithName:(NSString*)name
-{
-    [_database asyncUnregisterExtensionWithName:name completionBlock:nil];
-}
-
-# pragma mark - View mapping helpers
-
-- (BOOL)hasChangesForNotifications:(NSArray *)notifications mappings:(PMXDataStoreViewMappings*)mappings
-{
-    return [[_readConnection ext:mappings.viewName] hasChangesForNotifications:notifications];
-}
-
 - (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection inNotifications:(NSArray *)notifications
 {
     return [_readConnection hasChangeForKey:key inCollection:collection inNotifications:notifications];
-}
-
-- (id)objectAtIndexPath:(NSIndexPath*)indexPath withMappings:(PMXDataStoreViewMappings*)mappings
-{
-    __block id result;
-    [_readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction){
-        result = [[transaction ext:mappings.viewName] objectAtIndexPath:indexPath withMappings:(YapDatabaseViewMappings*)mappings.mappings];
-    }];
-    return result;
-}
-
-- (void)updateArrayDataMappings:(PMXDataStoreViewMappings*)mappings
-{
-    [_readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
-        [mappings.mappings updateWithTransaction:transaction];
-    }];
-}
-
-- (void)sectionChanges:(NSArray**)sectionChanges rowChanges:(NSArray**)rowChanges forNotifications:(NSArray*)notifications withMappings:(PMXDataStoreViewMappings*)mappings
-{
-    [[_readConnection ext:mappings.viewName] getSectionChanges:sectionChanges rowChanges:rowChanges forNotifications:notifications withMappings:mappings.mappings];
-}
-
-- (void)search:(NSString*)query viewMappings:(PMXDataStoreViewMappings*)viewMappings
-{
-    [_searchQueue enqueueQuery:query];
-    [_searchConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
-        [[transaction ext:viewMappings.viewName] performSearchWithQueue:_searchQueue];
-    }];
 }
 
 @end

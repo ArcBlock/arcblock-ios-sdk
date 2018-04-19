@@ -16,7 +16,7 @@
     if (self) {
         self.name = name;
         self.sections = parentDataSource.sections;
-        self.mappings = [[PMXDataStoreViewMappings alloc] initWithFilterBlock:block parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
+        self.mappings = [[PMXViewMappings alloc] initWithFilterBlock:block parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
         [self setup];
     }
     return self;
@@ -27,7 +27,6 @@
     __weak typeof(self) wself = self;
     [self.mappings setup:^(BOOL ready) {
         if (ready) {
-            [[PMXDataStore sharedInstance] beginLongLivedReadTransaction];
             [wself loadData];
             wself.ready = YES;
         }

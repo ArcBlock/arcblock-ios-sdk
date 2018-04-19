@@ -16,7 +16,7 @@
     if (self) {
         self.name = [NSString stringWithFormat:@"%@-search", parentDataSource.name];
         self.sections = parentDataSource.sections;
-        self.mappings = [[PMXDataStoreViewMappings alloc] initWithCollumnNames:collumnNames searchBlock:searchBlock parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
+        self.mappings = [[PMXViewMappings alloc] initWithCollumnNames:collumnNames searchBlock:searchBlock parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
         [self setup];
     }
     return self;
@@ -27,7 +27,6 @@
     __weak typeof(self) wself = self;
     [self.mappings setup:^(BOOL ready) {
         if (ready) {
-            [[PMXDataStore sharedInstance] beginLongLivedReadTransaction];
             [wself loadData];
             wself.ready = YES;
         }

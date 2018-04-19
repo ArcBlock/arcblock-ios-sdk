@@ -7,7 +7,7 @@
 //
 
 #import <PMXViewMappingsDataSource.h>
-#import "PMXDataStore.h"
+#import "PMXDataStore+VIewMappings.h"
 
 @interface PMXSearchDataSource : PMXViewMappingsDataSource
 

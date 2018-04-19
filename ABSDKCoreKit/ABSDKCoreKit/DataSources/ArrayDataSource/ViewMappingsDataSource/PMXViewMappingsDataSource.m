@@ -7,6 +7,7 @@
 //
 
 #import "PMXViewMappingsDataSource.h"
+#import "PMXDataStore+ViewMappings.h"
 
 @implementation PMXViewMappingsDataSource
 
@@ -19,13 +20,13 @@
     return self;
 }
 
-- (id)initWithName:(NSString*)name sections:(NSArray*)sections grouping:(PMXDataStoreViewGroupingBlock)grouping sorting:(PMXDataStoreViewSortingBlock)sorting
+- (id)initWithName:(NSString*)name sections:(NSArray*)sections grouping:(PMXViewGroupingBlock)grouping sorting:(PMXViewSortingBlock)sorting
 {
     self = [self init];
     if (self) {
         _name = name;
         self.sections = sections;
-        _mappings = [[PMXDataStoreViewMappings alloc] initWithViewName:name sections:sections grouping:grouping sorting:sorting];
+        _mappings = [[PMXViewMappings alloc] initWithViewName:name sections:sections grouping:grouping sorting:sorting];
         self.isRefreshing = YES;
         self.isLoading = YES;
         [self setup];
@@ -38,7 +39,6 @@
     __weak typeof(self) wself = self;
     [_mappings setup:^(BOOL ready) {
         if (ready) {
-            [[PMXDataStore sharedInstance] beginLongLivedReadTransaction];
             [wself loadData];
             wself.ready = YES;
         }
@@ -76,7 +76,7 @@
 - (void)setLength:(NSInteger)length forSection:(NSString*)section
 {
     [super setLength:length];
-    [self.mappings setFlexibleRangeOptions:self.length offset:0 from:PMXDataStoreViewBeginning maxLength:self.length growOption:PMXDataStoreViewGrowOnBothSides forGroup:section];
+    [self.mappings setFlexibleRangeOptions:self.length offset:0 from:PMXViewBeginning maxLength:self.length growOption:PMXViewGrowOnBothSides forGroup:section];
 }
 
 - (void)setReverseForSection:(NSString*)section
