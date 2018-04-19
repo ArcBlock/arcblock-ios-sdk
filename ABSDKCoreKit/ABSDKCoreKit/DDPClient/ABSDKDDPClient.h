@@ -8,12 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#define DDP_CLIENT_AUTH_KEY @"isAuth"
-
 typedef NS_ENUM(NSUInteger, ABSDKDDPClientError) {
     ABSDKDDPClientErrorNetworkNotAvailable,
     ABSDKDDPClientErrorNotConnected,
-    ABSDKDDPClientErrorNotAuthed,
     ABSDKDDPClientErrorDisconnectedBeforeCallbackComplete,
     ABSDKDDPClientErrorLogonRejected
 };
@@ -32,8 +29,7 @@ typedef void(^ABSDKDDPClientMethodCallback)(NSDictionary *response, NSError *err
 
 @interface ABSDKDDPClient : NSObject
 
-@property (nonatomic) BOOL isAuth;
-@property (nonatomic) BOOL isConnecting;
+@property (nonatomic, assign) BOOL isConnecting;
 @property (nonatomic, assign) BOOL connected;
 @property (nonatomic, assign) BOOL waitingForReconnect;
 @property (nonatomic, assign) BOOL isNetworkAvailable;
@@ -49,6 +45,5 @@ typedef void(^ABSDKDDPClientMethodCallback)(NSDictionary *response, NSError *err
 - (void)disconnect;
 - (void)reconnect;
 - (void)clearMethodPool;
-- (void)loginWithToken;
 
 @end

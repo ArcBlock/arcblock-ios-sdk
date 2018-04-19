@@ -10,10 +10,7 @@
 #import "ObjectiveDDP.h"
 #import "BSONIdGenerator.h"
 #import "ABSDKDataStore.h"
-//#import "ABSDKAuth.h"
 #import <Reachability.h>
-
-#define UNPROTECTED_METHODS @[@"loginWithToken", @"loginWithFacebook", @"login", @"signup", @"board", @"objectsInBoard", @"profile", @"post", @"history", @"getTimeline", @"getTimelineMoments", @"checkPostAssets", @"createPost", @"updatePost", @"removePost", @"auth.requestPasswordReset", @"getItemsInFeed", @"explore", @"getRecommendations"]
 
 NSString * const ddpVersion = @"1";
 
@@ -216,14 +213,6 @@ NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.tra
         _previousRetryInterval = 2;
         _retryInterval = 3;
         NSLog(@"[DDP Server Ready] %@", _ddp.urlString);
-        
-        for (ABSDKDDPMethodCall *subscription in _subscriptionMethods) {
-            if ([UNPROTECTED_METHODS containsObject:subscription.methodName]) {
-                [self callMethodName:subscription.methodName parameters:subscription.parameters responseCallback:subscription.callback];
-            }
-        }
-
-        [self loginWithToken];
     }
     else if ([msg isEqualToString:@"ready"]) {
         
@@ -252,17 +241,6 @@ NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.tra
 
 - (void)didReceiveConnectionClose {
     [self _handleConnectionError];
-}
-
-- (void)loginWithToken
-{
-    self.isConnecting = YES;
-    __weak typeof(self) wself = self;
-//    [[ABSDKAuth sharedInstance] sendTokenLoginRequest:^{
-//        for (ABSDKDDPMethodCall *subscription in wself.subscriptionMethods) {
-//            [wself callMethodName:subscription.methodName parameters:subscription.parameters responseCallback:subscription.callback];
-//        }
-//    } failed:nil];
 }
 
 #pragma mark - parse response
@@ -368,7 +346,6 @@ NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.tra
     self.connected = NO;
     [self _invalidateUnresolvedMethods];
     NSLog(@"[Disconnected] %@", _ddp.urlString);
-    self.isAuth = NO;
     if (_disconnecting) {
         _disconnecting = NO;
         return;
@@ -388,14 +365,6 @@ NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.tra
     else if (![self okToSend]) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not connected"};
         NSError *notConnectedError = [NSError errorWithDomain:ABSDKDDPClientTransportErrorDomain code:ABSDKDDPClientErrorNotConnected userInfo:userInfo];
-        if (responseCallback) {
-            responseCallback(nil, notConnectedError);
-        }
-        return YES;
-    }
-    else if ((!self.isAuth && ![UNPROTECTED_METHODS containsObject:methodName])) {
-        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not authenticated"};
-        NSError *notConnectedError = [NSError errorWithDomain:ABSDKDDPClientTransportErrorDomain code:ABSDKDDPClientErrorNotAuthed userInfo:userInfo];
         if (responseCallback) {
             responseCallback(nil, notConnectedError);
         }

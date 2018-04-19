@@ -54,13 +54,8 @@
 - (void) reconnect
 {
     for (ABSDKDDPClient *client in [_ddpClients allValues]) {
-        if (client && !client.isAuth && !client.isConnecting) {
-            if (!client.connected) {
-                [client reconnect];
-            }
-            else if (!client.isAuth) {
-                [client loginWithToken];
-            }
+        if (client && !client.connected && !client.isConnecting) {
+            [client reconnect];
         }
     }
 }
