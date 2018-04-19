@@ -1,18 +1,18 @@
 //
-//  PMXView.m
+//  ABSDKView.m
 //  Sprite
 //
 //  Created by Jonathan Lu on 12/11/2015.
 //  Copyright © 2015 Pixomobile. All rights reserved.
 //
 
-#import "PMXObjectDataSource.h"
+#import "ABSDKObjectDataSource.h"
 
-@interface PMXObjectDataSource ()
+@interface ABSDKObjectDataSource ()
 
 @end
 
-@implementation PMXObjectDataSource
+@implementation ABSDKObjectDataSource
 
 - (id)initWithCollectionName:(NSString*)collectionName identifier:(NSString*)identifier
 {
@@ -20,7 +20,7 @@
     if (self) {
         _collectionName = collectionName;
         _identifier = identifier;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:PMXDataStoreModifiedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:ABSDKDataStoreModifiedNotification object:nil];
     }
     return self;
 }
@@ -32,13 +32,13 @@
 
 - (void)dataStoreModified:(NSNotification *)notification
 {
-    if ([[PMXDataStore sharedInstance].collectionsInDatabase containsObject:_collectionName]) {
+    if ([[ABSDKDataStore sharedInstance].collectionsInDatabase containsObject:_collectionName]) {
         NSArray *notifications = notification.userInfo[@"notifications"];
         if (!notifications.count) {
             return;
         }
         if (_identifier) {
-            if ([[PMXDataStore sharedInstance] hasChangeForKey:_identifier inCollection:_collectionName inNotifications:notifications]) {
+            if ([[ABSDKDataStore sharedInstance] hasChangeForKey:_identifier inCollection:_collectionName inNotifications:notifications]) {
                 NSLog(@"data source updated: %@, %@", _collectionName, _identifier);
                 self.updated = YES;
             }
@@ -53,7 +53,7 @@
 }
 
 - (id)object{
-    return [[PMXDataStore sharedInstance] objectForKey:_identifier inCollection:_collectionName];
+    return [[ABSDKDataStore sharedInstance] objectForKey:_identifier inCollection:_collectionName];
 }
 
 - (void)bindWithView:(UIView*)view

@@ -1,5 +1,5 @@
 //
-//  PMXMeteorCollectionDataStore.h
+//  ABSDKMeteorCollectionDataStore.h
 //  Sprite
 //
 //  Created by Jonathan Lu on 5/11/2015.
@@ -8,15 +8,15 @@
 
 #import <YapDatabase.h>
 
-extern NSString *const PMXDataStoreModifiedNotification;
+extern NSString *const ABSDKDataStoreModifiedNotification;
 
-typedef NSDictionary* (^PMXDataStoreWillUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
-typedef void (^PMXDataStoreDidUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
-typedef void (^PMXDataStoreDidRemoveBlock)(NSString *collection, NSString *key);
+typedef NSDictionary* (^ABSDKDataStoreWillUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
+typedef void (^ABSDKDataStoreDidUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
+typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key);
 
-@interface PMXDataStore : NSObject
+@interface ABSDKDataStore : NSObject
 
-+ (PMXDataStore *)sharedInstance;
++ (ABSDKDataStore *)sharedInstance;
 
 @property (nonatomic) BOOL dataStoreReady;
 @property (nonatomic) NSMutableArray *collectionsInDatabase;

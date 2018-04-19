@@ -1,5 +1,5 @@
 //
-//  PMXArrayDataSource.h
+//  ABSDKArrayDataSource.h
 //  Pods
 //
 //  Created by Jonathan Lu on 4/9/2016.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const PMXArrayDataSourceDidUpdateNotification;
+extern NSString *const ABSDKArrayDataSourceDidUpdateNotification;
 
-@interface PMXArrayDataSource : NSObject
+@interface ABSDKArrayDataSource : NSObject
 
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic) BOOL isLoading;

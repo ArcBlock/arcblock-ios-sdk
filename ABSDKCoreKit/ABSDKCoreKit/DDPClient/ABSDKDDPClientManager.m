@@ -1,27 +1,27 @@
 //
-//  PMXDDPClientManager.m
+//  ABSDKDDPClientManager.m
 //  Pods
 //
 //  Created by Jonathan Lu on 19/11/2015.
 //
 //
 
-#import "PMXDDPClientManager.h"
+#import "ABSDKDDPClientManager.h"
 
-@interface PMXDDPClientManager ()
+@interface ABSDKDDPClientManager ()
 
 @property (nonatomic, strong) NSMutableDictionary *ddpClients;
 
 @end
 
-@implementation PMXDDPClientManager
+@implementation ABSDKDDPClientManager
 
-+ (PMXDDPClientManager*) sharedInstance
++ (ABSDKDDPClientManager*) sharedInstance
 {
-    static PMXDDPClientManager *_sharedInstance = nil;
+    static ABSDKDDPClientManager *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[PMXDDPClientManager alloc] init];
+        _sharedInstance = [[ABSDKDDPClientManager alloc] init];
     });
     
     return _sharedInstance;
@@ -39,13 +39,13 @@
     return self;
 }
 
-- (PMXDDPClient*) clientFromURLString:(NSString*)urlString
+- (ABSDKDDPClient*) clientFromURLString:(NSString*)urlString
 {
     if ([_ddpClients objectForKey:urlString] != nil) {
-        return (PMXDDPClient*)[_ddpClients objectForKey:urlString];
+        return (ABSDKDDPClient*)[_ddpClients objectForKey:urlString];
     }
     else {
-        PMXDDPClient* client = [[PMXDDPClient alloc] initWithURLString:urlString];
+        ABSDKDDPClient* client = [[ABSDKDDPClient alloc] initWithURLString:urlString];
         [_ddpClients setObject:client forKey:urlString];
         return client;
     }
@@ -53,7 +53,7 @@
 
 - (void) reconnect
 {
-    for (PMXDDPClient *client in [_ddpClients allValues]) {
+    for (ABSDKDDPClient *client in [_ddpClients allValues]) {
         if (client && !client.isAuth && !client.isConnecting) {
             if (!client.connected) {
                 [client reconnect];
@@ -72,7 +72,7 @@
 
 - (void)applicationDidBecomeActive
 {
-    NSLog(@"[PMXDDPClientManager] applicationDidBecomeActive, will try to reconnect client if any connection get lost");
+    NSLog(@"[ABSDKDDPClientManager] applicationDidBecomeActive, will try to reconnect client if any connection get lost");
     [self reconnect];
 }
 

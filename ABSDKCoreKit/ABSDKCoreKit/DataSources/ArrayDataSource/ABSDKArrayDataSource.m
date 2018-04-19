@@ -1,16 +1,16 @@
 //
-//  PMXArrayDataSource.m
+//  ABSDKArrayDataSource.m
 //  Pods
 //
 //  Created by Jonathan Lu on 4/9/2016.
 //
 //
 
-#import "PMXArrayDataSource.h"
+#import "ABSDKArrayDataSource.h"
 
-NSString *const PMXArrayDataSourceDidUpdateNotification = @"PMXArrayDataSourceDidUpdateNotification";
+NSString *const ABSDKArrayDataSourceDidUpdateNotification = @"ABSDKArrayDataSourceDidUpdateNotification";
 
-@implementation PMXArrayDataSource
+@implementation ABSDKArrayDataSource
 
 - (id)initWithArray:(NSArray*) array
 {
@@ -26,7 +26,7 @@ NSString *const PMXArrayDataSourceDidUpdateNotification = @"PMXArrayDataSourceDi
 - (void)setArray:(NSArray *)array
 {
     _array = array;
-    [[NSNotificationCenter defaultCenter] postNotificationName:PMXArrayDataSourceDidUpdateNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKArrayDataSourceDidUpdateNotification object:self];
 }
 
 - (NSInteger) numberOfSections

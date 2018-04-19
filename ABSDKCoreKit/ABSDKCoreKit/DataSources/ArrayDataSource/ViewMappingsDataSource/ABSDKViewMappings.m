@@ -1,20 +1,20 @@
 //
-//  PMXArrayDataMappings.m
+//  ABSDKArrayDataMappings.m
 //  Pods
 //
 //  Created by Jonathan Lu on 29/12/2015.
 //
 //
 
-#import "PMXViewMappings.h"
+#import "ABSDKViewMappings.h"
 #import "YapDatabase.h"
 #import "YapDatabaseView.h"
-#import "PMXDataStore.h"
+#import "ABSDKDataStore.h"
 #import "YapDatabaseFullTextSearch.h"
 #import "YapDatabaseSearchResultsView.h"
 #import "YapDatabaseFilteredView.h"
 
-@interface PMXViewMappings ()
+@interface ABSDKViewMappings ()
 
 @property (nonatomic, strong) YapDatabaseView *databaseView;
 @property (nonatomic, strong) YapDatabaseViewMappings *mappings;
@@ -25,11 +25,11 @@
 
 @end
 
-@implementation PMXViewMappings
+@implementation ABSDKViewMappings
 
 # pragma mark - basics
 
-- (id)initWithViewName:(NSString*)viewName sections:(NSArray*)sections grouping:(PMXViewGroupingBlock)groupingBlock sorting:(PMXViewSortingBlock)sortingBlock
+- (id)initWithViewName:(NSString*)viewName sections:(NSArray*)sections grouping:(ABSDKViewGroupingBlock)groupingBlock sorting:(ABSDKViewSortingBlock)sortingBlock
 {
     self = [super init];
     if (self) {
@@ -60,9 +60,9 @@
         _databaseView = [[YapDatabaseSearchResultsView alloc] initWithFullTextSearchName:_searchName parentViewName:_parentViewName versionTag:@"1" options:searchViewOptions];
         
         __weak typeof(self) wself = self;
-        [[PMXDataStore sharedInstance] registerExtension:fts withName:_searchName completionBlock:^(BOOL ready) {
+        [[ABSDKDataStore sharedInstance] registerExtension:fts withName:_searchName completionBlock:^(BOOL ready) {
             if (ready) {
-                [[PMXDataStore sharedInstance] registerExtension:wself.databaseView withName:wself.viewName completionBlock:^(BOOL ready) {
+                [[ABSDKDataStore sharedInstance] registerExtension:wself.databaseView withName:wself.viewName completionBlock:^(BOOL ready) {
                     if (ready) {
                         wself.mappings = [[YapDatabaseViewMappings alloc] initWithGroups:wself.sections view:wself.viewName];
                     }
@@ -77,7 +77,7 @@
     else if (_filtering) {
         _databaseView = [[YapDatabaseFilteredView alloc] initWithParentViewName:_parentViewName filtering:_filtering versionTag:@"1"];
         __weak typeof(self) wself = self;
-        [[PMXDataStore sharedInstance] registerExtension:_databaseView withName:_viewName completionBlock:^(BOOL ready) {
+        [[ABSDKDataStore sharedInstance] registerExtension:_databaseView withName:_viewName completionBlock:^(BOOL ready) {
             if (ready) {
                 wself.mappings = [[YapDatabaseViewMappings alloc] initWithGroups:wself.sections view:wself.viewName];
             }
@@ -87,7 +87,7 @@
     else {
 //        _databaseView = [[YapDatabaseView alloc] initWithGrouping:_grouping sorting:_sorting versionTag:@"0"];
         __weak typeof(self) wself = self;
-        [[PMXDataStore sharedInstance] registerExtension:_databaseView withName:_viewName completionBlock:^(BOOL ready) {
+        [[ABSDKDataStore sharedInstance] registerExtension:_databaseView withName:_viewName completionBlock:^(BOOL ready) {
             if (ready) {
                 wself.mappings = [[YapDatabaseViewMappings alloc] initWithGroups:wself.sections view:wself.viewName];
             }
@@ -98,7 +98,7 @@
 
 #pragma mark - search
 
-- (id)initWithCollumnNames:(NSArray*)collumnNames searchBlock:(PMXDataStoreFullTextSearchBlock)block parentViewName:(NSString*)parentViewName viewName:(NSString*)viewName sections:(NSArray*)sections
+- (id)initWithCollumnNames:(NSArray*)collumnNames searchBlock:(ABSDKDataStoreFullTextSearchBlock)block parentViewName:(NSString*)parentViewName viewName:(NSString*)viewName sections:(NSArray*)sections
 {
     self = [super init];
     if (self) {
@@ -114,7 +114,7 @@
 
 #pragma mark - search
 
-- (id)initWithFilterBlock:(PMXDataStoreFilteringBlock)block parentViewName:(NSString*)parentViewName viewName:(NSString*)viewName sections:(NSArray*)sections
+- (id)initWithFilterBlock:(ABSDKDataStoreFilteringBlock)block parentViewName:(NSString*)parentViewName viewName:(NSString*)viewName sections:(NSArray*)sections
 {
     self = [super init];
     if (self) {
@@ -133,17 +133,17 @@
     [_mappings setIsReversed:isReverse forGroup:group];
 }
 
-- (PMXViewRangePosition)rangePositionForGroup:(NSString*)group
+- (ABSDKViewRangePosition)rangePositionForGroup:(NSString*)group
 {
     YapDatabaseViewRangePosition rangePosition = [_mappings rangePositionForGroup:group];
-    return (PMXViewRangePosition){
+    return (ABSDKViewRangePosition){
         .offsetFromBeginning = rangePosition.offsetFromBeginning,
         .offsetFromEnd = rangePosition.offsetFromEnd,
         .length = rangePosition.length
     };
 }
 
-- (void)setFlexibleRangeOptions:(NSUInteger)length offset:(NSUInteger)offset from:(PMXViewPin)viewPin maxLength:(NSUInteger)maxLength growOption:(PMXViewGrowOptions)growOptions forGroup:(NSString *)group
+- (void)setFlexibleRangeOptions:(NSUInteger)length offset:(NSUInteger)offset from:(ABSDKViewPin)viewPin maxLength:(NSUInteger)maxLength growOption:(ABSDKViewGrowOptions)growOptions forGroup:(NSString *)group
 {
     if (length > 0) {
         YapDatabaseViewRangeOptions *rangeOpts = [YapDatabaseViewRangeOptions flexibleRangeWithLength:length offset:offset from:(YapDatabaseViewPin)viewPin];

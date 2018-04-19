@@ -1,23 +1,23 @@
 //
-//  PMXMeteorCollectionDataStore.m
+//  ABSDKMeteorCollectionDataStore.m
 //  Sprite
 //
 //  Created by Jonathan Lu on 5/11/2015.
 //  Copyright © 2015 Pixomobile. All rights reserved.
 //
 
-#import "PMXDataStore.h"
+#import "ABSDKDataStore.h"
 #import <FBKVOController.h>
 
-NSString *const PMXDataStoreModifiedNotification = @"PMXDataStoreModifiedNotification";
+NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNotification";
 
-typedef NS_ENUM(NSInteger, PMXDataStoreType) {
-    PMXDataStoreTypeNone        = 0,
-    PMXDataStoreInMemory        = 1,
-    PMXDataStoreInDatabase      = 2,
+typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
+    ABSDKDataStoreTypeNone        = 0,
+    ABSDKDataStoreInMemory        = 1,
+    ABSDKDataStoreInDatabase      = 2,
 };
 
-@interface PMXDataStore ()
+@interface ABSDKDataStore ()
 
 @property (nonatomic, strong) YapDatabase *database;
 @property (nonatomic, strong) YapDatabaseConnection *writeConnection;
@@ -27,14 +27,14 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
 
 @end
 
-@implementation PMXDataStore
+@implementation ABSDKDataStore
 
-+ (PMXDataStore *)sharedInstance
++ (ABSDKDataStore *)sharedInstance
 {
-    static PMXDataStore *_sharedInstance = nil;
+    static ABSDKDataStore *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[PMXDataStore alloc] init];
+        _sharedInstance = [[ABSDKDataStore alloc] init];
     });
     
     return _sharedInstance;
@@ -103,24 +103,24 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
 - (void)yapDatabaseModified:(NSNotification *)notification
 {
     NSArray *notifications = [_readConnection beginLongLivedReadTransaction];
-    [[NSNotificationCenter defaultCenter] postNotificationName:PMXDataStoreModifiedNotification object:nil userInfo:@{@"notifications": notifications}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"notifications": notifications}];
 }
 
-- (PMXDataStoreType)dataStoreTypeForCollection:(NSString*)collection
+- (ABSDKDataStoreType)dataStoreTypeForCollection:(NSString*)collection
 {
     for (NSString *collectionName in _collectionsInMemory) {
         if ([collectionName isEqualToString:collection]) {
-            return PMXDataStoreInMemory;
+            return ABSDKDataStoreInMemory;
         }
     }
     
     for (NSString *collectionName in _collectionsInDatabase) {
         if ([collectionName isEqualToString:collection]) {
-            return PMXDataStoreInDatabase;
+            return ABSDKDataStoreInDatabase;
         }
     }
     
-    return PMXDataStoreTypeNone;
+    return ABSDKDataStoreTypeNone;
 }
 
 - (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock
@@ -138,11 +138,11 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
     if (!key.length || !collection.length) {
         return;
     }
-    PMXDataStoreType type = [self dataStoreTypeForCollection:collection];
+    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
     
     // modify object before store
-    if (type == PMXDataStoreInMemory) {
-        PMXDataStoreWillUpdateBlock willUpdateBlock = [_dataStoreWillUpdateBlocks objectForKey:collection];
+    if (type == ABSDKDataStoreInMemory) {
+        ABSDKDataStoreWillUpdateBlock willUpdateBlock = [_dataStoreWillUpdateBlocks objectForKey:collection];
         if (willUpdateBlock) {
             object = willUpdateBlock(collection, key, object);
         }
@@ -152,19 +152,19 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
         }
         [collectionDict setObject:object forKey:key];
         [_tempDataStore setObject:collectionDict forKey:collection];
-        [[NSNotificationCenter defaultCenter] postNotificationName:PMXDataStoreModifiedNotification object:nil userInfo:@{@"collection": collection, @"key":key, @"object": object}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"collection": collection, @"key":key, @"object": object}];
         // perform post-update actions in data store level
-        PMXDataStoreDidUpdateBlock didUpdateBlock = [_dataStoreDidUpdateBlocks objectForKey:collection];
+        ABSDKDataStoreDidUpdateBlock didUpdateBlock = [_dataStoreDidUpdateBlocks objectForKey:collection];
         if (didUpdateBlock) {
             didUpdateBlock(collection, key, object);
         }
     }
-    else if (type == PMXDataStoreInDatabase) {
+    else if (type == ABSDKDataStoreInDatabase) {
         __weak typeof(self) wself = self;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             id oldObject = [transaction objectForKey:key inCollection:collection];
             
-            PMXDataStoreWillUpdateBlock willUpdateBlock = [wself.dataStoreWillUpdateBlocks objectForKey:collection];
+            ABSDKDataStoreWillUpdateBlock willUpdateBlock = [wself.dataStoreWillUpdateBlocks objectForKey:collection];
             id objectToUpdate;
             if (willUpdateBlock) {
                 objectToUpdate = willUpdateBlock(collection, key, object);
@@ -181,7 +181,7 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
             [transaction setObject:objectToUpdate forKey:key inCollection:collection];
         } completionBlock:^{
             // perform post-update actions in data store level
-            PMXDataStoreDidUpdateBlock didUpdateBlock = [wself.dataStoreDidUpdateBlocks objectForKey:collection];
+            ABSDKDataStoreDidUpdateBlock didUpdateBlock = [wself.dataStoreDidUpdateBlocks objectForKey:collection];
             if (didUpdateBlock) {
                 didUpdateBlock(collection, key, object);
             }
@@ -191,20 +191,20 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
 
 - (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection
 {
-    PMXDataStoreType type = [self dataStoreTypeForCollection:collection];
-    if (type == PMXDataStoreInMemory) {
+    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
+    if (type == ABSDKDataStoreInMemory) {
         NSMutableDictionary *collectionToRemoveObject = [NSMutableDictionary dictionaryWithDictionary:[_tempDataStore objectForKey:collection]];
         if ([collectionToRemoveObject objectForKey:key]) {
             [collectionToRemoveObject removeObjectForKey:key];
             [_tempDataStore setObject:collectionToRemoveObject forKey:collection];
-            [[NSNotificationCenter defaultCenter] postNotificationName:PMXDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"collection": collection, @"key":key}];
-            PMXDataStoreDidRemoveBlock didRemoveBlock = [_dataStoreDidRemoveBlocks objectForKey:collection];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"collection": collection, @"key":key}];
+            ABSDKDataStoreDidRemoveBlock didRemoveBlock = [_dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
             }
         }
     }
-    else if (type == PMXDataStoreInDatabase) {
+    else if (type == ABSDKDataStoreInDatabase) {
         __weak typeof(self) wself = self;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             if ([transaction objectForKey:key inCollection:collection]) {
@@ -215,7 +215,7 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
                 [transaction removeObjectForKey:key inCollection:collection];
             }
         } completionBlock:^{
-            PMXDataStoreDidRemoveBlock didRemoveBlock = [wself.dataStoreDidRemoveBlocks objectForKey:collection];
+            ABSDKDataStoreDidRemoveBlock didRemoveBlock = [wself.dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
             }
@@ -225,13 +225,13 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
 
 - (id)objectForKey:(NSString*)key inCollection:(NSString*)collection
 {
-    PMXDataStoreType type = [self dataStoreTypeForCollection:collection];
+    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
     
     __block id result;
-    if (type == PMXDataStoreInMemory) {
+    if (type == ABSDKDataStoreInMemory) {
         result = [[_tempDataStore objectForKey:collection] objectForKey:key];
     }
-    else if (type == PMXDataStoreInDatabase) {
+    else if (type == ABSDKDataStoreInDatabase) {
         [_readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
             result = [transaction objectForKey:key inCollection:collection];
         }];
@@ -241,13 +241,13 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
 
 - (void)enumerateKeysAndObjectsInCollection:(nullable NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block
 {
-    PMXDataStoreType type = [self dataStoreTypeForCollection:collection];
+    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
     
-    if (type == PMXDataStoreInMemory) {
+    if (type == ABSDKDataStoreInMemory) {
         NSDictionary *collectionDictionary = [_tempDataStore objectForKey:collection];
         [collectionDictionary enumerateKeysAndObjectsUsingBlock:block];
     }
-    else if (type == PMXDataStoreInDatabase) {
+    else if (type == ABSDKDataStoreInDatabase) {
 	[_readConnection asyncReadWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
             [transaction enumerateKeysAndObjectsInCollection:collection usingBlock:block];
         }];
@@ -256,13 +256,13 @@ typedef NS_ENUM(NSInteger, PMXDataStoreType) {
 
 - (NSArray*)allKeysInCollection:(NSString*)collection
 {
-    PMXDataStoreType type = [self dataStoreTypeForCollection:collection];
+    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
     
     __block id result;
-    if (type == PMXDataStoreInMemory) {
+    if (type == ABSDKDataStoreInMemory) {
         result = [[_tempDataStore objectForKey:collection] allKeys];
     }
-    else if (type == PMXDataStoreInDatabase) {
+    else if (type == ABSDKDataStoreInDatabase) {
         [_readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
             result = [transaction allKeysInCollection:collection];
         }];

@@ -1,5 +1,5 @@
 //
-//  PMXView.h
+//  ABSDKView.h
 //  Sprite
 //
 //  Created by Jonathan Lu on 12/11/2015.
@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PMXDataStore.h"
+#import "ABSDKDataStore.h"
 #import "UIView+KVBinding.h"
 #import "UIImageView+KVBinding.h"
 
 #define  UPDATED_KEYPATH    @"updated"
 
-@interface PMXObjectDataSource : NSObject
+@interface ABSDKObjectDataSource : NSObject
 
 @property (nonatomic, strong) NSString *collectionName;
 @property (nonatomic, strong) NSString *identifier;

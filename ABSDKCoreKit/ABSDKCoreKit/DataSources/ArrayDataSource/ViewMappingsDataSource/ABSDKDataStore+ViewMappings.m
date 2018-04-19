@@ -1,22 +1,22 @@
 //
-//  PMXDataStore+ViewMappings.m
+//  ABSDKDataStore+ViewMappings.m
 //  Pods
 //
 //  Created by Jonathan Lu on 19/4/2018.
 //
 
-#import "PMXDataStore+ViewMappings.h"
+#import "ABSDKDataStore+ViewMappings.h"
 #import "YapDatabaseView.h"
 #import "YapDatabaseSearchResultsView.h"
 
-@implementation PMXDataStore (ViewMappings)
+@implementation ABSDKDataStore (ViewMappings)
 
-- (BOOL)hasChangesForNotifications:(NSArray *)notifications mappings:(PMXViewMappings*)mappings
+- (BOOL)hasChangesForNotifications:(NSArray *)notifications mappings:(ABSDKViewMappings*)mappings
 {
     return [[self.readConnection ext:mappings.viewName] hasChangesForNotifications:notifications];
 }
 
-- (id)objectAtIndexPath:(NSIndexPath*)indexPath withMappings:(PMXViewMappings*)mappings
+- (id)objectAtIndexPath:(NSIndexPath*)indexPath withMappings:(ABSDKViewMappings*)mappings
 {
     __block id result;
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction){
@@ -25,19 +25,19 @@
     return result;
 }
 
-- (void)updateArrayDataMappings:(PMXViewMappings*)mappings
+- (void)updateArrayDataMappings:(ABSDKViewMappings*)mappings
 {
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
         [mappings.mappings updateWithTransaction:transaction];
     }];
 }
 
-- (void)sectionChanges:(NSArray**)sectionChanges rowChanges:(NSArray**)rowChanges forNotifications:(NSArray*)notifications withMappings:(PMXViewMappings*)mappings
+- (void)sectionChanges:(NSArray**)sectionChanges rowChanges:(NSArray**)rowChanges forNotifications:(NSArray*)notifications withMappings:(ABSDKViewMappings*)mappings
 {
     [[self.readConnection ext:mappings.viewName] getSectionChanges:sectionChanges rowChanges:rowChanges forNotifications:notifications withMappings:mappings.mappings];
 }
 
-- (void)search:(NSString*)query viewMappings:(PMXViewMappings*)viewMappings
+- (void)search:(NSString*)query viewMappings:(ABSDKViewMappings*)viewMappings
 {
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
         [[transaction ext:viewMappings.viewName] performSearchFor:query];

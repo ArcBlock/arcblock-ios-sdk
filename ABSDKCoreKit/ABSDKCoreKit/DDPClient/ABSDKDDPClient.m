@@ -1,27 +1,27 @@
 //
-//  PMXDDPClient.m
+//  ABSDKDDPClient.m
 //  Pods
 //
 //  Created by Jonathan Lu on 19/11/2015.
 //
 //
 
-#import "PMXDDPClient.h"
+#import "ABSDKDDPClient.h"
 #import "ObjectiveDDP.h"
 #import "BSONIdGenerator.h"
-#import "PMXDataStore.h"
-//#import "PMXAuth.h"
+#import "ABSDKDataStore.h"
+//#import "ABSDKAuth.h"
 #import <Reachability.h>
 
 #define UNPROTECTED_METHODS @[@"loginWithToken", @"loginWithFacebook", @"login", @"signup", @"board", @"objectsInBoard", @"profile", @"post", @"history", @"getTimeline", @"getTimelineMoments", @"checkPostAssets", @"createPost", @"updatePost", @"removePost", @"auth.requestPasswordReset", @"getItemsInFeed", @"explore", @"getRecommendations"]
 
 NSString * const ddpVersion = @"1";
 
-NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
+NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
 
-@implementation PMXDDPMethodCall
+@implementation ABSDKDDPMethodCall
 
-- (BOOL)isEqual:(PMXDDPMethodCall*)object
+- (BOOL)isEqual:(ABSDKDDPMethodCall*)object
 {
     if (![object isKindOfClass:[self class]]) {
         return NO;
@@ -34,7 +34,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 @end
 
-@interface PMXDDPClient () <ObjectiveDDPDelegate>
+@interface ABSDKDDPClient () <ObjectiveDDPDelegate>
 
 @property (nonatomic, strong) ObjectiveDDP *ddp;
 @property (nonatomic, assign) BOOL websocketReady;
@@ -49,7 +49,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 @end
 
-@implementation PMXDDPClient
+@implementation ABSDKDDPClient
 
 - (id) initWithURLString:(NSString*)urlString
 {
@@ -95,7 +95,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 # pragma mark - public APIs
-- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(PMXDDPClientMethodCallback)responseCallback
+- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(ABSDKDDPClientMethodCallback)responseCallback
 {
     if ([self _rejectIfNotConnected:methodName responseCallback:responseCallback]) {
         return nil;
@@ -108,9 +108,9 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 }
 
-- (void)callSubscription:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(PMXDDPClientMethodCallback)responseCallback
+- (void)callSubscription:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(ABSDKDDPClientMethodCallback)responseCallback
 {
-    PMXDDPMethodCall *subscription = [[PMXDDPMethodCall alloc] init];
+    ABSDKDDPMethodCall *subscription = [[ABSDKDDPMethodCall alloc] init];
     subscription.methodName = methodName;
     subscription.parameters = parameters;
     subscription.callback = responseCallback;
@@ -125,13 +125,13 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)removeSubscription:(NSString *)methodName paramters:(NSArray*)parameters
 {
-    PMXDDPMethodCall *subscription = [[PMXDDPMethodCall alloc] init];
+    ABSDKDDPMethodCall *subscription = [[ABSDKDDPMethodCall alloc] init];
     subscription.methodName = methodName;
     subscription.parameters = parameters;
     subscription.callback = nil;
     NSMutableArray *subscriptionMethods = [NSMutableArray arrayWithArray:_subscriptionMethods];
     NSMutableArray *subscriptionsToRemove = [NSMutableArray array];
-    for (PMXDDPMethodCall *subscription in subscriptionMethods) {
+    for (ABSDKDDPMethodCall *subscription in subscriptionMethods) {
         if ([subscription.methodName isEqualToString:methodName] && [subscription.parameters isEqualToArray:parameters]) {
             [subscriptionsToRemove addObject:subscription];
             break;
@@ -217,7 +217,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         _retryInterval = 3;
         NSLog(@"[DDP Server Ready] %@", _ddp.urlString);
         
-        for (PMXDDPMethodCall *subscription in _subscriptionMethods) {
+        for (ABSDKDDPMethodCall *subscription in _subscriptionMethods) {
             if ([UNPROTECTED_METHODS containsObject:subscription.methodName]) {
                 [self callMethodName:subscription.methodName parameters:subscription.parameters responseCallback:subscription.callback];
             }
@@ -258,8 +258,8 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 {
     self.isConnecting = YES;
     __weak typeof(self) wself = self;
-//    [[PMXAuth sharedInstance] sendTokenLoginRequest:^{
-//        for (PMXDDPMethodCall *subscription in wself.subscriptionMethods) {
+//    [[ABSDKAuth sharedInstance] sendTokenLoginRequest:^{
+//        for (ABSDKDDPMethodCall *subscription in wself.subscriptionMethods) {
 //            [wself callMethodName:subscription.methodName parameters:subscription.parameters responseCallback:subscription.callback];
 //        }
 //    } failed:nil];
@@ -269,7 +269,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg {
     if ([_methodIds containsObject:messageId] && [msg isEqualToString:@"result"]) {
-        PMXDDPClientMethodCallback callback = _responseCallbacks[messageId];
+        ABSDKDDPClientMethodCallback callback = _responseCallbacks[messageId];
         id response;
         if(message[@"error"]) {
             NSError *responseError = [NSError errorWithDomain:@"DDP_METHOD_ERROR" code:-1 userInfo:message[@"error"]];
@@ -300,7 +300,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         if (!message[@"id"]) {
             return;
         }
-        [[PMXDataStore sharedInstance] removeObjectForKey:message[@"id"] inCollection:message[@"collection"]];
+        [[ABSDKDataStore sharedInstance] removeObjectForKey:message[@"id"] inCollection:message[@"collection"]];
     }
 }
 
@@ -320,15 +320,15 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         return;
     }
     
-    if ([[PMXDataStore sharedInstance] objectForKey:message[@"id"] inCollection:message[@"collection"]]) {
-        NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:[[PMXDataStore sharedInstance] objectForKey:message[@"id"] inCollection:message[@"collection"]]];
+    if ([[ABSDKDataStore sharedInstance] objectForKey:message[@"id"] inCollection:message[@"collection"]]) {
+        NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:[[ABSDKDataStore sharedInstance] objectForKey:message[@"id"] inCollection:message[@"collection"]]];
         for (id key in message[@"fields"]) {
             object[key] = message[@"fields"][key];
         }
         for (id key in message[@"cleared"]) {
             [object removeObjectForKey:key];
         }
-        [[PMXDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"]];
+        [[ABSDKDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"]];
     }
     else {
         NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
@@ -338,7 +338,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         for (id key in message[@"cleared"]) {
             [object removeObjectForKey:key];
         }
-        [[PMXDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"]];
+        [[ABSDKDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"]];
     }
 }
 
@@ -376,10 +376,10 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self retry];
 }
 
-- (BOOL)_rejectIfNotConnected:(NSString*)methodName responseCallback:(PMXDDPClientMethodCallback)responseCallback {
+- (BOOL)_rejectIfNotConnected:(NSString*)methodName responseCallback:(ABSDKDDPClientMethodCallback)responseCallback {
     if (!_isNetworkAvailable) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"Network is not available"};
-        NSError *notConnectedError = [NSError errorWithDomain:PMXDDPClientTransportErrorDomain code:PMXDDPClientErrorNetworkNotAvailable userInfo:userInfo];
+        NSError *notConnectedError = [NSError errorWithDomain:ABSDKDDPClientTransportErrorDomain code:ABSDKDDPClientErrorNetworkNotAvailable userInfo:userInfo];
         if (responseCallback) {
             responseCallback(nil, notConnectedError);
         }
@@ -387,7 +387,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     }
     else if (![self okToSend]) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not connected"};
-        NSError *notConnectedError = [NSError errorWithDomain:PMXDDPClientTransportErrorDomain code:PMXDDPClientErrorNotConnected userInfo:userInfo];
+        NSError *notConnectedError = [NSError errorWithDomain:ABSDKDDPClientTransportErrorDomain code:ABSDKDDPClientErrorNotConnected userInfo:userInfo];
         if (responseCallback) {
             responseCallback(nil, notConnectedError);
         }
@@ -395,7 +395,7 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     }
     else if ((!self.isAuth && ![UNPROTECTED_METHODS containsObject:methodName])) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not authenticated"};
-        NSError *notConnectedError = [NSError errorWithDomain:PMXDDPClientTransportErrorDomain code:PMXDDPClientErrorNotAuthed userInfo:userInfo];
+        NSError *notConnectedError = [NSError errorWithDomain:ABSDKDDPClientTransportErrorDomain code:ABSDKDDPClientErrorNotAuthed userInfo:userInfo];
         if (responseCallback) {
             responseCallback(nil, notConnectedError);
         }
@@ -406,9 +406,9 @@ NSString * const PMXDDPClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)_invalidateUnresolvedMethods {
     for (NSString *methodId in _methodIds) {
-        PMXDDPClientMethodCallback callback = _responseCallbacks[methodId];
+        ABSDKDDPClientMethodCallback callback = _responseCallbacks[methodId];
         if (callback) {
-            callback(nil, [NSError errorWithDomain:PMXDDPClientTransportErrorDomain code:PMXDDPClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
+            callback(nil, [NSError errorWithDomain:ABSDKDDPClientTransportErrorDomain code:ABSDKDDPClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
         }
     }
     [_methodIds removeAllObjects];

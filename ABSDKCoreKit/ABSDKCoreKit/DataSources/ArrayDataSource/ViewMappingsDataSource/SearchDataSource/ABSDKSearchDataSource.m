@@ -1,22 +1,22 @@
 //
-//  PMXSearchViewMappingsDataSource.m
+//  ABSDKSearchViewMappingsDataSource.m
 //  Pods
 //
 //  Created by Jonathan Lu on 20/6/2016.
 //
 //
 
-#import "PMXSearchDataSource.h"
+#import "ABSDKSearchDataSource.h"
 
-@implementation PMXSearchDataSource
+@implementation ABSDKSearchDataSource
 
-- (id)initWithParentDataSource:(PMXViewMappingsDataSource*)parentDataSource collumnNames:(NSArray*)collumnNames searchBlock:(PMXDataStoreFullTextSearchBlock)searchBlock
+- (id)initWithParentDataSource:(ABSDKViewMappingsDataSource*)parentDataSource collumnNames:(NSArray*)collumnNames searchBlock:(ABSDKDataStoreFullTextSearchBlock)searchBlock
 {
     self = [super init];
     if (self) {
         self.name = [NSString stringWithFormat:@"%@-search", parentDataSource.name];
         self.sections = parentDataSource.sections;
-        self.mappings = [[PMXViewMappings alloc] initWithCollumnNames:collumnNames searchBlock:searchBlock parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
+        self.mappings = [[ABSDKViewMappings alloc] initWithCollumnNames:collumnNames searchBlock:searchBlock parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
         [self setup];
     }
     return self;
@@ -48,7 +48,7 @@
         [query appendFormat:@"%@*", term];
     }
     NSLog(@"%@", query);
-    [[PMXDataStore sharedInstance] search:query viewMappings:self.mappings];
+    [[ABSDKDataStore sharedInstance] search:query viewMappings:self.mappings];
 }
 
 @end

@@ -1,22 +1,22 @@
 //
-//  PMXFilteringDataSource.m
+//  ABSDKFilteringDataSource.m
 //  Pods
 //
 //  Created by Jonathan Lu on 7/7/2016.
 //
 //
 
-#import "PMXFilterDataSource.h"
+#import "ABSDKFilterDataSource.h"
 
-@implementation PMXFilterDataSource
+@implementation ABSDKFilterDataSource
 
-- (id)initWithName:(NSString*)name parentDataSource:(PMXViewMappingsDataSource*)parentDataSource filterBlock:(PMXDataStoreFilteringBlock)block
+- (id)initWithName:(NSString*)name parentDataSource:(ABSDKViewMappingsDataSource*)parentDataSource filterBlock:(ABSDKDataStoreFilteringBlock)block
 {
     self = [super init];
     if (self) {
         self.name = name;
         self.sections = parentDataSource.sections;
-        self.mappings = [[PMXViewMappings alloc] initWithFilterBlock:block parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
+        self.mappings = [[ABSDKViewMappings alloc] initWithFilterBlock:block parentViewName:parentDataSource.name viewName:self.name sections:self.sections];
         [self setup];
     }
     return self;

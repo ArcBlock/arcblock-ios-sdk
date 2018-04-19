@@ -1,32 +1,32 @@
 //
-//  PMXViewMappingsDataSource.m
+//  ABSDKViewMappingsDataSource.m
 //  Pods
 //
 //  Created by Jonathan Lu on 17/11/2015.
 //
 //
 
-#import "PMXViewMappingsDataSource.h"
-#import "PMXDataStore+ViewMappings.h"
+#import "ABSDKViewMappingsDataSource.h"
+#import "ABSDKDataStore+ViewMappings.h"
 
-@implementation PMXViewMappingsDataSource
+@implementation ABSDKViewMappingsDataSource
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:PMXDataStoreModifiedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:ABSDKDataStoreModifiedNotification object:nil];
     }
     return self;
 }
 
-- (id)initWithName:(NSString*)name sections:(NSArray*)sections grouping:(PMXViewGroupingBlock)grouping sorting:(PMXViewSortingBlock)sorting
+- (id)initWithName:(NSString*)name sections:(NSArray*)sections grouping:(ABSDKViewGroupingBlock)grouping sorting:(ABSDKViewSortingBlock)sorting
 {
     self = [self init];
     if (self) {
         _name = name;
         self.sections = sections;
-        _mappings = [[PMXViewMappings alloc] initWithViewName:name sections:sections grouping:grouping sorting:sorting];
+        _mappings = [[ABSDKViewMappings alloc] initWithViewName:name sections:sections grouping:grouping sorting:sorting];
         self.isRefreshing = YES;
         self.isLoading = YES;
         [self setup];
@@ -48,7 +48,7 @@
 - (void)dealloc
 {
     NSLog(@"deallocate %@", self.name);
-    [[PMXDataStore sharedInstance] unregisterExtensionWithName:self.name];
+    [[ABSDKDataStore sharedInstance] unregisterExtensionWithName:self.name];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -56,27 +56,27 @@
 {
     NSArray *notifications = notification.userInfo[@"notifications"];
     
-    if (![[PMXDataStore sharedInstance] hasChangesForNotifications:notifications mappings:self.mappings]) {
+    if (![[ABSDKDataStore sharedInstance] hasChangesForNotifications:notifications mappings:self.mappings]) {
         [self loadData];
         return;
     }
 
     NSArray *sectionChanges = nil;
     NSArray *rowChanges = nil;
-    [[PMXDataStore sharedInstance] sectionChanges:&sectionChanges rowChanges:&rowChanges forNotifications:notifications withMappings:_mappings];
+    [[ABSDKDataStore sharedInstance] sectionChanges:&sectionChanges rowChanges:&rowChanges forNotifications:notifications withMappings:_mappings];
     if ([sectionChanges count] == 0 && [rowChanges count] == 0)
     {
         [self loadData];
         return;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:PMXArrayDataSourceDidUpdateNotification object:self userInfo:@{@"sectionChanges": sectionChanges, @"rowChanges": rowChanges, @"notifications": notifications}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKArrayDataSourceDidUpdateNotification object:self userInfo:@{@"sectionChanges": sectionChanges, @"rowChanges": rowChanges, @"notifications": notifications}];
 }
 
 - (void)setLength:(NSInteger)length forSection:(NSString*)section
 {
     [super setLength:length];
-    [self.mappings setFlexibleRangeOptions:self.length offset:0 from:PMXViewBeginning maxLength:self.length growOption:PMXViewGrowOnBothSides forGroup:section];
+    [self.mappings setFlexibleRangeOptions:self.length offset:0 from:ABSDKViewBeginning maxLength:self.length growOption:ABSDKViewGrowOnBothSides forGroup:section];
 }
 
 - (void)setReverseForSection:(NSString*)section
@@ -86,7 +86,7 @@
 
 - (void)loadData
 {
-    [[PMXDataStore sharedInstance] updateArrayDataMappings:self.mappings];
+    [[ABSDKDataStore sharedInstance] updateArrayDataMappings:self.mappings];
 }
 
 - (NSInteger) numberOfSections
@@ -101,7 +101,7 @@
 
 - (id) getItemAtIndextPath:(NSIndexPath*)indexPath
 {
-    return [[PMXDataStore sharedInstance] objectAtIndexPath:indexPath withMappings:_mappings];
+    return [[ABSDKDataStore sharedInstance] objectAtIndexPath:indexPath withMappings:_mappings];
 }
 
 - (NSArray*)allItems
