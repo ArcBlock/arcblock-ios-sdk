@@ -6,7 +6,7 @@
 //  Copyright © 2015 Pixomobile. All rights reserved.
 //
 
-#import <YapDatabase.h>
+#import <YapDatabase/YapDatabase.h>
 
 extern NSString *const ABSDKDataStoreModifiedNotification;
 
@@ -18,15 +18,16 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 
 + (ABSDKDataStore *)sharedInstance;
 
-@property (nonatomic) BOOL dataStoreReady;
-@property (nonatomic) NSMutableArray *collectionsInDatabase;
-@property (nonatomic) NSMutableArray *collectionsInMemory;
-
-@property (nonatomic, strong) YapDatabaseConnection *readConnection;
+@property (nonatomic, readonly) BOOL dataStoreReady;
+@property (nonatomic, strong, readonly) YapDatabaseConnection *readConnection;
+@property (nonatomic, strong, readonly) NSArray *registeredCollections;
 
 @property (nonatomic) NSMutableDictionary *dataStoreWillUpdateBlocks; // actions to perform before updating data store
 @property (nonatomic) NSMutableDictionary *dataStoreDidUpdateBlocks; // perform related updates on relational objects in other collection
 @property (nonatomic) NSMutableDictionary *dataStoreDidRemoveBlocks;
+
+// collections not registered will be store only in memory
+- (void)registerCollections:(NSArray *)collections;
 
 - (void)setupDataStore:(NSString*)dbFileName;
 - (void)quitDataStore;
@@ -35,7 +36,7 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 - (void)unregisterExtensionWithName:(NSString*)name;
 
 - (NSArray*)allKeysInCollection:(NSString*)collection;
-- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection;
+- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
 - (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection;
 - (id)objectForKey:(NSString*)key inCollection:(NSString*)collection;
 - (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block;

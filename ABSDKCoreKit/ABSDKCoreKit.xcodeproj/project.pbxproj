@@ -8,8 +8,41 @@
 
 /* Begin PBXBuildFile section */
 		2757AADE2085999C00AD2F18 /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2757AAD42085999C00AD2F18 /* ABSDKCoreKit.framework */; };
-		2757AAE32085999C00AD2F18 /* ABSDKCoreKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2757AAE22085999C00AD2F18 /* ABSDKCoreKitTests.m */; };
-		2757AAE52085999C00AD2F18 /* ABSDKCoreKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2757AAD72085999C00AD2F18 /* ABSDKCoreKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27B9AC74208986490054C8E6 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC49208986490054C8E6 /* CALayer+XibConfiguration.m */; };
+		27B9AC75208986490054C8E6 /* UIButton+KVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC4A208986490054C8E6 /* UIButton+KVBinding.m */; };
+		27B9AC76208986490054C8E6 /* UIView+KVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC4B208986490054C8E6 /* UIView+KVBinding.m */; };
+		27B9AC77208986490054C8E6 /* UIImageView+KVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC4C208986490054C8E6 /* UIImageView+KVBinding.m */; };
+		27B9AC78208986490054C8E6 /* CALayer+XibConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC4D208986490054C8E6 /* CALayer+XibConfiguration.h */; };
+		27B9AC79208986490054C8E6 /* UIView+KVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC4E208986490054C8E6 /* UIView+KVBinding.h */; };
+		27B9AC7A208986490054C8E6 /* UIButton+KVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC4F208986490054C8E6 /* UIButton+KVBinding.h */; };
+		27B9AC7B208986490054C8E6 /* UIImageView+KVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC50208986490054C8E6 /* UIImageView+KVBinding.h */; };
+		27B9AC7C208986490054C8E6 /* ABSDKDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC52208986490054C8E6 /* ABSDKDataStore.m */; };
+		27B9AC7D208986490054C8E6 /* ABSDKDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC53208986490054C8E6 /* ABSDKDataStore.h */; };
+		27B9AC7E208986490054C8E6 /* ObjectiveDDP.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC56208986490054C8E6 /* ObjectiveDDP.h */; };
+		27B9AC7F208986490054C8E6 /* BSONIdGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC57208986490054C8E6 /* BSONIdGenerator.h */; };
+		27B9AC80208986490054C8E6 /* DependencyProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC58208986490054C8E6 /* DependencyProvider.h */; };
+		27B9AC81208986490054C8E6 /* ObjectiveDDP.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC59208986490054C8E6 /* ObjectiveDDP.m */; };
+		27B9AC82208986490054C8E6 /* DependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC5A208986490054C8E6 /* DependencyProvider.m */; };
+		27B9AC83208986490054C8E6 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC5B208986490054C8E6 /* BSONIdGenerator.m */; };
+		27B9AC84208986490054C8E6 /* ABSDKDDPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC5C208986490054C8E6 /* ABSDKDDPClient.m */; };
+		27B9AC85208986490054C8E6 /* ABSDKDDPClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC5D208986490054C8E6 /* ABSDKDDPClientManager.m */; };
+		27B9AC86208986490054C8E6 /* ABSDKDDPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC5E208986490054C8E6 /* ABSDKDDPClient.h */; };
+		27B9AC87208986490054C8E6 /* ABSDKDDPClientManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC5F208986490054C8E6 /* ABSDKDDPClientManager.h */; };
+		27B9AC88208986490054C8E6 /* ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC62208986490054C8E6 /* ABSDKArrayDataSource.h */; };
+		27B9AC89208986490054C8E6 /* ABSDKViewMappingsDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC64208986490054C8E6 /* ABSDKViewMappingsDataSource.h */; };
+		27B9AC8A208986490054C8E6 /* ABSDKDataStore+ViewMappings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC65208986490054C8E6 /* ABSDKDataStore+ViewMappings.m */; };
+		27B9AC8B208986490054C8E6 /* ABSDKSearchDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC67208986490054C8E6 /* ABSDKSearchDataSource.h */; };
+		27B9AC8C208986490054C8E6 /* ABSDKSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC68208986490054C8E6 /* ABSDKSearchDataSource.m */; };
+		27B9AC8D208986490054C8E6 /* ABSDKFilterDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC6A208986490054C8E6 /* ABSDKFilterDataSource.h */; };
+		27B9AC8E208986490054C8E6 /* ABSDKFilterDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC6B208986490054C8E6 /* ABSDKFilterDataSource.m */; };
+		27B9AC8F208986490054C8E6 /* ABSDKViewMappings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC6C208986490054C8E6 /* ABSDKViewMappings.h */; };
+		27B9AC90208986490054C8E6 /* ABSDKDataStore+ViewMappings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC6D208986490054C8E6 /* ABSDKDataStore+ViewMappings.h */; };
+		27B9AC91208986490054C8E6 /* ABSDKViewMappingsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC6E208986490054C8E6 /* ABSDKViewMappingsDataSource.m */; };
+		27B9AC92208986490054C8E6 /* ABSDKViewMappings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC6F208986490054C8E6 /* ABSDKViewMappings.m */; };
+		27B9AC93208986490054C8E6 /* ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC70208986490054C8E6 /* ABSDKArrayDataSource.m */; };
+		27B9AC94208986490054C8E6 /* ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B9AC72208986490054C8E6 /* ABSDKObjectDataSource.h */; };
+		27B9AC95208986490054C8E6 /* ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9AC73208986490054C8E6 /* ABSDKObjectDataSource.m */; };
+		27B9ACAF2089913E0054C8E6 /* ABSDKDataStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9ACAE2089913D0054C8E6 /* ABSDKDataStoreTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,11 +57,44 @@
 
 /* Begin PBXFileReference section */
 		2757AAD42085999C00AD2F18 /* ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2757AAD72085999C00AD2F18 /* ABSDKCoreKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABSDKCoreKit.h; sourceTree = "<group>"; };
 		2757AAD82085999C00AD2F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2757AADD2085999C00AD2F18 /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2757AAE22085999C00AD2F18 /* ABSDKCoreKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABSDKCoreKitTests.m; sourceTree = "<group>"; };
 		2757AAE42085999C00AD2F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27B9AC49208986490054C8E6 /* CALayer+XibConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+XibConfiguration.m"; sourceTree = "<group>"; };
+		27B9AC4A208986490054C8E6 /* UIButton+KVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+KVBinding.m"; sourceTree = "<group>"; };
+		27B9AC4B208986490054C8E6 /* UIView+KVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KVBinding.m"; sourceTree = "<group>"; };
+		27B9AC4C208986490054C8E6 /* UIImageView+KVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+KVBinding.m"; sourceTree = "<group>"; };
+		27B9AC4D208986490054C8E6 /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
+		27B9AC4E208986490054C8E6 /* UIView+KVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KVBinding.h"; sourceTree = "<group>"; };
+		27B9AC4F208986490054C8E6 /* UIButton+KVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+KVBinding.h"; sourceTree = "<group>"; };
+		27B9AC50208986490054C8E6 /* UIImageView+KVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+KVBinding.h"; sourceTree = "<group>"; };
+		27B9AC52208986490054C8E6 /* ABSDKDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDataStore.m; sourceTree = "<group>"; };
+		27B9AC53208986490054C8E6 /* ABSDKDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDataStore.h; sourceTree = "<group>"; };
+		27B9AC56208986490054C8E6 /* ObjectiveDDP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveDDP.h; sourceTree = "<group>"; };
+		27B9AC57208986490054C8E6 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
+		27B9AC58208986490054C8E6 /* DependencyProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DependencyProvider.h; sourceTree = "<group>"; };
+		27B9AC59208986490054C8E6 /* ObjectiveDDP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectiveDDP.m; sourceTree = "<group>"; };
+		27B9AC5A208986490054C8E6 /* DependencyProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DependencyProvider.m; sourceTree = "<group>"; };
+		27B9AC5B208986490054C8E6 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
+		27B9AC5C208986490054C8E6 /* ABSDKDDPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDDPClient.m; sourceTree = "<group>"; };
+		27B9AC5D208986490054C8E6 /* ABSDKDDPClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDDPClientManager.m; sourceTree = "<group>"; };
+		27B9AC5E208986490054C8E6 /* ABSDKDDPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDDPClient.h; sourceTree = "<group>"; };
+		27B9AC5F208986490054C8E6 /* ABSDKDDPClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDDPClientManager.h; sourceTree = "<group>"; };
+		27B9AC62208986490054C8E6 /* ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKArrayDataSource.h; sourceTree = "<group>"; };
+		27B9AC64208986490054C8E6 /* ABSDKViewMappingsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKViewMappingsDataSource.h; sourceTree = "<group>"; };
+		27B9AC65208986490054C8E6 /* ABSDKDataStore+ViewMappings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ABSDKDataStore+ViewMappings.m"; sourceTree = "<group>"; };
+		27B9AC67208986490054C8E6 /* ABSDKSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKSearchDataSource.h; sourceTree = "<group>"; };
+		27B9AC68208986490054C8E6 /* ABSDKSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKSearchDataSource.m; sourceTree = "<group>"; };
+		27B9AC6A208986490054C8E6 /* ABSDKFilterDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKFilterDataSource.h; sourceTree = "<group>"; };
+		27B9AC6B208986490054C8E6 /* ABSDKFilterDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKFilterDataSource.m; sourceTree = "<group>"; };
+		27B9AC6C208986490054C8E6 /* ABSDKViewMappings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKViewMappings.h; sourceTree = "<group>"; };
+		27B9AC6D208986490054C8E6 /* ABSDKDataStore+ViewMappings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKDataStore+ViewMappings.h"; sourceTree = "<group>"; };
+		27B9AC6E208986490054C8E6 /* ABSDKViewMappingsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKViewMappingsDataSource.m; sourceTree = "<group>"; };
+		27B9AC6F208986490054C8E6 /* ABSDKViewMappings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKViewMappings.m; sourceTree = "<group>"; };
+		27B9AC70208986490054C8E6 /* ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKArrayDataSource.m; sourceTree = "<group>"; };
+		27B9AC72208986490054C8E6 /* ABSDKObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKObjectDataSource.h; sourceTree = "<group>"; };
+		27B9AC73208986490054C8E6 /* ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKObjectDataSource.m; sourceTree = "<group>"; };
+		27B9ACAE2089913D0054C8E6 /* ABSDKDataStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDataStoreTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +137,10 @@
 		2757AAD62085999C00AD2F18 /* ABSDKCoreKit */ = {
 			isa = PBXGroup;
 			children = (
-				2757AAD72085999C00AD2F18 /* ABSDKCoreKit.h */,
+				27B9AC60208986490054C8E6 /* DataSources */,
+				27B9AC51208986490054C8E6 /* DataStore */,
+				27B9AC54208986490054C8E6 /* DDPClient */,
+				27B9AC48208986490054C8E6 /* KVBinding */,
 				2757AAD82085999C00AD2F18 /* Info.plist */,
 			);
 			path = ABSDKCoreKit;
@@ -80,10 +149,120 @@
 		2757AAE12085999C00AD2F18 /* ABSDKCoreKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				2757AAE22085999C00AD2F18 /* ABSDKCoreKitTests.m */,
+				27B9ACAE2089913D0054C8E6 /* ABSDKDataStoreTests.m */,
 				2757AAE42085999C00AD2F18 /* Info.plist */,
 			);
 			path = ABSDKCoreKitTests;
+			sourceTree = "<group>";
+		};
+		27B9AC48208986490054C8E6 /* KVBinding */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC4D208986490054C8E6 /* CALayer+XibConfiguration.h */,
+				27B9AC49208986490054C8E6 /* CALayer+XibConfiguration.m */,
+				27B9AC4F208986490054C8E6 /* UIButton+KVBinding.h */,
+				27B9AC4A208986490054C8E6 /* UIButton+KVBinding.m */,
+				27B9AC50208986490054C8E6 /* UIImageView+KVBinding.h */,
+				27B9AC4C208986490054C8E6 /* UIImageView+KVBinding.m */,
+				27B9AC4E208986490054C8E6 /* UIView+KVBinding.h */,
+				27B9AC4B208986490054C8E6 /* UIView+KVBinding.m */,
+			);
+			path = KVBinding;
+			sourceTree = "<group>";
+		};
+		27B9AC51208986490054C8E6 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC53208986490054C8E6 /* ABSDKDataStore.h */,
+				27B9AC52208986490054C8E6 /* ABSDKDataStore.m */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
+		27B9AC54208986490054C8E6 /* DDPClient */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC5E208986490054C8E6 /* ABSDKDDPClient.h */,
+				27B9AC5C208986490054C8E6 /* ABSDKDDPClient.m */,
+				27B9AC5F208986490054C8E6 /* ABSDKDDPClientManager.h */,
+				27B9AC5D208986490054C8E6 /* ABSDKDDPClientManager.m */,
+				27B9AC55208986490054C8E6 /* ObjectiveDDP */,
+			);
+			path = DDPClient;
+			sourceTree = "<group>";
+		};
+		27B9AC55208986490054C8E6 /* ObjectiveDDP */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC57208986490054C8E6 /* BSONIdGenerator.h */,
+				27B9AC5B208986490054C8E6 /* BSONIdGenerator.m */,
+				27B9AC58208986490054C8E6 /* DependencyProvider.h */,
+				27B9AC5A208986490054C8E6 /* DependencyProvider.m */,
+				27B9AC56208986490054C8E6 /* ObjectiveDDP.h */,
+				27B9AC59208986490054C8E6 /* ObjectiveDDP.m */,
+			);
+			path = ObjectiveDDP;
+			sourceTree = "<group>";
+		};
+		27B9AC60208986490054C8E6 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC61208986490054C8E6 /* ArrayDataSource */,
+				27B9AC71208986490054C8E6 /* ObjectDataSource */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		27B9AC61208986490054C8E6 /* ArrayDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC62208986490054C8E6 /* ABSDKArrayDataSource.h */,
+				27B9AC70208986490054C8E6 /* ABSDKArrayDataSource.m */,
+				27B9AC63208986490054C8E6 /* ViewMappingsDataSource */,
+			);
+			path = ArrayDataSource;
+			sourceTree = "<group>";
+		};
+		27B9AC63208986490054C8E6 /* ViewMappingsDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC6D208986490054C8E6 /* ABSDKDataStore+ViewMappings.h */,
+				27B9AC65208986490054C8E6 /* ABSDKDataStore+ViewMappings.m */,
+				27B9AC6C208986490054C8E6 /* ABSDKViewMappings.h */,
+				27B9AC6F208986490054C8E6 /* ABSDKViewMappings.m */,
+				27B9AC64208986490054C8E6 /* ABSDKViewMappingsDataSource.h */,
+				27B9AC6E208986490054C8E6 /* ABSDKViewMappingsDataSource.m */,
+				27B9AC69208986490054C8E6 /* FilterDataSource */,
+				27B9AC66208986490054C8E6 /* SearchDataSource */,
+			);
+			path = ViewMappingsDataSource;
+			sourceTree = "<group>";
+		};
+		27B9AC66208986490054C8E6 /* SearchDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC67208986490054C8E6 /* ABSDKSearchDataSource.h */,
+				27B9AC68208986490054C8E6 /* ABSDKSearchDataSource.m */,
+			);
+			path = SearchDataSource;
+			sourceTree = "<group>";
+		};
+		27B9AC69208986490054C8E6 /* FilterDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC6A208986490054C8E6 /* ABSDKFilterDataSource.h */,
+				27B9AC6B208986490054C8E6 /* ABSDKFilterDataSource.m */,
+			);
+			path = FilterDataSource;
+			sourceTree = "<group>";
+		};
+		27B9AC71208986490054C8E6 /* ObjectDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				27B9AC72208986490054C8E6 /* ABSDKObjectDataSource.h */,
+				27B9AC73208986490054C8E6 /* ABSDKObjectDataSource.m */,
+			);
+			path = ObjectDataSource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -93,7 +272,23 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2757AAE52085999C00AD2F18 /* ABSDKCoreKit.h in Headers */,
+				27B9AC7D208986490054C8E6 /* ABSDKDataStore.h in Headers */,
+				27B9AC89208986490054C8E6 /* ABSDKViewMappingsDataSource.h in Headers */,
+				27B9AC88208986490054C8E6 /* ABSDKArrayDataSource.h in Headers */,
+				27B9AC7B208986490054C8E6 /* UIImageView+KVBinding.h in Headers */,
+				27B9AC90208986490054C8E6 /* ABSDKDataStore+ViewMappings.h in Headers */,
+				27B9AC7A208986490054C8E6 /* UIButton+KVBinding.h in Headers */,
+				27B9AC8D208986490054C8E6 /* ABSDKFilterDataSource.h in Headers */,
+				27B9AC7E208986490054C8E6 /* ObjectiveDDP.h in Headers */,
+				27B9AC80208986490054C8E6 /* DependencyProvider.h in Headers */,
+				27B9AC8B208986490054C8E6 /* ABSDKSearchDataSource.h in Headers */,
+				27B9AC94208986490054C8E6 /* ABSDKObjectDataSource.h in Headers */,
+				27B9AC8F208986490054C8E6 /* ABSDKViewMappings.h in Headers */,
+				27B9AC86208986490054C8E6 /* ABSDKDDPClient.h in Headers */,
+				27B9AC7F208986490054C8E6 /* BSONIdGenerator.h in Headers */,
+				27B9AC79208986490054C8E6 /* UIView+KVBinding.h in Headers */,
+				27B9AC87208986490054C8E6 /* ABSDKDDPClientManager.h in Headers */,
+				27B9AC78208986490054C8E6 /* CALayer+XibConfiguration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +388,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B9AC93208986490054C8E6 /* ABSDKArrayDataSource.m in Sources */,
+				27B9AC8E208986490054C8E6 /* ABSDKFilterDataSource.m in Sources */,
+				27B9AC8C208986490054C8E6 /* ABSDKSearchDataSource.m in Sources */,
+				27B9AC84208986490054C8E6 /* ABSDKDDPClient.m in Sources */,
+				27B9AC7C208986490054C8E6 /* ABSDKDataStore.m in Sources */,
+				27B9AC76208986490054C8E6 /* UIView+KVBinding.m in Sources */,
+				27B9AC85208986490054C8E6 /* ABSDKDDPClientManager.m in Sources */,
+				27B9AC8A208986490054C8E6 /* ABSDKDataStore+ViewMappings.m in Sources */,
+				27B9AC83208986490054C8E6 /* BSONIdGenerator.m in Sources */,
+				27B9AC95208986490054C8E6 /* ABSDKObjectDataSource.m in Sources */,
+				27B9AC91208986490054C8E6 /* ABSDKViewMappingsDataSource.m in Sources */,
+				27B9AC92208986490054C8E6 /* ABSDKViewMappings.m in Sources */,
+				27B9AC82208986490054C8E6 /* DependencyProvider.m in Sources */,
+				27B9AC77208986490054C8E6 /* UIImageView+KVBinding.m in Sources */,
+				27B9AC75208986490054C8E6 /* UIButton+KVBinding.m in Sources */,
+				27B9AC81208986490054C8E6 /* ObjectiveDDP.m in Sources */,
+				27B9AC74208986490054C8E6 /* CALayer+XibConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2757AAE32085999C00AD2F18 /* ABSDKCoreKitTests.m in Sources */,
+				27B9ACAF2089913E0054C8E6 /* ABSDKDataStoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

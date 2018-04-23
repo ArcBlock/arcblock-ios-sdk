@@ -7,23 +7,21 @@
 //
 
 #import "ABSDKDataStore.h"
-#import <FBKVOController.h>
+#import "FBKVOController.h"
 
 NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNotification";
 
-typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
-    ABSDKDataStoreTypeNone        = 0,
-    ABSDKDataStoreInMemory        = 1,
-    ABSDKDataStoreInDatabase      = 2,
-};
-
 @interface ABSDKDataStore ()
 
-@property (nonatomic, strong) YapDatabase *database;
-@property (nonatomic, strong) YapDatabaseConnection *writeConnection;
 @property (nonatomic, strong) FBKVOController *kvoController;
+@property (nonatomic, strong) NSArray *registeredCollections;
+
+@property (nonatomic) BOOL dataStoreReady;
 @property (nonatomic, strong) NSMutableDictionary *tempDataStore;
 @property (nonatomic, strong) NSString *dbFileName;
+@property (nonatomic, strong) YapDatabase *database;
+@property (nonatomic, strong) YapDatabaseConnection *readConnection;
+@property (nonatomic, strong) YapDatabaseConnection *writeConnection;
 
 @end
 
@@ -44,8 +42,10 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
 {
     self = [super init];
     if (self) {
-        _collectionsInMemory = [NSMutableArray array];
-        _collectionsInDatabase = [NSMutableArray array];
+        _registeredCollections = [NSMutableArray array];
+        _dataStoreWillUpdateBlocks = [NSMutableDictionary dictionary];
+        _dataStoreDidUpdateBlocks = [NSMutableDictionary dictionary];
+        _dataStoreDidRemoveBlocks = [NSMutableDictionary dictionary];
         _kvoController = [FBKVOController controllerWithObserver:self];
     }
     return self;
@@ -56,46 +56,53 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)registerCollections:(NSArray *)collections
+{
+    _registeredCollections = collections;
+}
+
 - (void)setupDataStore:(NSString*)dbFileName
 {
-    if (_database) {
-        return;
+    if (!dbFileName) {
+        dbFileName = @"tmp";
     }
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    _dbFileName = dbFileName;
-    if (!_dbFileName) {
-        _dbFileName = @"tmp";
-    }
-    _database = [[YapDatabase alloc] initWithPath:[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", _dbFileName]]];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yapDatabaseModified:) name:YapDatabaseModifiedNotification object:_database];
-    _writeConnection = [_database newConnection];
     
-    _readConnection = [_database newConnection];
-    [_readConnection beginLongLivedReadTransaction];
+    if (_dataStoreReady) {
+        if ([dbFileName isEqualToString:_dbFileName]) {
+            return;
+        }
+        else {
+            [self quitDataStore];
+        }
+    }
     
     _tempDataStore = [NSMutableDictionary dictionary];
     
-    _dataStoreWillUpdateBlocks = [NSMutableDictionary dictionary];
-    _dataStoreDidUpdateBlocks = [NSMutableDictionary dictionary];
-    _dataStoreDidRemoveBlocks = [NSMutableDictionary dictionary];
+    _dbFileName = dbFileName;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    _database = [[YapDatabase alloc] initWithPath:[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", _dbFileName]]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yapDatabaseModified:) name:YapDatabaseModifiedNotification object:_database];
+    _readConnection = [_database newConnection];
+    [_readConnection beginLongLivedReadTransaction];
+    _writeConnection = [_database newConnection];
     
     self.dataStoreReady = YES;
 }
 
 - (void)quitDataStore
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    _database = nil;
-    _writeConnection = nil;
-    _readConnection = nil;
+    if (!_dataStoreReady) {
+        return;
+    }
     
     _tempDataStore = nil;
     
-    _dataStoreWillUpdateBlocks = nil;
-    _dataStoreDidUpdateBlocks = nil;
-    _dataStoreDidRemoveBlocks = nil;
+    _dbFileName = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _readConnection = nil;
+    _writeConnection = nil;
+    _database = nil;
     
     self.dataStoreReady = NO;
 }
@@ -103,24 +110,21 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
 - (void)yapDatabaseModified:(NSNotification *)notification
 {
     NSArray *notifications = [_readConnection beginLongLivedReadTransaction];
+    if (!notifications.count) {
+        return;
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"notifications": notifications}];
 }
 
-- (ABSDKDataStoreType)dataStoreTypeForCollection:(NSString*)collection
+- (BOOL)isRegisteredCollections:(NSString*)collection
 {
-    for (NSString *collectionName in _collectionsInMemory) {
+    for (NSString *collectionName in _registeredCollections) {
         if ([collectionName isEqualToString:collection]) {
-            return ABSDKDataStoreInMemory;
+            return YES;
         }
     }
     
-    for (NSString *collectionName in _collectionsInDatabase) {
-        if ([collectionName isEqualToString:collection]) {
-            return ABSDKDataStoreInDatabase;
-        }
-    }
-    
-    return ABSDKDataStoreTypeNone;
+    return NO;
 }
 
 - (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock
@@ -133,15 +137,13 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
     [_database asyncUnregisterExtensionWithName:name completionBlock:nil];
 }
 
-- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection
+- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock
 {
     if (!key.length || !collection.length) {
         return;
     }
-    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
     
-    // modify object before store
-    if (type == ABSDKDataStoreInMemory) {
+    if (![self isRegisteredCollections:collection]) {
         ABSDKDataStoreWillUpdateBlock willUpdateBlock = [_dataStoreWillUpdateBlocks objectForKey:collection];
         if (willUpdateBlock) {
             object = willUpdateBlock(collection, key, object);
@@ -158,8 +160,11 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
         if (didUpdateBlock) {
             didUpdateBlock(collection, key, object);
         }
+        if (completionBlock) {
+            completionBlock();
+        }
     }
-    else if (type == ABSDKDataStoreInDatabase) {
+    else {
         __weak typeof(self) wself = self;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             id oldObject = [transaction objectForKey:key inCollection:collection];
@@ -185,14 +190,16 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
             if (didUpdateBlock) {
                 didUpdateBlock(collection, key, object);
             }
+            if (completionBlock) {
+                completionBlock();
+            }
         }];
     }
 }
 
 - (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection
 {
-    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
-    if (type == ABSDKDataStoreInMemory) {
+    if (![self isRegisteredCollections:collection]) {
         NSMutableDictionary *collectionToRemoveObject = [NSMutableDictionary dictionaryWithDictionary:[_tempDataStore objectForKey:collection]];
         if ([collectionToRemoveObject objectForKey:key]) {
             [collectionToRemoveObject removeObjectForKey:key];
@@ -204,7 +211,7 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
             }
         }
     }
-    else if (type == ABSDKDataStoreInDatabase) {
+    else {
         __weak typeof(self) wself = self;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             if ([transaction objectForKey:key inCollection:collection]) {
@@ -225,13 +232,11 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
 
 - (id)objectForKey:(NSString*)key inCollection:(NSString*)collection
 {
-    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
-    
     __block id result;
-    if (type == ABSDKDataStoreInMemory) {
+    if (![self isRegisteredCollections:collection]) {
         result = [[_tempDataStore objectForKey:collection] objectForKey:key];
     }
-    else if (type == ABSDKDataStoreInDatabase) {
+    else {
         [_readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
             result = [transaction objectForKey:key inCollection:collection];
         }];
@@ -241,13 +246,11 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
 
 - (void)enumerateKeysAndObjectsInCollection:(nullable NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block
 {
-    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
-    
-    if (type == ABSDKDataStoreInMemory) {
+    if (![self isRegisteredCollections:collection]) {
         NSDictionary *collectionDictionary = [_tempDataStore objectForKey:collection];
         [collectionDictionary enumerateKeysAndObjectsUsingBlock:block];
     }
-    else if (type == ABSDKDataStoreInDatabase) {
+    else {
 	[_readConnection asyncReadWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
             [transaction enumerateKeysAndObjectsInCollection:collection usingBlock:block];
         }];
@@ -256,13 +259,11 @@ typedef NS_ENUM(NSInteger, ABSDKDataStoreType) {
 
 - (NSArray*)allKeysInCollection:(NSString*)collection
 {
-    ABSDKDataStoreType type = [self dataStoreTypeForCollection:collection];
-    
     __block id result;
-    if (type == ABSDKDataStoreInMemory) {
+    if (![self isRegisteredCollections:collection]) {
         result = [[_tempDataStore objectForKey:collection] allKeys];
     }
-    else if (type == ABSDKDataStoreInDatabase) {
+    else {
         [_readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
             result = [transaction allKeysInCollection:collection];
         }];

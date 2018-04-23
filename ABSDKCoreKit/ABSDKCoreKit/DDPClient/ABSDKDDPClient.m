@@ -10,7 +10,7 @@
 #import "ObjectiveDDP.h"
 #import "BSONIdGenerator.h"
 #import "ABSDKDataStore.h"
-#import <Reachability.h>
+#import "Reachability.h"
 
 NSString * const ddpVersion = @"1";
 
@@ -306,7 +306,7 @@ NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.tra
         for (id key in message[@"cleared"]) {
             [object removeObjectForKey:key];
         }
-        [[ABSDKDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"]];
+        [[ABSDKDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"] completionBlock:nil];
     }
     else {
         NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
@@ -316,7 +316,7 @@ NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.tra
         for (id key in message[@"cleared"]) {
             [object removeObjectForKey:key];
         }
-        [[ABSDKDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"]];
+        [[ABSDKDataStore sharedInstance] setObject:object forKey:message[@"id"] inCollection:message[@"collection"] completionBlock:nil];
     }
 }
 

@@ -32,11 +32,8 @@
 
 - (void)dataStoreModified:(NSNotification *)notification
 {
-    if ([[ABSDKDataStore sharedInstance].collectionsInDatabase containsObject:_collectionName]) {
+    if ([[ABSDKDataStore sharedInstance].registeredCollections containsObject:_collectionName]) {
         NSArray *notifications = notification.userInfo[@"notifications"];
-        if (!notifications.count) {
-            return;
-        }
         if (_identifier) {
             if ([[ABSDKDataStore sharedInstance] hasChangeForKey:_identifier inCollection:_collectionName inNotifications:notifications]) {
                 NSLog(@"data source updated: %@, %@", _collectionName, _identifier);
@@ -44,11 +41,9 @@
             }
         }
     }
-    else {
-        if ([notification.userInfo[@"collection"] isEqualToString:_collectionName] && [notification.userInfo[@"key"] isEqualToString:_identifier]) {
-            NSLog(@"data source updated: %@, %@", _collectionName, _identifier);
-            self.updated = YES;
-        }
+    else if ([notification.userInfo[@"collection"] isEqualToString:_collectionName] && [notification.userInfo[@"key"] isEqualToString:_identifier]) {
+        NSLog(@"data source updated: %@, %@", _collectionName, _identifier);
+        self.updated = YES;
     }
 }
 
