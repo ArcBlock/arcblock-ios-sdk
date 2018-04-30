@@ -32,7 +32,7 @@
 
 - (void)dataStoreModified:(NSNotification *)notification
 {
-    if ([[ABSDKDataStore sharedInstance].registeredCollections containsObject:_collectionName]) {
+    if ([[ABSDKDataStore sharedInstance] isRegisteredCollections:_collectionName]) {
         NSArray *notifications = notification.userInfo[@"notifications"];
         if (_identifier) {
             if ([[ABSDKDataStore sharedInstance] hasChangeForKey:_identifier inCollection:_collectionName inNotifications:notifications]) {

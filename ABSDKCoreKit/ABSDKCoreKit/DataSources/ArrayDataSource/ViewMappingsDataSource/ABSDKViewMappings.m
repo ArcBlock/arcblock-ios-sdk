@@ -7,6 +7,7 @@
 //
 
 #import "ABSDKViewMappings.h"
+#import "ABSDKDataStore+ViewMappings.h"
 #import "YapDatabase.h"
 #import "YapDatabaseView.h"
 #import "ABSDKDataStore.h"

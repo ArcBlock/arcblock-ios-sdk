@@ -7,7 +7,6 @@
 //
 
 #import "ABSDKViewMappingsDataSource.h"
-#import "ABSDKDataStore+VIewMappings.h"
 
 @interface ABSDKSearchDataSource : ABSDKViewMappingsDataSource
 

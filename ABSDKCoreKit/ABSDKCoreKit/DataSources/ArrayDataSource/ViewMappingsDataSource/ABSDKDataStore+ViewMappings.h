@@ -10,6 +10,9 @@
 
 @interface ABSDKDataStore (ViewMappings)
 
+- (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock;
+- (void)unregisterExtensionWithName:(NSString*)name;
+
 // For view mappings update
 - (BOOL)hasChangesForNotifications:(NSArray *)notifications mappings:(ABSDKViewMappings*)mappings;
 - (id)objectAtIndexPath:(NSIndexPath*)indexPath withMappings:(ABSDKViewMappings*)mappings;

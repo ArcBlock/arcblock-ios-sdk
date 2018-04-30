@@ -8,8 +8,19 @@
 #import "ABSDKDataStore+ViewMappings.h"
 #import "YapDatabaseView.h"
 #import "YapDatabaseSearchResultsView.h"
+#import "ABSDKDataStore+Private.h"
 
 @implementation ABSDKDataStore (ViewMappings)
+
+- (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock
+{
+    [self.database asyncRegisterExtension:extension withName:name completionBlock:completionBlock];
+}
+
+- (void)unregisterExtensionWithName:(NSString*)name
+{
+    [self.database asyncUnregisterExtensionWithName:name completionBlock:nil];
+}
 
 - (BOOL)hasChangesForNotifications:(NSArray *)notifications mappings:(ABSDKViewMappings*)mappings
 {

@@ -278,7 +278,7 @@ NSString * const ABSDKDDPClientTransportErrorDomain = @"boundsj.objectiveddp.tra
         if (!message[@"id"]) {
             return;
         }
-        [[ABSDKDataStore sharedInstance] removeObjectForKey:message[@"id"] inCollection:message[@"collection"]];
+        [[ABSDKDataStore sharedInstance] removeObjectForKey:message[@"id"] inCollection:message[@"collection"] completionBlock:nil];
     }
 }
 

@@ -34,7 +34,9 @@ TODO: Add long description of the pod here.
 
   s.test_spec 'Tests' do |test_spec|
     test_spec.source_files = 'ABSDKCoreKit/ABSDKCoreKitTests/*.{h,m}'
-    # test_spec.dependency 'OCMock' # This dependency will only be linked with your tests.
+    test_spec.dependency 'Specta'
+    test_spec.dependency 'Expecta'
+    test_spec.dependency 'OCMock'
   end
 
   # s.resource_bundles = {

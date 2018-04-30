@@ -6,7 +6,7 @@
 //  Copyright © 2015 Pixomobile. All rights reserved.
 //
 
-#import <YapDatabase/YapDatabase.h>
+#import <Foundation/Foundation.h>
 
 extern NSString *const ABSDKDataStoreModifiedNotification;
 
@@ -19,26 +19,18 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 + (ABSDKDataStore *)sharedInstance;
 
 @property (nonatomic, readonly) BOOL dataStoreReady;
-@property (nonatomic, strong, readonly) YapDatabaseConnection *readConnection;
-@property (nonatomic, strong, readonly) NSArray *registeredCollections;
-
-@property (nonatomic) NSMutableDictionary *dataStoreWillUpdateBlocks; // actions to perform before updating data store
-@property (nonatomic) NSMutableDictionary *dataStoreDidUpdateBlocks; // perform related updates on relational objects in other collection
-@property (nonatomic) NSMutableDictionary *dataStoreDidRemoveBlocks;
 
 // collections not registered will be store only in memory
 - (void)registerCollections:(NSArray *)collections;
+- (BOOL)isRegisteredCollections:(NSString*)collection;
 
 - (void)setupDataStore:(NSString*)dbFileName;
 - (void)quitDataStore;
 
-- (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock;
-- (void)unregisterExtensionWithName:(NSString*)name;
-
 - (NSArray*)allKeysInCollection:(NSString*)collection;
-- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
-- (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection;
 - (id)objectForKey:(NSString*)key inCollection:(NSString*)collection;
+- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
+- (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection completionBlock:(dispatch_block_t)completionBlock;
 - (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block;
 - (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection inNotifications:(NSArray *)notifications;
 

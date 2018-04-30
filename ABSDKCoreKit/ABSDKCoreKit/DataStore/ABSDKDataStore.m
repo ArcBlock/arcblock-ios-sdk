@@ -8,6 +8,8 @@
 
 #import "ABSDKDataStore.h"
 #import "FBKVOController.h"
+#import <YapDatabase/YapDatabase.h>
+#import "ABSDKDataStore+Private.h"
 
 NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNotification";
 
@@ -22,6 +24,10 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
 @property (nonatomic, strong) YapDatabase *database;
 @property (nonatomic, strong) YapDatabaseConnection *readConnection;
 @property (nonatomic, strong) YapDatabaseConnection *writeConnection;
+
+@property (nonatomic) NSMutableDictionary *dataStoreWillUpdateBlocks;
+@property (nonatomic) NSMutableDictionary *dataStoreDidUpdateBlocks;
+@property (nonatomic) NSMutableDictionary *dataStoreDidRemoveBlocks;
 
 @end
 
@@ -54,11 +60,6 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)registerCollections:(NSArray *)collections
-{
-    _registeredCollections = collections;
 }
 
 - (void)setupDataStore:(NSString*)dbFileName
@@ -116,25 +117,22 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"notifications": notifications}];
 }
 
+
+- (void)registerCollections:(NSArray *)collections
+{
+    _registeredCollections = [[NSSet setWithArray:[_registeredCollections arrayByAddingObjectsFromArray:collections]] allObjects];
+}
+
 - (BOOL)isRegisteredCollections:(NSString*)collection
 {
-    for (NSString *collectionName in _registeredCollections) {
-        if ([collectionName isEqualToString:collection]) {
-            return YES;
+    __block BOOL isRegistered = NO;
+    [_registeredCollections enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[NSString class]] && [obj isEqualToString:collection]) {
+            isRegistered = YES;
+            *stop = YES;
         }
-    }
-    
-    return NO;
-}
-
-- (void)registerExtension:(id)extension withName:(NSString*)name completionBlock:(void(^)(BOOL ready))completionBlock
-{
-    [_database asyncRegisterExtension:extension withName:name completionBlock:completionBlock];
-}
-
-- (void)unregisterExtensionWithName:(NSString*)name
-{
-    [_database asyncUnregisterExtensionWithName:name completionBlock:nil];
+    }];
+    return isRegistered;
 }
 
 - (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock
@@ -197,7 +195,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     }
 }
 
-- (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection
+- (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection completionBlock:(dispatch_block_t)completionBlock
 {
     if (![self isRegisteredCollections:collection]) {
         NSMutableDictionary *collectionToRemoveObject = [NSMutableDictionary dictionaryWithDictionary:[_tempDataStore objectForKey:collection]];
@@ -208,6 +206,9 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
             ABSDKDataStoreDidRemoveBlock didRemoveBlock = [_dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
+            }
+            if (completionBlock) {
+                completionBlock();
             }
         }
     }
@@ -225,6 +226,9 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
             ABSDKDataStoreDidRemoveBlock didRemoveBlock = [wself.dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
+            }
+            if (completionBlock) {
+                completionBlock();
             }
         }];
     }
