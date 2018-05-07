@@ -19,20 +19,42 @@ class ABSDKDataStoreSpec: QuickSpec {
             let key2 = "key2"
             let value1 = "value1"
             let value2 = "value2"
+            var observers = [NSKeyValueObservation]()
             
             beforeSuite {
                 datastore = ABSDKDataStore.sharedInstance()
                 datastore.registerCollections([registeredCollection])
             }
             
-            describe("setup", {
-                it("data store should be ready") {
+            describe("data store lifecycle", {
+                var dataStoreReadyChanged:Bool?
+                
+                beforeEach {
+                    observers.append(datastore.observe(\.dataStoreReady, changeHandler: { (datastore, changed) in
+                        dataStoreReadyChanged = true
+                    }))
+                }
+                
+                it("setup") {
+                    dataStoreReadyChanged = false
                     datastore.setupDataStore(nil)
                     expect(datastore.dataStoreReady).to(beTrue())
+                    expect(dataStoreReadyChanged).toEventually(beTrue())
+                }
+                
+                it("quit") {
+                    dataStoreReadyChanged = false
+                    datastore.quitDataStore()
+                    expect(datastore.dataStoreReady).to(beFalse())
+                    expect(dataStoreReadyChanged).toEventually(beTrue())
                 }
             })
             
-            describe("create, update and delete with registered collection", {
+            describe("setup", {
+                
+            })
+            
+            describe("CRUD with registered collection", {
                 var hasChange:Bool?
                 beforeEach {
                     datastore.setupDataStore(nil)
@@ -66,7 +88,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                 })
             })
             
-            describe("create, update and delete with nonregistered collection", {
+            describe("CRUD with nonregistered collection", {
                 var hasChange:Bool?
                 beforeEach {
                     datastore.setupDataStore(nil)
@@ -98,13 +120,6 @@ class ABSDKDataStoreSpec: QuickSpec {
                     expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).toEventually(beNil())
                     expect(hasChange).toEventually(beTrue())
                 })
-            })
-            
-            describe("quit", {
-                it("data store should be not ready") {
-                    datastore.quitDataStore()
-                    expect(datastore.dataStoreReady).to(beFalse())
-                }
             })
             
             afterSuite {
