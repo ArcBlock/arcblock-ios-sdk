@@ -2,8 +2,7 @@
 //  ABSDKWalletKit.h
 //  ABSDKWalletKit
 //
-//  Created by Jonathan Lu on 17/4/2018.
-//  Copyright © 2018 ArcBlock. All rights reserved.
+//  Created by Jonathan Lu on 7/5/2018.
 //
 
 #import <UIKit/UIKit.h>

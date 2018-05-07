@@ -30,7 +30,10 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'ABSDKMessagingKit/ABSDKMessagingKit/**/*'
+  s.source_files = 'ABSDKMessagingKit/**/*.{h,m}'
+
+  s.swift_version = '4.0'
+  s.pod_target_xcconfig = {'DEFINES_MODULE' => 'YES'}
 
   # s.resource_bundles = {
   #   'ABSDKMessagingKit' => ['ABSDKMessagingKit/Assets/*.png']
