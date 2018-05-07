@@ -11,6 +11,7 @@
 #import "BSONIdGenerator.h"
 #import "ABSDKDataStore.h"
 #import "Reachability.h"
+#import <UIKit/UIKit.h>
 
 NSString * const ddpVersion = @"1";
 

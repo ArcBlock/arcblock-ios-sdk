@@ -31,15 +31,9 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '10.0'
   s.pod_target_xcconfig = {'DEFINES_MODULE' => 'YES'}
 
-  s.source_files = 'ABSDKCoreKit/ABSDKCoreKit/**/*'
-  
-  s.swift_version = '4.0'
+  s.source_files = 'ABSDKCoreKit/**/*.{h,m}'
 
-  s.test_spec 'Tests' do |test_spec|
-    test_spec.source_files = 'ABSDKCoreKit/ABSDKCoreKitTests/*.swift'
-    test_spec.dependency 'Quick'
-    test_spec.dependency 'Nimble'
-  end
+  s.swift_version = '4.0'
 
   # s.resource_bundles = {
   #   'ABSDKCoreKit' => ['ABSDKCoreKit/Assets/*.png']
