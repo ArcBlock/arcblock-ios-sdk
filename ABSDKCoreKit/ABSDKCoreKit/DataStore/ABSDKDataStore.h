@@ -22,7 +22,6 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 
 // collections not registered will be store only in memory
 - (void)registerCollections:(NSArray *)collections;
-- (BOOL)isRegisteredCollections:(NSString*)collection;
 
 - (void)setupDataStore:(NSString*)dbFileName;
 - (void)quitDataStore;
@@ -32,6 +31,6 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 - (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
 - (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection completionBlock:(dispatch_block_t)completionBlock;
 - (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block;
-- (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection inNotifications:(NSArray *)notifications;
+- (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection notification:(NSNotification *)notification;
 
 @end
