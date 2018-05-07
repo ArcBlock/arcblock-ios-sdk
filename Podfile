@@ -16,6 +16,21 @@ target 'ABSDKCoreKitTests' do
     pod "Nimble"
 end
 
+target 'ABSDKAccountKitTests' do
+    pod "Quick"
+    pod "Nimble"
+end
+
+target 'ABSDKMessagingKitTests' do
+    pod "Quick"
+    pod "Nimble"
+end
+
+target 'ABSDKWalletKitTests' do
+    pod "Quick"
+    pod "Nimble"
+end
+
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|

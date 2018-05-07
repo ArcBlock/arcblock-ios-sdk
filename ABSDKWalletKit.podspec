@@ -30,7 +30,10 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'ABSDKWalletKit/ABSDKWalletKit/**/*'
+  s.source_files = 'ABSDKWalletKit/**/*.{h,m}'
+
+  s.swift_version = '4.0'
+  s.pod_target_xcconfig = {'DEFINES_MODULE' => 'YES'}
 
   # s.resource_bundles = {
   #   'ABSDKWalletKit' => ['ABSDKWalletKit/Assets/*.png']
