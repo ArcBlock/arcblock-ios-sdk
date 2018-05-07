@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'ABSDKCoreKit'
+  s.name             = 'ArcBlockSDK'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of ABSDKCoreKit.'
+  s.summary          = 'Used to integrate iOS apps with ArcBlock Platform.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,30 +21,41 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/jonathanlu813/ABSDKCoreKit'
+  s.homepage         = 'https://github.com/arcblock/arcblock-ios-sdk'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'jonathanlu813' => 'jonathanlu813@gmail.com' }
-  s.source           = { :git => 'https://github.com/jonathanlu813/ABSDKCoreKit.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/ArcBlock/arcblock-ios-sdk.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'ABSDKCoreKit/**/*.{h,m}'
-
   s.swift_version = '4.0'
   s.pod_target_xcconfig = {'DEFINES_MODULE' => 'YES'}
 
-  # s.resource_bundles = {
-  #   'ABSDKCoreKit' => ['ABSDKCoreKit/Assets/*.png']
-  # }
+  s.subspec 'CoreKit' do |sc|
+    sc.source_files = 'ABSDKCoreKit/**/*.{h,m}'
+    sc.dependency "SocketRocket"
+    sc.dependency "YapDatabase"
+    sc.dependency "AFNetworking"
+    sc.dependency "KVOController"
+    sc.dependency "Reachability"
+    sc.dependency "SDWebImage"
+  end
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency "SocketRocket"
-  s.dependency "YapDatabase"
-  s.dependency "AFNetworking"
-  s.dependency "KVOController"
-  s.dependency "Reachability"
-  s.dependency "SDWebImage"
+  s.subspec 'AccountKit' do |sa|
+    sa.source_files = 'ABSDKAccountKit/**/*.{h,m}'
+    sa.dependency 'ArcBlockSDK/CoreKit'
+  end
+
+  s.subspec 'MessagingKit' do |sm|
+    sm.source_files = 'ABSDKMessagingKit/**/*.{h,m}'
+    sm.dependency 'ArcBlockSDK/CoreKit'
+  end
+
+  s.subspec 'WalletKit' do |sw|
+    sw.source_files = 'ABSDKWalletKit/**/*.{h,m}'
+    sw.dependency 'ArcBlockSDK/CoreKit'
+  end
+
 end
