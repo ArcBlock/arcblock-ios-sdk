@@ -32,7 +32,6 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'ABSDKCoreKit/ABSDKCoreKit/**/*'
   
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '4.0'
 
   s.test_spec 'Tests' do |test_spec|
