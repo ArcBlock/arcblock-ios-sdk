@@ -7,7 +7,6 @@
 
 import Quick
 import Nimble
-import ABSDKCoreKit
 
 class ABSDKDataStoreSpec: QuickSpec {
     override func spec() {

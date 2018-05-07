@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ABSDKCoreKit.xcodeproj">
+      location = "self:ArcBlockSDK.xcodeproj">
    </FileRef>
 </Workspace>
