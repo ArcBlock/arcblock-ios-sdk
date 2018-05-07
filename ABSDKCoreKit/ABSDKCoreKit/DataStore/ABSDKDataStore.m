@@ -7,7 +7,6 @@
 //
 
 #import "ABSDKDataStore.h"
-#import "FBKVOController.h"
 #import <YapDatabase/YapDatabase.h>
 #import "ABSDKDataStore+Private.h"
 
@@ -15,7 +14,6 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
 
 @interface ABSDKDataStore ()
 
-@property (nonatomic, strong) FBKVOController *kvoController;
 @property (nonatomic, strong) NSArray *registeredCollections;
 
 @property (nonatomic) BOOL dataStoreReady;
@@ -52,7 +50,6 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         _dataStoreWillUpdateBlocks = [NSMutableDictionary dictionary];
         _dataStoreDidUpdateBlocks = [NSMutableDictionary dictionary];
         _dataStoreDidRemoveBlocks = [NSMutableDictionary dictionary];
-        _kvoController = [FBKVOController controllerWithObserver:self];
     }
     return self;
 }
@@ -70,6 +67,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     
     if (_dataStoreReady) {
         if ([dbFileName isEqualToString:_dbFileName]) {
+            self.dataStoreReady = YES;
             return;
         }
         else {
@@ -94,6 +92,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
 - (void)quitDataStore
 {
     if (!_dataStoreReady) {
+        self.dataStoreReady = NO;
         return;
     }
     
@@ -152,7 +151,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         }
         [collectionDict setObject:object forKey:key];
         [_tempDataStore setObject:collectionDict forKey:collection];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"collection": collection, @"key":key, @"object": object}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key, @"object": object}]}];
         // perform post-update actions in data store level
         ABSDKDataStoreDidUpdateBlock didUpdateBlock = [_dataStoreDidUpdateBlocks objectForKey:collection];
         if (didUpdateBlock) {
@@ -202,7 +201,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         if ([collectionToRemoveObject objectForKey:key]) {
             [collectionToRemoveObject removeObjectForKey:key];
             [_tempDataStore setObject:collectionToRemoveObject forKey:collection];
-            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"collection": collection, @"key":key}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key}]}];
             ABSDKDataStoreDidRemoveBlock didRemoveBlock = [_dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
@@ -276,9 +275,23 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     return result;
 }
 
-- (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection inNotifications:(NSArray *)notifications
+- (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection notification:(NSNotification *)notification
 {
-    return [_readConnection hasChangeForKey:key inCollection:collection inNotifications:notifications];
+    NSArray *notifications = notification.userInfo[@"notifications"];
+    BOOL inMemory = [notification.userInfo[@"inMemory"] boolValue];
+    if ([self isRegisteredCollections:collection]) {
+        return !inMemory && [_readConnection hasChangeForKey:key inCollection:collection inNotifications:notifications];
+    }
+    else {
+        if (inMemory) {
+            for (NSDictionary *notification in notifications) {
+                if ([notification[@"collection"] isEqualToString:collection] && [notification[@"key"] isEqualToString:key]) {
+                    return YES;
+                }
+            }
+        }
+        return NO;
+    }
 }
 
 @end

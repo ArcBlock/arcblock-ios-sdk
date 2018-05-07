@@ -29,14 +29,16 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
+  s.pod_target_xcconfig = {'DEFINES_MODULE' => 'YES'}
 
   s.source_files = 'ABSDKCoreKit/ABSDKCoreKit/**/*'
+  
+  s.swift_version = '4.0'
 
   s.test_spec 'Tests' do |test_spec|
-    test_spec.source_files = 'ABSDKCoreKit/ABSDKCoreKitTests/*.{h,m}'
-    test_spec.dependency 'Specta'
-    test_spec.dependency 'Expecta'
-    test_spec.dependency 'OCMock'
+    test_spec.source_files = 'ABSDKCoreKit/ABSDKCoreKitTests/*.swift'
+    test_spec.dependency 'Quick'
+    test_spec.dependency 'Nimble'
   end
 
   # s.resource_bundles = {
