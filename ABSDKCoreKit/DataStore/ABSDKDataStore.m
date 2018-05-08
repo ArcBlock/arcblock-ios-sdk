@@ -147,6 +147,9 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         }
         NSMutableDictionary *collectionDict = [NSMutableDictionary dictionaryWithDictionary:_tempDataStore[collection]];
         if ([[collectionDict objectForKey:key] isEqual:object]) {
+            if (completionBlock) {
+                completionBlock();
+            }
             return;
         }
         [collectionDict setObject:object forKey:key];
