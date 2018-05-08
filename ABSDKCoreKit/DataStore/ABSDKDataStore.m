@@ -80,6 +80,9 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     _dbFileName = dbFileName;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:documentDirectory]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     _database = [[YapDatabase alloc] initWithPath:[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", _dbFileName]]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yapDatabaseModified:) name:YapDatabaseModifiedNotification object:_database];
     _readConnection = [_database newConnection];
