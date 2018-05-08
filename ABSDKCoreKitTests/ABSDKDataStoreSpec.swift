@@ -39,26 +39,43 @@ class ABSDKDataStoreSpec: QuickSpec {
             }
             
             it("create", closure: {
-                datastore.setObject(value1, forKey: key1, inCollection: registeredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).toEventually(equal(value1))
-                expect(hasChange).toEventually(beTrue())
+                waitUntil(action: { (done) in
+                    datastore.setObject(value1, forKey: key1, inCollection: registeredCollection, completionBlock: {
+                        expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).to(equal(value1))
+                        expect(hasChange).to(beTrue())
+                        done()
+                    })
+                })
             })
             
             it("update with same value", closure: {
-                datastore.setObject((datastore.object(forKey: key1, inCollection: registeredCollection) as? String), forKey: key1, inCollection: registeredCollection, completionBlock: nil)
-                expect(hasChange).toEventually(beFalse())
+                waitUntil(action: { (done) in
+                    datastore.setObject((datastore.object(forKey: key1, inCollection: registeredCollection) as? String), forKey: key1, inCollection: registeredCollection, completionBlock: {
+                        expect(hasChange).to(beFalse())
+                        done()
+                    })
+                })
+                
             })
             
             it("update with different value", closure: {
-                datastore.setObject(value2, forKey: key1, inCollection: registeredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).toEventually(equal(value2))
-                expect(hasChange).toEventually(beTrue())
+                waitUntil(action: { (done) in
+                    datastore.setObject(value2, forKey: key1, inCollection: registeredCollection, completionBlock: {
+                        expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).to(equal(value2))
+                        expect(hasChange).to(beTrue())
+                        done()
+                    })
+                })
             })
             
             it("remove", closure: {
-                datastore.removeObject(forKey: key1, inCollection: registeredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).toEventually(beNil())
-                expect(hasChange).toEventually(beTrue())
+                waitUntil(action: { (done) in
+                    datastore.removeObject(forKey: key1, inCollection: registeredCollection, completionBlock: {
+                        expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).to(beNil())
+                        expect(hasChange).to(beTrue())
+                        done()
+                    })
+                })
             })
         })
         
@@ -76,26 +93,42 @@ class ABSDKDataStoreSpec: QuickSpec {
             }
             
             it("create") {
-                datastore.setObject(value2, forKey: key2, inCollection: nonregisteredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).toEventually(equal(value2))
-                expect(hasChange).toEventually(beTrue())
+                waitUntil(action: { (done) in
+                    datastore.setObject(value2, forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
+                        expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).to(equal(value2))
+                        expect(hasChange).to(beTrue())
+                        done()
+                    })
+                })
             }
             
             it("update with same value", closure: {
-                datastore.setObject((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String), forKey: key2, inCollection: nonregisteredCollection, completionBlock: nil)
-                expect(hasChange).toEventually(beFalse())
+                waitUntil(action: { (done) in
+                    datastore.setObject((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String), forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
+                        expect(hasChange).to(beFalse())
+                        done()
+                    })
+                })
             })
             
             it("update with different value", closure: {
-                datastore.setObject(value1, forKey: key2, inCollection: nonregisteredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).toEventually(equal(value1))
-                expect(hasChange).toEventually(beTrue())
+                waitUntil(action: { (done) in
+                    datastore.setObject(value1, forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
+                        expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).to(equal(value1))
+                        expect(hasChange).to(beTrue())
+                        done()
+                    })
+                })
             })
             
             it("remove", closure: {
-                datastore.removeObject(forKey: key2, inCollection: nonregisteredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).toEventually(beNil())
-                expect(hasChange).toEventually(beTrue())
+                waitUntil(action: { (done) in
+                    datastore.removeObject(forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
+                        expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).to(beNil())
+                        expect(hasChange).to(beTrue())
+                        done()
+                    })
+                })
             })
         })
         
