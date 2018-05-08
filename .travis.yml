@@ -8,6 +8,7 @@ cache:
 before_install:
   - gem install cocoapods
   - gem install xcpretty -N
+  - pod repo update
   - brew install swiftlint || true
 script:
   - set -o pipefail
