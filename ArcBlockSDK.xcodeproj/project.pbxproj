@@ -555,6 +555,7 @@
 				277E6B7220A0DE340054707E /* Frameworks */,
 				277E6B7320A0DE340054707E /* Headers */,
 				277E6B7420A0DE340054707E /* Resources */,
+				2712815420A2426B00530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -574,6 +575,7 @@
 				277E6B7B20A0DE340054707E /* Frameworks */,
 				277E6B7C20A0DE340054707E /* Resources */,
 				76A2C4D662FE89DAA7C8476A /* [CP] Embed Pods Frameworks */,
+				2712815520A2428900530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -593,6 +595,7 @@
 				278EF36520A0F54D00C99C1F /* Frameworks */,
 				278EF36620A0F54D00C99C1F /* Headers */,
 				278EF36720A0F54D00C99C1F /* Resources */,
+				2712815620A2428F00530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -612,6 +615,7 @@
 				278EF36E20A0F54D00C99C1F /* Frameworks */,
 				278EF36F20A0F54D00C99C1F /* Resources */,
 				48721F94260C9234D40D4293 /* [CP] Embed Pods Frameworks */,
+				2712815720A2429700530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -631,6 +635,7 @@
 				278EF38120A0F5AC00C99C1F /* Frameworks */,
 				278EF38220A0F5AC00C99C1F /* Headers */,
 				278EF38320A0F5AC00C99C1F /* Resources */,
+				2712815820A2429D00530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -650,6 +655,7 @@
 				278EF38A20A0F5AC00C99C1F /* Frameworks */,
 				278EF38B20A0F5AC00C99C1F /* Resources */,
 				06729BF5A7E78B5EF8EF80A9 /* [CP] Embed Pods Frameworks */,
+				2712815920A242A400530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -669,6 +675,7 @@
 				278EF39D20A0F5C100C99C1F /* Frameworks */,
 				278EF39E20A0F5C100C99C1F /* Headers */,
 				278EF39F20A0F5C100C99C1F /* Resources */,
+				2712815A20A242AA00530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -688,6 +695,7 @@
 				278EF3A620A0F5C200C99C1F /* Frameworks */,
 				278EF3A720A0F5C200C99C1F /* Resources */,
 				B2FBC64EFE160C3155FA0606 /* [CP] Embed Pods Frameworks */,
+				2712815B20A242B000530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -876,6 +884,110 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		2712815420A2426B00530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		2712815520A2428900530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		2712815620A2428F00530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		2712815720A2429700530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		2712815820A2429D00530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		2712815920A242A400530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		2712815A20A242AA00530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		2712815B20A242B000530FB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		48721F94260C9234D40D4293 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

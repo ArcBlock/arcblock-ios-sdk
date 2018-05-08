@@ -10,7 +10,7 @@ import Nimble
 
 class ABSDKDataStoreSpec: QuickSpec {
     override func spec() {
-        var datastore : ABSDKDataStore!
+        var datastore: ABSDKDataStore!
         let registeredCollection = "registeredCollection"
         let nonregisteredCollection = "nonregisteredCollection"
         let key1 = "key1"
@@ -18,26 +18,26 @@ class ABSDKDataStoreSpec: QuickSpec {
         let value1 = "value1"
         let value2 = "value2"
         var observers = [NSKeyValueObservation]()
-        
+
         beforeSuite {
             datastore = ABSDKDataStore.sharedInstance()
             datastore.registerCollections([registeredCollection])
-            datastore.setupDataStore(nil);
+            datastore.setupDataStore(nil)
         }
-        
+
         describe("CRUD with registered collection", {
-            var hasChange:Bool?
-            
+            var hasChange: Bool?
+
             beforeSuite {
                 NotificationCenter.default.addObserver(forName: Notification.Name.ABSDKDataStoreModified, object: nil, queue: nil, using: { (notification) in
                     hasChange = datastore.hasChange(forKey: key1, inCollection: registeredCollection, notification: notification)
                 })
             }
-            
+
             beforeEach {
                 hasChange = false
             }
-            
+
             it("create", closure: {
                 waitUntil(action: { (done) in
                     datastore.setObject(value1, forKey: key1, inCollection: registeredCollection, completionBlock: {
@@ -47,7 +47,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                     })
                 })
             })
-            
+
             it("update with same value", closure: {
                 waitUntil(action: { (done) in
                     datastore.setObject((datastore.object(forKey: key1, inCollection: registeredCollection) as? String), forKey: key1, inCollection: registeredCollection, completionBlock: {
@@ -55,9 +55,9 @@ class ABSDKDataStoreSpec: QuickSpec {
                         done()
                     })
                 })
-                
+
             })
-            
+
             it("update with different value", closure: {
                 waitUntil(action: { (done) in
                     datastore.setObject(value2, forKey: key1, inCollection: registeredCollection, completionBlock: {
@@ -67,7 +67,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                     })
                 })
             })
-            
+
             it("remove", closure: {
                 waitUntil(action: { (done) in
                     datastore.removeObject(forKey: key1, inCollection: registeredCollection, completionBlock: {
@@ -78,20 +78,20 @@ class ABSDKDataStoreSpec: QuickSpec {
                 })
             })
         })
-        
+
         describe("CRUD with nonregistered collection", {
-            var hasChange:Bool?
-            
+            var hasChange: Bool?
+
             beforeSuite {
                 NotificationCenter.default.addObserver(forName: Notification.Name.ABSDKDataStoreModified, object: nil, queue: nil, using: { (notification) in
                     hasChange = datastore.hasChange(forKey: key2, inCollection: nonregisteredCollection, notification: notification)
                 })
             }
-            
+
             beforeEach {
                 hasChange = false
             }
-            
+
             it("create") {
                 waitUntil(action: { (done) in
                     datastore.setObject(value2, forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
@@ -101,7 +101,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                     })
                 })
             }
-            
+
             it("update with same value", closure: {
                 waitUntil(action: { (done) in
                     datastore.setObject((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String), forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
@@ -110,7 +110,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                     })
                 })
             })
-            
+
             it("update with different value", closure: {
                 waitUntil(action: { (done) in
                     datastore.setObject(value1, forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
@@ -120,7 +120,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                     })
                 })
             })
-            
+
             it("remove", closure: {
                 waitUntil(action: { (done) in
                     datastore.removeObject(forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
@@ -131,16 +131,16 @@ class ABSDKDataStoreSpec: QuickSpec {
                 })
             })
         })
-        
+
         describe("lifecycle", {
-            var dataStoreReadyChanged:Bool?
+            var dataStoreReadyChanged: Bool?
 
             beforeSuite {
-                observers.append(datastore.observe(\.dataStoreReady, changeHandler: { (datastore, changed) in
+                observers.append(datastore.observe(\.dataStoreReady, changeHandler: { (_, _) in
                     dataStoreReadyChanged = true
                 }))
             }
-            
+
             beforeEach {
                 dataStoreReadyChanged = false
             }
@@ -157,7 +157,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                 expect(dataStoreReadyChanged).toEventually(beTrue())
             }
         })
-        
+
         afterSuite {
             datastore.quitDataStore()
             datastore = nil

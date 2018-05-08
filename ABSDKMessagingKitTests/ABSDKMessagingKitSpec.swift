@@ -10,6 +10,6 @@ import Nimble
 
 class ABSDKMessagingKitSpec: QuickSpec {
     override func spec() {
-        
+
     }
 }
