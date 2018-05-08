@@ -19,8 +19,6 @@ class ABSDKDataStoreSpec: QuickSpec {
         let value2 = "value2"
         var observers = [NSKeyValueObservation]()
         
-        Nimble.AsyncDefaults.Timeout = 10
-        
         beforeSuite {
             datastore = ABSDKDataStore.sharedInstance()
             datastore.registerCollections([registeredCollection])
