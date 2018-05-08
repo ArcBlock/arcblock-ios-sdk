@@ -2,15 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ABSDKWalletKit/ABSDKWalletKit.xcodeproj">
+      location = "group:ArcBlockSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ABSDKMessagingKit/ABSDKMessagingKit.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:ABSDKCoreKit/ABSDKCoreKit.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:ABSDKAccountKit/ABSDKAccountKit.xcodeproj">
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
