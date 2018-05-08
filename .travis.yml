@@ -8,13 +8,11 @@ cache:
 before_install:
   - gem install cocoapods
   - gem install xcpretty -N
-  - pod repo update
-  - brew update
   - brew install swiftlint || true
 script:
   - set -o pipefail
   - pod install
-  - xcodebuild -scheme ABSDKCoreKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator11.3 -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
+  - xcodebuild -scheme ABSDKCoreKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator11.3 -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test
   # - xcodebuild -scheme ABSDKAccountKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
   # - xcodebuild -scheme ABSDKMessagingKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
   # - xcodebuild -scheme ABSDKWalletKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c

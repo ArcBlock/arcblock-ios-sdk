@@ -178,6 +178,8 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
                 objectToUpdate = object;
             }
             
+            NSLog(@"setObject: %@, %@, %@, %@", key, collection, object, objectToUpdate);
+            
             if ([objectToUpdate isEqual:oldObject]) {
                 return;
             }
@@ -186,6 +188,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
             [transaction setObject:objectToUpdate forKey:key inCollection:collection];
         } completionBlock:^{
             // perform post-update actions in data store level
+            NSLog(@"complete set object");
             ABSDKDataStoreDidUpdateBlock didUpdateBlock = [wself.dataStoreDidUpdateBlocks objectForKey:collection];
             if (didUpdateBlock) {
                 didUpdateBlock(collection, key, object);
