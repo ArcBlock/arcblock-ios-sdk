@@ -5,8 +5,9 @@ before_install:
   - rvm install ruby-2.2.2
   - gem install cocoapods
   - gem install xcpretty -N
+  - pod repo update
 script:
-  - pod install --repo-update
+  - pod install
   - xcodebuild -scheme ABSDKCoreKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
   - xcodebuild -scheme ABSDKAccountKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
   - xcodebuild -scheme ABSDKMessagingKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
