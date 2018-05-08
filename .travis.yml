@@ -7,6 +7,7 @@ before_install:
   - gem install xcpretty -N
   - pod repo update
 script:
+  - set -o pipefail
   - pod install
   - xcodebuild -scheme ABSDKCoreKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
   # - xcodebuild -scheme ABSDKAccountKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
