@@ -5,6 +5,9 @@ cache:
   directories:
     - /home/travis/.rvm/
     - $HOME/Library/Caches/Homebrew
+branches:
+  only:
+  - master
 before_install:
   - gem install cocoapods
   - gem install xcpretty -N
