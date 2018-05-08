@@ -1,11 +1,12 @@
 language: swift
 osx_image: xcode9.3
+cache: cocoapods
 before_install:
   - rvm install ruby-2.2.2
   - gem install cocoapods
   - gem install xcpretty -N
 script:
-  - pod install
+  - pod install --repo-update
   - xcodebuild -scheme ABSDKCoreKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
   - xcodebuild -scheme ABSDKAccountKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
   - xcodebuild -scheme ABSDKMessagingKit -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' build test | xcpretty -c
