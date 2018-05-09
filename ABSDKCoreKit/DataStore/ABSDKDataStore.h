@@ -31,11 +31,12 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 - (void)setupDataStore:(NSString*)dbFileName;
 - (void)quitDataStore;
 
-- (NSArray*)allKeysInCollection:(NSString*)collection;
 - (id)objectForKey:(NSString*)key inCollection:(NSString*)collection;
 - (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
 - (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection completionBlock:(dispatch_block_t)completionBlock;
-- (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block;
 - (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection notification:(NSNotification *)notification;
+
+- (NSArray*)allKeysInCollection:(NSString*)collection;
+- (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block;
 
 @end
