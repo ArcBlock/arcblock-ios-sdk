@@ -197,8 +197,6 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
                 objectToUpdate = object;
             }
             
-            NSLog(@"setObject: %@, %@, %@, %@", key, collection, object, objectToUpdate);
-            
             if ([objectToUpdate isEqual:oldObject]) {
                 return;
             }

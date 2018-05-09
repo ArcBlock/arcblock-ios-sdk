@@ -11,187 +11,262 @@ import Quick
 import Nimble
 
 class ABSDKDataStoreSpec: QuickSpec {
+    enum Collection: String {
+        case registered, temporary
+    }
+
     override func spec() {
         var datastore: ABSDKDataStore!
-        let registeredCollection = "registeredCollection"
-        let nonregisteredCollection = "nonregisteredCollection"
-        let key1 = "key1"
-        let key2 = "key2"
-        let value1 = "value1"
-        let value2 = "value2"
-        var observers = [NSKeyValueObservation]()
+        let key = "key"
+        let initialValue = "initialValue"
+        let alternativeValue = "alternativeValue"
 
         beforeSuite {
             datastore = ABSDKDataStore.sharedInstance()
-            datastore.registerCollections([registeredCollection])
+            datastore.registerCollections([Collection.registered.rawValue])
             datastore.setupDataStore(nil)
         }
 
-        describe("CRUD with registered collection", {
-            var hasChange: Bool?
-            var willUpdateCalled: Bool?
-            var didUpdateCalled: Bool?
-            var didRemoveCalled: Bool?
+        describe("CRUD", {
+            struct Flags {
+                var valueChanged: Bool?
+                var willUpdateBlockCalled: Bool?
+                var didUpdateBlockCalled: Bool?
+                var didRemovedBlockCalled: Bool?
+
+                mutating func reset() {
+                    valueChanged = false
+                    willUpdateBlockCalled = false
+                    didUpdateBlockCalled = false
+                    didRemovedBlockCalled = false
+                }
+            }
+
+            var flagsForRegisteredCollection = Flags()
+            var flagsForTemporaryCollection = Flags()
+            var observers = [NSObjectProtocol]()
 
             beforeSuite {
-                NotificationCenter.default.addObserver(forName: Notification.Name.ABSDKDataStoreModified, object: nil, queue: nil, using: { (notification) in
-                    hasChange = datastore.hasChange(forKey: key1, inCollection: registeredCollection, notification: notification)
+                // observe data store modified event
+                var notificationObserver = NotificationCenter.default.addObserver(
+                                    forName: Notification.Name.ABSDKDataStoreModified,
+                                    object: nil,
+                                    queue: nil,
+                                    using: { (notification) in
+                                        flagsForRegisteredCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.registered.rawValue, notification: notification)
+                                })
+                observers.append(notificationObserver)
+                notificationObserver = NotificationCenter.default.addObserver(
+                    forName: Notification.Name.ABSDKDataStoreModified,
+                    object: nil,
+                    queue: nil,
+                    using: { (notification) in
+                        flagsForTemporaryCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.temporary.rawValue, notification: notification)
                 })
+                observers.append(notificationObserver)
 
-                datastore?.setDataStoreWillUpdateBlockForCollection(registeredCollection, block: { (_, _, object) -> Any? in
-                    willUpdateCalled = true
-                    return object
-                })
+                // add will update hooks
+                datastore.setDataStoreWillUpdateBlockForCollection(
+                    Collection.registered.rawValue,
+                    block: { (_, _, object) -> Any? in
+                        flagsForRegisteredCollection.willUpdateBlockCalled = true
+                        return object
+                    }
+                )
 
-                datastore.setDataStoreDidUpdateBlockForCollection(registeredCollection, block: { (_, _, _) in
-                    didUpdateCalled = true
-                })
+                datastore.setDataStoreWillUpdateBlockForCollection(
+                    Collection.temporary.rawValue,
+                    block: { (_, _, object) -> Any? in
+                        flagsForTemporaryCollection.willUpdateBlockCalled = true
+                        return object
+                    }
+                )
 
-                datastore.setDataStoreDidRemoveBlockForCollection(registeredCollection, block: { (_, _) in
-                    didRemoveCalled = true
-                })
+                // add did update hooks
+                datastore.setDataStoreDidUpdateBlockForCollection(
+                    Collection.registered.rawValue,
+                    block: { (_, _, _) in
+                        flagsForRegisteredCollection.didUpdateBlockCalled = true
+                    }
+                )
+
+                datastore.setDataStoreDidUpdateBlockForCollection(
+                    Collection.temporary.rawValue,
+                    block: { (_, _, _) in
+                        flagsForTemporaryCollection.didUpdateBlockCalled = true
+                    }
+                )
+
+                // add did remove hooks
+                datastore.setDataStoreDidRemoveBlockForCollection(
+                    Collection.registered.rawValue,
+                    block: { (_, _) in
+                        flagsForRegisteredCollection.didRemovedBlockCalled = true
+                    }
+                )
+
+                datastore.setDataStoreDidRemoveBlockForCollection(
+                    Collection.temporary.rawValue,
+                    block: { (_, _) in
+                        flagsForTemporaryCollection.didRemovedBlockCalled = true
+                    }
+                )
             }
 
             beforeEach {
-                hasChange = false
+                flagsForRegisteredCollection.reset()
+                flagsForTemporaryCollection.reset()
             }
 
-            it("create", closure: {
-                willUpdateCalled = false
-                didUpdateCalled = false
-                datastore.setObject(value1, forKey: key1, inCollection: registeredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).toEventually(equal(value1))
-                expect(hasChange).toEventually(beTrue())
-                expect(willUpdateCalled).toEventually(beTrue())
-                expect(didUpdateCalled).toEventually(beTrue())
-            })
+            describe("create", {
+                context("in registered collection", {
+                    beforeEach {
+                        datastore.setObject(initialValue, forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
+                    }
 
-            it("update with same value", closure: {
-                willUpdateCalled = false
-                didUpdateCalled = false
-                let oldValue = (datastore.object(forKey: key1, inCollection: registeredCollection) as? String)
-                datastore.setObject(oldValue, forKey: key1, inCollection: registeredCollection, completionBlock: nil)
-                expect(hasChange).toEventually(beFalse())
-                expect(willUpdateCalled).toEventually(beTrue())
-                expect(didUpdateCalled).toEventually(beFalse())
-
-            })
-
-            it("update with different value", closure: {
-                willUpdateCalled = false
-                didUpdateCalled = false
-                datastore.setObject(value2, forKey: key1, inCollection: registeredCollection, completionBlock:nil)
-                expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).toEventually(equal(value2))
-                expect(hasChange).toEventually(beTrue())
-                expect(willUpdateCalled).toEventually(beTrue())
-                expect(didUpdateCalled).toEventually(beTrue())
-            })
-
-            it("remove", closure: {
-                didRemoveCalled = false
-                datastore.removeObject(forKey: key1, inCollection: registeredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key1, inCollection: registeredCollection) as? String)).toEventually(beNil())
-                expect(hasChange).toEventually(beTrue())
-                expect(didRemoveCalled).toEventually(beTrue())
-            })
-        })
-
-        describe("CRUD with nonregistered collection", {
-            var hasChange: Bool?
-            var willUpdateCalled: Bool?
-            var didUpdateCalled: Bool?
-            var didRemoveCalled: Bool?
-
-            beforeSuite {
-                NotificationCenter.default.addObserver(forName: Notification.Name.ABSDKDataStoreModified, object: nil, queue: nil, using: { (notification) in
-                    hasChange = datastore.hasChange(forKey: key2, inCollection: nonregisteredCollection, notification: notification)
-                })
-
-                datastore?.setDataStoreWillUpdateBlockForCollection(nonregisteredCollection, block: { (_, _, object) -> Any? in
-                    willUpdateCalled = true
-                    return object
-                })
-
-                datastore.setDataStoreDidUpdateBlockForCollection(nonregisteredCollection, block: { (_, _, _) in
-                    didUpdateCalled = true
-                })
-
-                datastore.setDataStoreDidRemoveBlockForCollection(nonregisteredCollection, block: { (_, _) in
-                    didRemoveCalled = true
-                })
-            }
-
-            beforeEach {
-                hasChange = false
-            }
-
-            it("create") {
-                willUpdateCalled = false
-                didUpdateCalled = false
-                datastore.setObject(value2, forKey: key2, inCollection: nonregisteredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).toEventually(equal(value2))
-                expect(hasChange).toEventually(beTrue())
-                expect(willUpdateCalled).toEventually(beTrue())
-                expect(didUpdateCalled).toEventually(beTrue())
-            }
-
-            it("update with same value", closure: {
-                willUpdateCalled = false
-                didUpdateCalled = false
-                let oldValue = (datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)
-                datastore.setObject(oldValue, forKey: key2, inCollection: nonregisteredCollection, completionBlock: nil)
-                expect(hasChange).toEventually(beFalse())
-                expect(willUpdateCalled).toEventually(beTrue())
-                expect(didUpdateCalled).toEventually(beFalse())
-            })
-
-            it("update with different value", closure: {
-                willUpdateCalled = false
-                didUpdateCalled = false
-                datastore.setObject(value1, forKey: key2, inCollection: nonregisteredCollection, completionBlock: nil)
-                expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).toEventually(equal(value1))
-                expect(hasChange).toEventually(beTrue())
-                expect(willUpdateCalled).toEventually(beTrue())
-                expect(didUpdateCalled).toEventually(beTrue())
-            })
-
-            it("remove", closure: {
-                didRemoveCalled = false
-                waitUntil(action: { (done) in
-                    datastore.removeObject(forKey: key2, inCollection: nonregisteredCollection, completionBlock: {
-
-                        done()
+                    it("create success, value has changed, will update called, did update called", closure: {
+                        expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)).toEventually(equal(initialValue))
+                        expect(flagsForRegisteredCollection.valueChanged).toEventually(beTrue())
+                        expect(flagsForRegisteredCollection.willUpdateBlockCalled).toEventually(beTrue())
+                        expect(flagsForRegisteredCollection.didUpdateBlockCalled).toEventually(beTrue())
                     })
                 })
-                expect((datastore.object(forKey: key2, inCollection: nonregisteredCollection) as? String)).toEventually(beNil())
-                expect(hasChange).toEventually(beTrue())
-                expect(didRemoveCalled).toEventually(beTrue())
+
+                context("in temporary collection", {
+                    beforeEach {
+                        datastore.setObject(initialValue, forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
+                    }
+
+                    it("create success, value has changed, will update called, did update called", closure: {
+                        expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)).toEventually(equal(initialValue))
+                        expect(flagsForTemporaryCollection.valueChanged).toEventually(beTrue())
+                        expect(flagsForTemporaryCollection.willUpdateBlockCalled).toEventually(beTrue())
+                        expect(flagsForTemporaryCollection.didUpdateBlockCalled).toEventually(beTrue())
+                    })
+                })
             })
+
+            describe("update with same value", {
+                context("in registered collection", {
+                    beforeEach {
+                        let currentValue = (datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)
+                        datastore.setObject(currentValue, forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
+                    }
+                    it("update ignored, value has not changed, will update called, did update not called", closure: {
+                        expect(flagsForRegisteredCollection.valueChanged).toEventually(beFalse())
+                        expect(flagsForRegisteredCollection.willUpdateBlockCalled).toEventually(beTrue())
+                        expect(flagsForRegisteredCollection.didUpdateBlockCalled).toEventually(beFalse())
+                    })
+                })
+
+                context("in temporary collection", {
+                    beforeEach {
+                        let oldValue = (datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)
+                        datastore.setObject(oldValue, forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
+                    }
+                    it("update ignored, value has not changed, will update called, did update not called", closure: {
+                        expect(flagsForTemporaryCollection.valueChanged).toEventually(beFalse())
+                        expect(flagsForTemporaryCollection.willUpdateBlockCalled).toEventually(beTrue())
+                        expect(flagsForTemporaryCollection.didUpdateBlockCalled).toEventually(beFalse())
+                    })
+                })
+            })
+
+            describe("update with different value", {
+                context("in registered collection", {
+                    beforeEach {
+                        datastore.setObject(alternativeValue, forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
+                    }
+                    it("update success, value has changed, will update called, did update called", closure: {
+                        expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)).toEventually(equal(alternativeValue))
+                        expect(flagsForRegisteredCollection.valueChanged).toEventually(beTrue())
+                        expect(flagsForRegisteredCollection.willUpdateBlockCalled).toEventually(beTrue())
+                        expect(flagsForRegisteredCollection.didUpdateBlockCalled).toEventually(beTrue())
+                    })
+                })
+
+                context("in temporary collection", {
+                    beforeEach {
+                        datastore.setObject(alternativeValue, forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
+                    }
+                    it("update success, value has changed, will update called, did update called", closure: {
+                        expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)).toEventually(equal(alternativeValue))
+                        expect(flagsForTemporaryCollection.valueChanged).toEventually(beTrue())
+                        expect(flagsForTemporaryCollection.willUpdateBlockCalled).toEventually(beTrue())
+                        expect(flagsForTemporaryCollection.didUpdateBlockCalled).toEventually(beTrue())
+                    })
+                })
+            })
+
+            describe("remove", {
+                context("in registered collection", {
+                    beforeEach {
+                        datastore.removeObject(forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
+                    }
+                    it("remove success, value has changed, will update called, did update called", closure: {
+                        expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)).toEventually(beNil())
+                        expect(flagsForRegisteredCollection.valueChanged).toEventually(beTrue())
+                        expect(flagsForRegisteredCollection.didRemovedBlockCalled).toEventually(beTrue())
+                    })
+                })
+
+                context("in temporary collection", {
+                    beforeEach {
+                        datastore.removeObject(forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
+                    }
+                    it("remove success, value has changed, will update called, did update called", closure: {
+                        expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)).toEventually(beNil())
+                        expect(flagsForTemporaryCollection.valueChanged).toEventually(beTrue())
+                        expect(flagsForTemporaryCollection.didRemovedBlockCalled).toEventually(beTrue())
+                    })
+                })
+            })
+
+            afterSuite {
+                observers.forEach({ (notificationObserver) in
+                    NotificationCenter.default.removeObserver(notificationObserver)
+                })
+            }
         })
 
         describe("lifecycle", {
             var dataStoreReadyChanged: Bool?
+            var observer: NSKeyValueObservation?
 
             beforeSuite {
-                observers.append(datastore.observe(\.dataStoreReady, changeHandler: { (_, _) in
+                observer = datastore.observe(\.dataStoreReady, changeHandler: { (_, _) in
                     dataStoreReadyChanged = true
-                }))
+                })
             }
 
             beforeEach {
                 dataStoreReadyChanged = false
             }
 
-            it("setup") {
-                datastore.setupDataStore(nil)
-                expect(datastore.dataStoreReady).to(beTrue())
-                expect(dataStoreReadyChanged).toEventually(beTrue())
-            }
+            context("setup", {
+                beforeEach {
+                    datastore.setupDataStore(nil)
+                }
 
-            it("quit") {
-                datastore.quitDataStore()
-                expect(datastore.dataStoreReady).to(beFalse())
-                expect(dataStoreReadyChanged).toEventually(beTrue())
+                it("data store become ready", closure: {
+                    expect(datastore.dataStoreReady).to(beTrue())
+                    expect(dataStoreReadyChanged).toEventually(beTrue())
+                })
+            })
+
+            context("quit", {
+                beforeEach {
+                    datastore.quitDataStore()
+                }
+
+                it("data store become not ready", closure: {
+                    expect(datastore.dataStoreReady).to(beFalse())
+                    expect(dataStoreReadyChanged).toEventually(beTrue())
+                })
+            })
+
+            afterSuite {
+                observer?.invalidate()
             }
         })
 
