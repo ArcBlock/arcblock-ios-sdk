@@ -137,6 +137,21 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     return isRegistered;
 }
 
+- (void)setDataStoreWillUpdateBlockForCollection:(NSString*)collection block:(ABSDKDataStoreWillUpdateBlock)block
+{
+    _dataStoreWillUpdateBlocks[collection] = block;
+}
+
+- (void)setDataStoreDidUpdateBlockForCollection:(NSString*)collection block:(ABSDKDataStoreDidUpdateBlock)block
+{
+    _dataStoreDidUpdateBlocks[collection] = block;
+}
+
+- (void)setDataStoreDidRemoveBlockForCollection:(NSString*)collection block:(ABSDKDataStoreDidRemoveBlock)block
+{
+    _dataStoreDidRemoveBlocks[collection] = block;
+}
+
 - (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock
 {
     if (!key.length || !collection.length) {
@@ -169,6 +184,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     }
     else {
         __weak typeof(self) wself = self;
+        __block BOOL shouldUpdate = NO;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             id oldObject = [transaction objectForKey:key inCollection:collection];
             
@@ -186,14 +202,15 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
             if ([objectToUpdate isEqual:oldObject]) {
                 return;
             }
-            
+
+            shouldUpdate = YES;
             transaction.yapDatabaseModifiedNotificationCustomObject = objectToUpdate;
             [transaction setObject:objectToUpdate forKey:key inCollection:collection];
         } completionBlock:^{
             // perform post-update actions in data store level
             NSLog(@"complete set object");
             ABSDKDataStoreDidUpdateBlock didUpdateBlock = [wself.dataStoreDidUpdateBlocks objectForKey:collection];
-            if (didUpdateBlock) {
+            if (didUpdateBlock && shouldUpdate) {
                 didUpdateBlock(collection, key, object);
             }
             if (completionBlock) {

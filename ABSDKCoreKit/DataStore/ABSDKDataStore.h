@@ -10,8 +10,8 @@
 
 extern NSString *const ABSDKDataStoreModifiedNotification;
 
-typedef NSDictionary* (^ABSDKDataStoreWillUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
-typedef void (^ABSDKDataStoreDidUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
+typedef id (^ABSDKDataStoreWillUpdateBlock)(NSString *collection, NSString *key, id object);
+typedef void (^ABSDKDataStoreDidUpdateBlock)(NSString *collection, NSString *key, id object);
 typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key);
 
 @interface ABSDKDataStore : NSObject
@@ -22,6 +22,11 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 
 // collections not registered will be store only in memory
 - (void)registerCollections:(NSArray *)collections;
+
+// set data store change hooks
+- (void)setDataStoreWillUpdateBlockForCollection:(NSString*)collection block:(ABSDKDataStoreWillUpdateBlock)block;
+- (void)setDataStoreDidUpdateBlockForCollection:(NSString*)collection block:(ABSDKDataStoreDidUpdateBlock)block;
+- (void)setDataStoreDidRemoveBlockForCollection:(NSString*)collection block:(ABSDKDataStoreDidRemoveBlock)block;
 
 - (void)setupDataStore:(NSString*)dbFileName;
 - (void)quitDataStore;
