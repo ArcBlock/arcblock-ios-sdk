@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04C328F1EA6D4D9F19F4D994 /* Pods_ABSDKCoreKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72782B0D935A9788EF65648 /* Pods_ABSDKCoreKitTests.framework */; };
 		1CB7A091C22D199CD5C16CB9 /* Pods_ABSDKMessagingKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A9C37E6C4B6065C11CA917 /* Pods_ABSDKMessagingKitTests.framework */; };
+		2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
 		278EF33820A0DF2F00C99C1F /* ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF30D20A0DF2F00C99C1F /* ABSDKArrayDataSource.h */; };
 		278EF33920A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF30F20A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h */; };
@@ -95,6 +96,7 @@
 		0B686233E001761263F6FA93 /* Pods-ABSDKWalletKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKWalletKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKWalletKitTests/Pods-ABSDKWalletKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		104F02F45A1C47B3C7143E7F /* Pods-ABSDKCoreKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKCoreKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKCoreKit/Pods-ABSDKCoreKit.release.xcconfig"; sourceTree = "<group>"; };
 		11757839D91B73E587B41E31 /* Pods_ABSDKWalletKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABSDKWalletKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectDataSourceSpec.swift; sourceTree = "<group>"; };
 		277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B7920A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		277E6B7E20A0DE340054707E /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -307,6 +309,7 @@
 				278EF36120A0ED1700C99C1F /* ABSDKCoreKitTests-Bridging-Header.h */,
 				278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */,
 				277E6B8520A0DE340054707E /* Info.plist */,
+				2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */,
 			);
 			path = ABSDKCoreKitTests;
 			sourceTree = "<group>";
@@ -1148,6 +1151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */,
 				278EF35D20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
