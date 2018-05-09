@@ -17,109 +17,114 @@ class ABSDKDataStoreSpec: QuickSpec {
 
     override func spec() {
         describe("data store") {
+            struct Flags: Equatable {
+                var valueChanged: Bool?
+                var willUpdateBlockCalled: Bool?
+                var didUpdateBlockCalled: Bool?
+                var didRemovedBlockCalled: Bool?
+
+                mutating func reset() {
+                    valueChanged = false
+                    willUpdateBlockCalled = false
+                    didUpdateBlockCalled = false
+                    didRemovedBlockCalled = false
+                }
+            }
+
             var datastore: ABSDKDataStore!
             let key = "key"
             let initialValue = "initialValue"
             let alternativeValue = "alternativeValue"
 
+            var flagsForRegisteredCollection = Flags()
+            var flagsForTemporaryCollection = Flags()
+            var expectedFlagsForRegisteredCollection = Flags()
+            var expectedFlagsForTemporaryCollection = Flags()
+            var observers = [NSObjectProtocol]()
+
+            var dataStoreReadyChanged: Bool?
+            var observation: NSKeyValueObservation?
+
             beforeSuite {
                 datastore = ABSDKDataStore.sharedInstance()
                 datastore.registerCollections([Collection.registered.rawValue])
-                datastore.setupDataStore(nil)
+
+                // observe data store modified event
+                var notificationObserver = NotificationCenter.default.addObserver(
+                    forName: Notification.Name.ABSDKDataStoreModified,
+                    object: nil,
+                    queue: nil,
+                    using: { (notification) in
+                        flagsForRegisteredCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.registered.rawValue, notification: notification)
+                    }
+                )
+                observers.append(notificationObserver)
+
+                notificationObserver = NotificationCenter.default.addObserver(
+                    forName: Notification.Name.ABSDKDataStoreModified,
+                    object: nil,
+                    queue: nil,
+                    using: { (notification) in
+                        flagsForTemporaryCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.temporary.rawValue, notification: notification)
+                    }
+                )
+                observers.append(notificationObserver)
+
+                // add will update hooks
+                datastore.setDataStoreWillUpdateBlockForCollection(
+                    Collection.registered.rawValue,
+                    block: { (_, _, object) -> Any? in
+                        flagsForRegisteredCollection.willUpdateBlockCalled = true
+                        return object
+                    }
+                )
+
+                datastore.setDataStoreWillUpdateBlockForCollection(
+                    Collection.temporary.rawValue,
+                    block: { (_, _, object) -> Any? in
+                        flagsForTemporaryCollection.willUpdateBlockCalled = true
+                        return object
+                    }
+                )
+
+                // add did update hooks
+                datastore.setDataStoreDidUpdateBlockForCollection(
+                    Collection.registered.rawValue,
+                    block: { (_, _, _) in
+                        flagsForRegisteredCollection.didUpdateBlockCalled = true
+                    }
+                )
+
+                datastore.setDataStoreDidUpdateBlockForCollection(
+                    Collection.temporary.rawValue,
+                    block: { (_, _, _) in
+                        flagsForTemporaryCollection.didUpdateBlockCalled = true
+                    }
+                )
+
+                // add did remove hooks
+                datastore.setDataStoreDidRemoveBlockForCollection(
+                    Collection.registered.rawValue,
+                    block: { (_, _) in
+                        flagsForRegisteredCollection.didRemovedBlockCalled = true
+                    }
+                )
+
+                datastore.setDataStoreDidRemoveBlockForCollection(
+                    Collection.temporary.rawValue,
+                    block: { (_, _) in
+                        flagsForTemporaryCollection.didRemovedBlockCalled = true
+                    }
+                )
+
+                observation = datastore.observe(\.dataStoreReady, changeHandler: { (_, _) in
+                    dataStoreReadyChanged = true
+                })
             }
 
             describe("CRUD", {
-                struct Flags: Equatable {
-                    var valueChanged: Bool?
-                    var willUpdateBlockCalled: Bool?
-                    var didUpdateBlockCalled: Bool?
-                    var didRemovedBlockCalled: Bool?
-
-                    mutating func reset() {
-                        valueChanged = false
-                        willUpdateBlockCalled = false
-                        didUpdateBlockCalled = false
-                        didRemovedBlockCalled = false
-                    }
-                }
-
-                var flagsForRegisteredCollection = Flags()
-                var flagsForTemporaryCollection = Flags()
-                var expectedFlagsForRegisteredCollection = Flags()
-                var expectedFlagsForTemporaryCollection = Flags()
-                var observers = [NSObjectProtocol]()
-
-                beforeSuite {
-                    // observe data store modified event
-                    var notificationObserver = NotificationCenter.default.addObserver(
-                        forName: Notification.Name.ABSDKDataStoreModified,
-                        object: nil,
-                        queue: nil,
-                        using: { (notification) in
-                            flagsForRegisteredCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.registered.rawValue, notification: notification)
-                        }
-                    )
-                    observers.append(notificationObserver)
-
-                    notificationObserver = NotificationCenter.default.addObserver(
-                        forName: Notification.Name.ABSDKDataStoreModified,
-                        object: nil,
-                        queue: nil,
-                        using: { (notification) in
-                            flagsForTemporaryCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.temporary.rawValue, notification: notification)
-                        }
-                    )
-                    observers.append(notificationObserver)
-
-                    // add will update hooks
-                    datastore.setDataStoreWillUpdateBlockForCollection(
-                        Collection.registered.rawValue,
-                        block: { (_, _, object) -> Any? in
-                            flagsForRegisteredCollection.willUpdateBlockCalled = true
-                            return object
-                        }
-                    )
-
-                    datastore.setDataStoreWillUpdateBlockForCollection(
-                        Collection.temporary.rawValue,
-                        block: { (_, _, object) -> Any? in
-                            flagsForTemporaryCollection.willUpdateBlockCalled = true
-                            return object
-                        }
-                    )
-
-                    // add did update hooks
-                    datastore.setDataStoreDidUpdateBlockForCollection(
-                        Collection.registered.rawValue,
-                        block: { (_, _, _) in
-                            flagsForRegisteredCollection.didUpdateBlockCalled = true
-                        }
-                    )
-
-                    datastore.setDataStoreDidUpdateBlockForCollection(
-                        Collection.temporary.rawValue,
-                        block: { (_, _, _) in
-                            flagsForTemporaryCollection.didUpdateBlockCalled = true
-                        }
-                    )
-
-                    // add did remove hooks
-                    datastore.setDataStoreDidRemoveBlockForCollection(
-                        Collection.registered.rawValue,
-                        block: { (_, _) in
-                            flagsForRegisteredCollection.didRemovedBlockCalled = true
-                        }
-                    )
-
-                    datastore.setDataStoreDidRemoveBlockForCollection(
-                        Collection.temporary.rawValue,
-                        block: { (_, _) in
-                            flagsForTemporaryCollection.didRemovedBlockCalled = true
-                        }
-                    )
-                }
-
                 beforeEach {
+                    datastore.setupDataStore(nil)
                     flagsForRegisteredCollection.reset()
                     flagsForTemporaryCollection.reset()
                     expectedFlagsForRegisteredCollection.reset()
@@ -238,6 +243,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                         beforeEach {
                             datastore.removeObject(forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
                         }
+
                         it("remove success, value has changed, did remove called", closure: {
                             expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)).toEventually(beNil())
                             expectedFlagsForTemporaryCollection.valueChanged = true
@@ -247,24 +253,9 @@ class ABSDKDataStoreSpec: QuickSpec {
                         })
                     })
                 })
-
-                afterSuite {
-                    observers.forEach({ (notificationObserver) in
-                        NotificationCenter.default.removeObserver(notificationObserver)
-                    })
-                }
             })
 
             describe("lifecycle", {
-                var dataStoreReadyChanged: Bool?
-                var observation: NSKeyValueObservation?
-
-                beforeSuite {
-                    observation = datastore.observe(\.dataStoreReady, changeHandler: { (_, _) in
-                        dataStoreReadyChanged = true
-                    })
-                }
-
                 beforeEach {
                     dataStoreReadyChanged = false
                 }
@@ -290,15 +281,14 @@ class ABSDKDataStoreSpec: QuickSpec {
                         expect(dataStoreReadyChanged).toEventually(beTrue())
                     })
                 })
-
-                afterSuite {
-                    observation?.invalidate()
-                }
             })
 
             afterSuite {
+                observation?.invalidate()
+                observers.forEach({ (notificationObserver) in
+                    NotificationCenter.default.removeObserver(notificationObserver)
+                })
                 datastore.quitDataStore()
-                datastore = nil
                 let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
                 let dbFilePath = paths[0].appending("/tmp.sqlite")
                 try? FileManager.default.removeItem(atPath: dbFilePath)

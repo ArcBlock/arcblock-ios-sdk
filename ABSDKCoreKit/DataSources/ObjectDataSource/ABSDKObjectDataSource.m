@@ -7,19 +7,46 @@
 //
 
 #import "ABSDKObjectDataSource.h"
+#import "ABSDKDataStore.h"
+#import <KVOController/KVOController.h>
 
 @interface ABSDKObjectDataSource ()
+
+@property (nonatomic, strong) FBKVOController *kvoController;
+@property (nonatomic, strong) NSString *collection;
+@property (nonatomic, strong) NSString *key;
+@property (nonatomic, assign) BOOL updated;
 
 @end
 
 @implementation ABSDKObjectDataSource
 
-- (id)initWithCollectionName:(NSString*)collectionName identifier:(NSString*)identifier
++ (ABSDKObjectDataSource*)objectDataSourceWithCollection:(NSString*)collection key:(NSString*)key
+{
+    static NSMutableDictionary *dataSources = nil;
+    if (dataSources == nil) {
+        dataSources = [NSMutableDictionary dictionary];
+    }
+    NSString *index = [NSString stringWithFormat:@"%@.%@", collection, key];
+    ABSDKObjectDataSource *dataSource = dataSources[index];
+    if (!dataSource) {
+        dataSource = [[self alloc] initWithCollection:collection key:key];
+        [dataSources setObject:dataSource forKey:index];
+    }
+    return dataSource;
+}
+
+- (id)initWithCollection:(NSString*)collection key:(NSString*)key
 {
     self = [super init];
     if (self) {
-        _collectionName = collectionName;
-        _identifier = identifier;
+        _collection = collection;
+        _key = key;
+        _kvoController = [FBKVOController controllerWithObserver:self];
+        __weak typeof(self) wself = self;
+        [_kvoController observe:[ABSDKDataStore sharedInstance] keyPath:@"dataStoreReady" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+            wself.updated = YES;
+        }];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:ABSDKDataStoreModifiedNotification object:nil];
     }
     return self;
@@ -32,23 +59,14 @@
 
 - (void)dataStoreModified:(NSNotification *)notification
 {
-    if (_identifier) {
-        if ([[ABSDKDataStore sharedInstance] hasChangeForKey:_identifier inCollection:_collectionName notification:notification]) {
-            NSLog(@"data source updated: %@, %@", _collectionName, _identifier);
-            self.updated = YES;
-        }
+    if ([[ABSDKDataStore sharedInstance] hasChangeForKey:_key inCollection:_collection notification:notification]) {
+        NSLog(@"data source updated: %@, %@", _collection, _key);
+        self.updated = YES;
     }
 }
 
-- (id)object{
-    return [[ABSDKDataStore sharedInstance] objectForKey:_identifier inCollection:_collectionName];
-}
-
-- (void)bindWithView:(UIView*)view
-{
-    if ([self object]) {
-        [view bindWithObject:[self object]];
-    }
+- (id)fetchObject{
+    return [[ABSDKDataStore sharedInstance] objectForKey:_key inCollection:_collection];
 }
 
 @end

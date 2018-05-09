@@ -6,22 +6,15 @@
 //  Copyright © 2015 Pixomobile. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "ABSDKDataStore.h"
-#import "UIView+KVBinding.h"
-#import "UIImageView+KVBinding.h"
-
-#define  UPDATED_KEYPATH    @"updated"
+#import <Foundation/Foundation.h>
 
 @interface ABSDKObjectDataSource : NSObject
 
-@property (nonatomic, strong) NSString *collectionName;
-@property (nonatomic, strong) NSString *identifier;
-@property (nonatomic) BOOL updated;         // key for KVO
+@property (nonatomic, strong, readonly) NSString *collection;
+@property (nonatomic, strong, readonly) NSString *key;
+@property (nonatomic, readonly) BOOL updated;
 
-- (id)initWithCollectionName:(NSString*)collectionName identifier:(NSString*)identifier;
-
-- (void)bindWithView:(UIView*)view;
-- (id)object;
++ (ABSDKObjectDataSource*)objectDataSourceWithCollection:(NSString*)collection key:(NSString*)key;
+- (id)fetchObject;
 
 @end
