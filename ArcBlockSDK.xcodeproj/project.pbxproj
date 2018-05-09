@@ -28,14 +28,6 @@
 		278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */; };
 		278EF34720A0DF2F00C99C1F /* ABSDKDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32120A0DF2F00C99C1F /* ABSDKDataStore.h */; };
 		278EF34820A0DF2F00C99C1F /* ABSDKDataStore+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */; };
-		278EF34920A0DF2F00C99C1F /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32420A0DF2F00C99C1F /* CALayer+XibConfiguration.m */; };
-		278EF34A20A0DF2F00C99C1F /* UIButton+KVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32520A0DF2F00C99C1F /* UIButton+KVBinding.m */; };
-		278EF34B20A0DF2F00C99C1F /* UIView+KVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32620A0DF2F00C99C1F /* UIView+KVBinding.m */; };
-		278EF34C20A0DF2F00C99C1F /* UIImageView+KVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32720A0DF2F00C99C1F /* UIImageView+KVBinding.m */; };
-		278EF34D20A0DF2F00C99C1F /* CALayer+XibConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32820A0DF2F00C99C1F /* CALayer+XibConfiguration.h */; };
-		278EF34E20A0DF2F00C99C1F /* UIView+KVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32920A0DF2F00C99C1F /* UIView+KVBinding.h */; };
-		278EF34F20A0DF2F00C99C1F /* UIButton+KVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32A20A0DF2F00C99C1F /* UIButton+KVBinding.h */; };
-		278EF35020A0DF2F00C99C1F /* UIImageView+KVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32B20A0DF2F00C99C1F /* UIImageView+KVBinding.h */; };
 		278EF35120A0DF2F00C99C1F /* ObjectiveDDP.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32E20A0DF2F00C99C1F /* ObjectiveDDP.h */; };
 		278EF35220A0DF2F00C99C1F /* BSONIdGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32F20A0DF2F00C99C1F /* BSONIdGenerator.h */; };
 		278EF35320A0DF2F00C99C1F /* DependencyProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF33020A0DF2F00C99C1F /* DependencyProvider.h */; };
@@ -118,14 +110,6 @@
 		278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDataStore.m; sourceTree = "<group>"; };
 		278EF32120A0DF2F00C99C1F /* ABSDKDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDataStore.h; sourceTree = "<group>"; };
 		278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKDataStore+Private.h"; sourceTree = "<group>"; };
-		278EF32420A0DF2F00C99C1F /* CALayer+XibConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+XibConfiguration.m"; sourceTree = "<group>"; };
-		278EF32520A0DF2F00C99C1F /* UIButton+KVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+KVBinding.m"; sourceTree = "<group>"; };
-		278EF32620A0DF2F00C99C1F /* UIView+KVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KVBinding.m"; sourceTree = "<group>"; };
-		278EF32720A0DF2F00C99C1F /* UIImageView+KVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+KVBinding.m"; sourceTree = "<group>"; };
-		278EF32820A0DF2F00C99C1F /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
-		278EF32920A0DF2F00C99C1F /* UIView+KVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KVBinding.h"; sourceTree = "<group>"; };
-		278EF32A20A0DF2F00C99C1F /* UIButton+KVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+KVBinding.h"; sourceTree = "<group>"; };
-		278EF32B20A0DF2F00C99C1F /* UIImageView+KVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+KVBinding.h"; sourceTree = "<group>"; };
 		278EF32E20A0DF2F00C99C1F /* ObjectiveDDP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveDDP.h; sourceTree = "<group>"; };
 		278EF32F20A0DF2F00C99C1F /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
 		278EF33020A0DF2F00C99C1F /* DependencyProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DependencyProvider.h; sourceTree = "<group>"; };
@@ -298,7 +282,6 @@
 				278EF31F20A0DF2F00C99C1F /* DataStore */,
 				278EF32C20A0DF2F00C99C1F /* DDPClient */,
 				277E6B7920A0DE340054707E /* Info.plist */,
-				278EF32320A0DF2F00C99C1F /* KVBinding */,
 			);
 			path = ABSDKCoreKit;
 			sourceTree = "<group>";
@@ -308,8 +291,8 @@
 			children = (
 				278EF36120A0ED1700C99C1F /* ABSDKCoreKitTests-Bridging-Header.h */,
 				278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */,
-				277E6B8520A0DE340054707E /* Info.plist */,
 				2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */,
+				277E6B8520A0DE340054707E /* Info.plist */,
 			);
 			path = ABSDKCoreKitTests;
 			sourceTree = "<group>";
@@ -383,21 +366,6 @@
 				278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */,
 			);
 			path = DataStore;
-			sourceTree = "<group>";
-		};
-		278EF32320A0DF2F00C99C1F /* KVBinding */ = {
-			isa = PBXGroup;
-			children = (
-				278EF32820A0DF2F00C99C1F /* CALayer+XibConfiguration.h */,
-				278EF32420A0DF2F00C99C1F /* CALayer+XibConfiguration.m */,
-				278EF32A20A0DF2F00C99C1F /* UIButton+KVBinding.h */,
-				278EF32520A0DF2F00C99C1F /* UIButton+KVBinding.m */,
-				278EF32B20A0DF2F00C99C1F /* UIImageView+KVBinding.h */,
-				278EF32720A0DF2F00C99C1F /* UIImageView+KVBinding.m */,
-				278EF32920A0DF2F00C99C1F /* UIView+KVBinding.h */,
-				278EF32620A0DF2F00C99C1F /* UIView+KVBinding.m */,
-			);
-			path = KVBinding;
 			sourceTree = "<group>";
 		};
 		278EF32C20A0DF2F00C99C1F /* DDPClient */ = {
@@ -502,23 +470,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				278EF34020A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.h in Headers */,
-				278EF35020A0DF2F00C99C1F /* UIImageView+KVBinding.h in Headers */,
 				278EF35A20A0DF2F00C99C1F /* ABSDKDDPClientManager.h in Headers */,
 				278EF35220A0DF2F00C99C1F /* BSONIdGenerator.h in Headers */,
 				278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */,
 				278EF35320A0DF2F00C99C1F /* DependencyProvider.h in Headers */,
 				278EF34720A0DF2F00C99C1F /* ABSDKDataStore.h in Headers */,
-				278EF34F20A0DF2F00C99C1F /* UIButton+KVBinding.h in Headers */,
 				278EF33B20A0DF2F00C99C1F /* ABSDKSearchDataSource.h in Headers */,
 				278EF33820A0DF2F00C99C1F /* ABSDKArrayDataSource.h in Headers */,
 				278EF33920A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h in Headers */,
 				278EF33D20A0DF2F00C99C1F /* ABSDKFilterDataSource.h in Headers */,
 				278EF35920A0DF2F00C99C1F /* ABSDKDDPClient.h in Headers */,
-				278EF34D20A0DF2F00C99C1F /* CALayer+XibConfiguration.h in Headers */,
 				278EF34820A0DF2F00C99C1F /* ABSDKDataStore+Private.h in Headers */,
 				278EF35120A0DF2F00C99C1F /* ObjectiveDDP.h in Headers */,
 				278EF33F20A0DF2F00C99C1F /* ABSDKViewMappings.h in Headers */,
-				278EF34E20A0DF2F00C99C1F /* UIView+KVBinding.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1128,7 +1092,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				278EF33E20A0DF2F00C99C1F /* ABSDKFilterDataSource.m in Sources */,
-				278EF34C20A0DF2F00C99C1F /* UIImageView+KVBinding.m in Sources */,
 				278EF35620A0DF2F00C99C1F /* BSONIdGenerator.m in Sources */,
 				278EF35820A0DF2F00C99C1F /* ABSDKDDPClientManager.m in Sources */,
 				278EF33C20A0DF2F00C99C1F /* ABSDKSearchDataSource.m in Sources */,
@@ -1138,11 +1101,8 @@
 				278EF35720A0DF2F00C99C1F /* ABSDKDDPClient.m in Sources */,
 				278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */,
 				278EF34220A0DF2F00C99C1F /* ABSDKViewMappings.m in Sources */,
-				278EF34920A0DF2F00C99C1F /* CALayer+XibConfiguration.m in Sources */,
 				278EF35520A0DF2F00C99C1F /* DependencyProvider.m in Sources */,
 				278EF35420A0DF2F00C99C1F /* ObjectiveDDP.m in Sources */,
-				278EF34B20A0DF2F00C99C1F /* UIView+KVBinding.m in Sources */,
-				278EF34A20A0DF2F00C99C1F /* UIButton+KVBinding.m in Sources */,
 				278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
