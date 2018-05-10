@@ -10,8 +10,8 @@
 
 extern NSString *const ABSDKDataStoreModifiedNotification;
 
-typedef id (^ABSDKDataStoreWillUpdateBlock)(NSString *collection, NSString *key, id object);
-typedef void (^ABSDKDataStoreDidUpdateBlock)(NSString *collection, NSString *key, id object);
+typedef NSDictionary* (^ABSDKDataStoreWillUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
+typedef void (^ABSDKDataStoreDidUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
 typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key);
 
 @interface ABSDKDataStore : NSObject
@@ -31,12 +31,12 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 - (void)setupDataStore:(NSString*)dbFileName;
 - (void)quitDataStore;
 
-- (id)objectForKey:(NSString*)key inCollection:(NSString*)collection;
-- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
+- (NSDictionary*)objectForKey:(NSString*)key inCollection:(NSString*)collection;
+- (void)setObject:(NSDictionary*)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
 - (void)removeObjectForKey:(NSString*)key inCollection:(NSString*)collection completionBlock:(dispatch_block_t)completionBlock;
 - (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection notification:(NSNotification *)notification;
 
 - (NSArray*)allKeysInCollection:(NSString*)collection;
-- (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block;
+- (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, NSDictionary *object, BOOL *stop))block;
 
 @end
