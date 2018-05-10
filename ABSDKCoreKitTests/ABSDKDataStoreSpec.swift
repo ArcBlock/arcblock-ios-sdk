@@ -73,7 +73,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                 // add will update hooks
                 datastore.setDataStoreWillUpdateBlockForCollection(
                     Collection.registered.rawValue,
-                    block: { (_, _, object) -> Any? in
+                    block: { (_, _, object) -> [AnyHashable: Any]? in
                         flagsForRegisteredCollection.willUpdateBlockCalled = true
                         return object
                     }
@@ -81,7 +81,7 @@ class ABSDKDataStoreSpec: QuickSpec {
 
                 datastore.setDataStoreWillUpdateBlockForCollection(
                     Collection.temporary.rawValue,
-                    block: { (_, _, object) -> Any? in
+                    block: { (_, _, object) -> [AnyHashable: Any]? in
                         flagsForTemporaryCollection.willUpdateBlockCalled = true
                         return object
                     }
@@ -134,11 +134,11 @@ class ABSDKDataStoreSpec: QuickSpec {
                 describe("create", {
                     context("in registered collection", {
                         beforeEach {
-                            datastore.setObject(initialValue, forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
+                            datastore.setObject(["value": initialValue], forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
                         }
 
                         it("create success, value has changed, will update called, did update called", closure: {
-                            expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)).toEventually(equal(initialValue))
+                            expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? [String: String])).toEventually(equal(["_id": key, "value": initialValue]))
                             expectedFlagsForRegisteredCollection.valueChanged = true
                             expectedFlagsForRegisteredCollection.willUpdateBlockCalled = true
                             expectedFlagsForRegisteredCollection.didUpdateBlockCalled = true
@@ -150,11 +150,11 @@ class ABSDKDataStoreSpec: QuickSpec {
 
                     context("in temporary collection", {
                         beforeEach {
-                            datastore.setObject(initialValue, forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
+                            datastore.setObject(["value": initialValue], forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
                         }
 
                         it("create success, value has changed, will update called, did update called", closure: {
-                            expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)).toEventually(equal(initialValue))
+                            expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? [String: String])).toEventually(equal(["_id": key, "value": initialValue]))
                             expectedFlagsForTemporaryCollection.valueChanged = true
                             expectedFlagsForTemporaryCollection.willUpdateBlockCalled = true
                             expectedFlagsForTemporaryCollection.didUpdateBlockCalled = true
@@ -167,7 +167,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                 describe("update with same value", {
                     context("in registered collection", {
                         beforeEach {
-                            let currentValue = (datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)
+                            let currentValue = (datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? [String: String])
                             datastore.setObject(currentValue, forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
                         }
 
@@ -180,8 +180,8 @@ class ABSDKDataStoreSpec: QuickSpec {
 
                     context("in temporary collection", {
                         beforeEach {
-                            let oldValue = (datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)
-                            datastore.setObject(oldValue, forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
+                            let currentValue = (datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? [String: String])
+                            datastore.setObject(currentValue, forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
                         }
 
                         it("update ignored, value has not changed, will update called, did update not called", closure: {
@@ -195,11 +195,11 @@ class ABSDKDataStoreSpec: QuickSpec {
                 describe("update with different value", {
                     context("in registered collection", {
                         beforeEach {
-                            datastore.setObject(alternativeValue, forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
+                            datastore.setObject(["value": alternativeValue], forKey: key, inCollection: Collection.registered.rawValue, completionBlock: nil)
                         }
 
                         it("update success, value has changed, will update called, did update called", closure: {
-                            expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)).toEventually(equal(alternativeValue))
+                            expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? [String: String])).toEventually(equal(["_id": key, "value": alternativeValue]))
                             expectedFlagsForRegisteredCollection.valueChanged = true
                             expectedFlagsForRegisteredCollection.willUpdateBlockCalled = true
                             expectedFlagsForRegisteredCollection.didUpdateBlockCalled = true
@@ -210,11 +210,11 @@ class ABSDKDataStoreSpec: QuickSpec {
 
                     context("in temporary collection", {
                         beforeEach {
-                            datastore.setObject(alternativeValue, forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
+                            datastore.setObject(["value": alternativeValue], forKey: key, inCollection: Collection.temporary.rawValue, completionBlock: nil)
                         }
 
                         it("update success, value has changed, will update called, did update called", closure: {
-                            expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)).toEventually(equal(alternativeValue))
+                            expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? [String: String])).toEventually(equal(["_id": key, "value": alternativeValue]))
                             expectedFlagsForTemporaryCollection.valueChanged = true
                             expectedFlagsForTemporaryCollection.willUpdateBlockCalled = true
                             expectedFlagsForTemporaryCollection.didUpdateBlockCalled = true
@@ -231,7 +231,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                         }
 
                         it("remove success, value has changed, did remove called", closure: {
-                            expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? String)).toEventually(beNil())
+                            expect((datastore.object(forKey: key, inCollection: Collection.registered.rawValue) as? [String: String])).toEventually(beNil())
                             expectedFlagsForRegisteredCollection.valueChanged = true
                             expectedFlagsForRegisteredCollection.didRemovedBlockCalled = true
                             expect(flagsForRegisteredCollection).toEventually(equal(expectedFlagsForRegisteredCollection))
@@ -245,7 +245,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                         }
 
                         it("remove success, value has changed, did remove called", closure: {
-                            expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? String)).toEventually(beNil())
+                            expect((datastore.object(forKey: key, inCollection: Collection.temporary.rawValue) as? [String: String])).toEventually(beNil())
                             expectedFlagsForTemporaryCollection.valueChanged = true
                             expectedFlagsForTemporaryCollection.didRemovedBlockCalled = true
                             expect(flagsForRegisteredCollection).toEventually(equal(expectedFlagsForRegisteredCollection))

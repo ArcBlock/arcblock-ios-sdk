@@ -36,18 +36,18 @@ class ABSDKObjectDataSourceSpec: QuickSpec {
 
                 context("in correct collection and key", {
                     beforeEach {
-                        ABSDKDataStore.sharedInstance().setObject(value, forKey: key, inCollection: collection, completionBlock: nil)
+                        ABSDKDataStore.sharedInstance().setObject(["value": value], forKey: key, inCollection: collection, completionBlock: nil)
                     }
 
                     it("get correct value, recieve update", closure: {
                         expect(dataSourceUpdated).toEventually(beTrue())
-                        expect(dataSource?.fetchObject() as? String).toEventually(equal(value))
+                        expect(dataSource?.fetchObject() as? [String: String]).toEventually(equal(["_id": key, "value": value]))
                     })
                 })
 
                 context("in wrong collection", {
                     beforeEach {
-                        ABSDKDataStore.sharedInstance().setObject(value, forKey: key, inCollection: "wrongCollection", completionBlock: nil)
+                        ABSDKDataStore.sharedInstance().setObject(["value": value], forKey: key, inCollection: "wrongCollection", completionBlock: nil)
                     }
 
                     it("get nil value, no recieve update", closure: {
@@ -58,7 +58,7 @@ class ABSDKObjectDataSourceSpec: QuickSpec {
 
                 context("in wrong key", {
                     beforeEach {
-                        ABSDKDataStore.sharedInstance().setObject(value, forKey: "wrongKey", inCollection: collection, completionBlock: nil)
+                        ABSDKDataStore.sharedInstance().setObject(["value": value], forKey: "wrongKey", inCollection: collection, completionBlock: nil)
                     }
 
                     it("get nil value, no recieve update", closure: {
@@ -69,7 +69,7 @@ class ABSDKObjectDataSourceSpec: QuickSpec {
 
                 context("in wrong key and wrong collection", {
                     beforeEach {
-                        ABSDKDataStore.sharedInstance().setObject(value, forKey: "wrongKey", inCollection: "wrong collection", completionBlock: nil)
+                        ABSDKDataStore.sharedInstance().setObject(["value": value], forKey: "wrongKey", inCollection: "wrong collection", completionBlock: nil)
                     }
 
                     it("get nil value, no recieve update", closure: {
