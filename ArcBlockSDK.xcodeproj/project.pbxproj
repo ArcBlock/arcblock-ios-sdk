@@ -20,7 +20,6 @@
 		2712817920A4C41900530FB6 /* UIView+ABSDKKVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817320A4C41900530FB6 /* UIView+ABSDKKVBinding.h */; };
 		2712817A20A4C41900530FB6 /* UIButton+ABSDKKVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817420A4C41900530FB6 /* UIButton+ABSDKKVBinding.h */; };
 		2712817B20A4C41900530FB6 /* UIImageView+ABSDKKVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817520A4C41900530FB6 /* UIImageView+ABSDKKVBinding.h */; };
-		2712817D20A4C6F400530FB6 /* UIViewABSDKKVBindingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712817C20A4C6F400530FB6 /* UIViewABSDKKVBindingSpec.swift */; };
 		2712818020A4EA6400530FB6 /* UIImageViewMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817F20A4EA6400530FB6 /* UIImageViewMock.m */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
 		278EF33820A0DF2F00C99C1F /* ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF30D20A0DF2F00C99C1F /* ABSDKArrayDataSource.h */; };
@@ -111,7 +110,6 @@
 		2712817320A4C41900530FB6 /* UIView+ABSDKKVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ABSDKKVBinding.h"; sourceTree = "<group>"; };
 		2712817420A4C41900530FB6 /* UIButton+ABSDKKVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ABSDKKVBinding.h"; sourceTree = "<group>"; };
 		2712817520A4C41900530FB6 /* UIImageView+ABSDKKVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ABSDKKVBinding.h"; sourceTree = "<group>"; };
-		2712817C20A4C6F400530FB6 /* UIViewABSDKKVBindingSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewABSDKKVBindingSpec.swift; sourceTree = "<group>"; };
 		2712817E20A4EA6400530FB6 /* UIImageViewMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIImageViewMock.h; sourceTree = "<group>"; };
 		2712817F20A4EA6400530FB6 /* UIImageViewMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIImageViewMock.m; sourceTree = "<group>"; };
 		277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -318,7 +316,6 @@
 				278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */,
 				2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */,
 				277E6B8520A0DE340054707E /* Info.plist */,
-				2712817C20A4C6F400530FB6 /* UIViewABSDKKVBindingSpec.swift */,
 				2712817E20A4EA6400530FB6 /* UIImageViewMock.h */,
 				2712817F20A4EA6400530FB6 /* UIImageViewMock.m */,
 			);
@@ -1159,7 +1156,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2712817D20A4C6F400530FB6 /* UIViewABSDKKVBindingSpec.swift in Sources */,
 				2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */,
 				2712818020A4EA6400530FB6 /* UIImageViewMock.m in Sources */,
 				278EF35D20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift in Sources */,
