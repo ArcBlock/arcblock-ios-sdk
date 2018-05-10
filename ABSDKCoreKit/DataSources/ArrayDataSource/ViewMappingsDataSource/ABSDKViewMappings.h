@@ -6,7 +6,9 @@
 //
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "UITableView+ABSDKViewMappings.h"
+#import "UICollectionView+ABSDKViewMappings.h"
 
 struct ABSDKViewRangePosition {
     NSUInteger offsetFromBeginning;
@@ -57,17 +59,5 @@ typedef void (^ABSDKDataStoreFullTextSearchBlock)(NSMutableDictionary *dict, NSS
 
 // filter
 - (id)initWithFilterBlock:(ABSDKDataStoreFilteringBlock)block parentViewName:(NSString*)parentViewName viewName:(NSString*)viewName sections:(NSArray*)sections;
-
-@end
-
-@interface UITableView (ViewMapping)
-
-- (void)updateWithSectionChanges:(NSArray*)sectionChanges rowChanges:(NSArray*)rowChanges;
-
-@end
-
-@interface UICollectionView (ViewMapping)
-
-- (void)updateWithSectionChanges:(NSArray*)sectionChanges rowChanges:(NSArray*)rowChanges completion:(void (^)(BOOL finished))completion;
 
 @end

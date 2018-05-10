@@ -21,14 +21,14 @@ extern NSString *const ABSDKArrayDataSourceDidUpdateNotification;
 
 - (id)initWithArray:(NSArray*) array;
 
-- (NSInteger) numberOfSections;
-- (NSInteger) numberOfItemsForSection:(NSInteger)section;
-- (id) getItemAtIndextPath:(NSIndexPath*)indexPath;
+- (NSInteger)numberOfSections;
+- (NSInteger)numberOfItemsForSection:(NSInteger)section;
+- (id)getItemAtIndextPath:(NSIndexPath*)indexPath;
 - (BOOL)isEmpty;
 - (void)loadData;
-- (void) refresh;
-- (void) loadMore;
-- (void) removeAll;
-- (void) remove:(NSIndexPath*)indexPath;
+- (void)refresh;
+- (void)loadMore;
+- (void)removeAll;
+- (void)remove:(NSIndexPath*)indexPath;
 
 @end
