@@ -1,14 +1,14 @@
 //
-//  UITableView+ABSDKViewMappings.m
+//  UITableView+ABSDKArrayDataSource.m
 //  ABSDKCoreKit
 //
 //  Created by Jonathan Lu on 10/5/2018.
 //
 
-#import "UITableView+ABSDKViewMappings.h"
+#import "UITableView+ABSDKArrayDataSource.h"
 #import "YapDatabaseView.h"
 
-@implementation UITableView (ABSDKViewMappings)
+@implementation UITableView (ABSDKArrayDataSource)
 
 - (void)updateWithSectionChanges:(NSArray*)sectionChanges rowChanges:(NSArray*)rowChanges
 {
