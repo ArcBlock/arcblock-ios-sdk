@@ -1,14 +1,14 @@
 //
-//  UICollectionView+ABSDKViewMappings.m
+//  UICollectionView+ABSDKArrayDataSource.m
 //  ABSDKCoreKit
 //
 //  Created by Jonathan Lu on 10/5/2018.
 //
 
-#import "UICollectionView+ABSDKViewMappings.h"
+#import "UICollectionView+ABSDKArrayDataSource.h"
 #import "YapDatabaseView.h"
 
-@implementation UICollectionView (ABSDKViewMappings)
+@implementation UICollectionView (ABSDKArrayDataSource)
 
 - (void)updateWithSectionChanges:(NSArray*)sectionChanges rowChanges:(NSArray*)rowChanges completion:(void (^)(BOOL finished))completion
 {

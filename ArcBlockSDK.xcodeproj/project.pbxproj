@@ -10,10 +10,6 @@
 		04C328F1EA6D4D9F19F4D994 /* Pods_ABSDKCoreKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72782B0D935A9788EF65648 /* Pods_ABSDKCoreKitTests.framework */; };
 		1CB7A091C22D199CD5C16CB9 /* Pods_ABSDKMessagingKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A9C37E6C4B6065C11CA917 /* Pods_ABSDKMessagingKitTests.framework */; };
 		2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */; };
-		2712816A20A4B2C600530FB6 /* UITableView+ABSDKViewMappings.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712816820A4B2C600530FB6 /* UITableView+ABSDKViewMappings.h */; };
-		2712816B20A4B2C600530FB6 /* UITableView+ABSDKViewMappings.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712816920A4B2C600530FB6 /* UITableView+ABSDKViewMappings.m */; };
-		2712816E20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712816C20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.h */; };
-		2712816F20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712816D20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.m */; };
 		2712817620A4C41900530FB6 /* UIImageView+ABSDKKVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817020A4C41900530FB6 /* UIImageView+ABSDKKVBinding.m */; };
 		2712817720A4C41900530FB6 /* UIView+ABSDKKVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817120A4C41900530FB6 /* UIView+ABSDKKVBinding.m */; };
 		2712817820A4C41900530FB6 /* UIButton+ABSDKKVBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817220A4C41900530FB6 /* UIButton+ABSDKKVBinding.m */; };
@@ -21,19 +17,20 @@
 		2712817A20A4C41900530FB6 /* UIButton+ABSDKKVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817420A4C41900530FB6 /* UIButton+ABSDKKVBinding.h */; };
 		2712817B20A4C41900530FB6 /* UIImageView+ABSDKKVBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817520A4C41900530FB6 /* UIImageView+ABSDKKVBinding.h */; };
 		2712818020A4EA6400530FB6 /* UIImageViewMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817F20A4EA6400530FB6 /* UIImageViewMock.m */; };
+		2712818420A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712818320A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift */; };
+		2712819720A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712818920A6497900530FB6 /* UITableView+ABSDKArrayDataSource.h */; };
+		2712819820A6497B00530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712818A20A6497900530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.h */; };
+		2712819920A6497B00530FB6 /* ABSDKFilterDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712818B20A6497900530FB6 /* ABSDKFilterDataSource.m */; };
+		2712819A20A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712818C20A6497900530FB6 /* UICollectionView+ABSDKArrayDataSource.m */; };
+		2712819D20A6497B00530FB6 /* ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712818F20A6497A00530FB6 /* ABSDKArrayDataSource.h */; };
+		2712819E20A6497B00530FB6 /* ABSDKFilterDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712819020A6497A00530FB6 /* ABSDKFilterDataSource.h */; };
+		2712819F20A6497B00530FB6 /* ABSDKSearchDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712819120A6497A00530FB6 /* ABSDKSearchDataSource.h */; };
+		271281A020A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712819220A6497A00530FB6 /* UICollectionView+ABSDKArrayDataSource.h */; };
+		271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */; };
+		271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */; };
+		271281A320A6497B00530FB6 /* ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */; };
+		271281A420A6497B00530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819620A6497B00530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.m */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
-		278EF33820A0DF2F00C99C1F /* ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF30D20A0DF2F00C99C1F /* ABSDKArrayDataSource.h */; };
-		278EF33920A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF30F20A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h */; };
-		278EF33A20A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31020A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.m */; };
-		278EF33B20A0DF2F00C99C1F /* ABSDKSearchDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31220A0DF2F00C99C1F /* ABSDKSearchDataSource.h */; };
-		278EF33C20A0DF2F00C99C1F /* ABSDKSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31320A0DF2F00C99C1F /* ABSDKSearchDataSource.m */; };
-		278EF33D20A0DF2F00C99C1F /* ABSDKFilterDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31520A0DF2F00C99C1F /* ABSDKFilterDataSource.h */; };
-		278EF33E20A0DF2F00C99C1F /* ABSDKFilterDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31620A0DF2F00C99C1F /* ABSDKFilterDataSource.m */; };
-		278EF33F20A0DF2F00C99C1F /* ABSDKViewMappings.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31720A0DF2F00C99C1F /* ABSDKViewMappings.h */; };
-		278EF34020A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31820A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.h */; };
-		278EF34120A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31920A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.m */; };
-		278EF34220A0DF2F00C99C1F /* ABSDKViewMappings.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31A20A0DF2F00C99C1F /* ABSDKViewMappings.m */; };
-		278EF34320A0DF2F00C99C1F /* ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31B20A0DF2F00C99C1F /* ABSDKArrayDataSource.m */; };
 		278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31D20A0DF2F00C99C1F /* ABSDKObjectDataSource.h */; };
 		278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31E20A0DF2F00C99C1F /* ABSDKObjectDataSource.m */; };
 		278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */; };
@@ -100,10 +97,6 @@
 		104F02F45A1C47B3C7143E7F /* Pods-ABSDKCoreKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKCoreKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKCoreKit/Pods-ABSDKCoreKit.release.xcconfig"; sourceTree = "<group>"; };
 		11757839D91B73E587B41E31 /* Pods_ABSDKWalletKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABSDKWalletKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectDataSourceSpec.swift; sourceTree = "<group>"; };
-		2712816820A4B2C600530FB6 /* UITableView+ABSDKViewMappings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableView+ABSDKViewMappings.h"; sourceTree = "<group>"; };
-		2712816920A4B2C600530FB6 /* UITableView+ABSDKViewMappings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+ABSDKViewMappings.m"; sourceTree = "<group>"; };
-		2712816C20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+ABSDKViewMappings.h"; sourceTree = "<group>"; };
-		2712816D20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+ABSDKViewMappings.m"; sourceTree = "<group>"; };
 		2712817020A4C41900530FB6 /* UIImageView+ABSDKKVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ABSDKKVBinding.m"; sourceTree = "<group>"; };
 		2712817120A4C41900530FB6 /* UIView+ABSDKKVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ABSDKKVBinding.m"; sourceTree = "<group>"; };
 		2712817220A4C41900530FB6 /* UIButton+ABSDKKVBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ABSDKKVBinding.m"; sourceTree = "<group>"; };
@@ -112,22 +105,23 @@
 		2712817520A4C41900530FB6 /* UIImageView+ABSDKKVBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ABSDKKVBinding.h"; sourceTree = "<group>"; };
 		2712817E20A4EA6400530FB6 /* UIImageViewMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIImageViewMock.h; sourceTree = "<group>"; };
 		2712817F20A4EA6400530FB6 /* UIImageViewMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIImageViewMock.m; sourceTree = "<group>"; };
+		2712818320A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKArrayDataSourceSpec.swift; sourceTree = "<group>"; };
+		2712818920A6497900530FB6 /* UITableView+ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+ABSDKArrayDataSource.h"; sourceTree = "<group>"; };
+		2712818A20A6497900530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKDataStore+ABSDKArrayDataSource.h"; sourceTree = "<group>"; };
+		2712818B20A6497900530FB6 /* ABSDKFilterDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKFilterDataSource.m; sourceTree = "<group>"; };
+		2712818C20A6497900530FB6 /* UICollectionView+ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+ABSDKArrayDataSource.m"; sourceTree = "<group>"; };
+		2712818F20A6497A00530FB6 /* ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKArrayDataSource.h; sourceTree = "<group>"; };
+		2712819020A6497A00530FB6 /* ABSDKFilterDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKFilterDataSource.h; sourceTree = "<group>"; };
+		2712819120A6497A00530FB6 /* ABSDKSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKSearchDataSource.h; sourceTree = "<group>"; };
+		2712819220A6497A00530FB6 /* UICollectionView+ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+ABSDKArrayDataSource.h"; sourceTree = "<group>"; };
+		2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+ABSDKArrayDataSource.m"; sourceTree = "<group>"; };
+		2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKSearchDataSource.m; sourceTree = "<group>"; };
+		2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKArrayDataSource.m; sourceTree = "<group>"; };
+		2712819620A6497B00530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ABSDKDataStore+ABSDKArrayDataSource.m"; sourceTree = "<group>"; };
 		277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B7920A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		277E6B7E20A0DE340054707E /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B8520A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		278EF30D20A0DF2F00C99C1F /* ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKArrayDataSource.h; sourceTree = "<group>"; };
-		278EF30F20A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKViewMappingsDataSource.h; sourceTree = "<group>"; };
-		278EF31020A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ABSDKDataStore+ViewMappings.m"; sourceTree = "<group>"; };
-		278EF31220A0DF2F00C99C1F /* ABSDKSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKSearchDataSource.h; sourceTree = "<group>"; };
-		278EF31320A0DF2F00C99C1F /* ABSDKSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKSearchDataSource.m; sourceTree = "<group>"; };
-		278EF31520A0DF2F00C99C1F /* ABSDKFilterDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKFilterDataSource.h; sourceTree = "<group>"; };
-		278EF31620A0DF2F00C99C1F /* ABSDKFilterDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKFilterDataSource.m; sourceTree = "<group>"; };
-		278EF31720A0DF2F00C99C1F /* ABSDKViewMappings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKViewMappings.h; sourceTree = "<group>"; };
-		278EF31820A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKDataStore+ViewMappings.h"; sourceTree = "<group>"; };
-		278EF31920A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKViewMappingsDataSource.m; sourceTree = "<group>"; };
-		278EF31A20A0DF2F00C99C1F /* ABSDKViewMappings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKViewMappings.m; sourceTree = "<group>"; };
-		278EF31B20A0DF2F00C99C1F /* ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKArrayDataSource.m; sourceTree = "<group>"; };
 		278EF31D20A0DF2F00C99C1F /* ABSDKObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKObjectDataSource.h; sourceTree = "<group>"; };
 		278EF31E20A0DF2F00C99C1F /* ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKObjectDataSource.m; sourceTree = "<group>"; };
 		278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDataStore.m; sourceTree = "<group>"; };
@@ -315,6 +309,7 @@
 				278EF36120A0ED1700C99C1F /* ABSDKCoreKitTests-Bridging-Header.h */,
 				278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */,
 				2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */,
+				2712818320A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift */,
 				277E6B8520A0DE340054707E /* Info.plist */,
 				2712817E20A4EA6400530FB6 /* UIImageViewMock.h */,
 				2712817F20A4EA6400530FB6 /* UIImageViewMock.m */,
@@ -334,48 +329,20 @@
 		278EF30C20A0DF2F00C99C1F /* ArrayDataSource */ = {
 			isa = PBXGroup;
 			children = (
-				278EF30D20A0DF2F00C99C1F /* ABSDKArrayDataSource.h */,
-				278EF31B20A0DF2F00C99C1F /* ABSDKArrayDataSource.m */,
-				278EF30E20A0DF2F00C99C1F /* ViewMappingsDataSource */,
+				2712818F20A6497A00530FB6 /* ABSDKArrayDataSource.h */,
+				2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */,
+				2712818A20A6497900530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.h */,
+				2712819620A6497B00530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.m */,
+				2712819020A6497A00530FB6 /* ABSDKFilterDataSource.h */,
+				2712818B20A6497900530FB6 /* ABSDKFilterDataSource.m */,
+				2712819120A6497A00530FB6 /* ABSDKSearchDataSource.h */,
+				2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */,
+				2712819220A6497A00530FB6 /* UICollectionView+ABSDKArrayDataSource.h */,
+				2712818C20A6497900530FB6 /* UICollectionView+ABSDKArrayDataSource.m */,
+				2712818920A6497900530FB6 /* UITableView+ABSDKArrayDataSource.h */,
+				2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */,
 			);
 			path = ArrayDataSource;
-			sourceTree = "<group>";
-		};
-		278EF30E20A0DF2F00C99C1F /* ViewMappingsDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				278EF31820A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.h */,
-				278EF31020A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.m */,
-				278EF31720A0DF2F00C99C1F /* ABSDKViewMappings.h */,
-				278EF31A20A0DF2F00C99C1F /* ABSDKViewMappings.m */,
-				278EF30F20A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h */,
-				278EF31920A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.m */,
-				278EF31420A0DF2F00C99C1F /* FilterDataSource */,
-				278EF31120A0DF2F00C99C1F /* SearchDataSource */,
-				2712816C20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.h */,
-				2712816D20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.m */,
-				2712816820A4B2C600530FB6 /* UITableView+ABSDKViewMappings.h */,
-				2712816920A4B2C600530FB6 /* UITableView+ABSDKViewMappings.m */,
-			);
-			path = ViewMappingsDataSource;
-			sourceTree = "<group>";
-		};
-		278EF31120A0DF2F00C99C1F /* SearchDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				278EF31220A0DF2F00C99C1F /* ABSDKSearchDataSource.h */,
-				278EF31320A0DF2F00C99C1F /* ABSDKSearchDataSource.m */,
-			);
-			path = SearchDataSource;
-			sourceTree = "<group>";
-		};
-		278EF31420A0DF2F00C99C1F /* FilterDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				278EF31520A0DF2F00C99C1F /* ABSDKFilterDataSource.h */,
-				278EF31620A0DF2F00C99C1F /* ABSDKFilterDataSource.m */,
-			);
-			path = FilterDataSource;
 			sourceTree = "<group>";
 		};
 		278EF31C20A0DF2F00C99C1F /* ObjectDataSource */ = {
@@ -504,25 +471,23 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				278EF34020A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.h in Headers */,
-				2712816A20A4B2C600530FB6 /* UITableView+ABSDKViewMappings.h in Headers */,
 				278EF35A20A0DF2F00C99C1F /* ABSDKDDPClientManager.h in Headers */,
 				278EF35220A0DF2F00C99C1F /* BSONIdGenerator.h in Headers */,
+				2712819E20A6497B00530FB6 /* ABSDKFilterDataSource.h in Headers */,
 				278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */,
 				278EF35320A0DF2F00C99C1F /* DependencyProvider.h in Headers */,
+				2712819720A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.h in Headers */,
+				271281A020A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.h in Headers */,
 				278EF34720A0DF2F00C99C1F /* ABSDKDataStore.h in Headers */,
-				278EF33B20A0DF2F00C99C1F /* ABSDKSearchDataSource.h in Headers */,
-				278EF33820A0DF2F00C99C1F /* ABSDKArrayDataSource.h in Headers */,
+				2712819F20A6497B00530FB6 /* ABSDKSearchDataSource.h in Headers */,
 				2712817B20A4C41900530FB6 /* UIImageView+ABSDKKVBinding.h in Headers */,
 				2712817A20A4C41900530FB6 /* UIButton+ABSDKKVBinding.h in Headers */,
-				2712816E20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.h in Headers */,
-				278EF33920A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.h in Headers */,
-				278EF33D20A0DF2F00C99C1F /* ABSDKFilterDataSource.h in Headers */,
 				278EF35920A0DF2F00C99C1F /* ABSDKDDPClient.h in Headers */,
+				2712819820A6497B00530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.h in Headers */,
 				278EF34820A0DF2F00C99C1F /* ABSDKDataStore+Private.h in Headers */,
 				2712817920A4C41900530FB6 /* UIView+ABSDKKVBinding.h in Headers */,
+				2712819D20A6497B00530FB6 /* ABSDKArrayDataSource.h in Headers */,
 				278EF35120A0DF2F00C99C1F /* ObjectiveDDP.h in Headers */,
-				278EF33F20A0DF2F00C99C1F /* ABSDKViewMappings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,24 +1096,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				278EF33E20A0DF2F00C99C1F /* ABSDKFilterDataSource.m in Sources */,
+				271281A320A6497B00530FB6 /* ABSDKArrayDataSource.m in Sources */,
 				278EF35620A0DF2F00C99C1F /* BSONIdGenerator.m in Sources */,
 				278EF35820A0DF2F00C99C1F /* ABSDKDDPClientManager.m in Sources */,
-				278EF33C20A0DF2F00C99C1F /* ABSDKSearchDataSource.m in Sources */,
-				278EF34320A0DF2F00C99C1F /* ABSDKArrayDataSource.m in Sources */,
+				2712819A20A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.m in Sources */,
 				2712817720A4C41900530FB6 /* UIView+ABSDKKVBinding.m in Sources */,
+				271281A420A6497B00530FB6 /* ABSDKDataStore+ABSDKArrayDataSource.m in Sources */,
 				2712817620A4C41900530FB6 /* UIImageView+ABSDKKVBinding.m in Sources */,
-				278EF34120A0DF2F00C99C1F /* ABSDKViewMappingsDataSource.m in Sources */,
-				278EF33A20A0DF2F00C99C1F /* ABSDKDataStore+ViewMappings.m in Sources */,
 				278EF35720A0DF2F00C99C1F /* ABSDKDDPClient.m in Sources */,
 				278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */,
-				278EF34220A0DF2F00C99C1F /* ABSDKViewMappings.m in Sources */,
 				278EF35520A0DF2F00C99C1F /* DependencyProvider.m in Sources */,
-				2712816B20A4B2C600530FB6 /* UITableView+ABSDKViewMappings.m in Sources */,
+				271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */,
 				278EF35420A0DF2F00C99C1F /* ObjectiveDDP.m in Sources */,
+				2712819920A6497B00530FB6 /* ABSDKFilterDataSource.m in Sources */,
+				271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */,
 				278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */,
 				2712817820A4C41900530FB6 /* UIButton+ABSDKKVBinding.m in Sources */,
-				2712816F20A4B30700530FB6 /* UICollectionView+ABSDKViewMappings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1157,6 +1120,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */,
+				2712818420A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift in Sources */,
 				2712818020A4EA6400530FB6 /* UIImageViewMock.m in Sources */,
 				278EF35D20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift in Sources */,
 			);
