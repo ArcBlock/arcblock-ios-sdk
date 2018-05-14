@@ -7,3 +7,9 @@
 
 import Quick
 import Nimble
+
+class ABSDKArrayDataSourceSpec: QuickSpec {
+    override func spec() {
+
+    }
+}

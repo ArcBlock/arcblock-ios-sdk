@@ -6,7 +6,9 @@
 //
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "UITableView+ABSDKArrayDataSource.h"
+#import "UICollectionView+ABSDKArrayDataSource.h"
 
 extern NSString *const PMXArrayDataSourceDidUpdateNotification;
 
