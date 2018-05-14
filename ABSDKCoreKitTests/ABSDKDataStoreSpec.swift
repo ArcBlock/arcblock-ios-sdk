@@ -15,22 +15,22 @@ class ABSDKDataStoreSpec: QuickSpec {
         case registered, temporary
     }
 
+    struct Flags: Equatable {
+        var valueChanged = false
+        var willUpdateBlockCalled = false
+        var didUpdateBlockCalled = false
+        var didRemovedBlockCalled = false
+
+        mutating func reset() {
+            valueChanged = false
+            willUpdateBlockCalled = false
+            didUpdateBlockCalled = false
+            didRemovedBlockCalled = false
+        }
+    }
+
     override func spec() {
         describe("data store") {
-            struct Flags: Equatable {
-                var valueChanged: Bool?
-                var willUpdateBlockCalled: Bool?
-                var didUpdateBlockCalled: Bool?
-                var didRemovedBlockCalled: Bool?
-
-                mutating func reset() {
-                    valueChanged = false
-                    willUpdateBlockCalled = false
-                    didUpdateBlockCalled = false
-                    didRemovedBlockCalled = false
-                }
-            }
-
             var datastore: ABSDKDataStore!
             let key = "key"
             let initialValue = "initialValue"
@@ -42,8 +42,8 @@ class ABSDKDataStoreSpec: QuickSpec {
             var expectedFlagsForTemporaryCollection = Flags()
             var observers = [NSObjectProtocol]()
 
-            var dataStoreReadyChanged: Bool?
-            var observation: NSKeyValueObservation?
+            var dataStoreReadyChanged = false
+            var observation: NSKeyValueObservation!
 
             beforeSuite {
                 datastore = ABSDKDataStore.sharedInstance()
@@ -284,7 +284,7 @@ class ABSDKDataStoreSpec: QuickSpec {
             })
 
             afterSuite {
-                observation?.invalidate()
+                observation.invalidate()
                 observers.forEach({ (notificationObserver) in
                     NotificationCenter.default.removeObserver(notificationObserver)
                 })
