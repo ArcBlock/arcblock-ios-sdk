@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UIView+ABSDKKVBinding.h"
 
 @interface ABSDKObjectDataSource : NSObject
 

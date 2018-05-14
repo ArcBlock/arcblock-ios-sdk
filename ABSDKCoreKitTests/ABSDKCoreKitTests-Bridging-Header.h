@@ -4,5 +4,7 @@
 
 #import "ABSDKDataStore.h"
 #import "ABSDKObjectDataSource.h"
-#import "UIView+ABSDKKVBinding.h"
+#import "ABSDKArrayDataSource.h"
+#import "ABSDKFilterDataSource.h"
+#import "ABSDKSearchDataSource.h"
 #import "UIImageViewMock.h"
