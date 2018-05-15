@@ -10,12 +10,13 @@
 #import "ABSDKDataStore.h"
 #import <KVOController/KVOController.h>
 
+NSString *const ABSDKObjectDataSourceDidUpdateNotification = @"ABSDKObjectDataSourceDidUpdateNotification";
+
 @interface ABSDKObjectDataSource ()
 
 @property (nonatomic, strong) FBKVOController *kvoController;
 @property (nonatomic, strong) NSString *collection;
 @property (nonatomic, strong) NSString *key;
-@property (nonatomic, assign) BOOL updated;
 
 @end
 
@@ -45,9 +46,9 @@
         _kvoController = [FBKVOController controllerWithObserver:self];
         __weak typeof(self) wself = self;
         [_kvoController observe:[ABSDKDataStore sharedInstance] keyPath:@"dataStoreReady" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-            wself.updated = YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKObjectDataSourceDidUpdateNotification object:wself];
         }];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:ABSDKDataStoreModifiedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:ABSDKDataStoreModifiedNotification object:[ABSDKDataStore sharedInstance]];
     }
     return self;
 }
@@ -60,8 +61,7 @@
 - (void)dataStoreModified:(NSNotification *)notification
 {
     if ([[ABSDKDataStore sharedInstance] hasChangeForKey:_key inCollection:_collection notification:notification]) {
-        NSLog(@"data source updated: %@, %@", _collection, _key);
-        self.updated = YES;
+        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKObjectDataSourceDidUpdateNotification object:self];
     }
 }
 

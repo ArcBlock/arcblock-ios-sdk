@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UIView+ABSDKKVBinding.h"
+
+extern NSString *const ABSDKObjectDataSourceDidUpdateNotification;
 
 @interface ABSDKObjectDataSource : NSObject
 
 @property (nonatomic, strong, readonly) NSString *collection;
 @property (nonatomic, strong, readonly) NSString *key;
-@property (nonatomic, readonly) BOOL updated;
 
 + (ABSDKObjectDataSource*)objectDataSourceWithCollection:(NSString*)collection key:(NSString*)key;
 - (id)fetchObject;

@@ -1,14 +1,14 @@
 //
-//  UIButton+ABSDKKVBinding.m
+//  UIButton+ABSDKObjectDataSource.m
 //  Pods
 //
 //  Created by Jonathan Lu on 16/11/2015.
 //
 //
 
-#import "UIButton+ABSDKKVBinding.h"
+#import "UIButton+ABSDKObjectDataSource.h"
 
-@implementation UIButton (ABSDKKVBinding)
+@implementation UIButton (ABSDKObjectDataSource)
 
 - (void)setTitle:(NSString*)title
 {

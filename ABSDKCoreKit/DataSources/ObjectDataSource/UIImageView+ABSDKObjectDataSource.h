@@ -1,5 +1,5 @@
 //
-//  UIImageView+ABSDKKVBinding.h
+//  UIImageView+ABSDKObjectDataSource.h
 //  PixoClub
 //
 //  Created by Robert Mao on 1/7/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIImageView (ABSDKKVBinding)
+@interface UIImageView (ABSDKObjectDataSource)
 
 @property (nonatomic) NSString* imageUrl;
 

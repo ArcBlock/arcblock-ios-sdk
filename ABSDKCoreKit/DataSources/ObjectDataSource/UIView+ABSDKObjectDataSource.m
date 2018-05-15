@@ -6,12 +6,23 @@
 //  Copyright (c) 2014 LOCQL INC. All rights reserved.
 //
 
-#import "UIView+ABSDKKVBinding.h"
+#import "UIView+ABSDKObjectDataSource.h"
 #import <objc/runtime.h>
 
 static char const * const UndefinedObjectsDictKey = "UndefinedObjectsDict";
 
-@implementation UIView (ABSDKKVBinding)
+@implementation UIView (ABSDKObjectDataSource)
+
+- (void)observeObjectDataSource:(ABSDKObjectDataSource*)objectDataSource updatedBlock:(void (^)(void))updatedBlock
+{
+    __weak typeof(self) wself = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:ABSDKObjectDataSourceDidUpdateNotification object:objectDataSource queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
+        [wself updateWithObject:[objectDataSource fetchObject]];
+        if (updatedBlock) {
+            updatedBlock();
+        }
+    }];
+}
 
 #pragma mark - Overrides
 

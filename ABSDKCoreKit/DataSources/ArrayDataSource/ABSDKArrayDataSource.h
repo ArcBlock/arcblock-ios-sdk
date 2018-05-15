@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UITableView+ABSDKArrayDataSource.h"
-#import "UICollectionView+ABSDKArrayDataSource.h"
+#import <UIKit/UIKit.h>
 
-extern NSString *const PMXArrayDataSourceDidUpdateNotification;
+extern NSString *const ABSDKArrayDataSourceDidUpdateNotification;
 
 typedef NSString* (^ABSDKArrayDataSourceGroupingBlock)(NSString *collection, NSString *key, NSDictionary *object);
 typedef NSComparisonResult (^ABSDKArrayDataSourceSortingBlock) (NSString *group, NSString *collection1, NSString *key1, NSDictionary *object1, NSString *collection2, NSString *key2, NSDictionary *object2);
@@ -21,7 +20,6 @@ typedef void (^ABSDKArrayDataSourceSearchBlock)(NSMutableDictionary*dict, NSStri
 
 @property (nonatomic, strong, readonly) NSString* identifier;
 @property (nonatomic, readonly) NSArray *sections;
-@property (nonatomic, readonly) BOOL ready;
 @property (nonatomic, readonly) BOOL isLoading;
 @property (nonatomic, readonly) BOOL hasMore;
 @property (nonatomic, readonly) BOOL empty;
@@ -29,11 +27,11 @@ typedef void (^ABSDKArrayDataSourceSearchBlock)(NSMutableDictionary*dict, NSStri
 @property (nonatomic) NSInteger limit;
 
 - (id)initWithIdentifier:(NSString*)identifier sections:(NSArray*)sections grouping:(ABSDKArrayDataSourceGroupingBlock)grouping sorting:(ABSDKArrayDataSourceSortingBlock)sorting;
-- (void)setupView:(id)databaseView;
 - (void)loadData;
+- (NSArray*)allItems;
+
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfItemsForSection:(NSInteger)section;
 - (NSDictionary*)objectAtIndexPath:(NSIndexPath*)indexPath;
-- (NSArray*)allItems;
 
 @end

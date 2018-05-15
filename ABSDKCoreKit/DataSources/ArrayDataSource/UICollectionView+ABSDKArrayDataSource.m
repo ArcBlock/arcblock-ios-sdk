@@ -10,6 +10,21 @@
 
 @implementation UICollectionView (ABSDKArrayDataSource)
 
+- (void)observeArrayDataSource:(ABSDKArrayDataSource*)arrayDataSource updatedBlock:(void (^)(void))updatedBlock
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:ABSDKArrayDataSourceDidUpdateNotification object:arrayDataSource queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
+        if (notification.userInfo) {
+            [self updateWithSectionChanges:notification.userInfo[@"sectionChanges"] rowChanges:notification.userInfo[@"rowChanges"] completion:nil];
+        }
+        else {
+            [self reloadData];
+        }
+        if (updatedBlock) {
+            updatedBlock();
+        }
+    }];
+}
+
 - (void)updateWithSectionChanges:(NSArray*)sectionChanges rowChanges:(NSArray*)rowChanges completion:(void (^)(BOOL finished))completion
 {
     __weak typeof(self) wself = self;

@@ -52,7 +52,7 @@ class ABSDKDataStoreSpec: QuickSpec {
                 // observe data store modified event
                 var notificationObserver = NotificationCenter.default.addObserver(
                     forName: Notification.Name.ABSDKDataStoreModified,
-                    object: nil,
+                    object: datastore,
                     queue: nil,
                     using: { (notification) in
                         flagsForRegisteredCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.registered.rawValue, notification: notification)
@@ -62,7 +62,7 @@ class ABSDKDataStoreSpec: QuickSpec {
 
                 notificationObserver = NotificationCenter.default.addObserver(
                     forName: Notification.Name.ABSDKDataStoreModified,
-                    object: nil,
+                    object: datastore,
                     queue: nil,
                     using: { (notification) in
                         flagsForTemporaryCollection.valueChanged = datastore.hasChange(forKey: key, inCollection: Collection.temporary.rawValue, notification: notification)
