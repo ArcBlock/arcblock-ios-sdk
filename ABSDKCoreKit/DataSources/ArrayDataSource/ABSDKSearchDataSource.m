@@ -7,7 +7,8 @@
 //
 
 #import "ABSDKSearchDataSource.h"
-#import "ABSDKDataStore+ABSDKArrayDataSource.h"
+#import "ABSDKArrayDataSource+Private.h"
+#import "ABSDKDataStore+Private.h"
 #import <YapDatabase/YapDatabaseViewMappings.h>
 #import <YapDatabase/YapDatabaseFullTextSearch.h>
 #import <YapDatabase/YapDatabaseSearchResultsView.h>
@@ -18,14 +19,13 @@
 @property (nonatomic, strong) NSArray *sections;
 @property (nonatomic, strong) YapDatabaseViewMappings *viewMappings;
 @property (nonatomic, strong) NSArray *columnNames;
-@property (nonatomic, assign) BOOL ready;
+@property (nonatomic, strong) YapDatabaseFullTextSearch *fts;
 
 @end
 
 @implementation ABSDKSearchDataSource
 @synthesize identifier = _identifier;
 @synthesize sections = _sections;
-@synthesize ready = _ready;
 
 - (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource collumnNames:(NSArray*)collumnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock
 {
@@ -36,22 +36,12 @@
         _columnNames = collumnNames;
 
         YapDatabaseFullTextSearchHandler *ftsHandler = [YapDatabaseFullTextSearchHandler withObjectBlock:searchBlock];
-        YapDatabaseFullTextSearch *fts = [[YapDatabaseFullTextSearch alloc] initWithColumnNames:_columnNames handler:ftsHandler];
+        _fts = [[YapDatabaseFullTextSearch alloc] initWithColumnNames:_columnNames handler:ftsHandler];
 
         YapDatabaseSearchResultsViewOptions *options = [[YapDatabaseSearchResultsViewOptions alloc] init];
         options.isPersistent = NO;
         NSString *ftsName = [NSString stringWithFormat:@"%@-fts", _identifier];
-        YapDatabaseSearchResultsView *databaseView = [[YapDatabaseSearchResultsView alloc] initWithFullTextSearchName:ftsName parentViewName:parentDataSource.identifier versionTag:0 options:options];
-
-        __weak typeof(self) wself = self;
-        [[ABSDKDataStore sharedInstance] registerExtension:fts withName:ftsName completionBlock:^(BOOL ready) {
-            if (ready) {
-                [wself setupView:databaseView];
-            }
-            else {
-                wself.ready = ready;
-            }
-        }];
+        self.databaseView = [[YapDatabaseSearchResultsView alloc] initWithFullTextSearchName:ftsName parentViewName:parentDataSource.identifier versionTag:0 options:options];
     }
     return self;
 }
@@ -65,7 +55,7 @@
         _columnNames = columnNames;
 
         YapDatabaseFullTextSearchHandler *ftsHandler = [YapDatabaseFullTextSearchHandler withObjectBlock:searchBlock];
-        YapDatabaseFullTextSearch *fts = [[YapDatabaseFullTextSearch alloc] initWithColumnNames:_columnNames handler:ftsHandler];
+        _fts = [[YapDatabaseFullTextSearch alloc] initWithColumnNames:_columnNames handler:ftsHandler];
 
         YapDatabaseSearchResultsViewOptions *options = [[YapDatabaseSearchResultsViewOptions alloc] init];
         options.isPersistent = NO;
@@ -76,19 +66,22 @@
             return sorting(group, collection1, key1, object1, collection2, key2, object2);
         }];
         NSString *ftsName = [NSString stringWithFormat:@"%@-fts", _identifier];
-        YapDatabaseSearchResultsView *databaseView = [[YapDatabaseSearchResultsView alloc] initWithFullTextSearchName:ftsName grouping:databaseViewGrouping sorting:databaseViewSorting versionTag:0 options:options];
-
-        __weak typeof(self) wself = self;
-        [[ABSDKDataStore sharedInstance] registerExtension:fts withName:ftsName completionBlock:^(BOOL ready) {
-            if (ready) {
-                [wself setupView:databaseView];
-            }
-            else {
-                wself.ready = ready;
-            }
-        }];
+        self.databaseView = [[YapDatabaseSearchResultsView alloc] initWithFullTextSearchName:ftsName grouping:databaseViewGrouping sorting:databaseViewSorting versionTag:0 options:options];
     }
     return self;
+}
+
+- (void)resetView
+{
+    [[ABSDKDataStore sharedInstance].database unregisterExtensionWithName:((YapDatabaseSearchResultsView*)self.databaseView).fullTextSearchName];
+    [super resetView];
+}
+
+- (void)setupView
+{
+
+    [[ABSDKDataStore sharedInstance].database asyncRegisterExtension:_fts withName:((YapDatabaseSearchResultsView*)self.databaseView).fullTextSearchName completionBlock:nil];
+    [super setupView];
 }
 
 - (void)search:(NSString*)searchString
@@ -105,8 +98,11 @@
 
         [query appendFormat:@"%@*", term];
     }
-    NSLog(@"%@", query);
-    [[ABSDKDataStore sharedInstance] search:query mappings:_viewMappings];
+
+    __weak typeof(self) wself = self;
+    [[ABSDKDataStore sharedInstance].readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+        [[transaction ext:wself.viewMappings.view] performSearchFor:query];
+    }];
 }
 
 @end

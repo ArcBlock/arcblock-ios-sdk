@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 LOCQL INC. All rights reserved.
 //
 
-#import "UIImageView+ABSDKKVBinding.h"
+#import "UIImageView+ABSDKObjectDataSource.h"
 #import "UIImageView+WebCache.h"
 
-@implementation UIImageView (ABSDKKVBinding)
+@implementation UIImageView (ABSDKObjectDataSource)
 
 - (void)setImageUrl:(NSString *)imageUrl
 {

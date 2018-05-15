@@ -7,11 +7,13 @@
 //
 
 #import "ABSDKArrayDataSource.h"
-#import "ABSDKDataStore+ABSDKArrayDataSource.h"
+#import "ABSDKArrayDataSource+Private.h"
 #import <YapDatabase/YapDatabaseAutoView.h>
 #import <YapDatabase/YapDatabaseViewMappings.h>
+#import "ABSDKDataStore+Private.h"
+#import "FBKVOController.h"
 
-NSString *const PMXArrayDataSourceDidUpdateNotification = @"PMXArrayDataSourceDidUpdateNotification";
+NSString *const ABSDKArrayDataSourceDidUpdateNotification = @"ABSDKArrayDataSourceDidUpdateNotification";
 
 @interface ABSDKArrayDataSource ()
 
@@ -20,9 +22,9 @@ NSString *const PMXArrayDataSourceDidUpdateNotification = @"PMXArrayDataSourceDi
 @property (nonatomic, assign) BOOL ready;
 @property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, assign) BOOL hasMore;
-@property (nonatomic, assign) BOOL empty;
-
+@property (nonatomic, strong) FBKVOController *kvoController;
 @property (nonatomic, strong) YapDatabaseViewMappings *viewMappings;
+@property (nonatomic, strong) YapDatabaseView *databaseView;
 
 @end
 
@@ -33,14 +35,15 @@ NSString *const PMXArrayDataSourceDidUpdateNotification = @"PMXArrayDataSourceDi
     self = [super init];
     if (self) {
         _limit = -1;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:ABSDKDataStoreModifiedNotification object:nil];
+        _kvoController = [FBKVOController controllerWithObserver:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataStoreModified:) name:ABSDKDataStoreModifiedNotification object:[ABSDKDataStore sharedInstance]];
     }
     return self;
 }
 
 - (id)initWithIdentifier:(NSString*)identifier sections:(NSArray*)sections grouping:(ABSDKArrayDataSourceGroupingBlock)grouping sorting:(ABSDKArrayDataSourceSortingBlock)sorting
 {
-    self = [super init];
+    self = [self init];
     if (self) {
         _identifier = identifier;
         _sections = sections;
@@ -51,56 +54,84 @@ NSString *const PMXArrayDataSourceDidUpdateNotification = @"PMXArrayDataSourceDi
         YapDatabaseViewSorting *databaseViewSorting = [YapDatabaseViewSorting withObjectBlock:^NSComparisonResult(YapDatabaseReadTransaction * _Nonnull transaction, NSString * _Nonnull group, NSString * _Nonnull collection1, NSString * _Nonnull key1, id  _Nonnull object1, NSString * _Nonnull collection2, NSString * _Nonnull key2, id  _Nonnull object2) {
             return sorting(group, collection1, key1, object1, collection2, key2, object2);
         }];
-        YapDatabaseAutoView *databaseView = [[YapDatabaseAutoView alloc] initWithGrouping:databaseViewGrouping sorting:databaseViewSorting];
-        [self setupView:databaseView];
+
+        self.databaseView = [[YapDatabaseAutoView alloc] initWithGrouping:databaseViewGrouping sorting:databaseViewSorting];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [[ABSDKDataStore sharedInstance] unregisterExtensionWithName:_identifier];
+    [self resetView];
+}
+
+- (void)setDatabaseView:(YapDatabaseView *)databaseView
+{
+    _databaseView = databaseView;
+    __weak typeof(self) wself = self;
+    [_kvoController observe:[ABSDKDataStore sharedInstance] keyPath:@"dataStoreReady" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        if ([ABSDKDataStore sharedInstance].dataStoreReady) {
+            [wself setupView];
+        }
+        else {
+            [wself resetView];
+        }
+    }];
+
+    if ([ABSDKDataStore sharedInstance].dataStoreReady) {
+        [self setupView];
+    }
+}
+
+- (void)resetView
+{
+    [[ABSDKDataStore sharedInstance].database unregisterExtensionWithName:_identifier];
+    self.viewMappings = nil;
+    [self loadData];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setupView:(id)databaseView
+- (void)setupView
 {
-    if (![databaseView isKindOfClass:[YapDatabaseView class]]) {
-        return;
-    }
     __weak typeof(self) wself = self;
-    [[ABSDKDataStore sharedInstance] registerExtension:databaseView withName:_identifier completionBlock:^(BOOL ready) {
+    [[ABSDKDataStore sharedInstance].database asyncRegisterExtension:_databaseView withName:_identifier completionBlock:^(BOOL ready) {
         if (ready) {
             wself.viewMappings = [[YapDatabaseViewMappings alloc] initWithGroups:wself.sections view:wself.identifier];
             [wself loadData];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKArrayDataSourceDidUpdateNotification object:self];
         }
-        wself.ready = ready;
     }];
 }
 
 - (void)loadData
 {
-    [[ABSDKDataStore sharedInstance] updateArrayDataMappings:_viewMappings];
+    __weak typeof(self) wself = self;
+    [[ABSDKDataStore sharedInstance].readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+        [wself.viewMappings updateWithTransaction:transaction];
+    }];
 }
 
 - (void)dataStoreModified:(NSNotification *)notification
 {
+    if ([notification.userInfo[@"inMemory"] boolValue]) {
+        return;
+    }
     NSArray *notifications = notification.userInfo[@"notifications"];
 
-    if (![[ABSDKDataStore sharedInstance] hasChangesForNotifications:notifications mappings:_viewMappings]) {
+    if (![[[ABSDKDataStore sharedInstance].readConnection ext:_viewMappings.view] hasChangesForNotifications:notifications]) {
         [self loadData];
         return;
     }
-
+    
     NSArray *sectionChanges = nil;
     NSArray *rowChanges = nil;
-    [[ABSDKDataStore sharedInstance] sectionChanges:&sectionChanges rowChanges:&rowChanges forNotifications:notifications withMappings:_viewMappings];
+    [[[ABSDKDataStore sharedInstance].readConnection ext:_viewMappings.view] getSectionChanges:&sectionChanges rowChanges:&rowChanges forNotifications:notifications withMappings:_viewMappings];
     if ([sectionChanges count] == 0 && [rowChanges count] == 0)
     {
         return;
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:PMXArrayDataSourceDidUpdateNotification object:self userInfo:@{@"sectionChanges": sectionChanges, @"rowChanges": rowChanges, @"notifications": notifications}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKArrayDataSourceDidUpdateNotification object:self userInfo:@{@"sectionChanges": sectionChanges, @"rowChanges": rowChanges, @"notifications": notifications}];
 }
 
 - (NSInteger)numberOfSections
@@ -115,7 +146,12 @@ NSString *const PMXArrayDataSourceDidUpdateNotification = @"PMXArrayDataSourceDi
 
 - (NSDictionary*)objectAtIndexPath:(NSIndexPath*)indexPath
 {
-    return [[ABSDKDataStore sharedInstance] objectAtIndexPath:indexPath withMappings:_viewMappings];
+    __block id result;
+    __weak typeof(self) wself = self;
+    [[ABSDKDataStore sharedInstance].readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction){
+        result = [[transaction ext:wself.viewMappings.view] objectAtIndexPath:indexPath withMappings:wself.viewMappings];
+    }];
+    return result;
 }
 
 - (BOOL)isEmpty{

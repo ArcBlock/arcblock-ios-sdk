@@ -7,7 +7,7 @@
 //
 
 #import "ABSDKFilterDataSource.h"
-#import "ABSDKDataStore+ABSDKArrayDataSource.h"
+#import "ABSDKArrayDataSource+Private.h"
 #import <YapDatabase/YapDatabaseViewMappings.h>
 #import <YapDatabase/YapDatabaseFilteredView.h>
 
@@ -38,8 +38,7 @@
 
         YapDatabaseViewOptions *options = [[YapDatabaseViewOptions alloc] init];
         options.isPersistent = NO;
-        YapDatabaseFilteredView *filteredView = [[YapDatabaseFilteredView alloc] initWithParentViewName:parentDataSource.identifier filtering:filtering versionTag:0 options:options];
-        [self setupView:filteredView];
+        self.databaseView = [[YapDatabaseFilteredView alloc] initWithParentViewName:parentDataSource.identifier filtering:filtering versionTag:0 options:options];
     }
     return self;
 }

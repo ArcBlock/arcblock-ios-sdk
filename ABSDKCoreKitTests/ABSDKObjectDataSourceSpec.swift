@@ -20,7 +20,6 @@ class ABSDKObjectDataSourceSpec: QuickSpec {
             let mockImage = UIImage.init()
 
             var dataSource: ABSDKObjectDataSource!
-            var observation: NSKeyValueObservation!
             var dataSourceUpdated = false
             var label: UILabel!
             var imageView: UIImageViewMock!
@@ -41,9 +40,8 @@ class ABSDKObjectDataSourceSpec: QuickSpec {
                 view.addSubview(button)
 
                 dataSource = ABSDKObjectDataSource(collection: collection, key: key)
-                observation = dataSource.observe(\.updated, options: NSKeyValueObservingOptions.new, changeHandler: { (_, _) in
+                view.observe(dataSource, updatedBlock: {
                     dataSourceUpdated = true
-                    view.update(with: dataSource.fetchObject())
                 })
             }
 
@@ -125,10 +123,6 @@ class ABSDKObjectDataSourceSpec: QuickSpec {
                     })
                 })
             })
-
-            afterSuite {
-                observation.invalidate()
-            }
         }
     }
 }

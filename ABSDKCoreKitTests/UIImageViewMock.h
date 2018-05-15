@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageView+ABSDKKVBinding.h"
+#import "UIImageView+ABSDKObjectDataSource.h"
 
 @interface UIImageViewMock : UIImageView
 

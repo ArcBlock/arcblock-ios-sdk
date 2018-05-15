@@ -116,7 +116,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     if (!notifications.count) {
         return;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"notifications": notifications}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:self userInfo:@{@"notifications": notifications}];
 }
 
 
@@ -188,7 +188,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         }
         [collectionDict setObject:object forKey:key];
         [_tempDataStore setObject:collectionDict forKey:collection];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key, @"object": object}]}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:self userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key, @"object": object}]}];
         // perform post-update actions in data store level
         ABSDKDataStoreDidUpdateBlock didUpdateBlock = [_dataStoreDidUpdateBlocks objectForKey:collection];
         if (didUpdateBlock) {
@@ -237,7 +237,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         if ([collectionToRemoveObject objectForKey:key]) {
             [collectionToRemoveObject removeObjectForKey:key];
             [_tempDataStore setObject:collectionToRemoveObject forKey:collection];
-            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key}]}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:self userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key}]}];
             ABSDKDataStoreDidRemoveBlock didRemoveBlock = [_dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
