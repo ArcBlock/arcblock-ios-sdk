@@ -10,6 +10,6 @@ import Nimble
 
 class ABSDKWalletKitSpec: QuickSpec {
     override func spec() {
-        
+
     }
 }

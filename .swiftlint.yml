@@ -1,2 +1,7 @@
 excluded:
   - Pods
+
+line_length:
+  warning: 200
+  ignores_function_declarations: true
+  ignores_comments: true

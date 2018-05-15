@@ -6,15 +6,18 @@
 //  Copyright (c) 2014 LOCQL INC. All rights reserved.
 //
 
-#import "UIImageView+KVBinding.h"
+#import "UIImageView+ABSDKObjectDataSource.h"
 #import "UIImageView+WebCache.h"
 
-@implementation UIImageView (KVBinding)
+@implementation UIImageView (ABSDKObjectDataSource)
 
 - (void)setImageUrl:(NSString *)imageUrl
 {
     if (![imageUrl isEqual:[NSNull null]] && imageUrl.length) {
         [self sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    }
+    else {
+        self.image = nil;
     }
 }
 

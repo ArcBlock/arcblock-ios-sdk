@@ -116,7 +116,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     if (!notifications.count) {
         return;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"notifications": notifications}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:self userInfo:@{@"notifications": notifications}];
 }
 
 
@@ -137,11 +137,42 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     return isRegistered;
 }
 
-- (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock
+- (void)setDataStoreWillUpdateBlockForCollection:(NSString*)collection block:(ABSDKDataStoreWillUpdateBlock)block
+{
+    _dataStoreWillUpdateBlocks[collection] = block;
+}
+
+- (void)setDataStoreDidUpdateBlockForCollection:(NSString*)collection block:(ABSDKDataStoreDidUpdateBlock)block
+{
+    _dataStoreDidUpdateBlocks[collection] = block;
+}
+
+- (void)setDataStoreDidRemoveBlockForCollection:(NSString*)collection block:(ABSDKDataStoreDidRemoveBlock)block
+{
+    _dataStoreDidRemoveBlocks[collection] = block;
+}
+
+- (NSDictionary*)formatObject:(NSDictionary*)object key:(NSString*)key
+{
+    // format every object to an dictionary with a _id key
+    if (![object isKindOfClass:[NSDictionary class]]) {
+        return @{@"_id": key, @"value": object};
+    }
+    else if (object[@"_id"] == nil){
+        NSMutableDictionary *tmpObject = [NSMutableDictionary dictionaryWithObject:key forKey:@"_id"];
+        [tmpObject addEntriesFromDictionary:object];
+        return [NSDictionary dictionaryWithDictionary:tmpObject];
+    }
+    return object;
+}
+
+- (void)setObject:(NSDictionary*)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock
 {
     if (!key.length || !collection.length) {
         return;
     }
+
+    object = [self formatObject:object key:key];
     
     if (![self isRegisteredCollections:collection]) {
         ABSDKDataStoreWillUpdateBlock willUpdateBlock = [_dataStoreWillUpdateBlocks objectForKey:collection];
@@ -157,7 +188,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         }
         [collectionDict setObject:object forKey:key];
         [_tempDataStore setObject:collectionDict forKey:collection];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key, @"object": object}]}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:self userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key, @"object": object}]}];
         // perform post-update actions in data store level
         ABSDKDataStoreDidUpdateBlock didUpdateBlock = [_dataStoreDidUpdateBlocks objectForKey:collection];
         if (didUpdateBlock) {
@@ -169,32 +200,28 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     }
     else {
         __weak typeof(self) wself = self;
+        __block BOOL ignoreUpdate = NO;
+        __block typeof(NSDictionary*) bobject = object;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
-            id oldObject = [transaction objectForKey:key inCollection:collection];
+            NSDictionary *currentObject = [transaction objectForKey:key inCollection:collection];
             
             ABSDKDataStoreWillUpdateBlock willUpdateBlock = [wself.dataStoreWillUpdateBlocks objectForKey:collection];
-            id objectToUpdate;
             if (willUpdateBlock) {
-                objectToUpdate = willUpdateBlock(collection, key, object);
-            }
-            else {
-                objectToUpdate = object;
+                bobject = willUpdateBlock(collection, key, object);
             }
             
-            NSLog(@"setObject: %@, %@, %@, %@", key, collection, object, objectToUpdate);
-            
-            if ([objectToUpdate isEqual:oldObject]) {
+            if ([bobject isEqual:currentObject]) {
+                ignoreUpdate = YES;
                 return;
             }
-            
-            transaction.yapDatabaseModifiedNotificationCustomObject = objectToUpdate;
-            [transaction setObject:objectToUpdate forKey:key inCollection:collection];
+
+            transaction.yapDatabaseModifiedNotificationCustomObject = @{@"collection": collection, @"key":key, @"object": bobject};
+            [transaction setObject:bobject forKey:key inCollection:collection];
         } completionBlock:^{
             // perform post-update actions in data store level
-            NSLog(@"complete set object");
             ABSDKDataStoreDidUpdateBlock didUpdateBlock = [wself.dataStoreDidUpdateBlocks objectForKey:collection];
-            if (didUpdateBlock) {
-                didUpdateBlock(collection, key, object);
+            if (didUpdateBlock && !ignoreUpdate) {
+                didUpdateBlock(collection, key, bobject);
             }
             if (completionBlock) {
                 completionBlock();
@@ -210,7 +237,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         if ([collectionToRemoveObject objectForKey:key]) {
             [collectionToRemoveObject removeObjectForKey:key];
             [_tempDataStore setObject:collectionToRemoveObject forKey:collection];
-            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:nil userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key}]}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ABSDKDataStoreModifiedNotification object:self userInfo:@{@"inMemory":@(YES), @"notifications": @[@{@"collection": collection, @"key":key}]}];
             ABSDKDataStoreDidRemoveBlock didRemoveBlock = [_dataStoreDidRemoveBlocks objectForKey:collection];
             if (didRemoveBlock) {
                 didRemoveBlock(collection, key);
@@ -224,10 +251,8 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         __weak typeof(self) wself = self;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             if ([transaction objectForKey:key inCollection:collection]) {
-                if ([collection isEqualToString:@"message"]) {
-                    NSDictionary *transactionExtendedInfo = @{@"deleteMessage": key};
-                    transaction.yapDatabaseModifiedNotificationCustomObject = transactionExtendedInfo;
-                }
+                NSDictionary *transactionExtendedInfo = @{@"collection": collection, @"key": key};
+                transaction.yapDatabaseModifiedNotificationCustomObject = transactionExtendedInfo;
                 [transaction removeObjectForKey:key inCollection:collection];
             }
         } completionBlock:^{
@@ -242,21 +267,21 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     }
 }
 
-- (id)objectForKey:(NSString*)key inCollection:(NSString*)collection
+- (NSDictionary*)objectForKey:(NSString*)key inCollection:(NSString*)collection
 {
-    __block id result;
+    __block NSDictionary *object;
     if (![self isRegisteredCollections:collection]) {
-        result = [[_tempDataStore objectForKey:collection] objectForKey:key];
+        object = [[_tempDataStore objectForKey:collection] objectForKey:key];
     }
     else {
         [_readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
-            result = [transaction objectForKey:key inCollection:collection];
+            object = [transaction objectForKey:key inCollection:collection];
         }];
     }
-    return result;
+    return object;
 }
 
-- (void)enumerateKeysAndObjectsInCollection:(nullable NSString *)collection usingBlock:(void (^)(NSString *key, id object, BOOL *stop))block
+- (void)enumerateKeysAndObjectsInCollection:(NSString *)collection usingBlock:(void (^)(NSString *key, NSDictionary *object, BOOL *stop))block
 {
     if (![self isRegisteredCollections:collection]) {
         NSDictionary *collectionDictionary = [_tempDataStore objectForKey:collection];
@@ -271,7 +296,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
 
 - (NSArray*)allKeysInCollection:(NSString*)collection
 {
-    __block id result;
+    __block NSArray *result;
     if (![self isRegisteredCollections:collection]) {
         result = [[_tempDataStore objectForKey:collection] allKeys];
     }
