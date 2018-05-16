@@ -19,3 +19,4 @@ deploy:
   file: build/ArcBlockSDK.zip
   on:
     repo: ArcBlock/arcblock-ios-sdk
+    all_branches: true
