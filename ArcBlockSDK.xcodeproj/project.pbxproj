@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04C328F1EA6D4D9F19F4D994 /* Pods_ABSDKCoreKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72782B0D935A9788EF65648 /* Pods_ABSDKCoreKitTests.framework */; };
-		1CB7A091C22D199CD5C16CB9 /* Pods_ABSDKMessagingKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A9C37E6C4B6065C11CA917 /* Pods_ABSDKMessagingKitTests.framework */; };
 		2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */; };
 		2712817620A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817020A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m */; };
 		2712817720A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817120A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m */; };
@@ -34,16 +32,6 @@
 		278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */; };
 		278EF34720A0DF2F00C99C1F /* ABSDKDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32120A0DF2F00C99C1F /* ABSDKDataStore.h */; };
 		278EF34820A0DF2F00C99C1F /* ABSDKDataStore+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */; };
-		278EF35120A0DF2F00C99C1F /* ObjectiveDDP.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32E20A0DF2F00C99C1F /* ObjectiveDDP.h */; };
-		278EF35220A0DF2F00C99C1F /* BSONIdGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32F20A0DF2F00C99C1F /* BSONIdGenerator.h */; };
-		278EF35320A0DF2F00C99C1F /* DependencyProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF33020A0DF2F00C99C1F /* DependencyProvider.h */; };
-		278EF35420A0DF2F00C99C1F /* ObjectiveDDP.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF33120A0DF2F00C99C1F /* ObjectiveDDP.m */; };
-		278EF35520A0DF2F00C99C1F /* DependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF33220A0DF2F00C99C1F /* DependencyProvider.m */; };
-		278EF35620A0DF2F00C99C1F /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF33320A0DF2F00C99C1F /* BSONIdGenerator.m */; };
-		278EF35720A0DF2F00C99C1F /* ABSDKDDPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF33420A0DF2F00C99C1F /* ABSDKDDPClient.m */; };
-		278EF35820A0DF2F00C99C1F /* ABSDKDDPClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF33520A0DF2F00C99C1F /* ABSDKDDPClientManager.m */; };
-		278EF35920A0DF2F00C99C1F /* ABSDKDDPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF33620A0DF2F00C99C1F /* ABSDKDDPClient.h */; };
-		278EF35A20A0DF2F00C99C1F /* ABSDKDDPClientManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF33720A0DF2F00C99C1F /* ABSDKDDPClientManager.h */; };
 		278EF35D20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */; };
 		278EF37220A0F54D00C99C1F /* ABSDKAccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EF36920A0F54D00C99C1F /* ABSDKAccountKit.framework */; };
 		278EF37920A0F54D00C99C1F /* ABSDKAccountKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF36B20A0F54D00C99C1F /* ABSDKAccountKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -54,9 +42,21 @@
 		278EF3BA20A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3B920A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift */; };
 		278EF3BD20A1009000C99C1F /* ABSDKWalletKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BC20A1009000C99C1F /* ABSDKWalletKitSpec.swift */; };
 		278EF3C020A100E000C99C1F /* ABSDKAccountKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */; };
-		3A949555574BA538B3850591 /* Pods_ABSDKAccountKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BB53B812D94613DB8D5B038 /* Pods_ABSDKAccountKitTests.framework */; };
-		81361AC7031CF9917F1B28AB /* Pods_ABSDKWalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11757839D91B73E587B41E31 /* Pods_ABSDKWalletKitTests.framework */; };
-		EEF2C17CB30E9D3A542850FD /* Pods_ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3484DCF101A66AF5964775DF /* Pods_ABSDKCoreKit.framework */; };
+		279CD42E20AC9EB5009E1348 /* YapDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD42D20AC9EB5009E1348 /* YapDatabase.framework */; };
+		279CD43D20AC9F37009E1348 /* KVOController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD43A20AC9F37009E1348 /* KVOController.framework */; };
+		279CD43E20AC9F37009E1348 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD43B20AC9F37009E1348 /* SDWebImage.framework */; };
+		279CD43F20AC9F37009E1348 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */; };
+		279CD44220AC9F46009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
+		279CD44320AC9F46009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
+		279CD44620ACA967009E1348 /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
+		279CD44720ACA970009E1348 /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
+		279CD44820ACA977009E1348 /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
+		279CD44F20ACB2F5009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
+		279CD45020ACB2F5009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
+		279CD45120ACB307009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
+		279CD45220ACB307009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
+		279CD45320ACB31A009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
+		279CD45420ACB31A009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,12 +88,58 @@
 			remoteGlobalIDString = 278EF3A020A0F5C100C99C1F;
 			remoteInfo = ABSDKWalletKit;
 		};
+		279CD41020AC9C5B009E1348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 299522391BBF104D00859F49;
+			remoteInfo = "AFNetworking iOS";
+		};
+		279CD41220AC9C5B009E1348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 299522651BBF129200859F49;
+			remoteInfo = "AFNetworking watchOS";
+		};
+		279CD41420AC9C5B009E1348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 299522771BBF136400859F49;
+			remoteInfo = "AFNetworking macOS";
+		};
+		279CD41620AC9C5B009E1348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2987B0A51BC408A200179A4C;
+			remoteInfo = "AFNetworking tvOS";
+		};
+		279CD41820AC9C5B009E1348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 298D7C3B1BC2C79500FD3B3E;
+			remoteInfo = "AFNetworking iOS Tests";
+		};
+		279CD41A20AC9C5B009E1348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 298D7C4A1BC2C7B200FD3B3E;
+			remoteInfo = "AFNetworking macOS Tests";
+		};
+		279CD41C20AC9C5B009E1348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2987B0AE1BC408A200179A4C;
+			remoteInfo = "AFNetworking tvOS Tests";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B686233E001761263F6FA93 /* Pods-ABSDKWalletKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKWalletKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKWalletKitTests/Pods-ABSDKWalletKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		104F02F45A1C47B3C7143E7F /* Pods-ABSDKCoreKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKCoreKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKCoreKit/Pods-ABSDKCoreKit.release.xcconfig"; sourceTree = "<group>"; };
-		11757839D91B73E587B41E31 /* Pods_ABSDKWalletKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABSDKWalletKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectDataSourceSpec.swift; sourceTree = "<group>"; };
 		2712817020A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ABSDKObjectDataSource.m"; sourceTree = "<group>"; };
 		2712817120A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ABSDKObjectDataSource.m"; sourceTree = "<group>"; };
@@ -123,16 +169,6 @@
 		278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDataStore.m; sourceTree = "<group>"; };
 		278EF32120A0DF2F00C99C1F /* ABSDKDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDataStore.h; sourceTree = "<group>"; };
 		278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKDataStore+Private.h"; sourceTree = "<group>"; };
-		278EF32E20A0DF2F00C99C1F /* ObjectiveDDP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveDDP.h; sourceTree = "<group>"; };
-		278EF32F20A0DF2F00C99C1F /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
-		278EF33020A0DF2F00C99C1F /* DependencyProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DependencyProvider.h; sourceTree = "<group>"; };
-		278EF33120A0DF2F00C99C1F /* ObjectiveDDP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectiveDDP.m; sourceTree = "<group>"; };
-		278EF33220A0DF2F00C99C1F /* DependencyProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DependencyProvider.m; sourceTree = "<group>"; };
-		278EF33320A0DF2F00C99C1F /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
-		278EF33420A0DF2F00C99C1F /* ABSDKDDPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDDPClient.m; sourceTree = "<group>"; };
-		278EF33520A0DF2F00C99C1F /* ABSDKDDPClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDDPClientManager.m; sourceTree = "<group>"; };
-		278EF33620A0DF2F00C99C1F /* ABSDKDDPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDDPClient.h; sourceTree = "<group>"; };
-		278EF33720A0DF2F00C99C1F /* ABSDKDDPClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDDPClientManager.h; sourceTree = "<group>"; };
 		278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKDataStoreSpec.swift; sourceTree = "<group>"; };
 		278EF36120A0ED1700C99C1F /* ABSDKCoreKitTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKCoreKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		278EF36920A0F54D00C99C1F /* ABSDKAccountKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKAccountKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,18 +193,34 @@
 		278EF3BE20A100DF00C99C1F /* ABSDKAccountKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKAccountKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKAccountKitSpec.swift; sourceTree = "<group>"; };
 		279CD36320AAA72A009E1348 /* ABSDKArrayDataSource+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKArrayDataSource+Private.h"; sourceTree = "<group>"; };
-		2DE36B94A690C96F08741BBB /* Pods-ABSDKWalletKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKWalletKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKWalletKitTests/Pods-ABSDKWalletKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		3484DCF101A66AF5964775DF /* Pods_ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		474C45819AB291F158028149 /* Pods-ABSDKCoreKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKCoreKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKCoreKitTests/Pods-ABSDKCoreKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		551F5CF5F6E572A9ED58351C /* Pods-ABSDKAccountKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKAccountKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKAccountKitTests/Pods-ABSDKAccountKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		6BB53B812D94613DB8D5B038 /* Pods_ABSDKAccountKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABSDKAccountKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7835D000245FE61CBF615A9B /* Pods-ABSDKMessagingKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKMessagingKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKMessagingKitTests/Pods-ABSDKMessagingKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		988238FA5D73298194E99439 /* Pods-ABSDKMessagingKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKMessagingKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKMessagingKitTests/Pods-ABSDKMessagingKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9BF036F7BC2095242FE67E47 /* Pods-ABSDKCoreKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKCoreKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKCoreKitTests/Pods-ABSDKCoreKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		C72782B0D935A9788EF65648 /* Pods_ABSDKCoreKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABSDKCoreKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E31D9C62A00FA1885BC7F24F /* Pods-ABSDKAccountKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKAccountKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKAccountKitTests/Pods-ABSDKAccountKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F5A9C37E6C4B6065C11CA917 /* Pods_ABSDKMessagingKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABSDKMessagingKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAF121FEBF85D60C6C854630 /* Pods-ABSDKCoreKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABSDKCoreKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABSDKCoreKit/Pods-ABSDKCoreKit.debug.xcconfig"; sourceTree = "<group>"; };
+		279CD3D320AC8E11009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3D520AC8E11009E1348 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3D720AC8E11009E1348 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3D920AC8E11009E1348 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3DB20AC8E11009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3DD20AC8E11009E1348 /* SocketRocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocketRocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3DF20AC8E11009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YapDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3E220AC9414009E1348 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3E420AC9414009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3E620AC9414009E1348 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3E820AC9414009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3EA20AC9414009E1348 /* SocketRocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocketRocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD3EC20AC9414009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YapDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AFNetworking.xcodeproj; path = Carthage/Checkouts/AFNetworking/AFNetworking.xcodeproj; sourceTree = "<group>"; };
+		279CD41F20AC9D76009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD42120AC9D82009E1348 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD42320AC9D8A009E1348 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD42520AC9D97009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD42720AC9D9E009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YapDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD42920AC9E01009E1348 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD42B20AC9E01009E1348 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		279CD42D20AC9EB5009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YapDatabase.framework; path = Carthage/Build/iOS/YapDatabase.framework; sourceTree = "<group>"; };
+		279CD43720AC9F1E009E1348 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		279CD43A20AC9F37009E1348 /* KVOController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KVOController.framework; path = Carthage/Build/iOS/KVOController.framework; sourceTree = "<group>"; };
+		279CD43B20AC9F37009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
+		279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
+		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +228,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEF2C17CB30E9D3A542850FD /* Pods_ABSDKCoreKit.framework in Frameworks */,
+				279CD43D20AC9F37009E1348 /* KVOController.framework in Frameworks */,
+				279CD43E20AC9F37009E1348 /* SDWebImage.framework in Frameworks */,
+				279CD43F20AC9F37009E1348 /* CocoaLumberjack.framework in Frameworks */,
+				279CD42E20AC9EB5009E1348 /* YapDatabase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,7 +240,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */,
-				04C328F1EA6D4D9F19F4D994 /* Pods_ABSDKCoreKitTests.framework in Frameworks */,
+				279CD44220AC9F46009E1348 /* Nimble.framework in Frameworks */,
+				279CD44320AC9F46009E1348 /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279CD44620ACA967009E1348 /* ABSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,8 +257,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279CD44F20ACB2F5009E1348 /* Nimble.framework in Frameworks */,
+				279CD45020ACB2F5009E1348 /* Quick.framework in Frameworks */,
 				278EF37220A0F54D00C99C1F /* ABSDKAccountKit.framework in Frameworks */,
-				3A949555574BA538B3850591 /* Pods_ABSDKAccountKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +267,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279CD44720ACA970009E1348 /* ABSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,8 +275,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279CD45120ACB307009E1348 /* Nimble.framework in Frameworks */,
+				279CD45220ACB307009E1348 /* Quick.framework in Frameworks */,
 				278EF38E20A0F5AC00C99C1F /* ABSDKMessagingKit.framework in Frameworks */,
-				1CB7A091C22D199CD5C16CB9 /* Pods_ABSDKMessagingKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279CD44820ACA977009E1348 /* ABSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,31 +293,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279CD45320ACB31A009E1348 /* Nimble.framework in Frameworks */,
+				279CD45420ACB31A009E1348 /* Quick.framework in Frameworks */,
 				278EF3AA20A0F5C200C99C1F /* ABSDKWalletKit.framework in Frameworks */,
-				81361AC7031CF9917F1B28AB /* Pods_ABSDKWalletKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		064C243C230AAB70AFC2A860 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				FAF121FEBF85D60C6C854630 /* Pods-ABSDKCoreKit.debug.xcconfig */,
-				104F02F45A1C47B3C7143E7F /* Pods-ABSDKCoreKit.release.xcconfig */,
-				474C45819AB291F158028149 /* Pods-ABSDKCoreKitTests.debug.xcconfig */,
-				9BF036F7BC2095242FE67E47 /* Pods-ABSDKCoreKitTests.release.xcconfig */,
-				E31D9C62A00FA1885BC7F24F /* Pods-ABSDKAccountKitTests.debug.xcconfig */,
-				551F5CF5F6E572A9ED58351C /* Pods-ABSDKAccountKitTests.release.xcconfig */,
-				988238FA5D73298194E99439 /* Pods-ABSDKMessagingKitTests.debug.xcconfig */,
-				7835D000245FE61CBF615A9B /* Pods-ABSDKMessagingKitTests.release.xcconfig */,
-				0B686233E001761263F6FA93 /* Pods-ABSDKWalletKitTests.debug.xcconfig */,
-				2DE36B94A690C96F08741BBB /* Pods-ABSDKWalletKitTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		277E6B4D20A0DAB50054707E = {
 			isa = PBXGroup;
 			children = (
@@ -268,9 +313,8 @@
 				278EF39120A0F5AC00C99C1F /* ABSDKMessagingKitTests */,
 				278EF3A220A0F5C100C99C1F /* ABSDKWalletKit */,
 				278EF3AD20A0F5C200C99C1F /* ABSDKWalletKitTests */,
-				42631584C7887D09A9A81673 /* Frameworks */,
-				064C243C230AAB70AFC2A860 /* Pods */,
 				277E6B5A20A0DB160054707E /* Products */,
+				279CD3D220AC8E11009E1348 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -294,7 +338,6 @@
 			children = (
 				278EF30B20A0DF2F00C99C1F /* DataSources */,
 				278EF31F20A0DF2F00C99C1F /* DataStore */,
-				278EF32C20A0DF2F00C99C1F /* DDPClient */,
 				277E6B7920A0DE340054707E /* Info.plist */,
 			);
 			path = ABSDKCoreKit;
@@ -366,31 +409,6 @@
 			path = DataStore;
 			sourceTree = "<group>";
 		};
-		278EF32C20A0DF2F00C99C1F /* DDPClient */ = {
-			isa = PBXGroup;
-			children = (
-				278EF33620A0DF2F00C99C1F /* ABSDKDDPClient.h */,
-				278EF33420A0DF2F00C99C1F /* ABSDKDDPClient.m */,
-				278EF33720A0DF2F00C99C1F /* ABSDKDDPClientManager.h */,
-				278EF33520A0DF2F00C99C1F /* ABSDKDDPClientManager.m */,
-				278EF32D20A0DF2F00C99C1F /* ObjectiveDDP */,
-			);
-			path = DDPClient;
-			sourceTree = "<group>";
-		};
-		278EF32D20A0DF2F00C99C1F /* ObjectiveDDP */ = {
-			isa = PBXGroup;
-			children = (
-				278EF32F20A0DF2F00C99C1F /* BSONIdGenerator.h */,
-				278EF33320A0DF2F00C99C1F /* BSONIdGenerator.m */,
-				278EF33020A0DF2F00C99C1F /* DependencyProvider.h */,
-				278EF33220A0DF2F00C99C1F /* DependencyProvider.m */,
-				278EF32E20A0DF2F00C99C1F /* ObjectiveDDP.h */,
-				278EF33120A0DF2F00C99C1F /* ObjectiveDDP.m */,
-			);
-			path = ObjectiveDDP;
-			sourceTree = "<group>";
-		};
 		278EF36A20A0F54D00C99C1F /* ABSDKAccountKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,16 +466,53 @@
 			path = ABSDKWalletKitTests;
 			sourceTree = "<group>";
 		};
-		42631584C7887D09A9A81673 /* Frameworks */ = {
+		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3484DCF101A66AF5964775DF /* Pods_ABSDKCoreKit.framework */,
-				C72782B0D935A9788EF65648 /* Pods_ABSDKCoreKitTests.framework */,
-				6BB53B812D94613DB8D5B038 /* Pods_ABSDKAccountKitTests.framework */,
-				F5A9C37E6C4B6065C11CA917 /* Pods_ABSDKMessagingKitTests.framework */,
-				11757839D91B73E587B41E31 /* Pods_ABSDKWalletKitTests.framework */,
+				279CD44020AC9F46009E1348 /* Nimble.framework */,
+				279CD44120AC9F46009E1348 /* Quick.framework */,
+				279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */,
+				279CD43A20AC9F37009E1348 /* KVOController.framework */,
+				279CD43B20AC9F37009E1348 /* SDWebImage.framework */,
+				279CD43720AC9F1E009E1348 /* AFNetworking.framework */,
+				279CD42D20AC9EB5009E1348 /* YapDatabase.framework */,
+				279CD42920AC9E01009E1348 /* Nimble.framework */,
+				279CD42B20AC9E01009E1348 /* Quick.framework */,
+				279CD42720AC9D9E009E1348 /* YapDatabase.framework */,
+				279CD42520AC9D97009E1348 /* SDWebImage.framework */,
+				279CD42320AC9D8A009E1348 /* Quick.framework */,
+				279CD42120AC9D82009E1348 /* KVOController.framework */,
+				279CD41F20AC9D76009E1348 /* CocoaLumberjack.framework */,
+				279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */,
+				279CD3E220AC9414009E1348 /* AFNetworking.framework */,
+				279CD3E420AC9414009E1348 /* CocoaLumberjack.framework */,
+				279CD3E620AC9414009E1348 /* KVOController.framework */,
+				279CD3E820AC9414009E1348 /* SDWebImage.framework */,
+				279CD3EA20AC9414009E1348 /* SocketRocket.framework */,
+				279CD3EC20AC9414009E1348 /* YapDatabase.framework */,
+				279CD3D320AC8E11009E1348 /* CocoaLumberjack.framework */,
+				279CD3D520AC8E11009E1348 /* KVOController.framework */,
+				279CD3D720AC8E11009E1348 /* Nimble.framework */,
+				279CD3D920AC8E11009E1348 /* Quick.framework */,
+				279CD3DB20AC8E11009E1348 /* SDWebImage.framework */,
+				279CD3DD20AC8E11009E1348 /* SocketRocket.framework */,
+				279CD3DF20AC8E11009E1348 /* YapDatabase.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		279CD40720AC9C5A009E1348 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				279CD41120AC9C5B009E1348 /* AFNetworking.framework */,
+				279CD41320AC9C5B009E1348 /* AFNetworking.framework */,
+				279CD41520AC9C5B009E1348 /* AFNetworking.framework */,
+				279CD41720AC9C5B009E1348 /* AFNetworking.framework */,
+				279CD41920AC9C5B009E1348 /* AFNetworking iOS Tests.xctest */,
+				279CD41B20AC9C5B009E1348 /* AFNetworking macOS Tests.xctest */,
+				279CD41D20AC9C5B009E1348 /* AFNetworking tvOS Tests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,22 +522,17 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				278EF35A20A0DF2F00C99C1F /* ABSDKDDPClientManager.h in Headers */,
-				278EF35220A0DF2F00C99C1F /* BSONIdGenerator.h in Headers */,
 				2712819E20A6497B00530FB6 /* ABSDKFilterDataSource.h in Headers */,
 				278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */,
-				278EF35320A0DF2F00C99C1F /* DependencyProvider.h in Headers */,
 				2712819720A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.h in Headers */,
 				271281A020A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.h in Headers */,
 				278EF34720A0DF2F00C99C1F /* ABSDKDataStore.h in Headers */,
 				2712819F20A6497B00530FB6 /* ABSDKSearchDataSource.h in Headers */,
 				2712817B20A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.h in Headers */,
 				2712817A20A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.h in Headers */,
-				278EF35920A0DF2F00C99C1F /* ABSDKDDPClient.h in Headers */,
 				278EF34820A0DF2F00C99C1F /* ABSDKDataStore+Private.h in Headers */,
 				2712817920A4C41900530FB6 /* UIView+ABSDKObjectDataSource.h in Headers */,
 				2712819D20A6497B00530FB6 /* ABSDKArrayDataSource.h in Headers */,
-				278EF35120A0DF2F00C99C1F /* ObjectiveDDP.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,12 +567,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 277E6B8720A0DE340054707E /* Build configuration list for PBXNativeTarget "ABSDKCoreKit" */;
 			buildPhases = (
-				15D3FCED423A870FC1EED4F6 /* [CP] Check Pods Manifest.lock */,
 				277E6B7120A0DE340054707E /* Sources */,
 				277E6B7220A0DE340054707E /* Frameworks */,
 				277E6B7320A0DE340054707E /* Headers */,
 				277E6B7420A0DE340054707E /* Resources */,
 				2712815420A2426B00530FB6 /* ShellScript */,
+				279CD44420ACA2E3009E1348 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -537,12 +587,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 277E6B8A20A0DE340054707E /* Build configuration list for PBXNativeTarget "ABSDKCoreKitTests" */;
 			buildPhases = (
-				592B0F9CF8179639EC181B7A /* [CP] Check Pods Manifest.lock */,
 				277E6B7A20A0DE340054707E /* Sources */,
 				277E6B7B20A0DE340054707E /* Frameworks */,
 				277E6B7C20A0DE340054707E /* Resources */,
-				76A2C4D662FE89DAA7C8476A /* [CP] Embed Pods Frameworks */,
 				2712815520A2428900530FB6 /* ShellScript */,
+				279CD44520ACA46E009E1348 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -577,12 +626,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 278EF37D20A0F54D00C99C1F /* Build configuration list for PBXNativeTarget "ABSDKAccountKitTests" */;
 			buildPhases = (
-				A0F7DAB3CDFE66B4DD2B371E /* [CP] Check Pods Manifest.lock */,
 				278EF36D20A0F54D00C99C1F /* Sources */,
 				278EF36E20A0F54D00C99C1F /* Frameworks */,
 				278EF36F20A0F54D00C99C1F /* Resources */,
-				48721F94260C9234D40D4293 /* [CP] Embed Pods Frameworks */,
 				2712815720A2429700530FB6 /* ShellScript */,
+				279CD45520ACB358009E1348 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -617,12 +665,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 278EF39920A0F5AC00C99C1F /* Build configuration list for PBXNativeTarget "ABSDKMessagingKitTests" */;
 			buildPhases = (
-				8F11943010C39568142DD696 /* [CP] Check Pods Manifest.lock */,
 				278EF38920A0F5AC00C99C1F /* Sources */,
 				278EF38A20A0F5AC00C99C1F /* Frameworks */,
 				278EF38B20A0F5AC00C99C1F /* Resources */,
-				06729BF5A7E78B5EF8EF80A9 /* [CP] Embed Pods Frameworks */,
 				2712815920A242A400530FB6 /* ShellScript */,
+				279CD45620ACB362009E1348 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -657,12 +704,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 278EF3B520A0F5C200C99C1F /* Build configuration list for PBXNativeTarget "ABSDKWalletKitTests" */;
 			buildPhases = (
-				23A9203DE560B31260A2BE02 /* [CP] Check Pods Manifest.lock */,
 				278EF3A520A0F5C200C99C1F /* Sources */,
 				278EF3A620A0F5C200C99C1F /* Frameworks */,
 				278EF3A720A0F5C200C99C1F /* Resources */,
-				B2FBC64EFE160C3155FA0606 /* [CP] Embed Pods Frameworks */,
 				2712815B20A242B000530FB6 /* ShellScript */,
+				279CD45720ACB36A009E1348 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -722,6 +768,12 @@
 			mainGroup = 277E6B4D20A0DAB50054707E;
 			productRefGroup = 277E6B5A20A0DB160054707E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 279CD40720AC9C5A009E1348 /* Products */;
+					ProjectRef = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				277E6B7520A0DE340054707E /* ABSDKCoreKit */,
@@ -735,6 +787,58 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		279CD41120AC9C5B009E1348 /* AFNetworking.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AFNetworking.framework;
+			remoteRef = 279CD41020AC9C5B009E1348 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		279CD41320AC9C5B009E1348 /* AFNetworking.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AFNetworking.framework;
+			remoteRef = 279CD41220AC9C5B009E1348 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		279CD41520AC9C5B009E1348 /* AFNetworking.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AFNetworking.framework;
+			remoteRef = 279CD41420AC9C5B009E1348 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		279CD41720AC9C5B009E1348 /* AFNetworking.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AFNetworking.framework;
+			remoteRef = 279CD41620AC9C5B009E1348 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		279CD41920AC9C5B009E1348 /* AFNetworking iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "AFNetworking iOS Tests.xctest";
+			remoteRef = 279CD41820AC9C5B009E1348 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		279CD41B20AC9C5B009E1348 /* AFNetworking macOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "AFNetworking macOS Tests.xctest";
+			remoteRef = 279CD41A20AC9C5B009E1348 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		279CD41D20AC9C5B009E1348 /* AFNetworking tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "AFNetworking tvOS Tests.xctest";
+			remoteRef = 279CD41C20AC9C5B009E1348 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		277E6B7420A0DE340054707E /* Resources */ = {
@@ -796,62 +900,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		06729BF5A7E78B5EF8EF80A9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKMessagingKitTests/Pods-ABSDKMessagingKitTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKMessagingKitTests/Pods-ABSDKMessagingKitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		15D3FCED423A870FC1EED4F6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ABSDKCoreKit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		23A9203DE560B31260A2BE02 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ABSDKWalletKitTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2712815420A2426B00530FB6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -956,133 +1004,94 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		48721F94260C9234D40D4293 /* [CP] Embed Pods Frameworks */ = {
+		279CD44420ACA2E3009E1348 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKAccountKitTests/Pods-ABSDKAccountKitTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/KVOController.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/YapDatabase.framework",
 			);
-			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CocoaLumberjack.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KVOController.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SDWebImage.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/YapDatabase.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKAccountKitTests/Pods-ABSDKAccountKitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		592B0F9CF8179639EC181B7A /* [CP] Check Pods Manifest.lock */ = {
+		279CD44520ACA46E009E1348 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ABSDKCoreKitTests-checkManifestLockResult.txt",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Quick.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Nimble.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		76A2C4D662FE89DAA7C8476A /* [CP] Embed Pods Frameworks */ = {
+		279CD45520ACB358009E1348 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKCoreKitTests/Pods-ABSDKCoreKitTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-				"${BUILT_PRODUCTS_DIR}/KVOController/KVOController.framework",
-				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SocketRocket/SocketRocket.framework",
-				"${BUILT_PRODUCTS_DIR}/YapDatabase/YapDatabase.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
 			);
-			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KVOController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketRocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YapDatabase.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Quick.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Nimble.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKCoreKitTests/Pods-ABSDKCoreKitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		8F11943010C39568142DD696 /* [CP] Check Pods Manifest.lock */ = {
+		279CD45620ACB362009E1348 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ABSDKMessagingKitTests-checkManifestLockResult.txt",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Quick.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Nimble.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		A0F7DAB3CDFE66B4DD2B371E /* [CP] Check Pods Manifest.lock */ = {
+		279CD45720ACB36A009E1348 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ABSDKAccountKitTests-checkManifestLockResult.txt",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Quick.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Nimble.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B2FBC64EFE160C3155FA0606 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKWalletKitTests/Pods-ABSDKWalletKitTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ABSDKWalletKitTests/Pods-ABSDKWalletKitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1092,16 +1101,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				271281A320A6497B00530FB6 /* ABSDKArrayDataSource.m in Sources */,
-				278EF35620A0DF2F00C99C1F /* BSONIdGenerator.m in Sources */,
-				278EF35820A0DF2F00C99C1F /* ABSDKDDPClientManager.m in Sources */,
 				2712819A20A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.m in Sources */,
 				2712817720A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m in Sources */,
 				2712817620A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m in Sources */,
-				278EF35720A0DF2F00C99C1F /* ABSDKDDPClient.m in Sources */,
 				278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */,
-				278EF35520A0DF2F00C99C1F /* DependencyProvider.m in Sources */,
 				271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */,
-				278EF35420A0DF2F00C99C1F /* ObjectiveDDP.m in Sources */,
 				2712819920A6497B00530FB6 /* ABSDKFilterDataSource.m in Sources */,
 				271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */,
 				278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */,
@@ -1207,7 +1211,6 @@
 		};
 		277E6B8820A0DE340054707E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FAF121FEBF85D60C6C854630 /* Pods-ABSDKCoreKit.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1250,6 +1253,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1286,7 +1290,6 @@
 		};
 		277E6B8920A0DE340054707E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 104F02F45A1C47B3C7143E7F /* Pods-ABSDKCoreKit.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1329,6 +1332,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1359,7 +1363,6 @@
 		};
 		277E6B8B20A0DE340054707E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 474C45819AB291F158028149 /* Pods-ABSDKCoreKitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1397,6 +1400,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1432,7 +1439,6 @@
 		};
 		277E6B8C20A0DE340054707E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9BF036F7BC2095242FE67E47 /* Pods-ABSDKCoreKitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1470,6 +1476,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1540,6 +1550,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1618,6 +1632,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1648,7 +1666,6 @@
 		};
 		278EF37E20A0F54D00C99C1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E31D9C62A00FA1885BC7F24F /* Pods-ABSDKAccountKitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1686,6 +1703,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1721,7 +1742,6 @@
 		};
 		278EF37F20A0F54D00C99C1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 551F5CF5F6E572A9ED58351C /* Pods-ABSDKAccountKitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1759,6 +1779,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1829,6 +1853,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1907,6 +1935,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1937,7 +1969,6 @@
 		};
 		278EF39A20A0F5AC00C99C1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 988238FA5D73298194E99439 /* Pods-ABSDKMessagingKitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1975,6 +2006,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2010,7 +2045,6 @@
 		};
 		278EF39B20A0F5AC00C99C1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7835D000245FE61CBF615A9B /* Pods-ABSDKMessagingKitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2048,6 +2082,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2118,6 +2156,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2196,6 +2238,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2226,7 +2272,6 @@
 		};
 		278EF3B620A0F5C200C99C1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B686233E001761263F6FA93 /* Pods-ABSDKWalletKitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2264,6 +2309,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2299,7 +2348,6 @@
 		};
 		278EF3B720A0F5C200C99C1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DE36B94A690C96F08741BBB /* Pods-ABSDKWalletKitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2337,6 +2385,10 @@
 				DEVELOPMENT_TEAM = LSJ46BL3NY;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

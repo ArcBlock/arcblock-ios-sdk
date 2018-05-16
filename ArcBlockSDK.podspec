@@ -35,11 +35,8 @@ TODO: Add long description of the pod here.
 
   s.subspec 'CoreKit' do |sc|
     sc.source_files = 'ABSDKCoreKit/**/*.{h,m}'
-    sc.dependency "SocketRocket"
     sc.dependency "YapDatabase", "~> 3.0.2"
-    sc.dependency "AFNetworking"
     sc.dependency "KVOController"
-    sc.dependency "Reachability"
     sc.dependency "SDWebImage"
   end
 

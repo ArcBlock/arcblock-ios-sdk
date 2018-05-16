@@ -1,0 +1,6 @@
+github "CocoaLumberjack/CocoaLumberjack" "3.4.2"
+github "Quick/Nimble" "v7.1.1"
+github "Quick/Quick" "v1.3.0"
+github "facebook/KVOController" "v1.2.0"
+github "rs/SDWebImage" "4.3.3"
+github "yapstudios/YapDatabase" "3.0.2"
