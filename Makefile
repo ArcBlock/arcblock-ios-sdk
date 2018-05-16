@@ -5,7 +5,7 @@ VERSION=$(strip $(shell cat version))
 
 build:
 	@echo "Building the software..."
-	@carthage build --platform ios --no-skip-current
+	@carthage build --platform ios --no-skip-current --cache-builds
 
 init: install dep
 	@echo "Initializing the repo..."
@@ -22,7 +22,7 @@ install:
 
 dep:
 	@echo "Install dependencies required for this repo..."
-	@carthage bootstrap --platform ios
+	@carthage bootstrap --platform ios --cache-builds
 
 pre-build: install dep
 	@echo "Running scripts before the build..."
