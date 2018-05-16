@@ -15,7 +15,7 @@ travis-init: install
 
 install:
 	@echo "Install software required for this repo..."
-	@brew install carthage
+	@brew install carthage | true
 	@gem install xcpretty -N
 	@brew install swiftlint | true
 	@gem install jazzy
