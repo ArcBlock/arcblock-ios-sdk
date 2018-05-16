@@ -54,7 +54,7 @@ travis:
 	@set -o pipefail
 	@make precommit
 
-travis-deploy: all
+travis-deploy: release
 	@echo "Deploy the software by travis"
 
 clean:
