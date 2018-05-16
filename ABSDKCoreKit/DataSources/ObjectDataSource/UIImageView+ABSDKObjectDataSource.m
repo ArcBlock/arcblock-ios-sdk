@@ -7,7 +7,7 @@
 //
 
 #import "UIImageView+ABSDKObjectDataSource.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation UIImageView (ABSDKObjectDataSource)
 

@@ -11,7 +11,7 @@
 #import <YapDatabase/YapDatabaseAutoView.h>
 #import <YapDatabase/YapDatabaseViewMappings.h>
 #import "ABSDKDataStore+Private.h"
-#import "FBKVOController.h"
+#import <KVOController/FBKVOController.h>
 
 NSString *const ABSDKArrayDataSourceDidUpdateNotification = @"ABSDKArrayDataSourceDidUpdateNotification";
 
