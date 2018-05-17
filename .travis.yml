@@ -5,7 +5,7 @@ cache:
   directories:
   - "/home/travis/.rvm/"
   - "$HOME/Library/Caches/Homebrew"
-  - Carthage
+  - "Carthage"
 before_install: make travis-init
 script: make travis
 notifications:
