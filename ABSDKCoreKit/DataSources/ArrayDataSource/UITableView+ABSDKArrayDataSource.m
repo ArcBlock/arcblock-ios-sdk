@@ -6,7 +6,7 @@
 //
 
 #import "UITableView+ABSDKArrayDataSource.h"
-#import "YapDatabaseView.h"
+#import "ABSDKArrayDataSource+Private.h"
 
 @implementation UITableView (ABSDKArrayDataSource)
 

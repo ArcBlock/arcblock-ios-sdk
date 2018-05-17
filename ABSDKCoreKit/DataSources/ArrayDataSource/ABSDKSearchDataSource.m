@@ -9,6 +9,7 @@
 #import "ABSDKSearchDataSource.h"
 #import "ABSDKArrayDataSource+Private.h"
 #import "ABSDKDataStore+Private.h"
+#import <YapDatabase/YapDatabaseAutoView.h>
 #import <YapDatabase/YapDatabaseViewMappings.h>
 #import <YapDatabase/YapDatabaseFullTextSearch.h>
 #import <YapDatabase/YapDatabaseSearchResultsView.h>

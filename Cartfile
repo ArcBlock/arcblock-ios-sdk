@@ -1,0 +1,3 @@
+github "yapstudios/YapDatabase" ~> 3.0.2
+github "rs/SDWebImage"
+github "facebook/KVOController"
