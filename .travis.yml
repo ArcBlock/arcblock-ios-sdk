@@ -2,9 +2,9 @@ language: swift
 osx_image: xcode9.3
 cache:
   directories:
-  - "/home/travis/.rvm/"
-  - "$HOME/Library/Caches/Homebrew"
-  - "Carthage"
+  - /home/travis/.rvm/
+  - $HOME/Library/Caches/Homebrew
+  - Carthage
 branches:
   only:
   - master
