@@ -4,7 +4,8 @@ GIT_BRANCH=$(strip $(shell git symbolic-ref --short HEAD))
 release: all
 	@git config --local user.name "jonathanlu813"
 	@git config --local user.email "jonathanlu813@gmail.com"
-	@git tag $(cat version)
+	@git tag $(RELEASE_VERSION)
+	@git push origin $(RELEASE_VERSION) | true
 
 delete-release:
 	@echo "Delete a release on $(RELEASE_VERSION)"
