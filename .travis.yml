@@ -6,6 +6,9 @@ cache:
   - "/home/travis/.rvm/"
   - "$HOME/Library/Caches/Homebrew"
   - "Carthage"
+branches:
+  only:
+  - master
 before_install: make travis-init
 script: make travis
 notifications:
@@ -19,7 +22,7 @@ deploy:
   file: build/ArcBlockSDK.zip
   on:
     repo: ArcBlock/arcblock-ios-sdk
-    all_branches: true
+    branch: master
 env:
   global:
     secure: TqBebel7XBse4ATMMNKgJQjfroQBOAaEp2Q81l5vPiXVlI04SvG5187v0MtnuVwh+hM3t9wWTw+WqhV2z5cRWN4gIe9AdTPcSEu5kptTaKIKcJuxjon+M42hNjQiKwM+m8+LgW396yay9ZH+8ndhZyYYJc62AuYDkOe/OL402aQNRHfwA2Jibd6IjaAUr0ZASInfK/OTPwsUCOfgz8eD9mUhqAiS5UrcmuD0/sr+rqw/35HgRGH3RwCc63lx7G2DsTCP3x2XzchKPDXpUGQg+0NWi45hTeUl4lfnbPm6trH6ujDIht+Kn9+TuknJKfuIaIgZVnhDgLgnRYrL/BSoSn6YYOb5xQaDf4JUt7WVZeBKV58BIqbN0GTzqCzHZ01BsykvynA+iRbx2aHBf0oAvnBVRxcYMq2uoxR2KTBUoC1taHTIsGhq0WJa5mJvDszUv2H0I9lcolCnbZVZ1vyhrZey9boGdcxLdbh/uWWZCJwhTTNWbwAzXltcdtu/gcbMxUd10R1mB88Zza1f2cuEpZu44AcEi2uKJWit+30ArkRZKLwZgY1qRkeAtp37hgSlSrXL5kj8CbzCYdvW8OQXwE9MTw6heZvfSHKgqucUrkUrFGKvk5/4j/zzL4Npa38lJIf1ZY3LnyxWlX8XXMVC38x3CoI2yvgoR/q3zlfmppo=
