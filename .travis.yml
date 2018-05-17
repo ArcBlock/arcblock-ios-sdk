@@ -1,7 +1,6 @@
 language: swift
 osx_image: xcode9.3
 cache:
-  cocoapods: true
   directories:
   - "/home/travis/.rvm/"
   - "$HOME/Library/Caches/Homebrew"
