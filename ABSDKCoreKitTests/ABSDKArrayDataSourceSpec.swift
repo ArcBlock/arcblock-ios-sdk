@@ -5,6 +5,8 @@
 //  Created by Jonathan Lu on 10/5/2018.
 //
 
+// swiftlint:disable function_body_length
+
 import Quick
 import Nimble
 
