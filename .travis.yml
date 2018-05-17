@@ -10,7 +10,7 @@ before_install: make travis-init
 script: make travis
 notifications:
   email: false
-before_deploy: make travis-release
+before_deploy: make travis-deploy
 deploy:
   provider: releases
   skip_cleanup: true
