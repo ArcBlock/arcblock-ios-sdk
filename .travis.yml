@@ -2,8 +2,8 @@ language: swift
 osx_image: xcode9.3
 cache:
   directories:
-  - $HOME/travis/.rvm/
-  - $HOME/Library/Caches/Homebrew
+  - "$HOME/travis/.rvm/"
+  - "$HOME/Library/Caches/Homebrew"
   - Carthage
 branches:
   only:
@@ -11,7 +11,8 @@ branches:
 before_install: make travis-init
 script: make travis
 notifications:
-  email: false
+  slack:
+    secure: 1DWyoY3aV+PZNpg0U+Lo6Ph39Z1rf6p5NO2YnDGYsixAUQnrznPr1GYHlFpnJK1n5ipCfRscjNcVbl26Nt4w+SFA8uxgXVKpPwm/UXeKIp6YAaE9qcZZCijitBV7EvIj69M5IR7uBOM5jUbfZHT87iahFcEvQdu6OWxMcsfz7nGpOxTGbFzYC/RA6hyGEiRcTjf20nm6kgxiE2hnyKsT/EEBj26b0gndvcsKRPxtMZdT6A/ICappxQ1v7dzxTDSa/2VvTPy71/i3efmC3wxSEzT9rMnpldoHxA/jyml6BFKB1er8DrmAga86IzeMxTIeaft1ZS6zitVEMJQUAhc3tzdzRd8AGht4Dqy5ib8ssilbcxIkyXxST2QPYFCMbkqOeWnXMBDke5mloSYOr075d61u/yPyDLSN1cELlIgsqVI78LgBTbgLP3i/OBVSM0gE9nNveZlhnMk0tXJz9bMuEkB8z75hxhWdrveJuBBOxr9avO/Y/UXT/afn0dgJDI+I3AcJguLtwgkLHhxZ74r4vBJ2HPy0A5AllxKF8yYC62ciybVHtDGkglHQrcY/isRiK+XkbXZFCxKXawmgt0lQGgz/m2HtjZY6Z2sFjHt7gZvzfQ6zthKS0CfbKzEHe8RhSFq2p93fh0r+sPaC2SU4u5T+HPeFSV0GoG5vpsQarjQ=
 before_deploy: make travis-deploy
 deploy:
   provider: releases
