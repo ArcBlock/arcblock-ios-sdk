@@ -1,3 +1,7 @@
+## 0.4.3 (June 12, 2018)
+  - add jazzy config for generating documentation
+  - fix license file and add license to file header
+
 ## 0.4.2 (June 11, 2018)
   - fix travis status image in readme file
 
