@@ -221,6 +221,7 @@
 		279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		27D1EBCB20CF9C1E00422C35 /* ABSDKCoreKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABSDKCoreKit.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,6 +337,7 @@
 		277E6B7720A0DE340054707E /* ABSDKCoreKit */ = {
 			isa = PBXGroup;
 			children = (
+				27D1EBCB20CF9C1E00422C35 /* ABSDKCoreKit.h */,
 				278EF30B20A0DF2F00C99C1F /* DataSources */,
 				278EF31F20A0DF2F00C99C1F /* DataStore */,
 				277E6B7920A0DE340054707E /* Info.plist */,
