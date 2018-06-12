@@ -1,4 +1,4 @@
-// UIImageView+ABSDKObjectDataSource.m
+// ABSDKCoreKit.h
 //
 // Copyright (c) 2017-present ArcBlock Foundation Ltd <https://www.arcblock.io/>
 //
@@ -20,24 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "UIImageView+ABSDKObjectDataSource.h"
-#import <SDWebImage/UIImageView+WebCache.h>
-
-@implementation UIImageView (ABSDKObjectDataSource)
-
-- (void)setImageUrl:(NSString *)imageUrl
-{
-    if (![imageUrl isEqual:[NSNull null]] && imageUrl.length) {
-        [self sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
-    }
-    else {
-        self.image = nil;
-    }
-}
-
-- (NSString*)imageUrl
-{
-    return nil;
-}
-
-@end
+#import "ABSDKDataStore.h"
+#import "ABSDKObjectDataSource.h"
+#import "ABSDKArrayDataSource.h"
+#import "ABSDKFilterDataSource.h"
+#import "ABSDKSearchDataSource.h"
+#import "UIView+ABSDKObjectDataSource.h"
+#import "UITableView+ABSDKArrayDataSource.h"
+#import "UICollectionView+ABSDKArrayDataSource.h"

@@ -1,10 +1,24 @@
+// ABSDKDataStore.m
 //
-//  ABSDKMeteorCollectionDataStore.m
-//  Sprite
+// Copyright (c) 2017-present ArcBlock Foundation Ltd <https://www.arcblock.io/>
 //
-//  Created by Jonathan Lu on 5/11/2015.
-//  Copyright © 2015 Pixomobile. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 #import "ABSDKDataStore.h"
 #import <YapDatabase/YapDatabase.h>
@@ -38,7 +52,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[ABSDKDataStore alloc] init];
     });
-    
+
     return _sharedInstance;
 }
 
@@ -64,7 +78,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     if (!dbFileName) {
         dbFileName = @"tmp";
     }
-    
+
     if (_dataStoreReady) {
         if ([dbFileName isEqualToString:_dbFileName]) {
             self.dataStoreReady = YES;
@@ -74,9 +88,9 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
             [self quitDataStore];
         }
     }
-    
+
     _tempDataStore = [NSMutableDictionary dictionary];
-    
+
     _dbFileName = dbFileName;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
@@ -88,7 +102,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     _readConnection = [_database newConnection];
     [_readConnection beginLongLivedReadTransaction];
     _writeConnection = [_database newConnection];
-    
+
     self.dataStoreReady = YES;
 }
 
@@ -98,15 +112,15 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         self.dataStoreReady = NO;
         return;
     }
-    
+
     _tempDataStore = nil;
-    
+
     _dbFileName = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _readConnection = nil;
     _writeConnection = nil;
     _database = nil;
-    
+
     self.dataStoreReady = NO;
 }
 
@@ -173,7 +187,7 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
     }
 
     object = [self formatObject:object key:key];
-    
+
     if (![self isRegisteredCollections:collection]) {
         ABSDKDataStoreWillUpdateBlock willUpdateBlock = [_dataStoreWillUpdateBlocks objectForKey:collection];
         if (willUpdateBlock) {
@@ -204,12 +218,12 @@ NSString *const ABSDKDataStoreModifiedNotification = @"ABSDKDataStoreModifiedNot
         __block typeof(NSDictionary*) bobject = object;
         [_writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
             NSDictionary *currentObject = [transaction objectForKey:key inCollection:collection];
-            
+
             ABSDKDataStoreWillUpdateBlock willUpdateBlock = [wself.dataStoreWillUpdateBlocks objectForKey:collection];
             if (willUpdateBlock) {
                 bobject = willUpdateBlock(collection, key, object);
             }
-            
+
             if ([bobject isEqual:currentObject]) {
                 ignoreUpdate = YES;
                 return;
