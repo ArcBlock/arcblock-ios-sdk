@@ -46,10 +46,7 @@ lint:
 
 doc:
 	@echo "Building the documenation..."
-	@cd ABSDKCoreKit && jazzy
-	@cd ABSDKAccountKit && jazzy
-	@cd ABSDKMessagingKit && jazzy
-	@cd ABSDKWalletKit && jazzy
+	@jazzy
 
 precommit: dep lint doc test
 
