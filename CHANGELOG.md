@@ -1,3 +1,8 @@
+## 0.4.4 (June 13, 2018)
+  - add documentation for ABSDKDataStore interfaces
+  - update readme
+  - run jazzy in root directory
+
 ## 0.4.3 (June 12, 2018)
   - add jazzy config for generating documentation
   - fix license file and add license to file header
