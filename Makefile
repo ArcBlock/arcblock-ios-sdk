@@ -56,9 +56,6 @@ travis:
 
 travis-deploy: release
 	@echo "Deploy the software by travis..."
-
-travis-deploy-doc:
-	@echo "Deploy documenation..."
 	@rm -rf Carthage
 	@make doc
 
