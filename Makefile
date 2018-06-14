@@ -48,14 +48,19 @@ doc:
 	@echo "Building the documenation..."
 	@jazzy
 
-precommit: dep lint doc test
+precommit: dep lint test
 
 travis:
 	@set -o pipefail
 	@make precommit
 
 travis-deploy: release
-	@echo "Deploy the software by travis"
+	@echo "Deploy the software by travis..."
+
+travis-deploy-doc:
+	@echo "Deploy documenation..."
+	@rm -rf Carthage
+	@make doc
 
 clean:
 	@echo "Cleaning the build..."
