@@ -54,10 +54,13 @@ travis:
 	@set -o pipefail
 	@make precommit
 
-travis-deploy: release
-	@echo "Deploy the software by travis..."
-	@rm -rf Carthage
-	@make doc
+travis-deploy:
+	if ! [ -f "./build/ArcBlockSDK.zip" ]; then \
+		echo "Preparing for deployment..."; \
+		make release; \
+		rm -rf Carthage; \
+		make doc; \
+	fi
 
 clean:
 	@echo "Cleaning the build..."

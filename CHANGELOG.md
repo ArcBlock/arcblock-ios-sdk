@@ -1,3 +1,6 @@
+## 0.4.5 (June 14, 2018)
+  - make archive and doc gen only run once
+
 ## 0.4.4 (June 13, 2018)
   - add documentation for ABSDKDataStore interfaces
   - update readme
