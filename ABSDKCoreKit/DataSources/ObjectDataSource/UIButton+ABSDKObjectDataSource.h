@@ -22,8 +22,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  A UIButton category that exposes a title property. This will binding with ABSDKObjectDataSource easier.
+ **/
 @interface UIButton (ABSDKObjectDataSource)
 
+/**
+ *  The title of the button
+ **/
 @property (nonatomic) NSString* title;
 
 @end

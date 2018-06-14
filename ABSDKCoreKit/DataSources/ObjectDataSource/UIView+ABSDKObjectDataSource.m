@@ -73,7 +73,7 @@ static char const * const UndefinedObjectsDictKey = "UndefinedObjectsDict";
     [self setValue:objectKey forKey:[NSString stringWithFormat:@"bind%@", viewKey]];
 }
 
-- (void)updateWithObject:(id)object
+- (void)updateWithObject:(NSDictionary*)object
 {
     // first check ourselves for any bindable properties. Then process our
     // children.
