@@ -16,6 +16,7 @@ bump-version:
 	@echo "Bump version..."
 	@.makefiles/bump_version.sh
 	@.makefiles/bump_podspec_version.sh
+	@.makefiles/bump_docs_version.sh
 
 create-pr:
 	@echo "Creating pull request..."
