@@ -22,14 +22,42 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ *  This notification is posted when an ABSDKObjectDataSource is changed. NSNotification with this name will provide 1) `object` that is the ABSDKObjectDataSource instance posting the notification, and 2) `userInfo` that contains the changes to the object
+ **/
 extern NSString *const ABSDKObjectDataSourceDidUpdateNotification;
 
+/**
+ *  A read only data source that represents a key value pair in the data store.
+ *
+ *  Read only means that you can only read the key value pair via the data source, but can't mutate via it. If you want to do mutation, you need to call methods on the ABSDKDataStore singleton.
+ *
+ *  The data source will send ABSDKObjectDataSourceDidUpdateNotification when the corresponding key value pair is changed.
+ **/
 @interface ABSDKObjectDataSource : NSObject
 
+/**
+ *  The collection of the represented key value pair
+ **/
 @property (nonatomic, strong, readonly) NSString *collection;
+
+/**
+ *  The key of the represented key value pair
+ **/
 @property (nonatomic, strong, readonly) NSString *key;
 
+/**
+ *  Get an ABSDKObjectDataSource instance with specified collection and key
+ *  @param  collection  The collection of the represented key value pair
+ *  @param  key         The key of the represented key value pair
+ *  @return An instance of ABSDKObjectDataSource that represents the key value pair
+ **/
 + (ABSDKObjectDataSource*)objectDataSourceWithCollection:(NSString*)collection key:(NSString*)key;
-- (id)fetchObject;
+
+/**
+ *  Get the represented key value pair
+ *  @return The represented key value pair
+ **/
+- (NSDictionary*)fetchObject;
 
 @end
