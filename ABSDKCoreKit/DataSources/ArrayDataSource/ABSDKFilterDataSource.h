@@ -22,8 +22,28 @@
 
 #import "ABSDKArrayDataSource.h"
 
+/**
+ *  The filtering block. Iterate all the items in the parent ABSDKArrayDataSource to apply filter.
+ *  @param  group       The section of the current iterated item
+ *  @param  collection  The collection of the current iterated item
+ *  @param  key         The key of the current iterated item
+ *  @param  object      The value of the current iterated item
+ *  @return A boolean to indicate if the item should pass the filter.
+ **/
+typedef BOOL (^ABSDKArrayDataSourceFilteringBlock)(NSString *group, NSString *collection, NSString *key, NSDictionary *object);
+
+/**
+ *  An ABSDKArrayDataSource subclass that filters another ABSDKArrayDataSource to get a subset of it.
+ **/
 @interface ABSDKFilterDataSource : ABSDKArrayDataSource
 
-- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource filterBlock:(ABSDKArrayDataSourceFilteringBlock)block;
+/**
+ *  Initialize an ABSDKFilterDataSource
+ *  @param  identifier          The unique identifier
+ *  @param  parentDataSource    The parent array data source to apply filter to
+ *  @param  filterBlock         The filter block
+ *  @return An instance of ABSDKFilterDataSource
+ **/
+- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource filterBlock:(ABSDKArrayDataSourceFilteringBlock)filterBlock;
 
 @end
