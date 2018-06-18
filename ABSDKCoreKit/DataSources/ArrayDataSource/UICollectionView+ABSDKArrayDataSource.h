@@ -23,9 +23,24 @@
 #import <UIKit/UIKit.h>
 #import "ABSDKArrayDataSource.h"
 
+/**
+ *  A UICollectionView category that supports binding with ABSDKArrayDataSource.
+ **/
 @interface UICollectionView (ABSDKArrayDataSource)
 
+/**
+ *  Obverse the data change via an ABSDKArrayDataSource object
+ *  @param  arrayDataSource     The arrayDataSource to observe
+ *  @param  updatedBlock        The callback to perform more actions when data change
+ **/
 - (void)observeArrayDataSource:(ABSDKArrayDataSource*)arrayDataSource updatedBlock:(void (^)(void))updatedBlock;
+
+/**
+ *  Update the collection view itself with section and row changes. Changes could be insert, delete, or update.
+ *  @param  sectionChanges  The array of section changes
+ *  @param  rowChanges      The array of row changes
+ *  @param  completion      The callback to perform more actions when collection view update ends
+ **/
 - (void)updateWithSectionChanges:(NSArray*)sectionChanges rowChanges:(NSArray*)rowChanges completion:(void (^)(BOOL finished))completion;
 
 @end
