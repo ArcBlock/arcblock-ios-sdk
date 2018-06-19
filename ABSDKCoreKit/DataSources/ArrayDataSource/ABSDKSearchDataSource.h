@@ -22,10 +22,49 @@
 
 #import "ABSDKArrayDataSource.h"
 
+/**
+ *  When you add or update key value pairs in the data store the ABSDKArrayDataSourceSearchBlock is invoked. Your block can inspect the key value pair and determine if it contains any text columns that should be indexed. If not, the  block can simply return. Otherwise the block should extract any text values, and add them to the given dictionary.
+ *
+ *  After the block returns, the dictionary parameter will be inspected, and any set values will be automatically indexed.
+ *
+ *  @param dict         The dictonary to be inspected later for indexing.
+ *  @param  collection  The collection of the current iterated key value pair
+ *  @param  key         The key of the current iterated key value pair
+ *  @param  object      The value of the current iterated key value pair
+ **/
+typedef void (^ABSDKArrayDataSourceSearchBlock)(NSMutableDictionary*dict, NSString *collection, NSString *key, NSDictionary *object);
+
+/**
+ *  An ABSDKArrayDataSource subclass that supports full text search.
+ **/
 @interface ABSDKSearchDataSource : ABSDKArrayDataSource
 
-- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource collumnNames:(NSArray*)collumnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock;
-- (id)initWithIdentifier:(NSString*)identifier columnNames:(NSArray*)columnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock sections:(NSArray*)sections grouping:(ABSDKArrayDataSourceGroupingBlock)grouping sorting:(ABSDKArrayDataSourceSortingBlock)sorting;
+/**
+ *  Initialize an ABSDKSearchDataSource based on a parentDataSource
+ *  @param  identifier          The unique identifier
+ *  @param  parentDataSource    The parent array data source to apply filter to
+ *  @param  columnNames        The collumns to index
+ *  @param  searchBlock         The search block
+ *  @return An instance of ABSDKSearchDataSource
+ **/
+- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource columnNames:(NSArray*)columnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock;
+
+/**
+ *  Initialize an ABSDKSearchDataSource without a parentDataSource
+ *  @param  identifier          The unique identifier
+ *  @param  columnNames        The collumns to index
+ *  @param  searchBlock         The search block
+ *  @param  sections        The array of section names or identifiers
+ *  @param  groupingBlock   The grouping block
+ *  @param  sortingBlock    The sorting block
+ *  @return An instance of ABSDKSearchDataSource
+ **/
+- (id)initWithIdentifier:(NSString*)identifier columnNames:(NSArray*)columnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock sections:(NSArray*)sections groupingBlock:(ABSDKArrayDataSourceGroupingBlock)groupingBlock sortingBlock:(ABSDKArrayDataSourceSortingBlock)sortingBlock;
+
+/**
+ *  Apply search
+ *  @param  searchString    The search string
+ **/
 - (void)search:(NSString*)searchString;
 
 @end

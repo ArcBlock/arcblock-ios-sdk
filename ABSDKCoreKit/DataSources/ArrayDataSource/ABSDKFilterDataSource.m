@@ -39,7 +39,7 @@
 @synthesize sections = _sections;
 @synthesize ready = _ready;
 
-- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource filterBlock:(ABSDKArrayDataSourceFilteringBlock)block
+- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource filterBlock:(ABSDKArrayDataSourceFilteringBlock)filterBlock
 {
     self = [super init];
     if (self) {
@@ -47,7 +47,7 @@
         _sections = parentDataSource.sections;
 
         YapDatabaseViewFiltering *filtering = [YapDatabaseViewFiltering withObjectBlock:^BOOL(YapDatabaseReadTransaction * _Nonnull transaction, NSString * _Nonnull group, NSString * _Nonnull collection, NSString * _Nonnull key, id  _Nonnull object) {
-            return block(group, collection, key, object);
+            return filterBlock(group, collection, key, object);
         }];
 
         YapDatabaseViewOptions *options = [[YapDatabaseViewOptions alloc] init];

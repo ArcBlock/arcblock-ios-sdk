@@ -25,10 +25,29 @@
 #import "UIButton+ABSDKObjectDataSource.h"
 #import "ABSDKObjectDataSource.h"
 
+/**
+ *  A UIView category that supports binding with ABSDKObjectDataSource.
+ **/
 @interface UIView (ABSDKObjectDataSource)
 
+/**
+ *  Bind a key in the key value pair with a property of a view object
+ *  @param  viewKey     The property name of the view
+ *  @param  objectKey   The key in the key value pair
+ **/
 - (void)bind:(NSString*)viewKey objectKey:(NSString*)objectKey;
+
+/**
+ *  Obverse the data change via an ABSDKObjectDataSource object
+ *  @param  objectDataSource    The objectDataSource to observe
+ *  @param  updatedBlock        The callback to perform more actions when data change
+ **/
 - (void)observeObjectDataSource:(ABSDKObjectDataSource*)objectDataSource updatedBlock:(void (^)(void))updatedBlock;
-- (void)updateWithObject:(id)object;
+
+/**
+ *  Update the view itself with a key value pair
+ *  @param  object  The key value pair to update view with
+ **/
+- (void)updateWithObject:(NSDictionary*)object;
 
 @end

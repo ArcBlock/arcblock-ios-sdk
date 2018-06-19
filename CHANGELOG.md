@@ -1,3 +1,9 @@
+## 0.4.6 (June 18, 2018)
+  - add documentations for array data source categories
+  - add documentation for array data source classes
+  - add documentation for ObjectDataSource related codes
+  - update travis
+
 ## 0.4.5 (June 14, 2018)
   - make archive and doc gen only run once
 
