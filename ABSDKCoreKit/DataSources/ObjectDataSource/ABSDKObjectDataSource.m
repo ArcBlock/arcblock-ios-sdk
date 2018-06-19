@@ -79,7 +79,7 @@ NSString *const ABSDKObjectDataSourceDidUpdateNotification = @"ABSDKObjectDataSo
     }
 }
 
-- (id)fetchObject{
+- (NSDictionary*)fetchObject{
     return [[ABSDKDataStore sharedInstance] objectForKey:_key inCollection:_collection];
 }
 

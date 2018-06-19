@@ -42,13 +42,13 @@
 @synthesize identifier = _identifier;
 @synthesize sections = _sections;
 
-- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource collumnNames:(NSArray*)collumnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock
+- (id)initWithIdentifier:(NSString*)identifier parentDataSource:(ABSDKArrayDataSource*)parentDataSource columnNames:(NSArray*)columnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock
 {
     self = [super init];
     if (self) {
         _identifier = identifier;
         _sections = parentDataSource.sections;
-        _columnNames = collumnNames;
+        _columnNames = columnNames;
 
         YapDatabaseFullTextSearchHandler *ftsHandler = [YapDatabaseFullTextSearchHandler withObjectBlock:searchBlock];
         _fts = [[YapDatabaseFullTextSearch alloc] initWithColumnNames:_columnNames handler:ftsHandler];
@@ -61,7 +61,7 @@
     return self;
 }
 
-- (id)initWithIdentifier:(NSString*)identifier columnNames:(NSArray*)columnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock sections:(NSArray*)sections grouping:(ABSDKArrayDataSourceGroupingBlock)grouping sorting:(ABSDKArrayDataSourceSortingBlock)sorting
+- (id)initWithIdentifier:(NSString*)identifier columnNames:(NSArray*)columnNames searchBlock:(ABSDKArrayDataSourceSearchBlock)searchBlock sections:(NSArray*)sections groupingBlock:(ABSDKArrayDataSourceGroupingBlock)groupingBlock sortingBlock:(ABSDKArrayDataSourceSortingBlock)sortingBlock
 {
     self = [super init];
     if (self) {
@@ -75,10 +75,10 @@
         YapDatabaseSearchResultsViewOptions *options = [[YapDatabaseSearchResultsViewOptions alloc] init];
         options.isPersistent = NO;
         YapDatabaseViewGrouping *databaseViewGrouping = [YapDatabaseViewGrouping withObjectBlock:^NSString * _Nullable(YapDatabaseReadTransaction * _Nonnull transaction, NSString * _Nonnull collection, NSString * _Nonnull key, id  _Nonnull object) {
-            return grouping(collection, key, object);
+            return groupingBlock(collection, key, object);
         }];
         YapDatabaseViewSorting *databaseViewSorting = [YapDatabaseViewSorting withObjectBlock:^NSComparisonResult(YapDatabaseReadTransaction * _Nonnull transaction, NSString * _Nonnull group, NSString * _Nonnull collection1, NSString * _Nonnull key1, id  _Nonnull object1, NSString * _Nonnull collection2, NSString * _Nonnull key2, id  _Nonnull object2) {
-            return sorting(group, collection1, key1, object1, collection2, key2, object2);
+            return sortingBlock(group, collection1, key1, object1, collection2, key2, object2);
         }];
         NSString *ftsName = [NSString stringWithFormat:@"%@-fts", _identifier];
         self.databaseView = [[YapDatabaseSearchResultsView alloc] initWithFullTextSearchName:ftsName grouping:databaseViewGrouping sorting:databaseViewSorting versionTag:0 options:options];

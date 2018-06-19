@@ -23,9 +23,23 @@
 #import <UIKit/UIKit.h>
 #import "ABSDKArrayDataSource.h"
 
+/**
+ *  A UITableView category that supports binding with ABSDKArrayDataSource.
+ **/
 @interface UITableView (ABSDKArrayDataSource)
 
+/**
+ *  Obverse the data change via an ABSDKArrayDataSource object
+ *  @param  arrayDataSource     The arrayDataSource to observe
+ *  @param  updatedBlock        The callback to perform more actions when data change
+ **/
 - (void)observeArrayDataSource:(ABSDKArrayDataSource*)arrayDataSource updatedBlock:(void (^)(void))updatedBlock;
+
+/**
+ *  Update the table view itself with section and row changes. Changes could be insert, delete, or update.
+ *  @param  sectionChanges  The array of section changes
+ *  @param  rowChanges      The array of row changes
+ **/
 - (void)updateWithSectionChanges:(NSArray*)sectionChanges rowChanges:(NSArray*)rowChanges;
 
 @end

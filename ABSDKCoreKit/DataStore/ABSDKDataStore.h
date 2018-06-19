@@ -23,21 +23,21 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  This notification is posted when any object in the data store is changed. The notificatoin object can be passed to `hasChangeForKey:inCollection:notification:` or related methods to check if observed key value pair has been changed
+ *  This notification is posted when any object in the data store is changed. NSNotification with this name will provide 1) `object` that is the ABSDKDataStore posting the notification, and 2) `userInfo` that contains information about the changes
  **/
 extern NSString *const ABSDKDataStoreModifiedNotification;
 
 /**
- *  The block to modify value before written to the storage
+ *  The block to modify value before written to the store
  *  @param  collection  The collection in which the key-value pair will be stored
  *  @param  key         The key of the key-value pair
  *  @param  object      The value of the key-value pair
- *  @return The final value to be written to the storage
+ *  @return The final value to be written to the store
  **/
 typedef NSDictionary* (^ABSDKDataStoreWillUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
 
 /**
- *  The block to perform additional actions after key-value pair is written to the storage
+ *  The block to perform additional actions after key-value pair is written to the store
  *  @param  collection  The collection in which the key-value pair is stored
  *  @param  key         The key of the key-value pair
  *  @param  object      The value of the key-value pair
@@ -45,19 +45,18 @@ typedef NSDictionary* (^ABSDKDataStoreWillUpdateBlock)(NSString *collection, NSS
 typedef void (^ABSDKDataStoreDidUpdateBlock)(NSString *collection, NSString *key, NSDictionary* object);
 
 /**
- *  The block to perform additional actions after key-value pair is removed from the storage
+ *  The block to perform additional actions after key-value pair is removed from the store
  *  @param  collection  The collection in which the key-value pair is stored
  *  @param  key         The key of the key-value pair
  **/
 typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key);
 
 /**
- *  A key-value data storage that supports observation.
+ *  A key-value data store that supports observation.
  *
- *  Key-value pairs can be stored, retrived, updated and removed in a specified collection, with a specific key. Any change to the data storage will trigger an NSNotification, so that the users can know when one certain key-value pair or a set of them has been changed(change includes creation, update and removal).
+ *  Key-value pairs can be stored, retrived, updated and removed in a specified collection, with a specific key. Any change to the data store will trigger an NSNotification, so that the users can know when one certain key-value pair or a set of them has been changed(change includes creation, update and removal).
  *
  **/
-
 @interface ABSDKDataStore : NSObject
 
 /**
@@ -99,18 +98,18 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 - (void)setDataStoreDidRemoveBlockForCollection:(NSString*)collection block:(ABSDKDataStoreDidRemoveBlock)block;
 
 /**
- *  Setup the storage with a custom database file name for the on disk storage. This will be useful when we want to separate data in different context.
+ *  Setup the store with a custom database file name for the on disk store. This will be useful when we want to separate data in different context.
  *  @param  dbFileName  Optional, Name of database file. ABSDKDataStore will use "tmp" when nil is passed
  **/
 - (void)setupDataStore:(NSString*)dbFileName;
 
 /**
- *  Reset the storage
+ *  Reset the store
  **/
 - (void)quitDataStore;
 
 /**
- *  read a key value pair from the storage
+ *  read a key value pair from the store
  *  @param  key                 The key of the key-value pair
  *  @param  collection          The collection in which the key-value pair is stored
  *  @return The value of the key value pair
@@ -118,7 +117,7 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 - (NSDictionary*)objectForKey:(NSString*)key inCollection:(NSString*)collection;
 
 /**
- *  Write a key value pair to the storage
+ *  Write a key value pair to the store
  *  @param  object              The value of the key-value pair
  *  @param  key                 The key of the key-value pair
  *  @param  collection          The collection in which the key-value pair will be stored
@@ -127,7 +126,7 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
 - (void)setObject:(NSDictionary*)object forKey:(NSString*)key inCollection:(NSString *)collection completionBlock:(dispatch_block_t)completionBlock;
 
 /**
- *  remove a key value pair from the storage
+ *  remove a key value pair from the store
  *  @param  key                 The key of the key-value pair
  *  @param  collection          The collection in which the key-value pair is stored
  *  @param  completionBlock     The block called after the key value pair is removed
@@ -138,7 +137,7 @@ typedef void (^ABSDKDataStoreDidRemoveBlock)(NSString *collection, NSString *key
  *  Check if a key value pair has been changed
  *  @param  key                 The key of the key-value pair
  *  @param  collection          The collection in which the key-value pair is stored
- *  @param  notification        The notification user recieved when the data storage has any changes
+ *  @param  notification        The notification user recieved when the data store has any changes
  *  @return YES if the key value pair has been changed, otherwise NO
  **/
 - (BOOL)hasChangeForKey:(NSString*)key inCollection:(NSString *)collection notification:(NSNotification *)notification;

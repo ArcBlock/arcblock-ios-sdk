@@ -55,7 +55,7 @@ NSString *const ABSDKArrayDataSourceDidUpdateNotification = @"ABSDKArrayDataSour
     return self;
 }
 
-- (id)initWithIdentifier:(NSString*)identifier sections:(NSArray*)sections grouping:(ABSDKArrayDataSourceGroupingBlock)grouping sorting:(ABSDKArrayDataSourceSortingBlock)sorting
+- (id)initWithIdentifier:(NSString*)identifier sections:(NSArray*)sections groupingBlock:(ABSDKArrayDataSourceGroupingBlock)groupingBlock sortingBlock:(ABSDKArrayDataSourceSortingBlock)sortingBlock
 {
     self = [self init];
     if (self) {
@@ -63,10 +63,10 @@ NSString *const ABSDKArrayDataSourceDidUpdateNotification = @"ABSDKArrayDataSour
         _sections = sections;
 
         YapDatabaseViewGrouping *databaseViewGrouping = [YapDatabaseViewGrouping withObjectBlock:^NSString * _Nullable(YapDatabaseReadTransaction * _Nonnull transaction, NSString * _Nonnull collection, NSString * _Nonnull key, id  _Nonnull object) {
-            return grouping(collection, key, object);
+            return groupingBlock(collection, key, object);
         }];
         YapDatabaseViewSorting *databaseViewSorting = [YapDatabaseViewSorting withObjectBlock:^NSComparisonResult(YapDatabaseReadTransaction * _Nonnull transaction, NSString * _Nonnull group, NSString * _Nonnull collection1, NSString * _Nonnull key1, id  _Nonnull object1, NSString * _Nonnull collection2, NSString * _Nonnull key2, id  _Nonnull object2) {
-            return sorting(group, collection1, key1, object1, collection2, key2, object2);
+            return sortingBlock(group, collection1, key1, object1, collection2, key2, object2);
         }];
 
         self.databaseView = [[YapDatabaseAutoView alloc] initWithGrouping:databaseViewGrouping sorting:databaseViewSorting];

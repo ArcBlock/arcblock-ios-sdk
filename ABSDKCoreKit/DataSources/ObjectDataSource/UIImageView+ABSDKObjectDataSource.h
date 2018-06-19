@@ -22,8 +22,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  A UIImageView category that exposes an imageUrl property. This will binding with ABSDKObjectDataSource easier.
+ **/
 @interface UIImageView (ABSDKObjectDataSource)
 
+/**
+ *  The url of the image
+ **/
 @property (nonatomic) NSString* imageUrl;
 
 @end
