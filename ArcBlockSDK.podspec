@@ -38,6 +38,8 @@ TODO: Add long description of the pod here.
     sc.dependency "YapDatabase", "~> 3.0.2"
     sc.dependency "KVOController"
     sc.dependency "SDWebImage"
+    sc.dependency "Apollo"
+    sc.dependency "Apollo/SQLite"
   end
 
   s.subspec 'AccountKit' do |sa|
