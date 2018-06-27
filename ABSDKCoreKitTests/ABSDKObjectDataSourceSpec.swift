@@ -65,7 +65,7 @@ class ABSDKObjectDataSourceSpec: QuickSpec {
                     datastore.setupDataStore(nil)
                     datastore.removeObject(forKey: key, inCollection: collection, completionBlock: nil)
                     dataSourceUpdated = false
-                    view.update(with: nil)
+                    view.update(withObject: nil)
                 }
 
                 context("in correct collection and key", {
