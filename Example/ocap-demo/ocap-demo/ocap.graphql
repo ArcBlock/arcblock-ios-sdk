@@ -1,9 +1,16 @@
 query ListBlocks {
   blocks {
-    height
-    fees
-    total
     hash
     numberTxs
+    total
+  }
+}
+
+query ListTransactions {
+  transactions {
+    hash
+    total
+    numberInputs
+    numberOutputs
   }
 }
