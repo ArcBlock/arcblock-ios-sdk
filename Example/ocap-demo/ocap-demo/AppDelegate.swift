@@ -7,15 +7,25 @@
 //
 
 import UIKit
+import Apollo
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var apolloClient: ApolloClient!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        do {
+            let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("ocap-demo-db")
+            let apolloStore: ApolloStore = try ApolloStore(cache: SQLiteNormalizedCache(fileURL: databaseURL))
+            let networkTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: URL(string: "http://ocap.arcblock.io/api/btc")!)
+            apolloClient = ApolloClient(networkTransport: networkTransport,
+                                        store: apolloStore)
+        } catch {
+            print("Error initializing Apollo client. \(error)")
+        }
         return true
     }
 

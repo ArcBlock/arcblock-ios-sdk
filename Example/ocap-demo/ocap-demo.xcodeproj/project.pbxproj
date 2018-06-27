@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		272225D020E20B7A00E2BBB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225CF20E20B7A00E2BBB3 /* AppDelegate.swift */; };
-		272225D220E20B7A00E2BBB3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225D120E20B7A00E2BBB3 /* ViewController.swift */; };
 		272225D520E20B7A00E2BBB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272225D320E20B7A00E2BBB3 /* Main.storyboard */; };
 		272225D720E20B7C00E2BBB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272225D620E20B7C00E2BBB3 /* Assets.xcassets */; };
 		272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */; };
 		272225E520E20B7C00E2BBB3 /* ocap_demoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225E420E20B7C00E2BBB3 /* ocap_demoTests.swift */; };
 		272225F020E20B7C00E2BBB3 /* ocap_demoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */; };
 		272225FE20E2181400E2BBB3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225FD20E2181400E2BBB3 /* API.swift */; };
+		2722260220E32E8E00E2BBB3 /* ocap.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 2722260020E32E8E00E2BBB3 /* ocap.graphql */; };
+		2722260320E32E8F00E2BBB3 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 2722260120E32E8E00E2BBB3 /* schema.json */; };
+		2722260520E33A1200E2BBB3 /* BlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722260420E33A1200E2BBB3 /* BlockListViewController.swift */; };
+		2722260720E3501C00E2BBB3 /* TransactionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722260620E3501C00E2BBB3 /* TransactionListViewController.swift */; };
 		29922C4571AAE760FE4D1E09 /* Pods_ocap_demoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074787B86C52AD1B784E5C41 /* Pods_ocap_demoUITests.framework */; };
 		5DEE64201E6844D97EFE0EA1 /* Pods_ocap_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1632CDB0BE2616E19E781AE6 /* Pods_ocap_demo.framework */; };
 		DBD1980FE986DC499CEB3B99 /* Pods_ocap_demoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */; };
@@ -43,7 +46,6 @@
 		1632CDB0BE2616E19E781AE6 /* Pods_ocap_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ocap_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		272225CC20E20B7A00E2BBB3 /* ocap-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ocap-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		272225CF20E20B7A00E2BBB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		272225D120E20B7A00E2BBB3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		272225D420E20B7A00E2BBB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		272225D620E20B7C00E2BBB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		272225D920E20B7C00E2BBB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,6 +57,10 @@
 		272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ocap_demoUITests.swift; sourceTree = "<group>"; };
 		272225F120E20B7C00E2BBB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		272225FD20E2181400E2BBB3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		2722260020E32E8E00E2BBB3 /* ocap.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ocap.graphql; sourceTree = "<group>"; };
+		2722260120E32E8E00E2BBB3 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
+		2722260420E33A1200E2BBB3 /* BlockListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockListViewController.swift; sourceTree = "<group>"; };
+		2722260620E3501C00E2BBB3 /* TransactionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListViewController.swift; sourceTree = "<group>"; };
 		5E0B075F01E0409CA51F5D84 /* Pods-ocap-demoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.release.xcconfig"; sourceTree = "<group>"; };
 		9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ocap_demoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26009757EFE9BF83355D1F7 /* Pods-ocap-demoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,11 +124,14 @@
 			children = (
 				272225FD20E2181400E2BBB3 /* API.swift */,
 				272225CF20E20B7A00E2BBB3 /* AppDelegate.swift */,
-				272225D120E20B7A00E2BBB3 /* ViewController.swift */,
-				272225D320E20B7A00E2BBB3 /* Main.storyboard */,
 				272225D620E20B7C00E2BBB3 /* Assets.xcassets */,
-				272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */,
+				2722260620E3501C00E2BBB3 /* TransactionListViewController.swift */,
+				2722260420E33A1200E2BBB3 /* BlockListViewController.swift */,
 				272225DB20E20B7C00E2BBB3 /* Info.plist */,
+				272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */,
+				272225D320E20B7A00E2BBB3 /* Main.storyboard */,
+				2722260020E32E8E00E2BBB3 /* ocap.graphql */,
+				2722260120E32E8E00E2BBB3 /* schema.json */,
 			);
 			path = "ocap-demo";
 			sourceTree = "<group>";
@@ -176,6 +185,7 @@
 			buildConfigurationList = 272225F420E20B7C00E2BBB3 /* Build configuration list for PBXNativeTarget "ocap-demo" */;
 			buildPhases = (
 				B913157BD75EA16499B8A844 /* [CP] Check Pods Manifest.lock */,
+				272225FF20E32E4F00E2BBB3 /* Generate Apollo GraphQL API */,
 				272225C820E20B7A00E2BBB3 /* Sources */,
 				272225C920E20B7A00E2BBB3 /* Frameworks */,
 				272225CA20E20B7A00E2BBB3 /* Resources */,
@@ -276,6 +286,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2722260220E32E8E00E2BBB3 /* ocap.graphql in Resources */,
+				2722260320E32E8F00E2BBB3 /* schema.json in Resources */,
 				272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */,
 				272225D720E20B7C00E2BBB3 /* Assets.xcassets in Resources */,
 				272225D520E20B7A00E2BBB3 /* Main.storyboard in Resources */,
@@ -299,6 +311,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		272225FF20E32E4F00E2BBB3 /* Generate Apollo GraphQL API */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Apollo GraphQL API";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
+		};
 		3C36C9AE06C1AD30EC336DC1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -390,9 +416,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				272225D220E20B7A00E2BBB3 /* ViewController.swift in Sources */,
+				2722260520E33A1200E2BBB3 /* BlockListViewController.swift in Sources */,
 				272225FE20E2181400E2BBB3 /* API.swift in Sources */,
 				272225D020E20B7A00E2BBB3 /* AppDelegate.swift in Sources */,
+				2722260720E3501C00E2BBB3 /* TransactionListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
