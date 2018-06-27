@@ -1,3 +1,7 @@
+## 0.4.7 (June 27, 2018)
+  - connect demo to ocap service and show lists of blocks and transactions
+  - setup ocap demo project
+
 ## 0.4.6 (June 18, 2018)
   - add documentations for array data source categories
   - add documentation for array data source classes
