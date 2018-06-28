@@ -50,13 +50,13 @@ class ABSDKArrayDataSourceSpec: QuickSpec {
 
             self.tableViewArrayDataSource = ABSDKArrayDataSource.init(identifier: self.tableViewCellIdentifier,
                                                                  sections: [self.collection],
-                                                                 grouping: { (collection, _, _) -> String? in
-                                                                        if collection == self.collection {
-                                                                            return collection
-                                                                        }
-                                                                        return nil
-                                                                    },
-                                                                 sorting: sorting)
+                                                                 groupingBlock: { (collection, _, _) -> String? in
+                                                                    if collection == self.collection {
+                                                                        return collection
+                                                                    }
+                                                                    return nil
+            },
+                                                                 sortingBlock: sorting)
             self.tableView.observe(self.tableViewArrayDataSource, updatedBlock: nil)
             self.tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: self.tableViewCellIdentifier)
 

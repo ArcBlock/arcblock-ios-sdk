@@ -1,6 +1,7 @@
 excluded:
   - Pods
   - Carthage
+  - Example
 
 line_length:
   warning: 200

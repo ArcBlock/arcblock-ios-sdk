@@ -573,8 +573,8 @@
 				277E6B7220A0DE340054707E /* Frameworks */,
 				277E6B7320A0DE340054707E /* Headers */,
 				277E6B7420A0DE340054707E /* Resources */,
-				2712815420A2426B00530FB6 /* ShellScript */,
-				279CD44420ACA2E3009E1348 /* ShellScript */,
+				2712815420A2426B00530FB6 /* Lint */,
+				279CD44420ACA2E3009E1348 /* Copy Framework */,
 			);
 			buildRules = (
 			);
@@ -902,13 +902,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2712815420A2426B00530FB6 /* ShellScript */ = {
+		2712815420A2426B00530FB6 /* Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = Lint;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1006,7 +1007,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		279CD44420ACA2E3009E1348 /* ShellScript */ = {
+		279CD44420ACA2E3009E1348 /* Copy Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1017,6 +1018,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/YapDatabase.framework",
 			);
+			name = "Copy Framework";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CocoaLumberjack.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KVOController.framework",
