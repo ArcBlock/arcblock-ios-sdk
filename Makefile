@@ -22,7 +22,7 @@ install:
 
 dep:
 	@echo "Install dependencies required for this repo..."
-	@carthage bootstrap --platform ios --cache-builds
+	@carthage update --platform ios --cache-builds
 
 pre-build: install dep
 	@echo "Running scripts before the build..."
