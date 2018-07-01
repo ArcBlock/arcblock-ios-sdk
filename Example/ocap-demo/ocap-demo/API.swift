@@ -4,16 +4,23 @@ import Apollo
 
 public final class ListBlocksQuery: GraphQLQuery {
   public static let operationString =
-    "query ListBlocks {\n  blocks {\n    __typename\n    hash\n    numberTxs\n    total\n  }\n}"
+    "query ListBlocks($fromHeight: Int!) {\n  blocksByHeight(fromHeight: $fromHeight) {\n    __typename\n    data {\n      __typename\n      hash\n      numberTxs\n      total\n    }\n  }\n}"
 
-  public init() {
+  public var fromHeight: Int
+
+  public init(fromHeight: Int) {
+    self.fromHeight = fromHeight
+  }
+
+  public var variables: GraphQLMap? {
+    return ["fromHeight": fromHeight]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["RootQueryType"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("blocks", type: .list(.object(Block.selections))),
+      GraphQLField("blocksByHeight", arguments: ["fromHeight": GraphQLVariable("fromHeight")], type: .object(BlocksByHeight.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -22,28 +29,26 @@ public final class ListBlocksQuery: GraphQLQuery {
       self.snapshot = snapshot
     }
 
-    public init(blocks: [Block?]? = nil) {
-      self.init(snapshot: ["__typename": "RootQueryType", "blocks": blocks.flatMap { (value: [Block?]) -> [Snapshot?] in value.map { (value: Block?) -> Snapshot? in value.flatMap { (value: Block) -> Snapshot in value.snapshot } } }])
+    public init(blocksByHeight: BlocksByHeight? = nil) {
+      self.init(snapshot: ["__typename": "RootQueryType", "blocksByHeight": blocksByHeight.flatMap { (value: BlocksByHeight) -> Snapshot in value.snapshot }])
     }
 
-    /// Get all blocks
-    public var blocks: [Block?]? {
+    /// Returns blockks with paginations based on their height.
+    public var blocksByHeight: BlocksByHeight? {
       get {
-        return (snapshot["blocks"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Block?] in value.map { (value: Snapshot?) -> Block? in value.flatMap { (value: Snapshot) -> Block in Block(snapshot: value) } } }
+        return (snapshot["blocksByHeight"] as? Snapshot).flatMap { BlocksByHeight(snapshot: $0) }
       }
       set {
-        snapshot.updateValue(newValue.flatMap { (value: [Block?]) -> [Snapshot?] in value.map { (value: Block?) -> Snapshot? in value.flatMap { (value: Block) -> Snapshot in value.snapshot } } }, forKey: "blocks")
+        snapshot.updateValue(newValue?.snapshot, forKey: "blocksByHeight")
       }
     }
 
-    public struct Block: GraphQLSelectionSet {
-      public static let possibleTypes = ["BitcoinBlock"]
+    public struct BlocksByHeight: GraphQLSelectionSet {
+      public static let possibleTypes = ["PagedBitcoinBlocks"]
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("hash", type: .nonNull(.scalar(String.self))),
-        GraphQLField("numberTxs", type: .nonNull(.scalar(Int.self))),
-        GraphQLField("total", type: .nonNull(.scalar(Int.self))),
+        GraphQLField("data", type: .list(.object(Datum.selections))),
       ]
 
       public var snapshot: Snapshot
@@ -52,8 +57,8 @@ public final class ListBlocksQuery: GraphQLQuery {
         self.snapshot = snapshot
       }
 
-      public init(hash: String, numberTxs: Int, total: Int) {
-        self.init(snapshot: ["__typename": "BitcoinBlock", "hash": hash, "numberTxs": numberTxs, "total": total])
+      public init(data: [Datum?]? = nil) {
+        self.init(snapshot: ["__typename": "PagedBitcoinBlocks", "data": data.flatMap { (value: [Datum?]) -> [Snapshot?] in value.map { (value: Datum?) -> Snapshot? in value.flatMap { (value: Datum) -> Snapshot in value.snapshot } } }])
       }
 
       public var __typename: String {
@@ -65,133 +70,69 @@ public final class ListBlocksQuery: GraphQLQuery {
         }
       }
 
-      public var hash: String {
+      public var data: [Datum?]? {
         get {
-          return snapshot["hash"]! as! String
+          return (snapshot["data"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Datum?] in value.map { (value: Snapshot?) -> Datum? in value.flatMap { (value: Snapshot) -> Datum in Datum(snapshot: value) } } }
         }
         set {
-          snapshot.updateValue(newValue, forKey: "hash")
+          snapshot.updateValue(newValue.flatMap { (value: [Datum?]) -> [Snapshot?] in value.map { (value: Datum?) -> Snapshot? in value.flatMap { (value: Datum) -> Snapshot in value.snapshot } } }, forKey: "data")
         }
       }
 
-      public var numberTxs: Int {
-        get {
-          return snapshot["numberTxs"]! as! Int
+      public struct Datum: GraphQLSelectionSet {
+        public static let possibleTypes = ["BitcoinBlock"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("hash", type: .nonNull(.scalar(String.self))),
+          GraphQLField("numberTxs", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("total", type: .nonNull(.scalar(Int.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
         }
-        set {
-          snapshot.updateValue(newValue, forKey: "numberTxs")
+
+        public init(hash: String, numberTxs: Int, total: Int) {
+          self.init(snapshot: ["__typename": "BitcoinBlock", "hash": hash, "numberTxs": numberTxs, "total": total])
         }
-      }
 
-      public var total: Int {
-        get {
-          return snapshot["total"]! as! Int
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
         }
-        set {
-          snapshot.updateValue(newValue, forKey: "total")
+
+        public var hash: String {
+          get {
+            return snapshot["hash"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "hash")
+          }
         }
-      }
-    }
-  }
-}
 
-public final class ListTransactionsQuery: GraphQLQuery {
-  public static let operationString =
-    "query ListTransactions {\n  transactions {\n    __typename\n    hash\n    total\n    numberInputs\n    numberOutputs\n  }\n}"
-
-  public init() {
-  }
-
-  public struct Data: GraphQLSelectionSet {
-    public static let possibleTypes = ["RootQueryType"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("transactions", type: .list(.object(Transaction.selections))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public init(transactions: [Transaction?]? = nil) {
-      self.init(snapshot: ["__typename": "RootQueryType", "transactions": transactions.flatMap { (value: [Transaction?]) -> [Snapshot?] in value.map { (value: Transaction?) -> Snapshot? in value.flatMap { (value: Transaction) -> Snapshot in value.snapshot } } }])
-    }
-
-    /// Get all transactions
-    public var transactions: [Transaction?]? {
-      get {
-        return (snapshot["transactions"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Transaction?] in value.map { (value: Snapshot?) -> Transaction? in value.flatMap { (value: Snapshot) -> Transaction in Transaction(snapshot: value) } } }
-      }
-      set {
-        snapshot.updateValue(newValue.flatMap { (value: [Transaction?]) -> [Snapshot?] in value.map { (value: Transaction?) -> Snapshot? in value.flatMap { (value: Transaction) -> Snapshot in value.snapshot } } }, forKey: "transactions")
-      }
-    }
-
-    public struct Transaction: GraphQLSelectionSet {
-      public static let possibleTypes = ["BitcoinTransaction"]
-
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("hash", type: .nonNull(.scalar(String.self))),
-        GraphQLField("total", type: .nonNull(.scalar(Int.self))),
-        GraphQLField("numberInputs", type: .nonNull(.scalar(Int.self))),
-        GraphQLField("numberOutputs", type: .nonNull(.scalar(Int.self))),
-      ]
-
-      public var snapshot: Snapshot
-
-      public init(snapshot: Snapshot) {
-        self.snapshot = snapshot
-      }
-
-      public init(hash: String, total: Int, numberInputs: Int, numberOutputs: Int) {
-        self.init(snapshot: ["__typename": "BitcoinTransaction", "hash": hash, "total": total, "numberInputs": numberInputs, "numberOutputs": numberOutputs])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
+        public var numberTxs: Int {
+          get {
+            return snapshot["numberTxs"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "numberTxs")
+          }
         }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
-      }
 
-      public var hash: String {
-        get {
-          return snapshot["hash"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "hash")
-        }
-      }
-
-      public var total: Int {
-        get {
-          return snapshot["total"]! as! Int
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "total")
-        }
-      }
-
-      public var numberInputs: Int {
-        get {
-          return snapshot["numberInputs"]! as! Int
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "numberInputs")
-        }
-      }
-
-      public var numberOutputs: Int {
-        get {
-          return snapshot["numberOutputs"]! as! Int
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "numberOutputs")
+        public var total: Int {
+          get {
+            return snapshot["total"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "total")
+          }
         }
       }
     }
