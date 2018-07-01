@@ -7,24 +7,26 @@
 //
 
 import UIKit
-import Apollo
+import ArcBlockSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var apolloClient: ApolloClient!
+    var absdkClient: ABSDKClient!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("ocap-demo-db")
+        print(databaseURL)
         do {
-            let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("ocap-demo-db")
-            let apolloStore: ApolloStore = try ApolloStore(cache: SQLiteNormalizedCache(fileURL: databaseURL))
-            let networkTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: URL(string: "http://ocap.arcblock.io/api/btc")!)
-            apolloClient = ApolloClient(networkTransport: networkTransport,
-                                        store: apolloStore)
+            // initialize the AppSync client configuration configuration
+            let absdkConfig = try ABSDKClientConfiguration(url: URL(string: "https://ocap.arcblock.io/api/btc")!,
+                                                           databaseURL: databaseURL)
+            // initialize app sync client
+            absdkClient = try ABSDKClient(configuration: absdkConfig)
         } catch {
-            print("Error initializing Apollo client. \(error)")
+            print("Error initializing AppSync client. \(error)")
         }
         return true
     }
