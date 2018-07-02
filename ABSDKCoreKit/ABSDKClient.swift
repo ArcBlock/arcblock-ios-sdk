@@ -149,7 +149,7 @@ public struct ABSDKClientError: Error, LocalizedError {
     let additionalInfo: String?
 
     public var errorDescription: String? {
-        if (isInternalError) {
+        if isInternalError {
             return additionalInfo
         }
         return "(\(response!.statusCode) \(response!.statusCodeDescription)) \(additionalInfo ?? "")"
@@ -183,7 +183,7 @@ public class ABSDKClient: NetworkConnectionNotification {
         self.apolloClient = ApolloClient(networkTransport: self.httpTransport!, store: self.configuration.store)
 
         NotificationCenter.default.addObserver(self, selector: #selector(checkForReachability(note:)), name: .reachabilityChanged, object: reachability)
-        do{
+        do {
             try reachability?.startNotifier()
         } catch {
         }
@@ -191,14 +191,17 @@ public class ABSDKClient: NetworkConnectionNotification {
 
     @objc func checkForReachability(note: Notification) {
 
-        let reachability = note.object as! Reachability
+        guard let reachability = note.object as? Reachability else {
+            return
+        }
+
         var isReachable = false
 
         switch reachability.connection {
         case .wifi:
             isReachable = true
         case .cellular:
-            if (self.configuration.allowsCellularAccess) {
+            if self.configuration.allowsCellularAccess {
                 isReachable = true
             }
         case .none:
@@ -262,10 +265,10 @@ public class ABSDKClient: NetworkConnectionNotification {
     @discardableResult public func perform<Mutation: GraphQLMutation>(mutation: Mutation,
                                                                       queue: DispatchQueue = DispatchQueue.main,
                                                                       optimisticUpdate: OptimisticResponseBlock? = nil,
-                                                                      resultHandler: OperationResultHandler<Mutation>? = nil) -> Cancellable  {
+                                                                      resultHandler: OperationResultHandler<Mutation>? = nil) -> Cancellable {
         if let optimisticUpdate = optimisticUpdate {
             do {
-                let _ = try self.store?.withinReadWriteTransaction { transaction in
+                _ = try self.store?.withinReadWriteTransaction { transaction in
                     optimisticUpdate(transaction)
                     }.await()
             } catch {
@@ -277,7 +280,7 @@ public class ABSDKClient: NetworkConnectionNotification {
 
     func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
         var accessState: ClientNetworkAccessState = .offline
-        if (isEndpointReachable) {
+        if isEndpointReachable {
             accessState = .offline
         }
         self.connectionStateChangeHandler?.stateChanged(networkState: accessState)

@@ -26,13 +26,11 @@
 		271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */; };
 		271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */; };
 		271281A320A6497B00530FB6 /* ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */; };
-		2739E54B20E61F32009EA0C3 /* ABSDKClientConflictResolutionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E54A20E61F32009EA0C3 /* ABSDKClientConflictResolutionExtensions.swift */; };
 		274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B185920E4D06A00884659 /* ABSDKClient.swift */; };
 		274B185D20E4DD8900884659 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185B20E4DD8900884659 /* SQLite.framework */; };
 		274B185E20E4DD8900884659 /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185C20E4DD8900884659 /* Apollo.framework */; };
 		274B186020E603F700884659 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185F20E603F700884659 /* Reachability.framework */; };
 		274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */; };
-		274B186420E6186400884659 /* ABSDKOfflineMutationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B186320E6186400884659 /* ABSDKOfflineMutationStore.swift */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
 		278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31D20A0DF2F00C99C1F /* ABSDKObjectDataSource.h */; };
 		278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31E20A0DF2F00C99C1F /* ABSDKObjectDataSource.m */; };
@@ -118,13 +116,11 @@
 		2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+ABSDKArrayDataSource.m"; sourceTree = "<group>"; };
 		2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKSearchDataSource.m; sourceTree = "<group>"; };
 		2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKArrayDataSource.m; sourceTree = "<group>"; };
-		2739E54A20E61F32009EA0C3 /* ABSDKClientConflictResolutionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKClientConflictResolutionExtensions.swift; sourceTree = "<group>"; };
 		274B185920E4D06A00884659 /* ABSDKClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKClient.swift; sourceTree = "<group>"; };
 		274B185B20E4DD8900884659 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		274B185C20E4DD8900884659 /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		274B185F20E603F700884659 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKSQLLiteNormalizedCache.swift; sourceTree = "<group>"; };
-		274B186320E6186400884659 /* ABSDKOfflineMutationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKOfflineMutationStore.swift; sourceTree = "<group>"; };
 		277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B7920A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		277E6B7E20A0DE340054707E /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,9 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				274B185920E4D06A00884659 /* ABSDKClient.swift */,
-				2739E54A20E61F32009EA0C3 /* ABSDKClientConflictResolutionExtensions.swift */,
 				27D1EBCB20CF9C1E00422C35 /* ABSDKCoreKit.h */,
-				274B186320E6186400884659 /* ABSDKOfflineMutationStore.swift */,
 				274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */,
 				278EF30B20A0DF2F00C99C1F /* DataSources */,
 				278EF31F20A0DF2F00C99C1F /* DataStore */,
@@ -490,7 +484,6 @@
 				277E6B7220A0DE340054707E /* Frameworks */,
 				277E6B7320A0DE340054707E /* Headers */,
 				277E6B7420A0DE340054707E /* Resources */,
-				2712815420A2426B00530FB6 /* Lint */,
 				279CD44420ACA2E3009E1348 /* Copy Framework */,
 			);
 			buildRules = (
@@ -762,20 +755,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2712815420A2426B00530FB6 /* Lint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Lint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		2712815520A2428900530FB6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -975,11 +954,9 @@
 				2712817720A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m in Sources */,
 				2712817620A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m in Sources */,
 				274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */,
-				274B186420E6186400884659 /* ABSDKOfflineMutationStore.swift in Sources */,
 				278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */,
 				271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */,
 				2712819920A6497B00530FB6 /* ABSDKFilterDataSource.m in Sources */,
-				2739E54B20E61F32009EA0C3 /* ABSDKClientConflictResolutionExtensions.swift in Sources */,
 				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */,
 				278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */,
