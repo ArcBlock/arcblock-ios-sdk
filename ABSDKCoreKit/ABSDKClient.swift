@@ -34,8 +34,6 @@ public protocol ConnectionStateChangeHandler {
 
 public typealias OptimisticResponseBlock = (ApolloStore.ReadWriteTransaction?) -> Void
 
-//public typealias MutationConflictHandler<Mutation: GraphQLMutation> = (_ serverState: Snapshot?, _ taskCompletionSource: AWSTaskCompletionSource<Mutation>?, _ resultHandler: OperationResultHandler<Mutation>?) -> Void
-
 enum ABSDKGraphQLOperation {
     case mutation
     case query
@@ -158,46 +156,10 @@ public struct ABSDKClientError: Error, LocalizedError {
     }
 }
 
-public protocol ABSDKOfflineMutationDelegate {
-    func mutationCallback(recordIdentifier: String, operationString: String, snapshot: Snapshot?, error: Error?) -> Void
-}
-
-public final class PerformMutationOperation<Mutation: GraphQLMutation>: InMemoryMutationDelegate {
-    let apolloClient: ApolloClient
-    let client: ABSDKClient
-    let mutation: Mutation
-    let handlerQueue: DispatchQueue
-//    let mutationConflictHandler: MutationConflictHandler<Mutation>?
-    let resultHandler: OperationResultHandler<Mutation>?
-    let mutationExecutor: MutationExecutor
-    public let mutationRecord: ABSDKMutationRecord
-
-    init(offlineMutationRecord: ABSDKMutationRecord, apolloClient: ApolloClient, client: ABSDKClient, offlineExecutor: MutationExecutor, mutation: Mutation, handlerQueue: DispatchQueue, /*mutationConflictHandler: MutationConflictHandler<Mutation>?,*/ resultHandler: OperationResultHandler<Mutation>?) {
-        self.mutationRecord = offlineMutationRecord
-        self.client = client
-        self.apolloClient = apolloClient
-        self.mutationExecutor = offlineExecutor
-        self.mutation = mutation
-        self.handlerQueue = handlerQueue
-        self.resultHandler = resultHandler
-//        self.mutationConflictHandler = mutationConflictHandler
-        // set the deletgate callback to self
-        self.mutationRecord.inmemoryExecutor = self
-        mutationExecutor.queueMutation(mutation: self.mutationRecord)
-    }
-
-    func performMutation(dispatchGroup: DispatchGroup) {
-        dispatchGroup.enter()
-        let _ = client.send(operation: self.mutation, context: nil, dispatchGroup: dispatchGroup, handlerQueue: self.handlerQueue, resultHandler: self.resultHandler)
-        let _  = dispatchGroup.wait(timeout: DispatchTime(uptimeNanoseconds: 3000000))
-    }
-}
-
 // The client for making `Mutation`, `Query` and `Subscription` requests.
 public class ABSDKClient: NetworkConnectionNotification {
 
     public let apolloClient: ApolloClient?
-    public var offlineMutationDelegate: ABSDKOfflineMutationDelegate?
     public let store: ApolloStore?
 
     var reachability: Reachability?
@@ -205,9 +167,6 @@ public class ABSDKClient: NetworkConnectionNotification {
     private var networkStatusWatchers: [NetworkConnectionNotification] = []
     private var configuration: ABSDKClientConfiguration
     internal var httpTransport: HTTPNetworkTransport?
-    private var offlineMuationStore : ABSDKOfflineMutationStore?
-    private var offlineMutationExecutor: MutationExecutor?
-    private var autoSubmitOfflineMutations: Bool = false
     internal var connectionStateChangeHandler: ConnectionStateChangeHandler?
 
     /// Creates a client with the specified `ABSDKClientConfiguration`.
@@ -218,22 +177,10 @@ public class ABSDKClient: NetworkConnectionNotification {
         self.configuration = configuration
 
         reachability = Reachability(hostname: self.configuration.url.host!)
-        self.autoSubmitOfflineMutations = self.configuration.autoSubmitOfflineMutations
         self.store = configuration.store
         self.httpTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
 
         self.apolloClient = ApolloClient(networkTransport: self.httpTransport!, store: self.configuration.store)
-        try self.offlineMuationStore = ABSDKOfflineMutationStore()
-        if let fileURL = self.configuration.databaseURL {
-            do {
-                self.offlineMuationStore = try ABSDKOfflineMutationStore(fileURL: fileURL)
-            } catch {
-                // continue using in memory cache client
-            }
-        }
-
-        self.offlineMutationExecutor = MutationExecutor(networkClient: self.httpTransport!, client: self, snapshotProcessController: SnapshotProcessController(endpointURL:self.configuration.url), fileURL: self.configuration.databaseURL)
-        networkStatusWatchers.append(self.offlineMutationExecutor!)
 
         NotificationCenter.default.addObserver(self, selector: #selector(checkForReachability(note:)), name: .reachabilityChanged, object: reachability)
         do{
@@ -307,8 +254,7 @@ public class ABSDKClient: NetworkConnectionNotification {
     /// - Parameters:
     ///   - mutation: The mutation to perform.
     ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
-    ///   - optimisticUpdate: An optional closure which gets executed before making the network call, should be used to update local store using the `transaction` object.
-    ///   - conflictResolutionBlock: An optional closure that is called when mutation results into a conflict.
+    ///   - optimisticUpdate: An optional closure which gets executed before making the network call, should b
     ///   - resultHandler: An optional closure that is called when mutation results are available or when an error occurs.
     ///   - result: The result of the performed mutation, or `nil` if an error occurred.
     ///   - error: An error that indicates why the mutation failed, or `nil` if the mutation was succesful.
@@ -316,8 +262,7 @@ public class ABSDKClient: NetworkConnectionNotification {
     @discardableResult public func perform<Mutation: GraphQLMutation>(mutation: Mutation,
                                                                       queue: DispatchQueue = DispatchQueue.main,
                                                                       optimisticUpdate: OptimisticResponseBlock? = nil,
-//                                                                      conflictResolutionBlock: MutationConflictHandler<Mutation>? = nil,
-                                                                      resultHandler: OperationResultHandler<Mutation>? = nil) -> PerformMutationOperation<Mutation>? {
+                                                                      resultHandler: OperationResultHandler<Mutation>? = nil) -> Cancellable  {
         if let optimisticUpdate = optimisticUpdate {
             do {
                 let _ = try self.store?.withinReadWriteTransaction { transaction in
@@ -327,23 +272,7 @@ public class ABSDKClient: NetworkConnectionNotification {
             }
         }
 
-//        let taskCompletionSource = AWSTaskCompletionSource<Mutation>()
-//        taskCompletionSource.task.continueWith(block: { (task) -> Any? in
-//            _ = task.result
-//            return nil
-//        })
-
-        let serializationFormat = JSONSerializationFormat.self
-        let bodyRequest = requestBody(for: mutation)
-        let data = try! serializationFormat.serialize(value: bodyRequest)
-        let record = ABSDKMutationRecord()
-        record.data = data
-        record.contentMap = mutation.variables
-        record.jsonRecord = mutation.variables?.jsonObject
-        record.recordState = .inQueue
-        record.operationString = Mutation.operationString
-
-        return PerformMutationOperation(offlineMutationRecord: record, apolloClient: self.apolloClient!, client: self, offlineExecutor: self.offlineMutationExecutor!, mutation: mutation, handlerQueue: queue, /*mutationConflictHandler: conflictResolutionBlock,*/ resultHandler: resultHandler)
+        return apolloClient!.perform(mutation: mutation, queue: queue, resultHandler: resultHandler)
     }
 
     func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
@@ -352,9 +281,5 @@ public class ABSDKClient: NetworkConnectionNotification {
             accessState = .offline
         }
         self.connectionStateChangeHandler?.stateChanged(networkState: accessState)
-    }
-
-    private func requestBody<Operation: GraphQLOperation>(for operation: Operation) -> GraphQLMap {
-        return ["query": type(of: operation).requestString, "variables": operation.variables]
     }
 }

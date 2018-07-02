@@ -13,10 +13,10 @@
 		272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */; };
 		272225E520E20B7C00E2BBB3 /* ocap_demoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225E420E20B7C00E2BBB3 /* ocap_demoTests.swift */; };
 		272225F020E20B7C00E2BBB3 /* ocap_demoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */; };
-		272225FE20E2181400E2BBB3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225FD20E2181400E2BBB3 /* API.swift */; };
 		2722260220E32E8E00E2BBB3 /* ocap.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 2722260020E32E8E00E2BBB3 /* ocap.graphql */; };
 		2722260320E32E8F00E2BBB3 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 2722260120E32E8E00E2BBB3 /* schema.json */; };
 		2722260520E33A1200E2BBB3 /* BlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722260420E33A1200E2BBB3 /* BlockListViewController.swift */; };
+		2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E54C20E9D2A9009EA0C3 /* API.swift */; };
 		29922C4571AAE760FE4D1E09 /* Pods_ocap_demoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074787B86C52AD1B784E5C41 /* Pods_ocap_demoUITests.framework */; };
 		5DEE64201E6844D97EFE0EA1 /* Pods_ocap_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1632CDB0BE2616E19E781AE6 /* Pods_ocap_demo.framework */; };
 		DBD1980FE986DC499CEB3B99 /* Pods_ocap_demoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */; };
@@ -55,10 +55,10 @@
 		272225EB20E20B7C00E2BBB3 /* ocap-demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ocap-demoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ocap_demoUITests.swift; sourceTree = "<group>"; };
 		272225F120E20B7C00E2BBB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		272225FD20E2181400E2BBB3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		2722260020E32E8E00E2BBB3 /* ocap.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ocap.graphql; sourceTree = "<group>"; };
 		2722260120E32E8E00E2BBB3 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		2722260420E33A1200E2BBB3 /* BlockListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockListViewController.swift; sourceTree = "<group>"; };
+		2739E54C20E9D2A9009EA0C3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		5E0B075F01E0409CA51F5D84 /* Pods-ocap-demoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.release.xcconfig"; sourceTree = "<group>"; };
 		9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ocap_demoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26009757EFE9BF83355D1F7 /* Pods-ocap-demoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 		272225CE20E20B7A00E2BBB3 /* ocap-demo */ = {
 			isa = PBXGroup;
 			children = (
-				272225FD20E2181400E2BBB3 /* API.swift */,
+				2739E54C20E9D2A9009EA0C3 /* API.swift */,
 				272225CF20E20B7A00E2BBB3 /* AppDelegate.swift */,
 				272225D620E20B7C00E2BBB3 /* Assets.xcassets */,
 				2722260420E33A1200E2BBB3 /* BlockListViewController.swift */,
@@ -401,7 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2722260520E33A1200E2BBB3 /* BlockListViewController.swift in Sources */,
-				272225FE20E2181400E2BBB3 /* API.swift in Sources */,
+				2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */,
 				272225D020E20B7A00E2BBB3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
