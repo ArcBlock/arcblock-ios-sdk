@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 import Apollo
 import SQLite
 
@@ -43,7 +42,7 @@ public enum MutationType: String {
     case graphQLMutationWithS3Object
 }
 
-protocol InMemoryMutationDelegate {
+protocol InMemoryMutationDelegate: class {
     func performMutation(dispatchGroup: DispatchGroup)
 }
 
@@ -70,7 +69,7 @@ public class ABSDKMutationRecord {
 public protocol MutationCache {
     func saveMutation(body: Data) -> Int64
     func getMutation(id: Int64) -> Data
-    func loadAllMutation() -> Dictionary<Int64, Data>
+    func loadAllMutation() -> [Int64: Data]
 }
 
 public final class ABSDKMutationCache {
