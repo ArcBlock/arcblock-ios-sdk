@@ -26,6 +26,11 @@
 		271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */; };
 		271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */; };
 		271281A320A6497B00530FB6 /* ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */; };
+		274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B185920E4D06A00884659 /* ABSDKClient.swift */; };
+		274B185D20E4DD8900884659 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185B20E4DD8900884659 /* SQLite.framework */; };
+		274B185E20E4DD8900884659 /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185C20E4DD8900884659 /* Apollo.framework */; };
+		274B186020E603F700884659 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185F20E603F700884659 /* Reachability.framework */; };
+		274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
 		278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31D20A0DF2F00C99C1F /* ABSDKObjectDataSource.h */; };
 		278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31E20A0DF2F00C99C1F /* ABSDKObjectDataSource.m */; };
@@ -88,55 +93,6 @@
 			remoteGlobalIDString = 278EF3A020A0F5C100C99C1F;
 			remoteInfo = ABSDKWalletKit;
 		};
-		279CD41020AC9C5B009E1348 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 299522391BBF104D00859F49;
-			remoteInfo = "AFNetworking iOS";
-		};
-		279CD41220AC9C5B009E1348 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 299522651BBF129200859F49;
-			remoteInfo = "AFNetworking watchOS";
-		};
-		279CD41420AC9C5B009E1348 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 299522771BBF136400859F49;
-			remoteInfo = "AFNetworking macOS";
-		};
-		279CD41620AC9C5B009E1348 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2987B0A51BC408A200179A4C;
-			remoteInfo = "AFNetworking tvOS";
-		};
-		279CD41820AC9C5B009E1348 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 298D7C3B1BC2C79500FD3B3E;
-			remoteInfo = "AFNetworking iOS Tests";
-		};
-		279CD41A20AC9C5B009E1348 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 298D7C4A1BC2C7B200FD3B3E;
-			remoteInfo = "AFNetworking macOS Tests";
-		};
-		279CD41C20AC9C5B009E1348 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2987B0AE1BC408A200179A4C;
-			remoteInfo = "AFNetworking tvOS Tests";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +116,11 @@
 		2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+ABSDKArrayDataSource.m"; sourceTree = "<group>"; };
 		2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKSearchDataSource.m; sourceTree = "<group>"; };
 		2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKArrayDataSource.m; sourceTree = "<group>"; };
+		274B185920E4D06A00884659 /* ABSDKClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKClient.swift; sourceTree = "<group>"; };
+		274B185B20E4DD8900884659 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
+		274B185C20E4DD8900884659 /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
+		274B185F20E603F700884659 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
+		274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKSQLLiteNormalizedCache.swift; sourceTree = "<group>"; };
 		277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B7920A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		277E6B7E20A0DE340054707E /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,29 +154,7 @@
 		278EF3BE20A100DF00C99C1F /* ABSDKAccountKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKAccountKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKAccountKitSpec.swift; sourceTree = "<group>"; };
 		279CD36320AAA72A009E1348 /* ABSDKArrayDataSource+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKArrayDataSource+Private.h"; sourceTree = "<group>"; };
-		279CD3D320AC8E11009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3D520AC8E11009E1348 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3D720AC8E11009E1348 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3D920AC8E11009E1348 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3DB20AC8E11009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3DD20AC8E11009E1348 /* SocketRocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocketRocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3DF20AC8E11009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YapDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3E220AC9414009E1348 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3E420AC9414009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3E620AC9414009E1348 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3E820AC9414009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3EA20AC9414009E1348 /* SocketRocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocketRocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD3EC20AC9414009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YapDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AFNetworking.xcodeproj; path = Carthage/Checkouts/AFNetworking/AFNetworking.xcodeproj; sourceTree = "<group>"; };
-		279CD41F20AC9D76009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD42120AC9D82009E1348 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD42320AC9D8A009E1348 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD42520AC9D97009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD42720AC9D9E009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YapDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD42920AC9E01009E1348 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		279CD42B20AC9E01009E1348 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		279CD42D20AC9EB5009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YapDatabase.framework; path = Carthage/Build/iOS/YapDatabase.framework; sourceTree = "<group>"; };
-		279CD43720AC9F1E009E1348 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		279CD43A20AC9F37009E1348 /* KVOController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KVOController.framework; path = Carthage/Build/iOS/KVOController.framework; sourceTree = "<group>"; };
 		279CD43B20AC9F37009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
 		279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
@@ -229,6 +168,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				274B186020E603F700884659 /* Reachability.framework in Frameworks */,
+				274B185D20E4DD8900884659 /* SQLite.framework in Frameworks */,
+				274B185E20E4DD8900884659 /* Apollo.framework in Frameworks */,
 				279CD43D20AC9F37009E1348 /* KVOController.framework in Frameworks */,
 				279CD43E20AC9F37009E1348 /* SDWebImage.framework in Frameworks */,
 				279CD43F20AC9F37009E1348 /* CocoaLumberjack.framework in Frameworks */,
@@ -337,7 +279,9 @@
 		277E6B7720A0DE340054707E /* ABSDKCoreKit */ = {
 			isa = PBXGroup;
 			children = (
+				274B185920E4D06A00884659 /* ABSDKClient.swift */,
 				27D1EBCB20CF9C1E00422C35 /* ABSDKCoreKit.h */,
+				274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */,
 				278EF30B20A0DF2F00C99C1F /* DataSources */,
 				278EF31F20A0DF2F00C99C1F /* DataStore */,
 				277E6B7920A0DE340054707E /* Info.plist */,
@@ -471,50 +415,17 @@
 		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				274B185F20E603F700884659 /* Reachability.framework */,
+				274B185C20E4DD8900884659 /* Apollo.framework */,
+				274B185B20E4DD8900884659 /* SQLite.framework */,
 				279CD44020AC9F46009E1348 /* Nimble.framework */,
 				279CD44120AC9F46009E1348 /* Quick.framework */,
 				279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */,
 				279CD43A20AC9F37009E1348 /* KVOController.framework */,
 				279CD43B20AC9F37009E1348 /* SDWebImage.framework */,
-				279CD43720AC9F1E009E1348 /* AFNetworking.framework */,
 				279CD42D20AC9EB5009E1348 /* YapDatabase.framework */,
-				279CD42920AC9E01009E1348 /* Nimble.framework */,
-				279CD42B20AC9E01009E1348 /* Quick.framework */,
-				279CD42720AC9D9E009E1348 /* YapDatabase.framework */,
-				279CD42520AC9D97009E1348 /* SDWebImage.framework */,
-				279CD42320AC9D8A009E1348 /* Quick.framework */,
-				279CD42120AC9D82009E1348 /* KVOController.framework */,
-				279CD41F20AC9D76009E1348 /* CocoaLumberjack.framework */,
-				279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */,
-				279CD3E220AC9414009E1348 /* AFNetworking.framework */,
-				279CD3E420AC9414009E1348 /* CocoaLumberjack.framework */,
-				279CD3E620AC9414009E1348 /* KVOController.framework */,
-				279CD3E820AC9414009E1348 /* SDWebImage.framework */,
-				279CD3EA20AC9414009E1348 /* SocketRocket.framework */,
-				279CD3EC20AC9414009E1348 /* YapDatabase.framework */,
-				279CD3D320AC8E11009E1348 /* CocoaLumberjack.framework */,
-				279CD3D520AC8E11009E1348 /* KVOController.framework */,
-				279CD3D720AC8E11009E1348 /* Nimble.framework */,
-				279CD3D920AC8E11009E1348 /* Quick.framework */,
-				279CD3DB20AC8E11009E1348 /* SDWebImage.framework */,
-				279CD3DD20AC8E11009E1348 /* SocketRocket.framework */,
-				279CD3DF20AC8E11009E1348 /* YapDatabase.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		279CD40720AC9C5A009E1348 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				279CD41120AC9C5B009E1348 /* AFNetworking.framework */,
-				279CD41320AC9C5B009E1348 /* AFNetworking.framework */,
-				279CD41520AC9C5B009E1348 /* AFNetworking.framework */,
-				279CD41720AC9C5B009E1348 /* AFNetworking.framework */,
-				279CD41920AC9C5B009E1348 /* AFNetworking iOS Tests.xctest */,
-				279CD41B20AC9C5B009E1348 /* AFNetworking macOS Tests.xctest */,
-				279CD41D20AC9C5B009E1348 /* AFNetworking tvOS Tests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -573,7 +484,6 @@
 				277E6B7220A0DE340054707E /* Frameworks */,
 				277E6B7320A0DE340054707E /* Headers */,
 				277E6B7420A0DE340054707E /* Resources */,
-				2712815420A2426B00530FB6 /* Lint */,
 				279CD44420ACA2E3009E1348 /* Copy Framework */,
 			);
 			buildRules = (
@@ -732,6 +642,7 @@
 				TargetAttributes = {
 					277E6B7520A0DE340054707E = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0940;
 					};
 					277E6B7D20A0DE340054707E = {
 						CreatedOnToolsVersion = 9.3;
@@ -770,12 +681,6 @@
 			mainGroup = 277E6B4D20A0DAB50054707E;
 			productRefGroup = 277E6B5A20A0DB160054707E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 279CD40720AC9C5A009E1348 /* Products */;
-					ProjectRef = 279CD40620AC9C5A009E1348 /* AFNetworking.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				277E6B7520A0DE340054707E /* ABSDKCoreKit */,
@@ -789,58 +694,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		279CD41120AC9C5B009E1348 /* AFNetworking.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AFNetworking.framework;
-			remoteRef = 279CD41020AC9C5B009E1348 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279CD41320AC9C5B009E1348 /* AFNetworking.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AFNetworking.framework;
-			remoteRef = 279CD41220AC9C5B009E1348 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279CD41520AC9C5B009E1348 /* AFNetworking.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AFNetworking.framework;
-			remoteRef = 279CD41420AC9C5B009E1348 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279CD41720AC9C5B009E1348 /* AFNetworking.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AFNetworking.framework;
-			remoteRef = 279CD41620AC9C5B009E1348 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279CD41920AC9C5B009E1348 /* AFNetworking iOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "AFNetworking iOS Tests.xctest";
-			remoteRef = 279CD41820AC9C5B009E1348 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279CD41B20AC9C5B009E1348 /* AFNetworking macOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "AFNetworking macOS Tests.xctest";
-			remoteRef = 279CD41A20AC9C5B009E1348 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279CD41D20AC9C5B009E1348 /* AFNetworking tvOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "AFNetworking tvOS Tests.xctest";
-			remoteRef = 279CD41C20AC9C5B009E1348 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		277E6B7420A0DE340054707E /* Resources */ = {
@@ -902,20 +755,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2712815420A2426B00530FB6 /* Lint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Lint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		2712815520A2428900530FB6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1017,6 +856,9 @@
 				"$(SRCROOT)/Carthage/Build/iOS/KVOController.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/YapDatabase.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SQLite.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
 			);
 			name = "Copy Framework";
 			outputPaths = (
@@ -1024,6 +866,9 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KVOController.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SDWebImage.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/YapDatabase.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Apollo.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SQLite.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1108,9 +953,11 @@
 				2712819A20A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.m in Sources */,
 				2712817720A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m in Sources */,
 				2712817620A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m in Sources */,
+				274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */,
 				278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */,
 				271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */,
 				2712819920A6497B00530FB6 /* ABSDKFilterDataSource.m in Sources */,
+				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */,
 				278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */,
 				2712817820A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.m in Sources */,
@@ -1216,6 +1063,7 @@
 		277E6B8820A0DE340054707E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1286,6 +1134,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1358,6 +1208,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1368,6 +1219,7 @@
 		277E6B8B20A0DE340054707E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1444,6 +1296,7 @@
 		277E6B8C20A0DE340054707E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1513,6 +1366,7 @@
 		278EF37B20A0F54D00C99C1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1816,6 +1670,7 @@
 		278EF39720A0F5AC00C99C1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2119,6 +1974,7 @@
 		278EF3B320A0F5C200C99C1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
