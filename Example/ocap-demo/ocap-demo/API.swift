@@ -4,7 +4,7 @@ import Apollo
 
 public final class ListBlocksQuery: GraphQLQuery {
   public static let operationString =
-    "query ListBlocks($fromHeight: Int!) {\n  blocksByHeight(fromHeight: $fromHeight) {\n    __typename\n    data {\n      __typename\n      hash\n      numberTxs\n      total\n    }\n  }\n}"
+    "query ListBlocks($fromHeight: Int!) {\n  blocksByHeight(fromHeight: $fromHeight) {\n    data {\n      hash\n      numberTxs\n      total\n    }\n  }\n}"
 
   public var fromHeight: Int
 
@@ -47,7 +47,6 @@ public final class ListBlocksQuery: GraphQLQuery {
       public static let possibleTypes = ["PagedBitcoinBlocks"]
 
       public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("data", type: .list(.object(Datum.selections))),
       ]
 
@@ -59,15 +58,6 @@ public final class ListBlocksQuery: GraphQLQuery {
 
       public init(data: [Datum?]? = nil) {
         self.init(snapshot: ["__typename": "PagedBitcoinBlocks", "data": data.flatMap { (value: [Datum?]) -> [Snapshot?] in value.map { (value: Datum?) -> Snapshot? in value.flatMap { (value: Datum) -> Snapshot in value.snapshot } } }])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
       }
 
       public var data: [Datum?]? {
@@ -83,7 +73,6 @@ public final class ListBlocksQuery: GraphQLQuery {
         public static let possibleTypes = ["BitcoinBlock"]
 
         public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("hash", type: .nonNull(.scalar(String.self))),
           GraphQLField("numberTxs", type: .nonNull(.scalar(Int.self))),
           GraphQLField("total", type: .nonNull(.scalar(Int.self))),
@@ -97,15 +86,6 @@ public final class ListBlocksQuery: GraphQLQuery {
 
         public init(hash: String, numberTxs: Int, total: Int) {
           self.init(snapshot: ["__typename": "BitcoinBlock", "hash": hash, "numberTxs": numberTxs, "total": total])
-        }
-
-        public var __typename: String {
-          get {
-            return snapshot["__typename"]! as! String
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "__typename")
-          }
         }
 
         public var hash: String {

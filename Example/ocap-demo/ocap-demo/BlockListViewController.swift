@@ -41,6 +41,7 @@ class BlockListViewController: UIViewController {
                 print(error?.localizedDescription ?? "")
                 return
             }
+            print(result)
             self.blockList = result?.data?.blocksByHeight?.data
         }
     }
