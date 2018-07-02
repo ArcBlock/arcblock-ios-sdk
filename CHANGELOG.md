@@ -1,3 +1,6 @@
+## 0.4.8 (July 02, 2018)
+
+
 ## 0.4.7 (June 27, 2018)
   - connect demo to ocap service and show lists of blocks and transactions
   - setup ocap demo project

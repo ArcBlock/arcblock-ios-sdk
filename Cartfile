@@ -1,3 +1,5 @@
-github "yapstudios/YapDatabase" ~> 3.0.2
-github "rs/SDWebImage"
+github "yapstudios/YapDatabase" "3.0.2"
+github "rs/SDWebImage" "4.3.3"
 github "facebook/KVOController"
+github "apollostack/apollo-ios" "0.8.0"
+github "ashleymills/Reachability.swift" "v4.1.0"

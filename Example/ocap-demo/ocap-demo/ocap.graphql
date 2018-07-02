@@ -1,16 +1,9 @@
-query ListBlocks {
-  blocks {
-    hash
-    numberTxs
-    total
-  }
-}
-
-query ListTransactions {
-  transactions {
-    hash
-    total
-    numberInputs
-    numberOutputs
+query ListBlocks($fromHeight: Int!){
+  blocksByHeight(fromHeight: $fromHeight){
+    data{
+      hash
+      numberTxs
+      total
+    }
   }
 }

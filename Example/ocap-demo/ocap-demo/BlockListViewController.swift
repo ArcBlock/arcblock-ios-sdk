@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import Apollo
+import ArcBlockSDK
 
 class BlockListCell: UITableViewCell {
     @IBOutlet weak var hashLabel: UILabel!
     @IBOutlet weak var transactionLabel: UILabel!
 
-    public func updateBlockData(block: ListBlocksQuery.Data.Block) {
+    public func updateBlockData(block: ListBlocksQuery.Data.BlocksByHeight.Datum) {
         hashLabel.text = block.hash
         transactionLabel.text = String(block.numberTxs) + " txs " + String(block.total) + " BTC"
     }
@@ -22,9 +22,9 @@ class BlockListCell: UITableViewCell {
 class BlockListViewController: UIViewController {
 
     @IBOutlet weak var tableView:UITableView!
-    var apolloClient: ApolloClient!
+    var absdkClient: ABSDKClient!
 
-    var blockList: [ListBlocksQuery.Data.Block?]? = [] {
+    var blockList: [ListBlocksQuery.Data.BlocksByHeight.Datum?]? = [] {
         didSet {
             tableView.reloadData()
         }
@@ -34,14 +34,15 @@ class BlockListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        apolloClient = appDelegate.apolloClient
+        absdkClient = appDelegate.absdkClient
 
-        apolloClient.fetch(query: ListBlocksQuery(), cachePolicy: .returnCacheDataAndFetch) { (result, error) in
+        absdkClient.fetch(query: ListBlocksQuery(fromHeight: 0), cachePolicy: .returnCacheDataAndFetch) { (result, error) in
             if error != nil {
                 print(error?.localizedDescription ?? "")
                 return
             }
-            self.blockList = result?.data?.blocks
+            print(result)
+            self.blockList = result?.data?.blocksByHeight?.data
         }
     }
 
