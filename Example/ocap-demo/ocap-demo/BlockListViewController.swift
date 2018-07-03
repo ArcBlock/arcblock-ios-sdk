@@ -23,26 +23,23 @@ class BlockListViewController: UIViewController {
 
     @IBOutlet weak var tableView:UITableView!
     var arcblockClient: ABSDKClient!
-
-    var blockList: [ListBlocksQuery.Data.BlocksByHeight.Datum?]? = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var dataSource: ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         arcblockClient = appDelegate.arcblockClient
-
-        arcblockClient.fetch(query: ListBlocksQuery(fromHeight: 0), cachePolicy: .returnCacheDataAndFetch) { (result, error) in
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-                return
-            }
-            self.blockList = result?.data?.blocksByHeight?.data
+        let dataSourceMapper: DataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
+            return data.blocksByHeight?.data
         }
+        let cellUpdateHandler: CellUpdateHandler<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (reusedCell, data) in
+            if let cell = reusedCell as? BlockListCell {
+                cell.updateBlockData(block: data)
+            }
+        }
+        dataSource = ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0), reuseIdentifier: "Cell", dataSourceMapper: dataSourceMapper, cellUpdateHandler: cellUpdateHandler)
+        dataSource.tableView = tableView
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,23 +47,6 @@ class BlockListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-}
-
-extension BlockListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return blockList?.count ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! BlockListCell
-        let block = blockList![indexPath.row]!
-        cell.updateBlockData(block: block)
-        return cell
-    }
 }
 
 extension BlockListViewController: UITableViewDelegate {
