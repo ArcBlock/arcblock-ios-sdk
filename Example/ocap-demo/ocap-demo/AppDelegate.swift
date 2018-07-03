@@ -13,7 +13,7 @@ import ArcBlockSDK
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var absdkClient: ABSDKClient!
+    var arcblockClient: ABSDKClient!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -21,10 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(databaseURL)
         do {
             // initialize the AppSync client configuration configuration
-            let absdkConfig = try ABSDKClientConfiguration(url: URL(string: "https://ocap.arcblock.io/api/btc")!,
+            let arcblockConfiguration = try ABSDKClientConfiguration(url: URL(string: "https://ocap.arcblock.io/api/btc")!,
                                                            databaseURL: databaseURL)
             // initialize app sync client
-            absdkClient = try ABSDKClient(configuration: absdkConfig)
+            arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
         } catch {
             print("Error initializing AppSync client. \(error)")
         }

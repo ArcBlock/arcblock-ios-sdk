@@ -22,7 +22,7 @@ class BlockListCell: UITableViewCell {
 class BlockListViewController: UIViewController {
 
     @IBOutlet weak var tableView:UITableView!
-    var absdkClient: ABSDKClient!
+    var arcblockClient: ABSDKClient!
 
     var blockList: [ListBlocksQuery.Data.BlocksByHeight.Datum?]? = [] {
         didSet {
@@ -34,14 +34,13 @@ class BlockListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        absdkClient = appDelegate.absdkClient
+        arcblockClient = appDelegate.arcblockClient
 
-        absdkClient.fetch(query: ListBlocksQuery(fromHeight: 0), cachePolicy: .returnCacheDataAndFetch) { (result, error) in
+        arcblockClient.fetch(query: ListBlocksQuery(fromHeight: 0), cachePolicy: .returnCacheDataAndFetch) { (result, error) in
             if error != nil {
                 print(error?.localizedDescription ?? "")
                 return
             }
-            print(result)
             self.blockList = result?.data?.blocksByHeight?.data
         }
     }

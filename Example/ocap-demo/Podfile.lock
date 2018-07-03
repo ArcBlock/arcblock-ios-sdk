@@ -2,7 +2,7 @@ PODS:
   - Apollo (0.8.0):
     - Apollo/Core (= 0.8.0)
   - Apollo/Core (0.8.0)
-  - ArcBlockSDK/CoreKit (0.4.7):
+  - ArcBlockSDK/CoreKit (0.4.8):
     - Apollo (= 0.8.0)
     - KVOController
     - ReachabilitySwift (= 4.0.0)
@@ -103,7 +103,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
-  ArcBlockSDK: 08aec941b64c55c503cfe507ea6e8cc0f47018f6
+  ArcBlockSDK: 605d7ae8a338c47adb69260b0c995144c63b7992
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
   ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
