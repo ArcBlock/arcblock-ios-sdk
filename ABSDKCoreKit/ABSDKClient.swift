@@ -213,6 +213,14 @@ public class ABSDKClient: NetworkConnectionNotification {
         }
     }
 
+    func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
+        var accessState: ClientNetworkAccessState = .offline
+        if isEndpointReachable {
+            accessState = .offline
+        }
+        self.connectionStateChangeHandler?.stateChanged(networkState: accessState)
+    }
+
     /// Fetches a query from the server or from the local cache, depending on the current contents of the cache and the specified cache policy.
     ///
     /// - Parameters:
@@ -276,13 +284,5 @@ public class ABSDKClient: NetworkConnectionNotification {
         }
 
         return apolloClient!.perform(mutation: mutation, queue: queue, resultHandler: resultHandler)
-    }
-
-    func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
-        var accessState: ClientNetworkAccessState = .offline
-        if isEndpointReachable {
-            accessState = .offline
-        }
-        self.connectionStateChangeHandler?.stateChanged(networkState: accessState)
     }
 }

@@ -29,122 +29,10 @@ public enum ABSDKSQLLiteNormalizedCacheError: Error {
     case invalidRecordValue(value: Any)
 }
 
-internal let sqlBusyTimeoutConstant = 100.0 // Fix a sqllite busy time out of 100ms
-
-public enum MutationRecordState: String {
-    case inProgress
-    case inQueue
-    case isDone
-}
-
-public enum MutationType: String {
-    case graphQLMutation
-    case graphQLMutationWithS3Object
-}
-
-protocol InMemoryMutationDelegate: class {
-    func performMutation(dispatchGroup: DispatchGroup)
-}
-
-public class ABSDKMutationRecord {
-    var jsonRecord: JSONObject?
-    var data: Data?
-    var contentMap: GraphQLMap?
-    public var recordIdentitifer: String
-    public var recordState: MutationRecordState = .inQueue
-    var timestamp: Date
-    var selections: [GraphQLSelection]?
-    var operationTypeClass: String?
-    var inmemoryExecutor: InMemoryMutationDelegate?
-    var type: MutationType
-    var operationString: String?
-
-    init(recordIdentifier: String = UUID().uuidString, timestamp: Date = Date(), type: MutationType = .graphQLMutation) {
-        self.recordIdentitifer = recordIdentifier
-        self.timestamp = timestamp
-        self.type = type
-    }
-}
-
-public protocol MutationCache {
-    func saveMutation(body: Data) -> Int64
-    func getMutation(id: Int64) -> Data
-    func loadAllMutation() -> [Int64: Data]
-}
-
-public final class ABSDKMutationCache {
-
-    private let db: Connection
-    private let mutationRecords = Table("mutation_records")
-    private let id = Expression<Int64>("_id")
-    private let recordIdentifier = Expression<CacheKey>("recordIdentifier")
-    private let data = Expression<Data>("data")
-    private let contentMap = Expression<String>("contentMap")
-    private let recordState = Expression<String>("recordState")
-    private let timestamp = Expression<Date>("timestamp")
-    private let operationString = Expression<String>("operationString")
-
-    public init(fileURL: URL) throws {
-        db = try Connection(.uri(fileURL.absoluteString), readonly: false)
-        db.busyTimeout = sqlBusyTimeoutConstant
-        try createTableIfNeeded()
-    }
-
-    private func createTableIfNeeded() throws {
-        try db.run(mutationRecords.create(ifNotExists: true) { table in
-            table.column(id, primaryKey: .autoincrement)
-            table.column(recordIdentifier, unique: true)
-            table.column(data)
-            table.column(contentMap)
-            table.column(recordState)
-            table.column(timestamp)
-            table.column(operationString)
-        })
-        try db.run(mutationRecords.createIndex(recordIdentifier, unique: true, ifNotExists: true))
-    }
-
-    internal func saveMutationRecord(record: ABSDKMutationRecord) throws {
-        let insert = mutationRecords.insert(recordIdentifier <- record.recordIdentitifer,
-                                            data <- record.data!,
-                                            contentMap <- record.contentMap!.description,
-                                            recordState <- record.recordState.rawValue,
-                                            timestamp <- record.timestamp,
-                                            operationString <- record.operationString!)
-        try db.run(insert)
-
-    }
-
-    internal func updateMutationRecord(record: ABSDKMutationRecord) throws {
-        let sqlRecord = mutationRecords.filter(recordIdentifier == record.recordIdentitifer)
-        try db.run(sqlRecord.update(recordState <- record.recordState.rawValue))
-    }
-
-    internal func deleteMutationRecord(record: ABSDKMutationRecord) throws {
-        let sqlRecord = mutationRecords.filter(recordIdentifier == record.recordIdentitifer)
-        try db.run(sqlRecord.delete())
-    }
-
-    internal func getStoredMutationRecordsInQueue() throws -> [ABSDKMutationRecord] {
-        let sqlRecords = mutationRecords.filter(recordState == MutationRecordState.inQueue.rawValue).order(timestamp.asc)
-        var mutationRecordQueue = [ABSDKMutationRecord]()
-        for record in try db.prepare(sqlRecords) {
-            do {
-                let mutationRecord = ABSDKMutationRecord(recordIdentifier: try record.get(recordIdentifier), timestamp: try record.get(timestamp))
-                mutationRecord.data = try record.get(data)
-                mutationRecord.recordState = .inQueue
-                mutationRecord.operationString = try record.get(operationString)
-                mutationRecordQueue.append(mutationRecord)
-            } catch {
-            }
-        }
-        return mutationRecordQueue
-    }
-}
-
 public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
 
     public init(fileURL: URL) throws {
-        db = try Connection(.uri(fileURL.absoluteString), readonly: false)
+        database = try Connection(.uri(fileURL.absoluteString), readonly: false)
         try createTableIfNeeded()
     }
 
@@ -171,9 +59,9 @@ public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
         }
     }
 
-    private let db: Connection
+    private let database: Connection
     private let records = Table("records")
-    private let id = Expression<Int64>("_id")
+    private let identifier = Expression<Int64>("_id")
     private let key = Expression<CacheKey>("key")
     private let record = Expression<String>("record")
 
@@ -186,12 +74,12 @@ public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
     }
 
     private func createTableIfNeeded() throws {
-        try db.run(records.create(ifNotExists: true) { table in
-            table.column(id, primaryKey: .autoincrement)
+        try database.run(records.create(ifNotExists: true) { table in
+            table.column(identifier, primaryKey: .autoincrement)
             table.column(key, unique: true)
             table.column(record)
         })
-        try db.run(records.createIndex(key, unique: true, ifNotExists: true))
+        try database.run(records.createIndex(key, unique: true, ifNotExists: true))
     }
 
     private func mergeRecords(records: RecordSet) throws -> Set<CacheKey> {
@@ -205,7 +93,7 @@ public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
                     assertionFailure("Serialization should yield UTF-8 data")
                     continue
                 }
-                try db.run(self.records.insert(or: .replace, self.key <- recordKey, self.record <- recordString))
+                try database.run(self.records.insert(or: .replace, self.key <- recordKey, self.record <- recordString))
             }
         }
         return Set(changedFieldKeys)
@@ -213,11 +101,11 @@ public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
 
     private func selectRecords(forKeys keys: [CacheKey]) throws -> [Record] {
         let query = records.filter(keys.contains(key))
-        return try db.prepare(query).map { try parse(row: $0) }
+        return try database.prepare(query).map { try parse(row: $0) }
     }
 
     private func clearRecords() throws {
-        try db.run(records.delete())
+        try database.run(records.delete())
     }
 
     private func parse(row: Row) throws -> Record {
