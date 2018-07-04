@@ -31,7 +31,7 @@ class BlockListViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         arcblockClient = appDelegate.arcblockClient
 
-        let dataSourceMapper: DataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
+        let dataSourceMapper: ArrayDataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
         let viewUpdateHandler: ViewUpdateHandler<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (view, data) in

@@ -23,7 +23,9 @@
 import Apollo
 import UIKit
 
-public typealias DataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
+public typealias ArrayDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
+
+public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> Data?
 
 public typealias ViewUpdateHandler<Data: GraphQLSelectionSet> = (_ view: UIView, _ data: Data) -> Void
 
@@ -33,10 +35,42 @@ protocol ABSDKDataSource {
 
     var client: ABSDKClient { get }
     var query: Query { get }
-    var dataSourceMapper: DataSourceMapper<Query, Data> { get }
     var viewUpdateHandler: ViewUpdateHandler<Data> { get }
+    var watcher: GraphQLQueryWatcher<Query>? { get }
 
-    init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping DataSourceMapper<Query, Data>, viewUpdateHandler: @escaping ViewUpdateHandler<Data>)
+    init(client: ABSDKClient, query: Query, viewUpdateHandler: @escaping ViewUpdateHandler<Data>)
+}
+
+final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
+    public weak var view: UIView?
+
+    var object: Data? = nil {
+        didSet {
+            viewUpdateHandler(view!, object!)
+        }
+    }
+
+    var dataSourceMapper: ObjectDataSourceMapper<Query, Data>? = nil
+    var watcher: GraphQLQueryWatcher<Query>? = nil
+
+    let client: ABSDKClient
+    let query: Query
+    let viewUpdateHandler: ViewUpdateHandler<Data>
+
+    init(client: ABSDKClient, query: Query, viewUpdateHandler: @escaping ViewUpdateHandler<Data>) {
+        self.client = client
+        self.query = query
+        self.viewUpdateHandler = viewUpdateHandler
+    }
+
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ObjectDataSourceMapper<Query, Data>, viewUpdateHandler: @escaping ViewUpdateHandler<Data>) {
+        self.init(client: client, query: query, viewUpdateHandler: viewUpdateHandler)
+        self.dataSourceMapper = dataSourceMapper
+
+        self.watcher = self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+            self.object = self.dataSourceMapper!((result?.data)!)
+        })
+    }
 }
 
 final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: NSObject, UITableViewDataSource, ABSDKDataSource {
@@ -54,20 +88,26 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         }
     }
 
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>? = nil
+    var watcher: GraphQLQueryWatcher<Query>? = nil
+
     let client: ABSDKClient
     let query: Query
-    let dataSourceMapper: DataSourceMapper<Query, Data>
     let viewUpdateHandler: ViewUpdateHandler<Data>
 
-    public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, viewUpdateHandler: @escaping (UIView, Data) -> Void) {
+    init(client: ABSDKClient, query: Query, viewUpdateHandler: @escaping ViewUpdateHandler<Data>) {
         self.client = client
         self.query = query
-        self.dataSourceMapper = dataSourceMapper
         self.viewUpdateHandler = viewUpdateHandler
         super.init()
+    }
 
-        self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
-            self.array = self.dataSourceMapper((result?.data)!)
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, viewUpdateHandler: @escaping (UIView, Data) -> Void) {
+        self.init(client: client, query: query, viewUpdateHandler: viewUpdateHandler)
+        self.dataSourceMapper = dataSourceMapper
+
+        self.watcher = self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+            self.array = self.dataSourceMapper!((result?.data)!)
         })
     }
 
@@ -81,6 +121,60 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        let data = array![indexPath.row]!
+        viewUpdateHandler(cell, data)
+        return cell
+    }
+}
+
+final public class ABSDKCollectionViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: NSObject, UICollectionViewDataSource, ABSDKDataSource {
+    public weak var collectionView: UICollectionView? {
+        didSet {
+            collectionView?.dataSource = self
+        }
+    }
+
+    public var reuseIdentifier: String! = "Cell"
+
+    var array: [Data?]? = [] {
+        didSet {
+            collectionView?.reloadData()
+        }
+    }
+
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>? = nil
+    var watcher: GraphQLQueryWatcher<Query>? = nil
+
+    let client: ABSDKClient
+    let query: Query
+    let viewUpdateHandler: ViewUpdateHandler<Data>
+
+    init(client: ABSDKClient, query: Query, viewUpdateHandler: @escaping ViewUpdateHandler<Data>) {
+        self.client = client
+        self.query = query
+        self.viewUpdateHandler = viewUpdateHandler
+        super.init()
+    }
+
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, viewUpdateHandler: @escaping (UIView, Data) -> Void) {
+        self.init(client: client, query: query, viewUpdateHandler: viewUpdateHandler)
+        self.dataSourceMapper = dataSourceMapper
+
+        self.watcher = self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+            self.array = self.dataSourceMapper!((result?.data)!)
+        })
+    }
+
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return array?.count ?? 0
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         let data = array![indexPath.row]!
         viewUpdateHandler(cell, data)
         return cell
