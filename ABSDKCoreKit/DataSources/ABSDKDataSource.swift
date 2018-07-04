@@ -25,14 +25,27 @@ import UIKit
 
 public typealias DataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
 
-public typealias CellUpdateHandler<Data: GraphQLSelectionSet> = (_ cell: UITableViewCell, _ data: Data) -> Void
+public typealias ViewUpdateHandler<Data: GraphQLSelectionSet> = (_ view: UIView, _ data: Data) -> Void
 
-public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: NSObject, UITableViewDataSource{
+protocol ABSDKDataSource {
+    associatedtype Query: GraphQLQuery
+    associatedtype Data: GraphQLSelectionSet
+
+    var client: ABSDKClient { get }
+    var query: Query { get }
+    var dataSourceMapper: DataSourceMapper<Query, Data> { get }
+
+    init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping DataSourceMapper<Query, Data>)
+}
+
+final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: NSObject, UITableViewDataSource, ABSDKDataSource {
     public weak var tableView: UITableView? {
         didSet {
             tableView?.dataSource = self
         }
     }
+
+    public var viewUpdateHandler: ViewUpdateHandler<Data>? = nil
     
     var array: [Data?]? = [] {
         didSet {
@@ -43,21 +56,22 @@ public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectio
     let client: ABSDKClient
     let query: Query
     let dataSourceMapper: DataSourceMapper<Query, Data>
-    let reuseIdentifier: String
-    let cellUpdateHandler: CellUpdateHandler<Data>
+    var reuseIdentifier: String!
 
-    public init(client: ABSDKClient, query: Query, reuseIdentifier: String, dataSourceMapper: @escaping DataSourceMapper<Query, Data>, cellUpdateHandler: @escaping CellUpdateHandler<Data>) {
+    init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping DataSourceMapper<Query, Data>) {
         self.client = client
         self.query = query
         self.dataSourceMapper = dataSourceMapper
-        self.reuseIdentifier = reuseIdentifier
-        self.cellUpdateHandler = cellUpdateHandler
-        
         super.init()
 
         self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
             self.array = self.dataSourceMapper((result?.data)!)
         })
+    }
+
+    public convenience init(client: ABSDKClient, query: Query, reuseIdentifier: String = "Cell", dataSourceMapper: @escaping DataSourceMapper<Query, Data>) {
+        self.init(client: client, query: query, dataSourceMapper: dataSourceMapper)
+        self.reuseIdentifier = reuseIdentifier
     }
 
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -71,7 +85,7 @@ public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectio
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         let data = array![indexPath.row]!
-        cellUpdateHandler(cell, data)
+        viewUpdateHandler?(cell, data)
         return cell
     }
 }

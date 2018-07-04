@@ -30,15 +30,16 @@ class BlockListViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         arcblockClient = appDelegate.arcblockClient
+
         let dataSourceMapper: DataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
-        let cellUpdateHandler: CellUpdateHandler<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (reusedCell, data) in
-            if let cell = reusedCell as? BlockListCell {
+        dataSource = ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0), dataSourceMapper: dataSourceMapper)
+        dataSource.viewUpdateHandler = { (view, data) in
+            if let cell = view as? BlockListCell {
                 cell.updateBlockData(block: data)
             }
         }
-        dataSource = ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0), reuseIdentifier: "Cell", dataSourceMapper: dataSourceMapper, cellUpdateHandler: cellUpdateHandler)
         dataSource.tableView = tableView
     }
 
