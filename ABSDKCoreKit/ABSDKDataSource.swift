@@ -111,6 +111,10 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         })
     }
 
+    public func dataForIndexPath(indexPath: IndexPath) -> Data? {
+        return array![indexPath.row]
+    }
+
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -121,8 +125,8 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        let data = array![indexPath.row]!
-        viewUpdateHandler(cell, data)
+        let data = self.dataForIndexPath(indexPath: indexPath)
+        viewUpdateHandler(cell, data!)
         return cell
     }
 }

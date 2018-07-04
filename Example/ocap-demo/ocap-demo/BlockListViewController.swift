@@ -10,11 +10,11 @@ import UIKit
 import ArcBlockSDK
 
 class BlockListCell: UITableViewCell {
-    @IBOutlet weak var hashLabel: UILabel!
+    @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var transactionLabel: UILabel!
 
     public func updateBlockData(block: ListBlocksQuery.Data.BlocksByHeight.Datum) {
-        hashLabel.text = block.hash
+        heightLabel.text = "Block Height: " + String(block.height)
         transactionLabel.text = String(block.numberTxs) + " txs " + String(block.total) + " BTC"
     }
 }
@@ -47,6 +47,16 @@ class BlockListViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "BlockDetailSegue" {
+            let indexPath: IndexPath = tableView.indexPathForSelectedRow!
+            let data: ListBlocksQuery.Data.BlocksByHeight.Datum = dataSource.dataForIndexPath(indexPath: indexPath)!
+            let destinationViewController: BlockDetailViewController = segue.destination as! BlockDetailViewController
+            destinationViewController.height = data.height
+            destinationViewController.title = "Block " + String(data.height)
+        }
     }
 
 }
