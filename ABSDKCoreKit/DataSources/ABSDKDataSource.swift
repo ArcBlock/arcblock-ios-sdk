@@ -34,8 +34,9 @@ protocol ABSDKDataSource {
     var client: ABSDKClient { get }
     var query: Query { get }
     var dataSourceMapper: DataSourceMapper<Query, Data> { get }
+    var viewUpdateHandler: ViewUpdateHandler<Data> { get }
 
-    init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping DataSourceMapper<Query, Data>)
+    init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping DataSourceMapper<Query, Data>, viewUpdateHandler: @escaping ViewUpdateHandler<Data>)
 }
 
 final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: NSObject, UITableViewDataSource, ABSDKDataSource {
@@ -45,7 +46,7 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         }
     }
 
-    public var viewUpdateHandler: ViewUpdateHandler<Data>? = nil
+    public var reuseIdentifier: String! = "Cell"
     
     var array: [Data?]? = [] {
         didSet {
@@ -56,22 +57,18 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
     let client: ABSDKClient
     let query: Query
     let dataSourceMapper: DataSourceMapper<Query, Data>
-    var reuseIdentifier: String!
+    let viewUpdateHandler: ViewUpdateHandler<Data>
 
-    init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping DataSourceMapper<Query, Data>) {
+    public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, viewUpdateHandler: @escaping (UIView, Data) -> Void) {
         self.client = client
         self.query = query
         self.dataSourceMapper = dataSourceMapper
+        self.viewUpdateHandler = viewUpdateHandler
         super.init()
 
         self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
             self.array = self.dataSourceMapper((result?.data)!)
         })
-    }
-
-    public convenience init(client: ABSDKClient, query: Query, reuseIdentifier: String = "Cell", dataSourceMapper: @escaping DataSourceMapper<Query, Data>) {
-        self.init(client: client, query: query, dataSourceMapper: dataSourceMapper)
-        self.reuseIdentifier = reuseIdentifier
     }
 
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -85,7 +82,7 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         let data = array![indexPath.row]!
-        viewUpdateHandler?(cell, data)
+        viewUpdateHandler(cell, data)
         return cell
     }
 }

@@ -34,12 +34,13 @@ class BlockListViewController: UIViewController {
         let dataSourceMapper: DataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
-        dataSource = ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0), dataSourceMapper: dataSourceMapper)
-        dataSource.viewUpdateHandler = { (view, data) in
+        let viewUpdateHandler: ViewUpdateHandler<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (view, data) in
             if let cell = view as? BlockListCell {
                 cell.updateBlockData(block: data)
             }
         }
+        dataSource = ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0), dataSourceMapper: dataSourceMapper, viewUpdateHandler: viewUpdateHandler)
+
         dataSource.tableView = tableView
     }
 
