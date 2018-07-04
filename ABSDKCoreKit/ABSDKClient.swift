@@ -235,15 +235,19 @@ public class ABSDKClient: NetworkConnectionNotification {
         return apolloClient!.fetch(query: query, cachePolicy: cachePolicy, queue: queue, resultHandler: resultHandler)
     }
 
-//    public func subscribe<Subscription: GraphQLSubscription>(subscription: Subscription, queue: DispatchQueue = DispatchQueue.main, resultHandler: @escaping SubscriptionResultHandler<Subscription>) throws -> AWSAppSyncSubscriptionWatcher<Subscription>? {
-//
-//        return AWSAppSyncSubscriptionWatcher(client: self.appSyncMQTTClient,
-//                                             httpClient: self.httpTransport!,
-//                                             store: self.store!,
-//                                             subscription: subscription,
-//                                             handlerQueue: queue,
-//                                             resultHandler: resultHandler)
-//    }
+    /// Watches a query by first fetching an initial result from the server or from the local cache, depending on the current contents of the cache and the specified cache policy. After the initial fetch, the returned query watcher object will get notified whenever any of the data the query result depends on changes in the local cache, and calls the result handler again with the new result.
+    ///
+    /// - Parameters:
+    ///   - query: The query to fetch.
+    ///   - cachePolicy: A cache policy that specifies when results should be fetched from the server or from the local cache.
+    ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
+    ///   - resultHandler: An optional closure that is called when query results are available or when an error occurs.
+    ///   - result: The result of the fetched query, or `nil` if an error occurred.
+    ///   - error: An error that indicates why the fetch failed, or `nil` if the fetch was succesful.
+    /// - Returns: A query watcher object that can be used to control the watching behavior.
+    @discardableResult public func watch<Query: GraphQLQuery>(query: Query, cachePolicy: CachePolicy = .returnCacheDataElseFetch, queue: DispatchQueue = DispatchQueue.main, resultHandler: @escaping OperationResultHandler<Query>) -> GraphQLQueryWatcher<Query> {
+        return apolloClient!.watch(query: query, cachePolicy: cachePolicy, queue: queue, resultHandler: resultHandler)
+    }
 
     /// Performs a mutation by sending it to the server.
     ///

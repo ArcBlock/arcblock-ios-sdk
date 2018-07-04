@@ -67,7 +67,7 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
         self.init(client: client, query: query, viewUpdateHandler: viewUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
 
-        self.watcher = self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
             self.object = self.dataSourceMapper!((result?.data)!)
         })
     }
@@ -106,7 +106,7 @@ final public class ABSDKTableViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         self.init(client: client, query: query, viewUpdateHandler: viewUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
 
-        self.watcher = self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
             self.array = self.dataSourceMapper!((result?.data)!)
         })
     }
@@ -160,7 +160,7 @@ final public class ABSDKCollectionViewDataSource<Query: GraphQLQuery, Data: Grap
         self.init(client: client, query: query, viewUpdateHandler: viewUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
 
-        self.watcher = self.client.apolloClient?.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
             self.array = self.dataSourceMapper!((result?.data)!)
         })
     }
