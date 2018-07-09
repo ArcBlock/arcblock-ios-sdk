@@ -8,36 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */; };
-		2712817620A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817020A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m */; };
-		2712817720A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817120A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m */; };
-		2712817820A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817220A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.m */; };
-		2712817920A4C41900530FB6 /* UIView+ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817320A4C41900530FB6 /* UIView+ABSDKObjectDataSource.h */; };
-		2712817A20A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817420A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.h */; };
-		2712817B20A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712817520A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.h */; };
-		2712818020A4EA6400530FB6 /* UIImageViewMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712817F20A4EA6400530FB6 /* UIImageViewMock.m */; };
-		2712818420A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712818320A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift */; };
-		2712819720A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712818920A6497900530FB6 /* UITableView+ABSDKArrayDataSource.h */; };
-		2712819920A6497B00530FB6 /* ABSDKFilterDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712818B20A6497900530FB6 /* ABSDKFilterDataSource.m */; };
-		2712819A20A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712818C20A6497900530FB6 /* UICollectionView+ABSDKArrayDataSource.m */; };
-		2712819D20A6497B00530FB6 /* ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712818F20A6497A00530FB6 /* ABSDKArrayDataSource.h */; };
-		2712819E20A6497B00530FB6 /* ABSDKFilterDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712819020A6497A00530FB6 /* ABSDKFilterDataSource.h */; };
-		2712819F20A6497B00530FB6 /* ABSDKSearchDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712819120A6497A00530FB6 /* ABSDKSearchDataSource.h */; };
-		271281A020A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2712819220A6497A00530FB6 /* UICollectionView+ABSDKArrayDataSource.h */; };
-		271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */; };
-		271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */; };
-		271281A320A6497B00530FB6 /* ABSDKArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */; };
+		2712818420A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712818320A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift */; };
+		2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */; };
+		2739E55720EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E55620EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift */; };
 		274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B185920E4D06A00884659 /* ABSDKClient.swift */; };
 		274B185D20E4DD8900884659 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185B20E4DD8900884659 /* SQLite.framework */; };
 		274B185E20E4DD8900884659 /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185C20E4DD8900884659 /* Apollo.framework */; };
 		274B186020E603F700884659 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185F20E603F700884659 /* Reachability.framework */; };
 		274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
-		278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF31D20A0DF2F00C99C1F /* ABSDKObjectDataSource.h */; };
-		278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF31E20A0DF2F00C99C1F /* ABSDKObjectDataSource.m */; };
-		278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */; };
-		278EF34720A0DF2F00C99C1F /* ABSDKDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32120A0DF2F00C99C1F /* ABSDKDataStore.h */; };
-		278EF34820A0DF2F00C99C1F /* ABSDKDataStore+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */; };
-		278EF35D20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */; };
 		278EF37220A0F54D00C99C1F /* ABSDKAccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EF36920A0F54D00C99C1F /* ABSDKAccountKit.framework */; };
 		278EF37920A0F54D00C99C1F /* ABSDKAccountKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF36B20A0F54D00C99C1F /* ABSDKAccountKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		278EF38E20A0F5AC00C99C1F /* ABSDKMessagingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EF38520A0F5AC00C99C1F /* ABSDKMessagingKit.framework */; };
@@ -47,10 +26,6 @@
 		278EF3BA20A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3B920A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift */; };
 		278EF3BD20A1009000C99C1F /* ABSDKWalletKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BC20A1009000C99C1F /* ABSDKWalletKitSpec.swift */; };
 		278EF3C020A100E000C99C1F /* ABSDKAccountKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */; };
-		279CD42E20AC9EB5009E1348 /* YapDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD42D20AC9EB5009E1348 /* YapDatabase.framework */; };
-		279CD43D20AC9F37009E1348 /* KVOController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD43A20AC9F37009E1348 /* KVOController.framework */; };
-		279CD43E20AC9F37009E1348 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD43B20AC9F37009E1348 /* SDWebImage.framework */; };
-		279CD43F20AC9F37009E1348 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */; };
 		279CD44220AC9F46009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		279CD44320AC9F46009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
 		279CD44620ACA967009E1348 /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
@@ -97,25 +72,9 @@
 
 /* Begin PBXFileReference section */
 		2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectDataSourceSpec.swift; sourceTree = "<group>"; };
-		2712817020A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ABSDKObjectDataSource.m"; sourceTree = "<group>"; };
-		2712817120A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ABSDKObjectDataSource.m"; sourceTree = "<group>"; };
-		2712817220A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ABSDKObjectDataSource.m"; sourceTree = "<group>"; };
-		2712817320A4C41900530FB6 /* UIView+ABSDKObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ABSDKObjectDataSource.h"; sourceTree = "<group>"; };
-		2712817420A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ABSDKObjectDataSource.h"; sourceTree = "<group>"; };
-		2712817520A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ABSDKObjectDataSource.h"; sourceTree = "<group>"; };
-		2712817E20A4EA6400530FB6 /* UIImageViewMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIImageViewMock.h; sourceTree = "<group>"; };
-		2712817F20A4EA6400530FB6 /* UIImageViewMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIImageViewMock.m; sourceTree = "<group>"; };
-		2712818320A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKArrayDataSourceSpec.swift; sourceTree = "<group>"; };
-		2712818920A6497900530FB6 /* UITableView+ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+ABSDKArrayDataSource.h"; sourceTree = "<group>"; };
-		2712818B20A6497900530FB6 /* ABSDKFilterDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKFilterDataSource.m; sourceTree = "<group>"; };
-		2712818C20A6497900530FB6 /* UICollectionView+ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+ABSDKArrayDataSource.m"; sourceTree = "<group>"; };
-		2712818F20A6497A00530FB6 /* ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKArrayDataSource.h; sourceTree = "<group>"; };
-		2712819020A6497A00530FB6 /* ABSDKFilterDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKFilterDataSource.h; sourceTree = "<group>"; };
-		2712819120A6497A00530FB6 /* ABSDKSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKSearchDataSource.h; sourceTree = "<group>"; };
-		2712819220A6497A00530FB6 /* UICollectionView+ABSDKArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+ABSDKArrayDataSource.h"; sourceTree = "<group>"; };
-		2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+ABSDKArrayDataSource.m"; sourceTree = "<group>"; };
-		2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKSearchDataSource.m; sourceTree = "<group>"; };
-		2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKArrayDataSource.m; sourceTree = "<group>"; };
+		2712818320A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKTableViewDataSourceSpec.swift; sourceTree = "<group>"; };
+		2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKDataSource.swift; sourceTree = "<group>"; };
+		2739E55620EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKCollectionViewDataSourceSpec.swift; sourceTree = "<group>"; };
 		274B185920E4D06A00884659 /* ABSDKClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKClient.swift; sourceTree = "<group>"; };
 		274B185B20E4DD8900884659 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		274B185C20E4DD8900884659 /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
@@ -125,13 +84,6 @@
 		277E6B7920A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		277E6B7E20A0DE340054707E /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B8520A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		278EF31D20A0DF2F00C99C1F /* ABSDKObjectDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKObjectDataSource.h; sourceTree = "<group>"; };
-		278EF31E20A0DF2F00C99C1F /* ABSDKObjectDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKObjectDataSource.m; sourceTree = "<group>"; };
-		278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSDKDataStore.m; sourceTree = "<group>"; };
-		278EF32120A0DF2F00C99C1F /* ABSDKDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSDKDataStore.h; sourceTree = "<group>"; };
-		278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKDataStore+Private.h"; sourceTree = "<group>"; };
-		278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKDataStoreSpec.swift; sourceTree = "<group>"; };
-		278EF36120A0ED1700C99C1F /* ABSDKCoreKitTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABSDKCoreKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		278EF36920A0F54D00C99C1F /* ABSDKAccountKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKAccountKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		278EF36B20A0F54D00C99C1F /* ABSDKAccountKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABSDKAccountKit.h; sourceTree = "<group>"; };
 		278EF36C20A0F54D00C99C1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -153,14 +105,12 @@
 		278EF3BC20A1009000C99C1F /* ABSDKWalletKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKWalletKitSpec.swift; sourceTree = "<group>"; };
 		278EF3BE20A100DF00C99C1F /* ABSDKAccountKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKAccountKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKAccountKitSpec.swift; sourceTree = "<group>"; };
-		279CD36320AAA72A009E1348 /* ABSDKArrayDataSource+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKArrayDataSource+Private.h"; sourceTree = "<group>"; };
 		279CD42D20AC9EB5009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YapDatabase.framework; path = Carthage/Build/iOS/YapDatabase.framework; sourceTree = "<group>"; };
 		279CD43A20AC9F37009E1348 /* KVOController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KVOController.framework; path = Carthage/Build/iOS/KVOController.framework; sourceTree = "<group>"; };
 		279CD43B20AC9F37009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
 		279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
-		27D1EBCB20CF9C1E00422C35 /* ABSDKCoreKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABSDKCoreKit.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,10 +121,6 @@
 				274B186020E603F700884659 /* Reachability.framework in Frameworks */,
 				274B185D20E4DD8900884659 /* SQLite.framework in Frameworks */,
 				274B185E20E4DD8900884659 /* Apollo.framework in Frameworks */,
-				279CD43D20AC9F37009E1348 /* KVOController.framework in Frameworks */,
-				279CD43E20AC9F37009E1348 /* SDWebImage.framework in Frameworks */,
-				279CD43F20AC9F37009E1348 /* CocoaLumberjack.framework in Frameworks */,
-				279CD42E20AC9EB5009E1348 /* YapDatabase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,10 +226,8 @@
 			isa = PBXGroup;
 			children = (
 				274B185920E4D06A00884659 /* ABSDKClient.swift */,
-				27D1EBCB20CF9C1E00422C35 /* ABSDKCoreKit.h */,
 				274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */,
-				278EF30B20A0DF2F00C99C1F /* DataSources */,
-				278EF31F20A0DF2F00C99C1F /* DataStore */,
+				2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */,
 				277E6B7920A0DE340054707E /* Info.plist */,
 			);
 			path = ABSDKCoreKit;
@@ -292,67 +236,12 @@
 		277E6B8220A0DE340054707E /* ABSDKCoreKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				278EF36120A0ED1700C99C1F /* ABSDKCoreKitTests-Bridging-Header.h */,
-				278EF35C20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift */,
+				2739E55620EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift */,
 				2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */,
-				2712818320A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift */,
+				2712818320A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift */,
 				277E6B8520A0DE340054707E /* Info.plist */,
-				2712817E20A4EA6400530FB6 /* UIImageViewMock.h */,
-				2712817F20A4EA6400530FB6 /* UIImageViewMock.m */,
 			);
 			path = ABSDKCoreKitTests;
-			sourceTree = "<group>";
-		};
-		278EF30B20A0DF2F00C99C1F /* DataSources */ = {
-			isa = PBXGroup;
-			children = (
-				278EF30C20A0DF2F00C99C1F /* ArrayDataSource */,
-				278EF31C20A0DF2F00C99C1F /* ObjectDataSource */,
-			);
-			path = DataSources;
-			sourceTree = "<group>";
-		};
-		278EF30C20A0DF2F00C99C1F /* ArrayDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				2712818F20A6497A00530FB6 /* ABSDKArrayDataSource.h */,
-				279CD36320AAA72A009E1348 /* ABSDKArrayDataSource+Private.h */,
-				2712819520A6497A00530FB6 /* ABSDKArrayDataSource.m */,
-				2712819020A6497A00530FB6 /* ABSDKFilterDataSource.h */,
-				2712818B20A6497900530FB6 /* ABSDKFilterDataSource.m */,
-				2712819120A6497A00530FB6 /* ABSDKSearchDataSource.h */,
-				2712819420A6497A00530FB6 /* ABSDKSearchDataSource.m */,
-				2712819220A6497A00530FB6 /* UICollectionView+ABSDKArrayDataSource.h */,
-				2712818C20A6497900530FB6 /* UICollectionView+ABSDKArrayDataSource.m */,
-				2712818920A6497900530FB6 /* UITableView+ABSDKArrayDataSource.h */,
-				2712819320A6497A00530FB6 /* UITableView+ABSDKArrayDataSource.m */,
-			);
-			path = ArrayDataSource;
-			sourceTree = "<group>";
-		};
-		278EF31C20A0DF2F00C99C1F /* ObjectDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				278EF31D20A0DF2F00C99C1F /* ABSDKObjectDataSource.h */,
-				278EF31E20A0DF2F00C99C1F /* ABSDKObjectDataSource.m */,
-				2712817420A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.h */,
-				2712817220A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.m */,
-				2712817520A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.h */,
-				2712817020A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m */,
-				2712817320A4C41900530FB6 /* UIView+ABSDKObjectDataSource.h */,
-				2712817120A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m */,
-			);
-			path = ObjectDataSource;
-			sourceTree = "<group>";
-		};
-		278EF31F20A0DF2F00C99C1F /* DataStore */ = {
-			isa = PBXGroup;
-			children = (
-				278EF32120A0DF2F00C99C1F /* ABSDKDataStore.h */,
-				278EF32020A0DF2F00C99C1F /* ABSDKDataStore.m */,
-				278EF32220A0DF2F00C99C1F /* ABSDKDataStore+Private.h */,
-			);
-			path = DataStore;
 			sourceTree = "<group>";
 		};
 		278EF36A20A0F54D00C99C1F /* ABSDKAccountKit */ = {
@@ -435,17 +324,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2712819E20A6497B00530FB6 /* ABSDKFilterDataSource.h in Headers */,
-				278EF34420A0DF2F00C99C1F /* ABSDKObjectDataSource.h in Headers */,
-				2712819720A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.h in Headers */,
-				271281A020A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.h in Headers */,
-				278EF34720A0DF2F00C99C1F /* ABSDKDataStore.h in Headers */,
-				2712819F20A6497B00530FB6 /* ABSDKSearchDataSource.h in Headers */,
-				2712817B20A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.h in Headers */,
-				2712817A20A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.h in Headers */,
-				278EF34820A0DF2F00C99C1F /* ABSDKDataStore+Private.h in Headers */,
-				2712817920A4C41900530FB6 /* UIView+ABSDKObjectDataSource.h in Headers */,
-				2712819D20A6497B00530FB6 /* ABSDKArrayDataSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,20 +730,12 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/KVOController.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/YapDatabase.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SQLite.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
 			);
 			name = "Copy Framework";
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CocoaLumberjack.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KVOController.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SDWebImage.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/YapDatabase.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Apollo.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SQLite.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Reachability.framework",
@@ -949,18 +819,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				271281A320A6497B00530FB6 /* ABSDKArrayDataSource.m in Sources */,
-				2712819A20A6497B00530FB6 /* UICollectionView+ABSDKArrayDataSource.m in Sources */,
-				2712817720A4C41900530FB6 /* UIView+ABSDKObjectDataSource.m in Sources */,
-				2712817620A4C41900530FB6 /* UIImageView+ABSDKObjectDataSource.m in Sources */,
 				274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */,
-				278EF34520A0DF2F00C99C1F /* ABSDKObjectDataSource.m in Sources */,
-				271281A220A6497B00530FB6 /* ABSDKSearchDataSource.m in Sources */,
-				2712819920A6497B00530FB6 /* ABSDKFilterDataSource.m in Sources */,
+				2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */,
 				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
-				271281A120A6497B00530FB6 /* UITableView+ABSDKArrayDataSource.m in Sources */,
-				278EF34620A0DF2F00C99C1F /* ABSDKDataStore.m in Sources */,
-				2712817820A4C41900530FB6 /* UIButton+ABSDKObjectDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -969,9 +830,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */,
-				2712818420A4F3B500530FB6 /* ABSDKArrayDataSourceSpec.swift in Sources */,
-				2712818020A4EA6400530FB6 /* UIImageViewMock.m in Sources */,
-				278EF35D20A0DF5B00C99C1F /* ABSDKDataStoreSpec.swift in Sources */,
+				2712818420A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift in Sources */,
+				2739E55720EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,7 +1146,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.arcblock.ABSDKCoreKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "ABSDKCoreKitTests/ABSDKCoreKitTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1356,7 +1216,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.arcblock.ABSDKCoreKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "ABSDKCoreKitTests/ABSDKCoreKitTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

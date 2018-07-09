@@ -1,9 +1,21 @@
 query ListBlocks($fromHeight: Int!){
   blocksByHeight(fromHeight: $fromHeight){
     data{
-      hash
+      height
       numberTxs
       total
     }
+  }
+}
+
+query BlockDetail($height: Int!){
+  blockByHeight(height: $height){
+    height
+    hash
+    preHash
+    numberTxs
+    total
+    fees
+    merkleRoot
   }
 }

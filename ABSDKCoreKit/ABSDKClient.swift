@@ -213,6 +213,14 @@ public class ABSDKClient: NetworkConnectionNotification {
         }
     }
 
+    func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
+        var accessState: ClientNetworkAccessState = .offline
+        if isEndpointReachable {
+            accessState = .offline
+        }
+        self.connectionStateChangeHandler?.stateChanged(networkState: accessState)
+    }
+
     /// Fetches a query from the server or from the local cache, depending on the current contents of the cache and the specified cache policy.
     ///
     /// - Parameters:
@@ -238,19 +246,8 @@ public class ABSDKClient: NetworkConnectionNotification {
     ///   - error: An error that indicates why the fetch failed, or `nil` if the fetch was succesful.
     /// - Returns: A query watcher object that can be used to control the watching behavior.
     @discardableResult public func watch<Query: GraphQLQuery>(query: Query, cachePolicy: CachePolicy = .returnCacheDataElseFetch, queue: DispatchQueue = DispatchQueue.main, resultHandler: @escaping OperationResultHandler<Query>) -> GraphQLQueryWatcher<Query> {
-
         return apolloClient!.watch(query: query, cachePolicy: cachePolicy, queue: queue, resultHandler: resultHandler)
     }
-
-//    public func subscribe<Subscription: GraphQLSubscription>(subscription: Subscription, queue: DispatchQueue = DispatchQueue.main, resultHandler: @escaping SubscriptionResultHandler<Subscription>) throws -> AWSAppSyncSubscriptionWatcher<Subscription>? {
-//
-//        return AWSAppSyncSubscriptionWatcher(client: self.appSyncMQTTClient,
-//                                             httpClient: self.httpTransport!,
-//                                             store: self.store!,
-//                                             subscription: subscription,
-//                                             handlerQueue: queue,
-//                                             resultHandler: resultHandler)
-//    }
 
     /// Performs a mutation by sending it to the server.
     ///
@@ -276,13 +273,5 @@ public class ABSDKClient: NetworkConnectionNotification {
         }
 
         return apolloClient!.perform(mutation: mutation, queue: queue, resultHandler: resultHandler)
-    }
-
-    func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
-        var accessState: ClientNetworkAccessState = .offline
-        if isEndpointReachable {
-            accessState = .offline
-        }
-        self.connectionStateChangeHandler?.stateChanged(networkState: accessState)
     }
 }
