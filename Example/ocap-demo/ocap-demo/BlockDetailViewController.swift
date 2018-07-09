@@ -11,9 +11,15 @@ import ArcBlockSDK
 
 class BlockDetailView: UIView {
     @IBOutlet weak var hashLabel: UILabel!
+    @IBOutlet weak var numberOfTxsLabel: UILabel!
+    @IBOutlet weak var totalLabel: UILabel!
+    @IBOutlet weak var feesLabel: UILabel!
 
     public func updateBlockData(block: BlockDetailQuery.Data.BlockByHeight) {
         hashLabel.text = block.hash
+        numberOfTxsLabel.text = String(block.numberTxs)
+        totalLabel.text = String(block.total)
+        feesLabel.text = String(block.fees)
     }
 }
 
@@ -67,6 +73,15 @@ class BlockDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TransactionSegue" {
+            let indexPath: IndexPath = tableView.indexPathForSelectedRow!
+            let data: BlockDetailQuery.Data.BlockByHeight.Transaction.Datum = transactionDataSource.dataForIndexPath(indexPath: indexPath)!
+            let destinationViewController: TransactionViewController = segue.destination as! TransactionViewController
+            destinationViewController.txHash = data.hash
+        }
+    }
 }
 
 extension BlockDetailViewController: UITableViewDataSource {
@@ -79,7 +94,7 @@ extension BlockDetailViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TransactionListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionListCell", for: indexPath) as! TransactionListCell
         let data = transactionDataSource.dataForIndexPath(indexPath: indexPath)
         cell.updateTransactionData(transaction: data!)
         return cell

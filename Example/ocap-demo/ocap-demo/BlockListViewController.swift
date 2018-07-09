@@ -9,8 +9,6 @@
 import UIKit
 import ArcBlockSDK
 
-let cellIdentifier = "Cell"
-
 class BlockListCell: UITableViewCell {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var transactionLabel: UILabel!
@@ -36,7 +34,7 @@ class BlockListViewController: UIViewController {
         let dataSourceMapper: ArrayDataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
-        dataSource = ABSDKArrayViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0, toHeight: 9999, paging: PageInput(cursor: nil, order: nil, size: 10)), dataSourceMapper: dataSourceMapper)
+        dataSource = ABSDKArrayViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 500000, toHeight: 500099, paging: PageInput(cursor: nil, order: nil, size: 10)), dataSourceMapper: dataSourceMapper)
 
         dataSource.tableView = tableView
     }
@@ -55,7 +53,6 @@ class BlockListViewController: UIViewController {
             destinationViewController.title = "Block " + String(data.height)
         }
     }
-
 }
 
 extension BlockListViewController: UITableViewDataSource {
@@ -68,7 +65,7 @@ extension BlockListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BlockListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BlockListCell", for: indexPath) as! BlockListCell
         let data = dataSource.dataForIndexPath(indexPath: indexPath)
         cell.updateBlockData(block: data!)
         return cell
