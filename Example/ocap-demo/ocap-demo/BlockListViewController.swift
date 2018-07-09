@@ -10,11 +10,11 @@ import UIKit
 import ArcBlockSDK
 
 class BlockListCell: UITableViewCell {
-    @IBOutlet weak var hashLabel: UILabel!
+    @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var transactionLabel: UILabel!
 
     public func updateBlockData(block: ListBlocksQuery.Data.BlocksByHeight.Datum) {
-        hashLabel.text = block.hash
+        heightLabel.text = "Block Height: " + String(block.height)
         transactionLabel.text = String(block.numberTxs) + " txs " + String(block.total) + " BTC"
     }
 }
@@ -22,28 +22,26 @@ class BlockListCell: UITableViewCell {
 class BlockListViewController: UIViewController {
 
     @IBOutlet weak var tableView:UITableView!
-    var absdkClient: ABSDKClient!
-
-    var blockList: [ListBlocksQuery.Data.BlocksByHeight.Datum?]? = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var arcblockClient: ABSDKClient!
+    var dataSource: ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        absdkClient = appDelegate.absdkClient
+        arcblockClient = appDelegate.arcblockClient
 
-        absdkClient.fetch(query: ListBlocksQuery(fromHeight: 0), cachePolicy: .returnCacheDataAndFetch) { (result, error) in
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-                return
-            }
-            print(result)
-            self.blockList = result?.data?.blocksByHeight?.data
+        let dataSourceMapper: ArrayDataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
+            return data.blocksByHeight?.data
         }
+        let viewUpdateHandler: ViewUpdateHandler<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (view, data) in
+            if let cell = view as? BlockListCell {
+                cell.updateBlockData(block: data)
+            }
+        }
+        dataSource = ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0), dataSourceMapper: dataSourceMapper, viewUpdateHandler: viewUpdateHandler)
+
+        dataSource.tableView = tableView
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,23 +49,16 @@ class BlockListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-}
-
-extension BlockListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "BlockDetailSegue" {
+            let indexPath: IndexPath = tableView.indexPathForSelectedRow!
+            let data: ListBlocksQuery.Data.BlocksByHeight.Datum = dataSource.dataForIndexPath(indexPath: indexPath)!
+            let destinationViewController: BlockDetailViewController = segue.destination as! BlockDetailViewController
+            destinationViewController.height = data.height
+            destinationViewController.title = "Block " + String(data.height)
+        }
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return blockList?.count ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! BlockListCell
-        let block = blockList![indexPath.row]!
-        cell.updateBlockData(block: block)
-        return cell
-    }
 }
 
 extension BlockListViewController: UITableViewDelegate {

@@ -1,4 +1,4 @@
-// UIImageView+ABSDKObjectDataSource.m
+// ABSDKArrayDataSourceSpec.swift
 //
 // Copyright (c) 2017-present ArcBlock Foundation Ltd <https://www.arcblock.io/>
 //
@@ -20,24 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "UIImageView+ABSDKObjectDataSource.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+import Quick
+import Nimble
 
-@implementation UIImageView (ABSDKObjectDataSource)
+class ABSDKTableViewDataSourceSpec: QuickSpec {
+    override func spec() {
 
-- (void)setImageUrl:(NSString *)imageUrl
-{
-    if (![imageUrl isEqual:[NSNull null]] && imageUrl.length) {
-        [self sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
-    }
-    else {
-        self.image = nil;
     }
 }
-
-- (NSString*)imageUrl
-{
-    return nil;
-}
-
-@end

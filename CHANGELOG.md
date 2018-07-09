@@ -1,3 +1,11 @@
+## 0.4.9 (July 04, 2018)
+  - remove legacy codes and useless dependency
+  - implement object data source and collection view data source
+  - move viewUpdateHandler to ABSDKDataSource Protocol
+  - extract ABSDKDataSource Protocol
+  - implement ABSDKTableViewDataSource with live update
+  - remove useless codes refactor naming in demo
+
 ## 0.4.8 (July 02, 2018)
 
 
