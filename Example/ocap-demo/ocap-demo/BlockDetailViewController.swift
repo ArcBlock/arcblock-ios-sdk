@@ -17,13 +17,25 @@ class BlockDetailView: UIView {
     }
 }
 
+class TransactionListCell: UITableViewCell {
+    @IBOutlet weak var hashLabel: UILabel!
+
+    public func updateTransactionData(transaction: BlockDetailQuery.Data.BlockByHeight.Transaction.Datum) {
+        hashLabel.text = transaction.hash
+    }
+}
+
 class BlockDetailViewController: UIViewController {
-
     public var height: Int = 0
-    var arcblockClient: ABSDKClient!
-    var dataSource: ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>!
 
-    @IBOutlet weak var detailView:BlockDetailView!
+    var arcblockClient: ABSDKClient!
+    var blockDetailQuery: BlockDetailQuery!
+
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var detailView: BlockDetailView!
+
+    var detailDataSource: ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>!
+    var transactionDataSource: ABSDKArrayViewDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +43,9 @@ class BlockDetailViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         arcblockClient = appDelegate.arcblockClient
 
-        let dataSourceMapper: ObjectDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight> = { (data) in
+        blockDetailQuery = BlockDetailQuery(height: height)
+
+        let detailSourceMapper: ObjectDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight> = { (data) in
             return data.blockByHeight
         }
         let viewUpdateHandler: ViewUpdateHandler<BlockDetailQuery.Data.BlockByHeight> = { (view, data) in
@@ -39,14 +53,39 @@ class BlockDetailViewController: UIViewController {
                 blockDetailView.updateBlockData(block: data)
             }
         }
-        dataSource = ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: BlockDetailQuery(height: height), dataSourceMapper: dataSourceMapper, viewUpdateHandler: viewUpdateHandler)
+        detailDataSource = ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: detailSourceMapper, viewUpdateHandler: viewUpdateHandler)
+        detailDataSource.view = detailView
 
-        dataSource.view = detailView
+        let transactionSourceMapper: ArrayDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum> = { (data) in
+            return data.blockByHeight?.transactions?.data
+        }
+        transactionDataSource = ABSDKArrayViewDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: transactionSourceMapper)
+        transactionDataSource.tableView = tableView
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
+extension BlockDetailViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return transactionDataSource.numberOfSections()
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return transactionDataSource.numberOfRows(section: section)
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TransactionListCell
+        let data = transactionDataSource.dataForIndexPath(indexPath: indexPath)
+        cell.updateTransactionData(transaction: data!)
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Transactions"
+    }
 }

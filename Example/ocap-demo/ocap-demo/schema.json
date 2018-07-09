@@ -13,9 +13,13 @@
           "fields":[
             {
               "type":{
-                "ofType":null,
-                "name":"String",
-                "kind":"SCALAR"
+                "ofType":{
+                  "ofType":null,
+                  "name":"String",
+                  "kind":"SCALAR"
+                },
+                "name":null,
+                "kind":"NON_NULL"
               },
               "name":"address",
               "isDeprecated":false,
@@ -96,7 +100,16 @@
               "description":null,
               "deprecationReason":null,
               "args":[
-
+                {
+                  "type":{
+                    "ofType":null,
+                    "name":"PageInput",
+                    "kind":"INPUT_OBJECT"
+                  },
+                  "name":"paging",
+                  "description":null,
+                  "defaultValue":null
+                }
               ]
             },
             {
@@ -110,12 +123,21 @@
               "description":null,
               "deprecationReason":null,
               "args":[
-
+                {
+                  "type":{
+                    "ofType":null,
+                    "name":"PageInput",
+                    "kind":"INPUT_OBJECT"
+                  },
+                  "name":"paging",
+                  "description":null,
+                  "defaultValue":null
+                }
               ]
             }
           ],
           "enumValues":null,
-          "description":"The BitcoinAccount object implements the Account interface for Bitcoin chain."
+          "description":"The btcoin account object implements the Account interface for Bitcoin chain."
         },
         {
           "possibleTypes":null,
@@ -200,6 +222,20 @@
             },
             {
               "type":{
+                "ofType":null,
+                "name":"Int",
+                "kind":"SCALAR"
+              },
+              "name":"medianTime",
+              "isDeprecated":false,
+              "description":null,
+              "deprecationReason":null,
+              "args":[
+
+              ]
+            },
+            {
+              "type":{
                 "ofType":{
                   "ofType":null,
                   "name":"String",
@@ -209,6 +245,20 @@
                 "kind":"NON_NULL"
               },
               "name":"merkleRoot",
+              "isDeprecated":false,
+              "description":null,
+              "deprecationReason":null,
+              "args":[
+
+              ]
+            },
+            {
+              "type":{
+                "ofType":null,
+                "name":"BitcoinAccount",
+                "kind":"OBJECT"
+              },
+              "name":"miner",
               "isDeprecated":false,
               "description":null,
               "deprecationReason":null,
@@ -263,6 +313,24 @@
                 "kind":"NON_NULL"
               },
               "name":"preHash",
+              "isDeprecated":false,
+              "description":null,
+              "deprecationReason":null,
+              "args":[
+
+              ]
+            },
+            {
+              "type":{
+                "ofType":{
+                  "ofType":null,
+                  "name":"Int",
+                  "kind":"SCALAR"
+                },
+                "name":null,
+                "kind":"NON_NULL"
+              },
+              "name":"reward",
               "isDeprecated":false,
               "description":null,
               "deprecationReason":null,
@@ -353,7 +421,16 @@
               "description":null,
               "deprecationReason":null,
               "args":[
-
+                {
+                  "type":{
+                    "ofType":null,
+                    "name":"PageInput",
+                    "kind":"INPUT_OBJECT"
+                  },
+                  "name":"paging",
+                  "description":null,
+                  "defaultValue":null
+                }
               ]
             },
             {
@@ -394,7 +471,7 @@
             }
           ],
           "enumValues":null,
-          "description":"The BitcoinBlock object implements Block interface for Bitcoin chain."
+          "description":"The bitcoin block object implements Block interface for Bitcoin chain."
         },
         {
           "possibleTypes":null,
@@ -524,7 +601,16 @@
               "description":null,
               "deprecationReason":null,
               "args":[
-
+                {
+                  "type":{
+                    "ofType":null,
+                    "name":"PageInput",
+                    "kind":"INPUT_OBJECT"
+                  },
+                  "name":"paging",
+                  "description":null,
+                  "defaultValue":null
+                }
               ]
             },
             {
@@ -592,7 +678,16 @@
               "description":null,
               "deprecationReason":null,
               "args":[
-
+                {
+                  "type":{
+                    "ofType":null,
+                    "name":"PageInput",
+                    "kind":"INPUT_OBJECT"
+                  },
+                  "name":"paging",
+                  "description":null,
+                  "defaultValue":null
+                }
               ]
             },
             {
@@ -816,7 +911,83 @@
             }
           ],
           "enumValues":null,
-          "description":"The pagination information."
+          "description":"OCAP adopts cursor-based pagination model. A cursor is a string value and serves like an anchor between two queries. The cursors are opaque which means their format should not be relied upon. We encode cursors in base64."
+        },
+        {
+          "possibleTypes":null,
+          "name":"PageInput",
+          "kind":"INPUT_OBJECT",
+          "interfaces":null,
+          "inputFields":[
+            {
+              "type":{
+                "ofType":null,
+                "name":"String",
+                "kind":"SCALAR"
+              },
+              "name":"cursor",
+              "description":null,
+              "defaultValue":null
+            },
+            {
+              "type":{
+                "ofType":{
+                  "ofType":null,
+                  "name":"PageOrder",
+                  "kind":"INPUT_OBJECT"
+                },
+                "name":null,
+                "kind":"LIST"
+              },
+              "name":"order",
+              "description":null,
+              "defaultValue":null
+            },
+            {
+              "type":{
+                "ofType":null,
+                "name":"Int",
+                "kind":"SCALAR"
+              },
+              "name":"size",
+              "description":null,
+              "defaultValue":null
+            }
+          ],
+          "fields":null,
+          "enumValues":null,
+          "description":"The common arguments for quering data with pagination."
+        },
+        {
+          "possibleTypes":null,
+          "name":"PageOrder",
+          "kind":"INPUT_OBJECT",
+          "interfaces":null,
+          "inputFields":[
+            {
+              "type":{
+                "ofType":null,
+                "name":"String",
+                "kind":"SCALAR"
+              },
+              "name":"field",
+              "description":null,
+              "defaultValue":null
+            },
+            {
+              "type":{
+                "ofType":null,
+                "name":"String",
+                "kind":"SCALAR"
+              },
+              "name":"type",
+              "description":null,
+              "defaultValue":null
+            }
+          ],
+          "fields":null,
+          "enumValues":null,
+          "description":"When you carry out a query, in most of cases you can provide which field you want to us to order the result. The field to be ordered is vary query by query."
         },
         {
           "possibleTypes":null,
@@ -861,7 +1032,7 @@
             }
           ],
           "enumValues":null,
-          "description":"Represents paginated BitcoinAccounts."
+          "description":"Represents paginated bitcoin accounts."
         },
         {
           "possibleTypes":null,
@@ -906,7 +1077,7 @@
             }
           ],
           "enumValues":null,
-          "description":"Represents paginated BitcoinBlocks."
+          "description":"Represents paginated bitcoin blocks."
         },
         {
           "possibleTypes":null,
@@ -1045,41 +1216,6 @@
         },
         {
           "possibleTypes":null,
-          "name":"PagingInput",
-          "kind":"INPUT_OBJECT",
-          "interfaces":null,
-          "inputFields":[
-            {
-              "type":{
-                "ofType":null,
-                "name":"String",
-                "kind":"SCALAR"
-              },
-              "name":"cursor",
-              "description":null,
-              "defaultValue":null
-            },
-            {
-              "type":{
-                "ofType":{
-                  "ofType":null,
-                  "name":"Int",
-                  "kind":"SCALAR"
-                },
-                "name":null,
-                "kind":"NON_NULL"
-              },
-              "name":"size",
-              "description":null,
-              "defaultValue":null
-            }
-          ],
-          "fields":null,
-          "enumValues":null,
-          "description":"The common arguments for quering data with pagination."
-        },
-        {
-          "possibleTypes":null,
           "name":"RootQueryType",
           "kind":"OBJECT",
           "interfaces":[
@@ -1093,7 +1229,7 @@
                 "name":"BitcoinAccount",
                 "kind":"OBJECT"
               },
-              "name":"account",
+              "name":"accountByAddress",
               "isDeprecated":false,
               "description":"Returns information of an account.",
               "deprecationReason":null,
@@ -1196,7 +1332,7 @@
                 {
                   "type":{
                     "ofType":null,
-                    "name":"PagingInput",
+                    "name":"PageInput",
                     "kind":"INPUT_OBJECT"
                   },
                   "name":"paging",
@@ -1243,7 +1379,7 @@
                 {
                   "type":{
                     "ofType":null,
-                    "name":"PagingInput",
+                    "name":"PageInput",
                     "kind":"INPUT_OBJECT"
                   },
                   "name":"paging",
@@ -1290,7 +1426,7 @@
                 {
                   "type":{
                     "ofType":null,
-                    "name":"PagingInput",
+                    "name":"PageInput",
                     "kind":"INPUT_OBJECT"
                   },
                   "name":"paging",
@@ -1387,7 +1523,7 @@
                 {
                   "type":{
                     "ofType":null,
-                    "name":"PagingInput",
+                    "name":"PageInput",
                     "kind":"INPUT_OBJECT"
                   },
                   "name":"paging",
@@ -1460,7 +1596,7 @@
                 {
                   "type":{
                     "ofType":null,
-                    "name":"PagingInput",
+                    "name":"PageInput",
                     "kind":"INPUT_OBJECT"
                   },
                   "name":"paging",
@@ -1507,7 +1643,7 @@
                 {
                   "type":{
                     "ofType":null,
-                    "name":"PagingInput",
+                    "name":"PageInput",
                     "kind":"INPUT_OBJECT"
                   },
                   "name":"paging",

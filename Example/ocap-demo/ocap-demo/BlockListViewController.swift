@@ -9,6 +9,8 @@
 import UIKit
 import ArcBlockSDK
 
+let cellIdentifier = "Cell"
+
 class BlockListCell: UITableViewCell {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var transactionLabel: UILabel!
@@ -21,9 +23,9 @@ class BlockListCell: UITableViewCell {
 
 class BlockListViewController: UIViewController {
 
-    @IBOutlet weak var tableView:UITableView!
+    @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
-    var dataSource: ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
+    var dataSource: ABSDKArrayViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +36,7 @@ class BlockListViewController: UIViewController {
         let dataSourceMapper: ArrayDataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
-        let viewUpdateHandler: ViewUpdateHandler<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (view, data) in
-            if let cell = view as? BlockListCell {
-                cell.updateBlockData(block: data)
-            }
-        }
-        dataSource = ABSDKTableViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0), dataSourceMapper: dataSourceMapper, viewUpdateHandler: viewUpdateHandler)
+        dataSource = ABSDKArrayViewDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 0, toHeight: 9999, paging: PageInput(cursor: nil, order: nil, size: 10)), dataSourceMapper: dataSourceMapper)
 
         dataSource.tableView = tableView
     }
@@ -61,7 +58,23 @@ class BlockListViewController: UIViewController {
 
 }
 
-extension BlockListViewController: UITableViewDelegate {
-    
+extension BlockListViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dataSource.numberOfSections()
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.numberOfRows(section: section)
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BlockListCell
+        let data = dataSource.dataForIndexPath(indexPath: indexPath)
+        cell.updateBlockData(block: data!)
+        return cell
+    }
 }
 
+extension BlockListViewController: UITableViewDelegate {
+
+}
