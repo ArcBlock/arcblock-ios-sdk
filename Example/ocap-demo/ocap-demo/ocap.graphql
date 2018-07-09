@@ -41,3 +41,24 @@ query BlockDetail($height: Int!){
     }
   }
 }
+
+query TransactionDetail($hash: String!){
+  transactionByHash(hash: $hash) {
+    fees
+    total
+    numberInputs
+    numberOutputs
+    inputs{
+      data{
+        account
+        value
+      }
+    }
+    outputs {
+      data{
+        account
+        value
+      }
+    }
+  }
+}
