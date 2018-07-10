@@ -223,7 +223,7 @@
             {
               "type":{
                 "ofType":null,
-                "name":"Int",
+                "name":"DateTime",
                 "kind":"SCALAR"
               },
               "name":"medianTime",
@@ -378,7 +378,7 @@
               "type":{
                 "ofType":{
                   "ofType":null,
-                  "name":"Int",
+                  "name":"DateTime",
                   "kind":"SCALAR"
                 },
                 "name":null,
@@ -829,6 +829,16 @@
           "fields":null,
           "enumValues":null,
           "description":"The `Boolean` scalar type represents `true` or `false`."
+        },
+        {
+          "possibleTypes":null,
+          "name":"DateTime",
+          "kind":"SCALAR",
+          "interfaces":null,
+          "inputFields":null,
+          "fields":null,
+          "enumValues":null,
+          "description":"The `DateTime` scalar type represents a date and time in the UTC\ntimezone. The DateTime appears in a JSON response as an ISO8601 formatted\nstring, including UTC timezone (\"Z\"). The parsed date and time string will\nbe converted to UTC and any UTC offset other than 0 will be rejected."
         },
         {
           "possibleTypes":null,

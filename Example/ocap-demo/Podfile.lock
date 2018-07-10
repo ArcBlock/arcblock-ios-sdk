@@ -2,7 +2,7 @@ PODS:
   - Apollo (0.8.0):
     - Apollo/Core (= 0.8.0)
   - Apollo/Core (0.8.0)
-  - ArcBlockSDK/CoreKit (0.4.8):
+  - ArcBlockSDK/CoreKit (0.4.9):
     - Apollo (= 0.8.0)
     - ReachabilitySwift (= 4.0.0)
     - SQLite.swift (= 0.11.5)
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
-  ArcBlockSDK: e9eb9deffbb2e43c38189c2f4ca28ff2c1c7909e
+  ArcBlockSDK: 9ef85b868d0ae19629adf66f614ef1bfc6cc51e7
   ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
 

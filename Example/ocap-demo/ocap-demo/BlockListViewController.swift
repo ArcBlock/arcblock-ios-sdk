@@ -9,13 +9,51 @@
 import UIKit
 import ArcBlockSDK
 
+struct TimeConverter {
+    public var dateStyle: DateFormatter.Style = .short {
+        didSet {
+            outputDateFormatter.dateStyle = dateStyle
+        }
+    }
+
+    public var timeStyle: DateFormatter.Style = .short {
+        didSet {
+            outputDateFormatter.timeStyle = timeStyle
+        }
+    }
+
+    let inputDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'"
+        return formatter
+    }()
+
+    let outputDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        formatter.timeZone = .current
+        return formatter
+    }()
+
+    func convertTime(time: String) -> String {
+        let date: Date = inputDateFormatter.date(from: time)!
+        return outputDateFormatter.string(from: date)
+    }
+}
+
 class BlockListCell: UITableViewCell {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var transactionLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+
+    fileprivate static let timeConverter: TimeConverter = TimeConverter()
 
     public func updateBlockData(block: ListBlocksQuery.Data.BlocksByHeight.Datum) {
         heightLabel.text = "Block Height: " + String(block.height)
         transactionLabel.text = String(block.numberTxs) + " txs " + String(block.total) + " BTC"
+        timeLabel.text = type(of: self).timeConverter.convertTime(time: block.time)
     }
 }
 

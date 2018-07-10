@@ -14,12 +14,21 @@ class BlockDetailView: UIView {
     @IBOutlet weak var numberOfTxsLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var feesLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+
+    fileprivate static let timeConverter: TimeConverter = {
+        var timeConverter = TimeConverter()
+        timeConverter.dateStyle = .medium
+        timeConverter.timeStyle = .medium
+        return timeConverter
+    }()
 
     public func updateBlockData(block: BlockDetailQuery.Data.BlockByHeight) {
         hashLabel.text = block.hash
         numberOfTxsLabel.text = String(block.numberTxs)
         totalLabel.text = String(block.total)
         feesLabel.text = String(block.fees)
+        timeLabel.text = type(of: self).timeConverter.convertTime(time: block.time)
     }
 }
 
