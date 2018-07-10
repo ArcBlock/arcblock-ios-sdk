@@ -67,7 +67,7 @@ public struct PageOrder: GraphQLMapConvertible {
 
 public final class ListBlocksQuery: GraphQLQuery {
   public static let operationString =
-    "query ListBlocks($fromHeight: Int!, $toHeight: Int!, $paging: PageInput) {\n  blocksByHeight(fromHeight: $fromHeight, toHeight: $toHeight, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      numberTxs\n      total\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
+    "query ListBlocks($fromHeight: Int!, $toHeight: Int!, $paging: PageInput) {\n  blocksByHeight(fromHeight: $fromHeight, toHeight: $toHeight, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      numberTxs\n      total\n      time\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
 
   public var fromHeight: Int
   public var toHeight: Int
@@ -165,6 +165,7 @@ public final class ListBlocksQuery: GraphQLQuery {
           GraphQLField("hash", type: .nonNull(.scalar(String.self))),
           GraphQLField("numberTxs", type: .nonNull(.scalar(Int.self))),
           GraphQLField("total", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("time", type: .nonNull(.scalar(String.self))),
         ]
 
         public var snapshot: Snapshot
@@ -173,8 +174,8 @@ public final class ListBlocksQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(height: Int, hash: String, numberTxs: Int, total: Int) {
-          self.init(snapshot: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "numberTxs": numberTxs, "total": total])
+        public init(height: Int, hash: String, numberTxs: Int, total: Int, time: String) {
+          self.init(snapshot: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "numberTxs": numberTxs, "total": total, "time": time])
         }
 
         public var __typename: String {
@@ -219,6 +220,15 @@ public final class ListBlocksQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "total")
+          }
+        }
+
+        public var time: String {
+          get {
+            return snapshot["time"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "time")
           }
         }
       }
@@ -285,7 +295,7 @@ public final class ListBlocksQuery: GraphQLQuery {
 
 public final class BlockDetailQuery: GraphQLQuery {
   public static let operationString =
-    "query BlockDetail($height: Int!) {\n  blockByHeight(height: $height) {\n    __typename\n    height\n    hash\n    preHash\n    numberTxs\n    total\n    fees\n    merkleRoot\n    transactions {\n      __typename\n      data {\n        __typename\n        index\n        hash\n        numberInputs\n        numberOutputs\n        size\n        total\n        fees\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
+    "query BlockDetail($height: Int!) {\n  blockByHeight(height: $height) {\n    __typename\n    height\n    hash\n    preHash\n    numberTxs\n    total\n    fees\n    merkleRoot\n    time\n    transactions {\n      __typename\n      data {\n        __typename\n        hash\n        lockTime\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
 
   public var height: Int
 
@@ -336,6 +346,7 @@ public final class BlockDetailQuery: GraphQLQuery {
         GraphQLField("total", type: .nonNull(.scalar(Int.self))),
         GraphQLField("fees", type: .nonNull(.scalar(Int.self))),
         GraphQLField("merkleRoot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("time", type: .nonNull(.scalar(String.self))),
         GraphQLField("transactions", type: .object(Transaction.selections)),
       ]
 
@@ -345,8 +356,8 @@ public final class BlockDetailQuery: GraphQLQuery {
         self.snapshot = snapshot
       }
 
-      public init(height: Int, hash: String, preHash: String, numberTxs: Int, total: Int, fees: Int, merkleRoot: String, transactions: Transaction? = nil) {
-        self.init(snapshot: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "preHash": preHash, "numberTxs": numberTxs, "total": total, "fees": fees, "merkleRoot": merkleRoot, "transactions": transactions.flatMap { (value: Transaction) -> Snapshot in value.snapshot }])
+      public init(height: Int, hash: String, preHash: String, numberTxs: Int, total: Int, fees: Int, merkleRoot: String, time: String, transactions: Transaction? = nil) {
+        self.init(snapshot: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "preHash": preHash, "numberTxs": numberTxs, "total": total, "fees": fees, "merkleRoot": merkleRoot, "time": time, "transactions": transactions.flatMap { (value: Transaction) -> Snapshot in value.snapshot }])
       }
 
       public var __typename: String {
@@ -421,6 +432,15 @@ public final class BlockDetailQuery: GraphQLQuery {
         }
       }
 
+      public var time: String {
+        get {
+          return snapshot["time"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "time")
+        }
+      }
+
       public var transactions: Transaction? {
         get {
           return (snapshot["transactions"] as? Snapshot).flatMap { Transaction(snapshot: $0) }
@@ -481,13 +501,8 @@ public final class BlockDetailQuery: GraphQLQuery {
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("index", type: .nonNull(.scalar(Int.self))),
             GraphQLField("hash", type: .nonNull(.scalar(String.self))),
-            GraphQLField("numberInputs", type: .nonNull(.scalar(Int.self))),
-            GraphQLField("numberOutputs", type: .nonNull(.scalar(Int.self))),
-            GraphQLField("size", type: .nonNull(.scalar(Int.self))),
-            GraphQLField("total", type: .nonNull(.scalar(Int.self))),
-            GraphQLField("fees", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("lockTime", type: .nonNull(.scalar(Int.self))),
           ]
 
           public var snapshot: Snapshot
@@ -496,8 +511,8 @@ public final class BlockDetailQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(index: Int, hash: String, numberInputs: Int, numberOutputs: Int, size: Int, total: Int, fees: Int) {
-            self.init(snapshot: ["__typename": "BitcoinTransaction", "index": index, "hash": hash, "numberInputs": numberInputs, "numberOutputs": numberOutputs, "size": size, "total": total, "fees": fees])
+          public init(hash: String, lockTime: Int) {
+            self.init(snapshot: ["__typename": "BitcoinTransaction", "hash": hash, "lockTime": lockTime])
           }
 
           public var __typename: String {
@@ -506,15 +521,6 @@ public final class BlockDetailQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "__typename")
-            }
-          }
-
-          public var index: Int {
-            get {
-              return snapshot["index"]! as! Int
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "index")
             }
           }
 
@@ -527,48 +533,12 @@ public final class BlockDetailQuery: GraphQLQuery {
             }
           }
 
-          public var numberInputs: Int {
+          public var lockTime: Int {
             get {
-              return snapshot["numberInputs"]! as! Int
+              return snapshot["lockTime"]! as! Int
             }
             set {
-              snapshot.updateValue(newValue, forKey: "numberInputs")
-            }
-          }
-
-          public var numberOutputs: Int {
-            get {
-              return snapshot["numberOutputs"]! as! Int
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "numberOutputs")
-            }
-          }
-
-          public var size: Int {
-            get {
-              return snapshot["size"]! as! Int
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "size")
-            }
-          }
-
-          public var total: Int {
-            get {
-              return snapshot["total"]! as! Int
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "total")
-            }
-          }
-
-          public var fees: Int {
-            get {
-              return snapshot["fees"]! as! Int
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "fees")
+              snapshot.updateValue(newValue, forKey: "lockTime")
             }
           }
         }

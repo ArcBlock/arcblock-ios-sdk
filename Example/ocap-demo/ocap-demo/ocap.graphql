@@ -5,6 +5,7 @@ query ListBlocks($fromHeight: Int!, $toHeight: Int!, $paging: PageInput){
       hash
       numberTxs
       total
+      time
     }
     page {
       cursor
@@ -23,15 +24,11 @@ query BlockDetail($height: Int!){
     total
     fees
     merkleRoot
+    time
     transactions {
       data{
-        index
         hash
-        numberInputs
-        numberOutputs
-        size
-        total
-        fees
+        lockTime
       }
       page{
         total
