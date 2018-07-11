@@ -1,3 +1,8 @@
+## 0.4.10 (July 11, 2018)
+  - add time field to query
+  - add transaction detail page to demo
+  - add block detail page to demo
+
 ## 0.4.9 (July 04, 2018)
   - remove legacy codes and useless dependency
   - implement object data source and collection view data source

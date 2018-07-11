@@ -1,8 +1,15 @@
-query ListBlocks($fromHeight: Int!){
-  blocksByHeight(fromHeight: $fromHeight){
+query ListBlocks($fromHeight: Int!, $toHeight: Int!, $paging: PageInput){
+  blocksByHeight(fromHeight: $fromHeight, toHeight: $toHeight, paging: $paging){
     data{
       height
+      hash
       numberTxs
+      total
+      time
+    }
+    page {
+      cursor
+      next
       total
     }
   }
@@ -17,5 +24,38 @@ query BlockDetail($height: Int!){
     total
     fees
     merkleRoot
+    time
+    transactions {
+      data{
+        hash
+        lockTime
+      }
+      page{
+        total
+        next
+        cursor
+      }
+    }
+  }
+}
+
+query TransactionDetail($hash: String!){
+  transactionByHash(hash: $hash) {
+    fees
+    total
+    numberInputs
+    numberOutputs
+    inputs{
+      data{
+        account
+        value
+      }
+    }
+    outputs {
+      data{
+        account
+        value
+      }
+    }
   }
 }

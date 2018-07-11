@@ -8,4 +8,4 @@ author_url: https://arcblock.io
 module: ABSDKCoreKit
 github_url: https://github.com/ArcBlock/arcblock-ios-sdk
 github_file_prefix: https://github.com/ArcBlock/arcblock-ios-sdk/tree/master
-module_version: 0.4.9
+module_version: 0.4.10
