@@ -67,25 +67,26 @@ class TransactionViewController: UIViewController {
         let detailSourceMapper: ObjectDataSourceMapper<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash> = { (data) in
             return data.transactionByHash
         }
-        let viewUpdateHandler: ViewUpdateHandler<TransactionDetailQuery.Data.TransactionByHash> = { (view, data) in
-            if let transactionDetailView = view as? TransactionDetailView {
-                transactionDetailView.updateTransactionData(transaction: data)
-            }
+        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = {
+            self.detailView.updateTransactionData(transaction: self.detailDataSource.getObject()!)
         }
-        detailDataSource = ABSDKObjectDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: detailSourceMapper, viewUpdateHandler: viewUpdateHandler)
-        detailDataSource.view = detailView
+        detailDataSource = ABSDKObjectDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
 
         let inputSourceMapper: ArrayDataSourceMapper<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum> = { (data) in
             return data.transactionByHash?.inputs?.data
         }
-        inputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: inputSourceMapper)
-        inputDataSource.tableView = tableView
+        let inputDataSourceUpdateHandler: DataSourceUpdateHandler = {
+            self.tableView.reloadData()
+        }
+        inputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
 
         let outputSourceMapper: ArrayDataSourceMapper<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum> = { (data) in
             return data.transactionByHash?.outputs?.data
         }
-        outputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: outputSourceMapper)
-        outputDataSource.tableView = tableView
+        let outputDataSourceUpdateHandler: DataSourceUpdateHandler = {
+            self.tableView.reloadData()
+        }
+        outputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: outputSourceMapper, dataSourceUpdateHandler: outputDataSourceUpdateHandler)
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,14 +114,14 @@ extension TransactionViewController: UITableViewDataSource {
         let numberOfSectionsForInputs = inputDataSource.numberOfSections()
         if indexPath.section < numberOfSectionsForInputs {
             let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath) as! InputCell
-            let data = inputDataSource.dataForIndexPath(indexPath: indexPath)
+            let data = inputDataSource.itemForIndexPath(indexPath: indexPath)
             cell.updateInputData(input: data!)
             return cell
         }
         else {
             let dataIndexPath: IndexPath = IndexPath(row: indexPath.row, section: indexPath.section - numberOfSectionsForInputs)
             let cell = tableView.dequeueReusableCell(withIdentifier: "OutputCell", for: indexPath) as! OutputCell
-            let data = outputDataSource.dataForIndexPath(indexPath: dataIndexPath)
+            let data = outputDataSource.itemForIndexPath(indexPath: dataIndexPath)
             cell.updateOuputData(output: data!)
             return cell
         }
