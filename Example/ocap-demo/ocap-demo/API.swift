@@ -1,71 +1,9 @@
 //  This file was automatically generated and should not be edited.
 
 import Apollo
+import ArcBlockSDK
 
-/// The common arguments for quering data with pagination.
-public struct PageInput: GraphQLMapConvertible {
-  public var graphQLMap: GraphQLMap
-
-  public init(cursor: Swift.Optional<String?> = nil, order: Swift.Optional<[PageOrder?]?> = nil, size: Swift.Optional<Int?> = nil) {
-    graphQLMap = ["cursor": cursor, "order": order, "size": size]
-  }
-
-  public var cursor: Swift.Optional<String?> {
-    get {
-      return graphQLMap["cursor"] as! Swift.Optional<String?>
-    }
-    set {
-      graphQLMap.updateValue(newValue, forKey: "cursor")
-    }
-  }
-
-  public var order: Swift.Optional<[PageOrder?]?> {
-    get {
-      return graphQLMap["order"] as! Swift.Optional<[PageOrder?]?>
-    }
-    set {
-      graphQLMap.updateValue(newValue, forKey: "order")
-    }
-  }
-
-  public var size: Swift.Optional<Int?> {
-    get {
-      return graphQLMap["size"] as! Swift.Optional<Int?>
-    }
-    set {
-      graphQLMap.updateValue(newValue, forKey: "size")
-    }
-  }
-}
-
-/// When you carry out a query, in most of cases you can provide which field you want to us to order the result. The field to be ordered is vary query by query.
-public struct PageOrder: GraphQLMapConvertible {
-  public var graphQLMap: GraphQLMap
-
-  public init(field: Swift.Optional<String?> = nil, type: Swift.Optional<String?> = nil) {
-    graphQLMap = ["field": field, "type": type]
-  }
-
-  public var field: Swift.Optional<String?> {
-    get {
-      return graphQLMap["field"] as! Swift.Optional<String?>
-    }
-    set {
-      graphQLMap.updateValue(newValue, forKey: "field")
-    }
-  }
-
-  public var type: Swift.Optional<String?> {
-    get {
-      return graphQLMap["type"] as! Swift.Optional<String?>
-    }
-    set {
-      graphQLMap.updateValue(newValue, forKey: "type")
-    }
-  }
-}
-
-public final class ListBlocksQuery: GraphQLQuery {
+public final class ListBlocksQuery: GraphQLPagedQuery {
   public let operationDefinition =
     "query ListBlocks($fromHeight: Int!, $toHeight: Int!, $paging: PageInput) {\n  blocksByHeight(fromHeight: $fromHeight, toHeight: $toHeight, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      numberTxs\n      total\n      time\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
 
@@ -110,7 +48,7 @@ public final class ListBlocksQuery: GraphQLQuery {
       }
     }
 
-    public struct BlocksByHeight: GraphQLSelectionSet {
+    public struct BlocksByHeight: PagedData {
       public static let possibleTypes = ["PagedBitcoinBlocks"]
 
       public static let selections: [GraphQLSelection] = [
@@ -232,79 +170,24 @@ public final class ListBlocksQuery: GraphQLQuery {
           }
         }
       }
-
-      public struct Page: GraphQLSelectionSet {
-        public static let possibleTypes = ["PageInfo"]
-
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("cursor", type: .nonNull(.scalar(String.self))),
-          GraphQLField("next", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("total", type: .scalar(Int.self)),
-        ]
-
-        public private(set) var resultMap: ResultMap
-
-        public init(unsafeResultMap: ResultMap) {
-          self.resultMap = unsafeResultMap
-        }
-
-        public init(cursor: String, next: Bool, total: Int? = nil) {
-          self.init(unsafeResultMap: ["__typename": "PageInfo", "cursor": cursor, "next": next, "total": total])
-        }
-
-        public var __typename: String {
-          get {
-            return resultMap["__typename"]! as! String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "__typename")
-          }
-        }
-
-        public var cursor: String {
-          get {
-            return resultMap["cursor"]! as! String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "cursor")
-          }
-        }
-
-        public var next: Bool {
-          get {
-            return resultMap["next"]! as! Bool
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "next")
-          }
-        }
-
-        public var total: Int? {
-          get {
-            return resultMap["total"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "total")
-          }
-        }
-      }
     }
   }
 }
 
-public final class BlockDetailQuery: GraphQLQuery {
+public final class BlockDetailQuery: GraphQLPagedQuery {
   public let operationDefinition =
-    "query BlockDetail($height: Int!) {\n  blockByHeight(height: $height) {\n    __typename\n    height\n    hash\n    preHash\n    numberTxs\n    total\n    fees\n    merkleRoot\n    time\n    transactions {\n      __typename\n      data {\n        __typename\n        hash\n        lockTime\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
+    "query BlockDetail($height: Int!, $paging: PageInput) {\n  blockByHeight(height: $height) {\n    __typename\n    height\n    hash\n    preHash\n    numberTxs\n    total\n    fees\n    merkleRoot\n    time\n    transactions(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n        lockTime\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
 
   public var height: Int
+  public var paging: PageInput?
 
-  public init(height: Int) {
+  public init(height: Int, paging: PageInput? = nil) {
     self.height = height
+    self.paging = paging
   }
 
   public var variables: GraphQLMap? {
-    return ["height": height]
+    return ["height": height, "paging": paging]
   }
 
   public struct Data: GraphQLSelectionSet {
@@ -347,7 +230,7 @@ public final class BlockDetailQuery: GraphQLQuery {
         GraphQLField("fees", type: .nonNull(.scalar(Int.self))),
         GraphQLField("merkleRoot", type: .nonNull(.scalar(String.self))),
         GraphQLField("time", type: .nonNull(.scalar(String.self))),
-        GraphQLField("transactions", type: .object(Transaction.selections)),
+        GraphQLField("transactions", arguments: ["paging": GraphQLVariable("paging")], type: .object(Transaction.selections)),
       ]
 
       public private(set) var resultMap: ResultMap
@@ -450,7 +333,7 @@ public final class BlockDetailQuery: GraphQLQuery {
         }
       }
 
-      public struct Transaction: GraphQLSelectionSet {
+      public struct Transaction: PagedData {
         public static let possibleTypes = ["PagedBitcoinTransactions"]
 
         public static let selections: [GraphQLSelection] = [
@@ -539,63 +422,6 @@ public final class BlockDetailQuery: GraphQLQuery {
             }
             set {
               resultMap.updateValue(newValue, forKey: "lockTime")
-            }
-          }
-        }
-
-        public struct Page: GraphQLSelectionSet {
-          public static let possibleTypes = ["PageInfo"]
-
-          public static let selections: [GraphQLSelection] = [
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("total", type: .scalar(Int.self)),
-            GraphQLField("next", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("cursor", type: .nonNull(.scalar(String.self))),
-          ]
-
-          public private(set) var resultMap: ResultMap
-
-          public init(unsafeResultMap: ResultMap) {
-            self.resultMap = unsafeResultMap
-          }
-
-          public init(total: Int? = nil, next: Bool, cursor: String) {
-            self.init(unsafeResultMap: ["__typename": "PageInfo", "total": total, "next": next, "cursor": cursor])
-          }
-
-          public var __typename: String {
-            get {
-              return resultMap["__typename"]! as! String
-            }
-            set {
-              resultMap.updateValue(newValue, forKey: "__typename")
-            }
-          }
-
-          public var total: Int? {
-            get {
-              return resultMap["total"] as? Int
-            }
-            set {
-              resultMap.updateValue(newValue, forKey: "total")
-            }
-          }
-
-          public var next: Bool {
-            get {
-              return resultMap["next"]! as! Bool
-            }
-            set {
-              resultMap.updateValue(newValue, forKey: "next")
-            }
-          }
-
-          public var cursor: String {
-            get {
-              return resultMap["cursor"]! as! String
-            }
-            set {
-              resultMap.updateValue(newValue, forKey: "cursor")
             }
           }
         }
