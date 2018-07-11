@@ -29,6 +29,14 @@ public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelect
 
 public typealias ViewUpdateHandler<Data: GraphQLSelectionSet> = (_ view: UIView, _ data: Data) -> Void
 
+public protocol GraphQLPagedQuery: GraphQLQuery {
+    var paging: PageInput? { get }
+}
+
+public protocol PagedData: GraphQLSelectionSet {
+    var page: Page? { get }
+}
+
 protocol ABSDKDataSource {
     associatedtype Query: GraphQLQuery
     associatedtype Data: GraphQLSelectionSet
@@ -77,6 +85,49 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
 final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: NSObject, ABSDKDataSource {
     public weak var tableView: UITableView?
     
+    var array: [Data?]? = [] {
+        didSet {
+            tableView?.reloadData()
+        }
+    }
+
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>? = nil
+    var watcher: GraphQLQueryWatcher<Query>? = nil
+
+    let client: ABSDKClient
+    let query: Query
+
+    init(client: ABSDKClient, query: Query) {
+        self.client = client
+        self.query = query
+        super.init()
+    }
+
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?) {
+        self.init(client: client, query: query)
+        self.dataSourceMapper = dataSourceMapper
+
+        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+            self.array = self.dataSourceMapper!((result?.data)!)
+        })
+    }
+
+    public func numberOfSections() -> Int {
+        return 1
+    }
+
+    public func numberOfRows(section: Int) -> Int{
+        return (array?.count)!
+    }
+
+    public func dataForIndexPath(indexPath: IndexPath) -> Data? {
+        return array![indexPath.row]
+    }
+}
+
+final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: NSObject, ABSDKDataSource {
+    public weak var tableView: UITableView?
+
     var array: [Data?]? = [] {
         didSet {
             tableView?.reloadData()

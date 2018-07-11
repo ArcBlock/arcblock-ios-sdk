@@ -15,7 +15,7 @@ query ListBlocks($fromHeight: Int!, $toHeight: Int!, $paging: PageInput){
   }
 }
 
-query BlockDetail($height: Int!){
+query BlockDetail($height: Int!, $paging: PageInput){
   blockByHeight(height: $height){
     height
     hash
@@ -25,7 +25,7 @@ query BlockDetail($height: Int!){
     fees
     merkleRoot
     time
-    transactions {
+    transactions(paging: $paging) {
       data{
         hash
         lockTime
