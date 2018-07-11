@@ -1,9 +1,7 @@
 PODS:
-  - Apollo (0.8.0):
-    - Apollo/Core (= 0.8.0)
-  - Apollo/Core (0.8.0)
-  - ArcBlockSDK/CoreKit (0.4.9):
-    - Apollo (= 0.8.0)
+  - Apollo (0.9.0)
+  - ArcBlockSDK/CoreKit (0.4.10):
+    - Apollo
     - ReachabilitySwift (= 4.0.0)
     - SQLite.swift (= 0.11.5)
   - ReachabilitySwift (4.0.0)
@@ -12,24 +10,26 @@ PODS:
   - SQLite.swift/standard (0.11.5)
 
 DEPENDENCIES:
+  - Apollo (from `../../../apollo-ios`)
   - ArcBlockSDK/CoreKit (from `../../`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Apollo
     - ReachabilitySwift
     - SQLite.swift
 
 EXTERNAL SOURCES:
+  Apollo:
+    :path: "../../../apollo-ios"
   ArcBlockSDK:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
-  ArcBlockSDK: 9ef85b868d0ae19629adf66f614ef1bfc6cc51e7
+  Apollo: 62fec6edfd62c5752915ca597090a116ea1f166b
+  ArcBlockSDK: 7edfe994784e12c4934cbf71f6f10f54f7911db3
   ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
 
-PODFILE CHECKSUM: bba617703e87554669d7d4ec0e58d83acf589ad6
+PODFILE CHECKSUM: 2399cfe5bf6602fe2edfe90ae048259a380118c2
 
 COCOAPODS: 1.5.3
