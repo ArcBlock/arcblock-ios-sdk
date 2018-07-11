@@ -23,19 +23,21 @@
 import Apollo
 import UIKit
 
-public typealias ArrayDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
-
-public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> Data?
-
-public typealias DataSourceUpdateHandler = () -> Void
-
 public protocol GraphQLPagedQuery: GraphQLQuery {
-    var paging: PageInput? { get }
+    var paging: PageInput? { get set }
 }
 
 public protocol PagedData: GraphQLSelectionSet {
     var page: Page? { get }
 }
+
+public typealias ArrayDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
+
+public typealias PageMapper<Query: GraphQLPagedQuery> = (_ data: Query.Data) -> Page
+
+public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> Data?
+
+public typealias DataSourceUpdateHandler = () -> Void
 
 protocol ABSDKDataSource {
     associatedtype Query: GraphQLQuery
@@ -74,7 +76,9 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
         self.dataSourceMapper = dataSourceMapper
 
         self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
-            self.object = self.dataSourceMapper!((result?.data)!)
+            if err == nil {
+                self.object = self.dataSourceMapper!((result?.data)!)
+            }
         })
     }
 
@@ -84,7 +88,7 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
 }
 
 final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
-    var array: [Data?]? = [] {
+    var array: [Data?] = [] {
         didSet {
             dataSourceUpdateHandler()
         }
@@ -108,7 +112,12 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         self.dataSourceMapper = dataSourceMapper
 
         self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
-            self.array = self.dataSourceMapper!((result?.data)!)
+            if err == nil {
+                let newElements: [Data?]? = self.dataSourceMapper!((result?.data)!)
+                if newElements != nil {
+                    self.array += newElements!
+                }
+            }
         })
     }
 
@@ -117,22 +126,42 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
     }
 
     public func numberOfRows(section: Int) -> Int{
-        return (array?.count)!
+        return array.count
     }
 
     public func itemForIndexPath(indexPath: IndexPath) -> Data? {
-        return array![indexPath.row]
+        return array[indexPath.row]
     }
 }
 
 final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
-    var array: [Data?]? = [] {
+    var array: [Data?] = [] {
         didSet {
             dataSourceUpdateHandler()
         }
     }
 
+    public var next: Bool {
+        get {
+            return page?.next ?? false
+        }
+    }
+
+    public var isLoading = false
+
+    var page: Page? = nil {
+        didSet {
+            if page != nil && self.next {
+                self.query.paging = PageInput(cursor: page?.cursor)
+            }
+            else {
+                self.query.paging = nil
+            }
+        }
+    }
+
     var dataSourceMapper: ArrayDataSourceMapper<Query, Data>? = nil
+    var pageMapper: PageMapper<Query>? = nil
     var watcher: GraphQLQueryWatcher<Query>? = nil
 
     let client: ABSDKClient
@@ -145,13 +174,34 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         self.dataSourceUpdateHandler = dataSourceUpdateHandler
     }
 
-    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, pageMapper: @escaping (Query.Data) -> Page, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
+        self.pageMapper = pageMapper
+    }
 
-        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
-            self.array = self.dataSourceMapper!((result?.data)!)
+    func load() {
+        isLoading = true
+        watcher = client.watch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+            if err == nil {
+                self.isLoading = false
+                self.page = self.pageMapper!((result?.data)!)
+                let newElements: [Data?]? = self.dataSourceMapper!((result?.data)!)
+                if newElements != nil {
+                    self.array += newElements!
+                }
+            }
         })
+    }
+
+    public func refresh() {
+        page = nil
+        array = []
+        load()
+    }
+
+    public func loadMore() {
+        load()
     }
 
     public func numberOfSections() -> Int {
@@ -159,10 +209,10 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
     }
 
     public func numberOfRows(section: Int) -> Int{
-        return (array?.count)!
+        return array.count
     }
 
     public func dataForIndexPath(indexPath: IndexPath) -> Data? {
-        return array![indexPath.row]
+        return array[indexPath.row]
     }
 }
