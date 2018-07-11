@@ -63,19 +63,18 @@ class BlockDetailViewController: UIViewController {
         let detailSourceMapper: ObjectDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight> = { (data) in
             return data.blockByHeight
         }
-        let viewUpdateHandler: ViewUpdateHandler<BlockDetailQuery.Data.BlockByHeight> = { (view, data) in
-            if let blockDetailView = view as? BlockDetailView {
-                blockDetailView.updateBlockData(block: data)
-            }
+        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = {
+            self.detailView.updateBlockData(block: self.detailDataSource.getObject()!)
         }
-        detailDataSource = ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: detailSourceMapper, viewUpdateHandler: viewUpdateHandler)
-        detailDataSource.view = detailView
+        detailDataSource = ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
 
         let transactionSourceMapper: ArrayDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum> = { (data) in
             return data.blockByHeight?.transactions?.data
         }
-        transactionDataSource = ABSDKArrayViewDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: transactionSourceMapper)
-        transactionDataSource.tableView = tableView
+        let transactionDataSourceUpdateHandler: DataSourceUpdateHandler = {
+            self.tableView.reloadData()
+        }
+        transactionDataSource = ABSDKArrayViewDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: transactionSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler)
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,7 +85,7 @@ class BlockDetailViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "TransactionSegue" {
             let indexPath: IndexPath = tableView.indexPathForSelectedRow!
-            let data: BlockDetailQuery.Data.BlockByHeight.Transaction.Datum = transactionDataSource.dataForIndexPath(indexPath: indexPath)!
+            let data: BlockDetailQuery.Data.BlockByHeight.Transaction.Datum = transactionDataSource.itemForIndexPath(indexPath: indexPath)!
             let destinationViewController: TransactionViewController = segue.destination as! TransactionViewController
             destinationViewController.txHash = data.hash
         }
@@ -104,7 +103,7 @@ extension BlockDetailViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionListCell", for: indexPath) as! TransactionListCell
-        let data = transactionDataSource.dataForIndexPath(indexPath: indexPath)
+        let data = transactionDataSource.itemForIndexPath(indexPath: indexPath)
         cell.updateTransactionData(transaction: data!)
         return cell
     }
