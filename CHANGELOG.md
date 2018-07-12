@@ -1,3 +1,10 @@
+## 0.4.11 (July 12, 2018)
+  - fix make release
+  - test infinite scroll
+  - refactor updateHandler related codes
+  - extra pagination related codes from generated codes
+  - switch apollo dependency to local repo
+
 ## 0.4.10 (July 11, 2018)
   - add time field to query
   - add transaction detail page to demo
