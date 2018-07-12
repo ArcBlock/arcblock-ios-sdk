@@ -1,2 +1,4 @@
-github "apollostack/apollo-ios" "0.8.0"
-github "ashleymills/Reachability.swift" "v4.1.0"
+github "ArcBlock/apollo-ios" "0.9.0.0"
+github "stephencelis/SQLite.swift" ~> 0.11.5
+github "daltoniam/Starscream" ~> 3.0.5
+github "ashleymills/Reachability.swift"
