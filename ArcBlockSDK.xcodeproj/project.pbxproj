@@ -16,6 +16,7 @@
 		274B185E20E4DD8900884659 /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185C20E4DD8900884659 /* Apollo.framework */; };
 		274B186020E603F700884659 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185F20E603F700884659 /* Reachability.framework */; };
 		274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */; };
+		275EC94D20F61C7100CAF356 /* ABSDKPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EC94C20F61C7100CAF356 /* ABSDKPagination.swift */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
 		278EF37220A0F54D00C99C1F /* ABSDKAccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EF36920A0F54D00C99C1F /* ABSDKAccountKit.framework */; };
 		278EF37920A0F54D00C99C1F /* ABSDKAccountKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF36B20A0F54D00C99C1F /* ABSDKAccountKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -80,6 +81,7 @@
 		274B185C20E4DD8900884659 /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		274B185F20E603F700884659 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKSQLLiteNormalizedCache.swift; sourceTree = "<group>"; };
+		275EC94C20F61C7100CAF356 /* ABSDKPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKPagination.swift; sourceTree = "<group>"; };
 		277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B7920A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		277E6B7E20A0DE340054707E /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +231,7 @@
 				274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */,
 				2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */,
 				277E6B7920A0DE340054707E /* Info.plist */,
+				275EC94C20F61C7100CAF356 /* ABSDKPagination.swift */,
 			);
 			path = ABSDKCoreKit;
 			sourceTree = "<group>";
@@ -401,7 +404,6 @@
 				278EF36520A0F54D00C99C1F /* Frameworks */,
 				278EF36620A0F54D00C99C1F /* Headers */,
 				278EF36720A0F54D00C99C1F /* Resources */,
-				2712815620A2428F00530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -440,7 +442,6 @@
 				278EF38120A0F5AC00C99C1F /* Frameworks */,
 				278EF38220A0F5AC00C99C1F /* Headers */,
 				278EF38320A0F5AC00C99C1F /* Resources */,
-				2712815820A2429D00530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -479,7 +480,6 @@
 				278EF39D20A0F5C100C99C1F /* Frameworks */,
 				278EF39E20A0F5C100C99C1F /* Headers */,
 				278EF39F20A0F5C100C99C1F /* Resources */,
-				2712815A20A242AA00530FB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -646,19 +646,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		2712815620A2428F00530FB6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		2712815720A2429700530FB6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -672,33 +659,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		2712815820A2429D00530FB6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		2712815920A242A400530FB6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
-		2712815A20A242AA00530FB6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -822,6 +783,7 @@
 				274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */,
 				2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */,
 				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
+				275EC94D20F61C7100CAF356 /* ABSDKPagination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

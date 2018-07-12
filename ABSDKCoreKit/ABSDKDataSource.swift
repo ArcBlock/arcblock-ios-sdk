@@ -23,11 +23,21 @@
 import Apollo
 import UIKit
 
+public protocol GraphQLPagedQuery: GraphQLQuery {
+    var paging: PageInput? { get set }
+}
+
+public protocol PagedData: GraphQLSelectionSet {
+    var page: Page? { get }
+}
+
 public typealias ArrayDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
+
+public typealias PageMapper<Query: GraphQLPagedQuery> = (_ data: Query.Data) -> Page
 
 public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> Data?
 
-public typealias ViewUpdateHandler<Data: GraphQLSelectionSet> = (_ view: UIView, _ data: Data) -> Void
+public typealias DataSourceUpdateHandler = () -> Void
 
 protocol ABSDKDataSource {
     associatedtype Query: GraphQLQuery
@@ -35,72 +45,79 @@ protocol ABSDKDataSource {
 
     var client: ABSDKClient { get }
     var query: Query { get }
+    var dataSourceUpdateHandler: DataSourceUpdateHandler { get }
     var watcher: GraphQLQueryWatcher<Query>? { get }
 
-    init(client: ABSDKClient, query: Query)
+    init(client: ABSDKClient, query: Query, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler)
 }
 
 final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
-    public weak var view: UIView?
-
     var object: Data? = nil {
         didSet {
-            if view != nil && object != nil {
-                viewUpdateHandler!(view!, object!)
-            }
+            dataSourceUpdateHandler()
         }
     }
 
-    var dataSourceMapper: ObjectDataSourceMapper<Query, Data>? = nil
-    var viewUpdateHandler: ViewUpdateHandler<Data>? = nil
-    var watcher: GraphQLQueryWatcher<Query>? = nil
+    var dataSourceMapper: ObjectDataSourceMapper<Query, Data>?
+    var watcher: GraphQLQueryWatcher<Query>?
 
     let client: ABSDKClient
     let query: Query
+    let dataSourceUpdateHandler: DataSourceUpdateHandler
 
-    init(client: ABSDKClient, query: Query) {
+    init(client: ABSDKClient, query: Query, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.client = client
         self.query = query
+        self.dataSourceUpdateHandler = dataSourceUpdateHandler
     }
 
-    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ObjectDataSourceMapper<Query, Data>, viewUpdateHandler: @escaping ViewUpdateHandler<Data>) {
-        self.init(client: client, query: query)
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ObjectDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+        self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
-        self.viewUpdateHandler = viewUpdateHandler
 
         self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
-            self.object = self.dataSourceMapper!((result?.data)!)
+            if err == nil {
+                self.object = self.dataSourceMapper!((result?.data)!)
+            }
         })
+    }
+
+    public func getObject() -> Data? {
+        return object
     }
 }
 
-final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: NSObject, ABSDKDataSource {
-    public weak var tableView: UITableView?
-    
-    var array: [Data?]? = [] {
+final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
+    var array: [Data?] = [] {
         didSet {
-            tableView?.reloadData()
+            dataSourceUpdateHandler()
         }
     }
 
-    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>? = nil
-    var watcher: GraphQLQueryWatcher<Query>? = nil
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
+    var watcher: GraphQLQueryWatcher<Query>?
 
     let client: ABSDKClient
     let query: Query
+    let dataSourceUpdateHandler: DataSourceUpdateHandler
 
-    init(client: ABSDKClient, query: Query) {
+    init(client: ABSDKClient, query: Query, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.client = client
         self.query = query
-        super.init()
+        self.dataSourceUpdateHandler = dataSourceUpdateHandler
     }
 
-    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?) {
-        self.init(client: client, query: query)
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+        self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
 
         self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
-            self.array = self.dataSourceMapper!((result?.data)!)
+            if err == nil {
+                let newElements: [Data?]? = self.dataSourceMapper!((result?.data)!)
+                if newElements != nil {
+                    self.array += newElements!
+                }
+            }
         })
     }
 
@@ -108,11 +125,95 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         return 1
     }
 
-    public func numberOfRows(section: Int) -> Int{
-        return (array?.count)!
+    public func numberOfRows(section: Int) -> Int {
+        return array.count
+    }
+
+    public func itemForIndexPath(indexPath: IndexPath) -> Data? {
+        return array[indexPath.row]
+    }
+}
+
+final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
+    var array: [Data?] = [] {
+        didSet {
+            dataSourceUpdateHandler()
+        }
+    }
+
+    public var next: Bool {
+        get {
+            return page?.next ?? false
+        }
+    }
+
+    public var isLoading = false
+
+    var page: Page? = nil {
+        didSet {
+            if page != nil {
+                if self.next {
+                    self.query.paging = PageInput(cursor: page?.cursor)
+                }
+            } else {
+                self.query.paging = nil
+            }
+        }
+    }
+
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
+    var pageMapper: PageMapper<Query>?
+    var watcher: GraphQLQueryWatcher<Query>?
+
+    let client: ABSDKClient
+    let query: Query
+    let dataSourceUpdateHandler: DataSourceUpdateHandler
+
+    init(client: ABSDKClient, query: Query, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+        self.client = client
+        self.query = query
+        self.dataSourceUpdateHandler = dataSourceUpdateHandler
+    }
+
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, pageMapper: @escaping (Query.Data) -> Page, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+        self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
+        self.dataSourceMapper = dataSourceMapper
+        self.pageMapper = pageMapper
+    }
+
+    func load() {
+        isLoading = true
+        watcher = client.watch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+            if err == nil {
+                self.isLoading = false
+                self.page = self.pageMapper!((result?.data)!)
+                let newElements: [Data?]? = self.dataSourceMapper!((result?.data)!)
+                if newElements != nil {
+                    self.array += newElements!
+                }
+            }
+        })
+    }
+
+    public func refresh() {
+        page = nil
+        array = []
+        load()
+    }
+
+    public func loadMore() {
+        load()
+    }
+
+    public func numberOfSections() -> Int {
+        return 1
+    }
+
+    public func numberOfRows(section: Int) -> Int {
+        return array.count
     }
 
     public func dataForIndexPath(indexPath: IndexPath) -> Data? {
-        return array![indexPath.row]
+        return array[indexPath.row]
     }
 }
