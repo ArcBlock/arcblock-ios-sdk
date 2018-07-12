@@ -72,8 +72,8 @@ class BlockListViewController: UIViewController {
         let dataSourceMapper: ArrayDataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
-        let dataSourceUpdateHandler: DataSourceUpdateHandler = {
-            self.tableView.reloadData()
+        let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+            self?.tableView.reloadData()
         }
         let pageMapper: PageMapper<ListBlocksQuery> = { (data) in
             return (data.blocksByHeight?.page)!
@@ -117,7 +117,7 @@ extension BlockListViewController: UITableViewDataSource {
 
 extension BlockListViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height && !dataSource.isLoading && dataSource.next {
+        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
             dataSource.loadMore()
         }
     }
