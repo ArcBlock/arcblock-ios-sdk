@@ -1,3 +1,9 @@
+## 0.4.12 (July 12, 2018)
+  - fix linter error
+  - clean up optional unwrapping
+  - fix memory leak
+  - fix paged array data source merge pages bug
+
 ## 0.4.11 (July 12, 2018)
   - fix make release
   - test infinite scroll
