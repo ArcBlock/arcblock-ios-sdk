@@ -236,7 +236,7 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         return array.count
     }
 
-    public func dataForIndexPath(indexPath: IndexPath) -> Data? {
+    public func itemForIndexPath(indexPath: IndexPath) -> Data? {
         return array[indexPath.row]
     }
 }

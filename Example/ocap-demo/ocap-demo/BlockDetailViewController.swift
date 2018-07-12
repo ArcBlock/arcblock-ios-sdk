@@ -50,7 +50,7 @@ class BlockDetailViewController: UIViewController {
     @IBOutlet weak var detailView: BlockDetailView!
 
     var detailDataSource: ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>!
-    var transactionDataSource: ABSDKArrayViewDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>!
+    var transactionDataSource: ABSDKArrayViewPagedDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +74,11 @@ class BlockDetailViewController: UIViewController {
         let transactionDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
             self?.tableView.reloadData()
         }
-        transactionDataSource = ABSDKArrayViewDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: transactionSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler)
+        let transactionPageMapper: PageMapper<BlockDetailQuery> = { (data) in
+            return (data.blockByHeight?.transactions?.page)!
+        }
+        transactionDataSource = ABSDKArrayViewPagedDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: transactionSourceMapper, pageMapper: transactionPageMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler)
+        transactionDataSource.refresh()
     }
 
     override func didReceiveMemoryWarning() {
@@ -110,5 +114,13 @@ extension BlockDetailViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Transactions"
+    }
+}
+
+extension BlockDetailViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
+            transactionDataSource.loadMore()
+        }
     }
 }
