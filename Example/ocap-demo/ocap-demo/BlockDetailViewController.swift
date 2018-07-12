@@ -63,16 +63,16 @@ class BlockDetailViewController: UIViewController {
         let detailSourceMapper: ObjectDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight> = { (data) in
             return data.blockByHeight
         }
-        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = {
-            self.detailView.updateBlockData(block: self.detailDataSource.getObject()!)
+        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+            self?.detailView.updateBlockData(block: (self?.detailDataSource.getObject()!)!)
         }
         detailDataSource = ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
 
         let transactionSourceMapper: ArrayDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum> = { (data) in
             return data.blockByHeight?.transactions?.data
         }
-        let transactionDataSourceUpdateHandler: DataSourceUpdateHandler = {
-            self.tableView.reloadData()
+        let transactionDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+            self?.tableView.reloadData()
         }
         transactionDataSource = ABSDKArrayViewDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight.Transaction.Datum>(client: arcblockClient, query: blockDetailQuery, dataSourceMapper: transactionSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler)
     }

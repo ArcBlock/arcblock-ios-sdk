@@ -67,24 +67,24 @@ class TransactionViewController: UIViewController {
         let detailSourceMapper: ObjectDataSourceMapper<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash> = { (data) in
             return data.transactionByHash
         }
-        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = {
-            self.detailView.updateTransactionData(transaction: self.detailDataSource.getObject()!)
+        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+            self?.detailView.updateTransactionData(transaction: (self?.detailDataSource.getObject()!)!)
         }
         detailDataSource = ABSDKObjectDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
 
         let inputSourceMapper: ArrayDataSourceMapper<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum> = { (data) in
             return data.transactionByHash?.inputs?.data
         }
-        let inputDataSourceUpdateHandler: DataSourceUpdateHandler = {
-            self.tableView.reloadData()
+        let inputDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+            self?.tableView.reloadData()
         }
         inputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
 
         let outputSourceMapper: ArrayDataSourceMapper<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum> = { (data) in
             return data.transactionByHash?.outputs?.data
         }
-        let outputDataSourceUpdateHandler: DataSourceUpdateHandler = {
-            self.tableView.reloadData()
+        let outputDataSourceUpdateHandler: DataSourceUpdateHandler = {[weak self] in
+            self?.tableView.reloadData()
         }
         outputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: outputSourceMapper, dataSourceUpdateHandler: outputDataSourceUpdateHandler)
     }
