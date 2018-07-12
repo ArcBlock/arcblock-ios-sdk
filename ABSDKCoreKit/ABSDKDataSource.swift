@@ -46,7 +46,6 @@ protocol ABSDKDataSource {
     var client: ABSDKClient { get }
     var query: Query { get }
     var dataSourceUpdateHandler: DataSourceUpdateHandler { get }
-    var watcher: GraphQLQueryWatcher<Query>? { get }
 
     init(client: ABSDKClient, query: Query, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler)
 }
@@ -75,9 +74,9 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
         self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
 
-        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
             if err == nil {
-                self.object = self.dataSourceMapper!((result?.data)!)
+                self?.object = self?.dataSourceMapper!((result?.data)!)
             }
         })
     }
@@ -111,11 +110,10 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
 
-        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
+        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
             if err == nil {
-                let items: [Data?]? = self.dataSourceMapper!((result?.data)!)
-                if items != nil {
-                    self.array += items!
+                if let items: [Data?] = self?.dataSourceMapper!((result?.data)!) {
+                    self?.array = items
                 }
             }
         })
@@ -163,7 +161,7 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
 
     var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
     var pageMapper: PageMapper<Query>?
-    var watcher: GraphQLQueryWatcher<Query>?
+    var watchers: [String: GraphQLQueryWatcher<Query>] = [:]
 
     let client: ABSDKClient
     let query: Query
@@ -182,21 +180,27 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
     }
 
     func load() {
-        isLoading = true
-        watcher = client.watch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
-            if err == nil {
-                if result?.source == .server {
-                    self.isLoading = false
+        var pageCursor: String = ""
+        if self.query.paging?.cursor != nil {
+            pageCursor = (self.query.paging?.cursor)!
+        }
+        if let watcher: GraphQLQueryWatcher<Query> = watchers[pageCursor]  {
+            isLoading = true
+            watcher.refetch()
+        }
+        else {
+            let watcher: GraphQLQueryWatcher<Query> = client.watch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
+                if err == nil {
+                    if result?.source == .server {
+                        self?.isLoading = false
+                    }
+                    self?.page = self?.pageMapper!((result?.data)!)
+                    let items: [Data?]? = self?.dataSourceMapper!((result?.data)!)
+                    self?.addPage(pageCursor: pageCursor, items: items)
                 }
-                self.page = self.pageMapper!((result?.data)!)
-                let items: [Data?]? = self.dataSourceMapper!((result?.data)!)
-                if let pageCursor: String = self.query.paging?.cursor {
-                    self.addPage(pageCursor: pageCursor, items: items)
-                } else {
-                    self.addPage(pageCursor: "start", items: items)
-                }
-            }
-        })
+            })
+            watchers[pageCursor] = watcher
+        }
     }
 
     func addPage(pageCursor: String!, items: [Data?]?) {
