@@ -113,9 +113,9 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
 
         self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
             if err == nil {
-                let newElements: [Data?]? = self.dataSourceMapper!((result?.data)!)
-                if newElements != nil {
-                    self.array += newElements!
+                let items: [Data?]? = self.dataSourceMapper!((result?.data)!)
+                if items != nil {
+                    self.array += items!
                 }
             }
         })
@@ -142,22 +142,22 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
     }
 
     public var next: Bool {
-        get {
-            return page?.next ?? false
-        }
+        return page?.next ?? false
     }
 
     public var isLoading = false
 
-    var page: Page? = nil {
+    var page: Page?
+    var pageCursors: [String] = []
+    var pages: [String: [Data?]] = [:] {
         didSet {
-            if page != nil {
-                if self.next {
-                    self.query.paging = PageInput(cursor: page?.cursor)
+            var newArray: [Data?] = []
+            for pageCursor in pageCursors {
+                if let items: [Data?] = pages[pageCursor] {
+                    newArray += items
                 }
-            } else {
-                self.query.paging = nil
             }
+            array = newArray
         }
     }
 
@@ -185,24 +185,41 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         isLoading = true
         watcher = client.watch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, err) in
             if err == nil {
-                self.isLoading = false
+                if result?.source == .server {
+                    self.isLoading = false
+                }
                 self.page = self.pageMapper!((result?.data)!)
-                let newElements: [Data?]? = self.dataSourceMapper!((result?.data)!)
-                if newElements != nil {
-                    self.array += newElements!
+                let items: [Data?]? = self.dataSourceMapper!((result?.data)!)
+                if let pageCursor: String = self.query.paging?.cursor {
+                    self.addPage(pageCursor: pageCursor, items: items)
+                } else {
+                    self.addPage(pageCursor: "start", items: items)
                 }
             }
         })
     }
 
+    func addPage(pageCursor: String!, items: [Data?]?) {
+        if !pages.keys.contains(pageCursor) {
+            pageCursors.append(pageCursor)
+        }
+        pages[pageCursor] = items
+    }
+
     public func refresh() {
         page = nil
+        query.paging = nil
         array = []
+        pages = [:]
+        pageCursors = []
         load()
     }
 
     public func loadMore() {
-        load()
+        if !isLoading && next {
+            query.paging = PageInput(cursor: page?.cursor)
+            load()
+        }
     }
 
     public func numberOfSections() -> Int {

@@ -117,7 +117,7 @@ extension BlockListViewController: UITableViewDataSource {
 
 extension BlockListViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height && !dataSource.isLoading && dataSource.next {
+        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
             dataSource.loadMore()
         }
     }
