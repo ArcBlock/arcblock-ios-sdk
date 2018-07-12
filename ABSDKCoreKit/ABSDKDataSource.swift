@@ -57,7 +57,7 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
         }
     }
 
-    var dataSourceMapper: ObjectDataSourceMapper<Query, Data>?
+    var dataSourceMapper: ObjectDataSourceMapper<Query, Data>!
     var watcher: GraphQLQueryWatcher<Query>?
 
     let client: ABSDKClient
@@ -76,7 +76,9 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
 
         self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
             if err == nil {
-                self?.object = self?.dataSourceMapper!((result?.data)!)
+                if let data: Query.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
+                    self?.object = object
+                }
             }
         })
     }
@@ -93,7 +95,7 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         }
     }
 
-    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>!
     var watcher: GraphQLQueryWatcher<Query>?
 
     let client: ABSDKClient
@@ -106,13 +108,13 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         self.dataSourceUpdateHandler = dataSourceUpdateHandler
     }
 
-    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
 
         self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
             if err == nil {
-                if let items: [Data?] = self?.dataSourceMapper!((result?.data)!) {
+                if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
                     self?.array = items
                 }
             }
@@ -159,8 +161,8 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         }
     }
 
-    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
-    var pageMapper: PageMapper<Query>?
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>!
+    var pageMapper: PageMapper<Query>!
     var watchers: [String: GraphQLQueryWatcher<Query>] = [:]
 
     let client: ABSDKClient
@@ -173,7 +175,7 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         self.dataSourceUpdateHandler = dataSourceUpdateHandler
     }
 
-    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping (Query.Data) -> [Data?]?, pageMapper: @escaping (Query.Data) -> Page, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, pageMapper: @escaping PageMapper<Query>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
         self.dataSourceMapper = dataSourceMapper
         self.pageMapper = pageMapper
@@ -194,9 +196,10 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
                     if result?.source == .server {
                         self?.isLoading = false
                     }
-                    self?.page = self?.pageMapper!((result?.data)!)
-                    let items: [Data?]? = self?.dataSourceMapper!((result?.data)!)
-                    self?.addPage(pageCursor: pageCursor, items: items)
+                    if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data), let page: Page = self?.pageMapper(data) {
+                        self?.page = page
+                        self?.addPage(pageCursor: pageCursor, items: items)
+                    }
                 }
             })
             watchers[pageCursor] = watcher
