@@ -48,7 +48,7 @@ doc:
 	@echo "Building the documenation..."
 	@jazzy
 
-precommit: dep lint test
+precommit: dep lint doc test
 
 travis:
 	@set -o pipefail

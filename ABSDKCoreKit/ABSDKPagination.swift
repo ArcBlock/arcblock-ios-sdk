@@ -20,37 +20,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+// swiftlint:disable identifier_name
+
 import Apollo
 
 /// The common arguments for quering data with pagination.
 public struct PageInput: GraphQLMapConvertible {
     public var graphQLMap: GraphQLMap
 
-    public init(cursor: Swift.Optional<String?> = nil, order: Swift.Optional<[PageOrder?]?> = nil, size: Swift.Optional<Int?> = nil) {
+    public init(cursor: String? = nil, order: [PageOrder?]? = nil, size: Int? = nil) {
         graphQLMap = ["cursor": cursor, "order": order, "size": size]
     }
 
-    public var cursor: Swift.Optional<String?> {
+    public var cursor: String? {
         get {
-            return graphQLMap["cursor"] as! Swift.Optional<String?>
+            guard let cursor = graphQLMap["cursor"] as? String else {
+                return nil
+            }
+            return cursor
         }
         set {
             graphQLMap.updateValue(newValue, forKey: "cursor")
         }
     }
 
-    public var order: Swift.Optional<[PageOrder?]?> {
+    public var order: [PageOrder?]? {
         get {
-            return graphQLMap["order"] as! Swift.Optional<[PageOrder?]?>
+            guard let order = graphQLMap["order"] as? [PageOrder?] else {
+                return nil
+            }
+            return order
         }
         set {
             graphQLMap.updateValue(newValue, forKey: "order")
         }
     }
 
-    public var size: Swift.Optional<Int?> {
+    public var size: Int? {
         get {
-            return graphQLMap["size"] as! Swift.Optional<Int?>
+            guard let size = graphQLMap["size"] as? Int else {
+                return nil
+            }
+            return size
         }
         set {
             graphQLMap.updateValue(newValue, forKey: "size")
@@ -62,22 +73,28 @@ public struct PageInput: GraphQLMapConvertible {
 public struct PageOrder: GraphQLMapConvertible {
     public var graphQLMap: GraphQLMap
 
-    public init(field: Swift.Optional<String?> = nil, type: Swift.Optional<String?> = nil) {
+    public init(field: String? = nil, type: String? = nil) {
         graphQLMap = ["field": field, "type": type]
     }
 
-    public var field: Swift.Optional<String?> {
+    public var field: String? {
         get {
-            return graphQLMap["field"] as! Swift.Optional<String?>
+            guard let field = graphQLMap["field"] as? String else {
+                return nil
+            }
+            return field
         }
         set {
             graphQLMap.updateValue(newValue, forKey: "field")
         }
     }
 
-    public var type: Swift.Optional<String?> {
+    public var type: String? {
         get {
-            return graphQLMap["type"] as! Swift.Optional<String?>
+            guard let type = graphQLMap["type"] as? String else {
+                return nil
+            }
+            return type
         }
         set {
             graphQLMap.updateValue(newValue, forKey: "type")
@@ -92,7 +109,7 @@ public struct Page: GraphQLSelectionSet {
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("total", type: .scalar(Int.self)),
         GraphQLField("next", type: .nonNull(.scalar(Bool.self))),
-        GraphQLField("cursor", type: .nonNull(.scalar(String.self))),
+        GraphQLField("cursor", type: .nonNull(.scalar(String.self)))
         ]
 
     public private(set) var resultMap: ResultMap
@@ -107,7 +124,10 @@ public struct Page: GraphQLSelectionSet {
 
     public var __typename: String {
         get {
-            return resultMap["__typename"]! as! String
+            guard let __typename = resultMap["__typename"]! as? String else {
+                return ""
+            }
+            return __typename
         }
         set {
             resultMap.updateValue(newValue, forKey: "__typename")
@@ -116,7 +136,10 @@ public struct Page: GraphQLSelectionSet {
 
     public var total: Int? {
         get {
-            return resultMap["total"] as? Int
+            guard let total = resultMap["total"]! as? Int else {
+                return nil
+            }
+            return total
         }
         set {
             resultMap.updateValue(newValue, forKey: "total")
@@ -125,7 +148,10 @@ public struct Page: GraphQLSelectionSet {
 
     public var next: Bool {
         get {
-            return resultMap["next"]! as! Bool
+            guard let next = resultMap["next"]! as? Bool else {
+                return false
+            }
+            return next
         }
         set {
             resultMap.updateValue(newValue, forKey: "next")
@@ -134,7 +160,10 @@ public struct Page: GraphQLSelectionSet {
 
     public var cursor: String {
         get {
-            return resultMap["cursor"]! as! String
+            guard let cursor = resultMap["cursor"]! as? String else {
+                return ""
+            }
+            return cursor
         }
         set {
             resultMap.updateValue(newValue, forKey: "cursor")

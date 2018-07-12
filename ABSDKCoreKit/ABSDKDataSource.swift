@@ -58,8 +58,8 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
         }
     }
 
-    var dataSourceMapper: ObjectDataSourceMapper<Query, Data>? = nil
-    var watcher: GraphQLQueryWatcher<Query>? = nil
+    var dataSourceMapper: ObjectDataSourceMapper<Query, Data>?
+    var watcher: GraphQLQueryWatcher<Query>?
 
     let client: ABSDKClient
     let query: Query
@@ -94,8 +94,8 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         }
     }
 
-    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>? = nil
-    var watcher: GraphQLQueryWatcher<Query>? = nil
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
+    var watcher: GraphQLQueryWatcher<Query>?
 
     let client: ABSDKClient
     let query: Query
@@ -125,7 +125,7 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
         return 1
     }
 
-    public func numberOfRows(section: Int) -> Int{
+    public func numberOfRows(section: Int) -> Int {
         return array.count
     }
 
@@ -151,18 +151,19 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
 
     var page: Page? = nil {
         didSet {
-            if page != nil && self.next {
-                self.query.paging = PageInput(cursor: page?.cursor)
-            }
-            else {
+            if page != nil {
+                if self.next {
+                    self.query.paging = PageInput(cursor: page?.cursor)
+                }
+            } else {
                 self.query.paging = nil
             }
         }
     }
 
-    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>? = nil
-    var pageMapper: PageMapper<Query>? = nil
-    var watcher: GraphQLQueryWatcher<Query>? = nil
+    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
+    var pageMapper: PageMapper<Query>?
+    var watcher: GraphQLQueryWatcher<Query>?
 
     let client: ABSDKClient
     let query: Query
@@ -208,7 +209,7 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         return 1
     }
 
-    public func numberOfRows(section: Int) -> Int{
+    public func numberOfRows(section: Int) -> Int {
         return array.count
     }
 
