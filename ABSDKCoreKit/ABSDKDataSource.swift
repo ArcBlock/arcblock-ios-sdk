@@ -186,11 +186,10 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         if self.query.paging?.cursor != nil {
             pageCursor = (self.query.paging?.cursor)!
         }
-        if let watcher: GraphQLQueryWatcher<Query> = watchers[pageCursor]  {
+        if let watcher: GraphQLQueryWatcher<Query> = watchers[pageCursor] {
             isLoading = true
             watcher.refetch()
-        }
-        else {
+        } else {
             let watcher: GraphQLQueryWatcher<Query> = client.watch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
                 if err == nil {
                     if result?.source == .server {
