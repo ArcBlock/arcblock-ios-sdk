@@ -58,7 +58,7 @@ class BlockListCell: UITableViewCell {
 }
 
 class BlockListViewController: UIViewController {
-
+    @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
     var dataSource: ABSDKArrayViewPagedDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
@@ -74,6 +74,9 @@ class BlockListViewController: UIViewController {
         }
         let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
             self?.tableView.reloadData()
+            if let hasMore: Bool = self?.dataSource.hasMore {
+                self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
+            }
         }
         let pageMapper: PageMapper<ListBlocksQuery> = { (data) in
             return (data.blocksByHeight?.page)!
