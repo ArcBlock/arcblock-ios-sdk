@@ -1,3 +1,8 @@
+## 0.5.0 (July 13, 2018)
+  - add loading footer to block detail view
+  - optimize offline pagination handling
+  - add pagination in block detail view
+
 ## 0.4.12 (July 12, 2018)
   - fix linter error
   - clean up optional unwrapping
