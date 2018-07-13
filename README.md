@@ -15,16 +15,11 @@ The ArcBlock iOS SDK is compatible with apps supporting iOS 9 and above and requ
 
 ### CocoaPods
 ArcBlockSDK is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+it, simply add the following lines to your Podfile:
 
 ```ruby
 pod 'ArcBlockSDK'
-```
-
-This will install all [kits](#kits). Or you can install the specific kit you need, for example:
-
-```ruby
-pod 'ArcBlockSDK/AccountKit'
+pod 'Apollo', :git => 'https://github.com/ArcBlock/apollo-ios.git'
 ```
 
 ### Carthage
