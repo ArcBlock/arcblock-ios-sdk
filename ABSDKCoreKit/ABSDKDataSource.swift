@@ -141,9 +141,7 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         }
     }
 
-    public var next: Bool {
-        return page?.next ?? false
-    }
+    public var hasMore: Bool = true
 
     public var isLoading = false
 
@@ -194,9 +192,12 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
                 if err == nil {
                     if result?.source == .server {
                         self?.isLoading = false
+                        if let data: Query.Data = result?.data, let page: Page = self?.pageMapper(data) {
+                            self?.page = page
+                            self?.hasMore = page.next
+                        }
                     }
-                    if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data), let page: Page = self?.pageMapper(data) {
-                        self?.page = page
+                    if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
                         self?.addPage(pageCursor: pageCursor, items: items)
                     }
                 }
@@ -222,7 +223,7 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
     }
 
     public func loadMore() {
-        if !isLoading && next {
+        if !isLoading && hasMore {
             query.paging = PageInput(cursor: page?.cursor)
             load()
         }

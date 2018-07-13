@@ -100,6 +100,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Blocks" id="YxH-lt-mgs"/>
                     <connections>
+                        <outlet property="loadingFooter" destination="thh-yx-x5G" id="Ykp-Pe-JG8"/>
                         <outlet property="tableView" destination="Gev-L1-UNR" id="xcU-Oc-bzq"/>
                     </connections>
                 </viewController>
