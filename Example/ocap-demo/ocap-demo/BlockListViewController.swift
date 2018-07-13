@@ -58,7 +58,7 @@ class BlockListCell: UITableViewCell {
 }
 
 class BlockListViewController: UIViewController {
-
+    @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
     var dataSource: ABSDKArrayViewPagedDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
@@ -74,6 +74,9 @@ class BlockListViewController: UIViewController {
         }
         let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
             self?.tableView.reloadData()
+            if let hasMore: Bool = self?.dataSource.hasMore {
+                self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
+            }
         }
         let pageMapper: PageMapper<ListBlocksQuery> = { (data) in
             return (data.blocksByHeight?.page)!
@@ -90,7 +93,7 @@ class BlockListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "BlockDetailSegue" {
             let indexPath: IndexPath = tableView.indexPathForSelectedRow!
-            let data: ListBlocksQuery.Data.BlocksByHeight.Datum = dataSource.dataForIndexPath(indexPath: indexPath)!
+            let data: ListBlocksQuery.Data.BlocksByHeight.Datum = dataSource.itemForIndexPath(indexPath: indexPath)!
             let destinationViewController: BlockDetailViewController = segue.destination as! BlockDetailViewController
             destinationViewController.height = data.height
             destinationViewController.title = "Block " + String(data.height)
@@ -109,7 +112,7 @@ extension BlockListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BlockListCell", for: indexPath) as! BlockListCell
-        let data = dataSource.dataForIndexPath(indexPath: indexPath)
+        let data = dataSource.itemForIndexPath(indexPath: indexPath)
         cell.updateBlockData(block: data!)
         return cell
     }
