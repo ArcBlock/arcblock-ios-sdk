@@ -1,6 +1,4 @@
-github "ArcBlock/apollo-ios" "0.9.0.0"
+github "ArcBlock/apollo-ios" "0.9.1"
 github "Quick/Nimble" "v7.1.3"
-github "Quick/Quick" "v1.3.0"
-github "ashleymills/Reachability.swift" "v4.1.0"
-github "daltoniam/Starscream" "3.0.5"
+github "Quick/Quick" "v1.3.1"
 github "stephencelis/SQLite.swift" "0.11.5"

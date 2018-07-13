@@ -33,26 +33,27 @@ TODO: Add long description of the pod here.
   s.swift_version = '4.0'
   s.pod_target_xcconfig = {'DEFINES_MODULE' => 'YES'}
 
+  s.default_subspec = 'CoreKit'
+
   s.subspec 'CoreKit' do |sc|
     sc.source_files = 'ABSDKCoreKit/**/*.{h,m,swift}'
     sc.dependency 'Apollo'
-    sc.dependency 'SQLite.swift', '0.11.5'
-    sc.dependency 'ReachabilitySwift', '4.0.0'
+    sc.dependency 'SQLite.swift'
   end
 
-  s.subspec 'AccountKit' do |sa|
-    sa.source_files = 'ABSDKAccountKit/**/*.{h,m}'
-    sa.dependency 'ArcBlockSDK/CoreKit'
-  end
-
-  s.subspec 'MessagingKit' do |sm|
-    sm.source_files = 'ABSDKMessagingKit/**/*.{h,m}'
-    sm.dependency 'ArcBlockSDK/CoreKit'
-  end
-
-  s.subspec 'WalletKit' do |sw|
-    sw.source_files = 'ABSDKWalletKit/**/*.{h,m}'
-    sw.dependency 'ArcBlockSDK/CoreKit'
-  end
+  # s.subspec 'AccountKit' do |sa|
+  #   sa.source_files = 'ABSDKAccountKit/**/*.{h,m}'
+  #   sa.dependency 'ArcBlockSDK/CoreKit'
+  # end
+  #
+  # s.subspec 'MessagingKit' do |sm|
+  #   sm.source_files = 'ABSDKMessagingKit/**/*.{h,m}'
+  #   sm.dependency 'ArcBlockSDK/CoreKit'
+  # end
+  #
+  # s.subspec 'WalletKit' do |sw|
+  #   sw.source_files = 'ABSDKWalletKit/**/*.{h,m}'
+  #   sw.dependency 'ArcBlockSDK/CoreKit'
+  # end
 
 end
