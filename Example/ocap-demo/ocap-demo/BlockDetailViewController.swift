@@ -47,6 +47,7 @@ class BlockDetailViewController: UIViewController {
     var blockDetailQuery: BlockDetailQuery!
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var detailView: BlockDetailView!
 
     var detailDataSource: ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>!
@@ -73,6 +74,9 @@ class BlockDetailViewController: UIViewController {
         }
         let transactionDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
             self?.tableView.reloadData()
+            if let hasMore: Bool = self?.transactionDataSource.hasMore {
+                self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
+            }
         }
         let transactionPageMapper: PageMapper<BlockDetailQuery> = { (data) in
             return (data.blockByHeight?.transactions?.page)!
