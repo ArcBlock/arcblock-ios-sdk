@@ -100,6 +100,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Blocks" id="YxH-lt-mgs"/>
                     <connections>
+                        <outlet property="loadingFooter" destination="thh-yx-x5G" id="Ykp-Pe-JG8"/>
                         <outlet property="tableView" destination="Gev-L1-UNR" id="xcU-Oc-bzq"/>
                     </connections>
                 </viewController>
@@ -232,6 +233,20 @@
                                         <outlet property="totalLabel" destination="Mef-PP-FcE" id="6wa-Hf-vwA"/>
                                     </connections>
                                 </view>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="Pqs-A2-6gY">
+                                    <rect key="frame" x="0.0" y="297" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="O1B-fv-VOa">
+                                            <rect key="frame" x="177" y="12" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="O1B-fv-VOa" firstAttribute="centerX" secondItem="Pqs-A2-6gY" secondAttribute="centerX" id="8Zx-zo-uiU"/>
+                                        <constraint firstItem="O1B-fv-VOa" firstAttribute="centerY" secondItem="Pqs-A2-6gY" secondAttribute="centerY" id="H1p-VZ-3DD"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="TransactionListCell" id="Q2B-Hw-i3L" customClass="TransactionListCell" customModule="ocap_demo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="239" width="375" height="58"/>
@@ -277,6 +292,7 @@
                     </view>
                     <connections>
                         <outlet property="detailView" destination="VCD-c0-6kk" id="e4z-sL-zuQ"/>
+                        <outlet property="loadingFooter" destination="Pqs-A2-6gY" id="aUq-4V-oRk"/>
                         <outlet property="tableView" destination="ftE-zk-2Tp" id="qk9-0d-jwS"/>
                     </connections>
                 </viewController>

@@ -7,7 +7,7 @@ target 'ocap-demo' do
 
   # Pods for ocap-demo
   pod 'ArcBlockSDK/CoreKit', :path => '../../'
-  pod 'Apollo', :path => '../../../apollo-ios'
+  pod 'Apollo', :git => 'https://github.com/ArcBlock/apollo-ios.git'
 
   target 'ocap-demoTests' do
     inherit! :search_paths
