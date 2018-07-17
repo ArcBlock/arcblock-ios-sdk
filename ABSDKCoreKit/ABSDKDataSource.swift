@@ -25,6 +25,7 @@ import UIKit
 
 public protocol GraphQLPagedQuery: GraphQLQuery {
     var paging: PageInput? { get set }
+    func copy() -> Self
 }
 
 public protocol PagedData: GraphQLSelectionSet {
@@ -181,14 +182,17 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
 
     func load() {
         var pageCursor: String = ""
-        if self.query.paging?.cursor != nil {
-            pageCursor = (self.query.paging?.cursor)!
+        if page != nil {
+            pageCursor = (page?.cursor)!
         }
         if let watcher: GraphQLQueryWatcher<Query> = watchers[pageCursor] {
             isLoading = true
             watcher.refetch()
         } else {
-            let watcher: GraphQLQueryWatcher<Query> = client.watch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
+            let pagedQuery: Query = query.copy()
+            pagedQuery.paging = PageInput(cursor: pageCursor)
+
+            let watcher: GraphQLQueryWatcher<Query> = client.watch(query: pagedQuery, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
                 if err == nil {
                     if result?.source == .server {
                         self?.isLoading = false
@@ -215,7 +219,6 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
 
     public func refresh() {
         page = nil
-        query.paging = nil
         array = []
         pages = [:]
         pageCursors = []
@@ -224,7 +227,6 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
 
     public func loadMore() {
         if !isLoading && hasMore {
-            query.paging = PageInput(cursor: page?.cursor)
             load()
         }
     }
