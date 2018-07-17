@@ -108,6 +108,91 @@
             </objects>
             <point key="canvasLocation" x="3172" y="-194.75262368815595"/>
         </scene>
+        <!--Richest Accounts-->
+        <scene sceneID="dQl-Hy-rUc">
+            <objects>
+                <viewController title="Richest Accounts" id="RBo-4v-WsB" customClass="RichestAccountsViewController" customModule="ocap_demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fss-WF-b3i">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" estimatedRowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q2q-vd-GDB">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="Pab-zs-m5r">
+                                    <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AHn-V5-l9p">
+                                            <rect key="frame" x="177" y="12" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="AHn-V5-l9p" firstAttribute="centerY" secondItem="Pab-zs-m5r" secondAttribute="centerY" id="S87-XO-5uE"/>
+                                        <constraint firstItem="AHn-V5-l9p" firstAttribute="centerX" secondItem="Pab-zs-m5r" secondAttribute="centerX" id="tDe-m9-hzw"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AccountListCell" id="C85-g0-jup" customClass="AccountListCell" customModule="ocap_demo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="64"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="C85-g0-jup" id="2J9-Ir-4vp">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rpe-9s-qTQ">
+                                                    <rect key="frame" x="16" y="8" width="310" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iY8-Pg-Zj6">
+                                                    <rect key="frame" x="16" y="34" width="310" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Rpe-9s-qTQ" firstAttribute="leading" secondItem="2J9-Ir-4vp" secondAttribute="leading" constant="16" id="Ata-WM-eNj"/>
+                                                <constraint firstItem="Rpe-9s-qTQ" firstAttribute="top" secondItem="2J9-Ir-4vp" secondAttribute="top" constant="8" id="BcL-s7-TEb"/>
+                                                <constraint firstItem="iY8-Pg-Zj6" firstAttribute="trailing" secondItem="Rpe-9s-qTQ" secondAttribute="trailing" id="OQ1-dC-ePY"/>
+                                                <constraint firstAttribute="trailing" secondItem="Rpe-9s-qTQ" secondAttribute="trailing" constant="16" id="SaX-d6-w7q"/>
+                                                <constraint firstItem="iY8-Pg-Zj6" firstAttribute="top" secondItem="Rpe-9s-qTQ" secondAttribute="bottom" constant="5" id="ZTs-sG-AJz"/>
+                                                <constraint firstItem="iY8-Pg-Zj6" firstAttribute="leading" secondItem="Rpe-9s-qTQ" secondAttribute="leading" id="sYh-Fh-ype"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="Rpe-9s-qTQ" id="2N6-Of-vta"/>
+                                            <outlet property="balanceLabel" destination="iY8-Pg-Zj6" id="Emf-0f-MMg"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="RBo-4v-WsB" id="5Y5-4Z-qxF"/>
+                                    <outlet property="delegate" destination="RBo-4v-WsB" id="qaC-1d-EXP"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="b19-Bh-f2h" firstAttribute="bottom" secondItem="Q2q-vd-GDB" secondAttribute="bottom" id="b3t-5w-JrR"/>
+                            <constraint firstItem="b19-Bh-f2h" firstAttribute="trailing" secondItem="Q2q-vd-GDB" secondAttribute="trailing" id="faH-IG-E0v"/>
+                            <constraint firstItem="Q2q-vd-GDB" firstAttribute="leading" secondItem="b19-Bh-f2h" secondAttribute="leading" id="mkC-Al-baN"/>
+                            <constraint firstItem="Q2q-vd-GDB" firstAttribute="top" secondItem="b19-Bh-f2h" secondAttribute="top" id="oi9-Cv-dWA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="b19-Bh-f2h"/>
+                    </view>
+                    <connections>
+                        <outlet property="loadingFooter" destination="Pab-zs-m5r" id="ZVr-gw-AUF"/>
+                        <outlet property="tableView" destination="Q2q-vd-GDB" id="Elx-qV-us4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ik5-uV-qXF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3172" y="574.36281859070471"/>
+        </scene>
         <!--Block Detail View Controller-->
         <scene sceneID="OhS-ce-xcL">
             <objects>
@@ -505,6 +590,26 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="BYZ-38-t0r" kind="show" id="P0E-T1-JIc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="JnQ-Sv-2bj" style="IBUITableViewCellStyleDefault" id="0LG-7i-dls">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0LG-7i-dls" id="x1U-r7-tfo">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Richest Accounts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JnQ-Sv-2bj">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="RBo-4v-WsB" kind="show" id="zaK-j4-7Vv"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

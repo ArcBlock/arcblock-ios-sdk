@@ -59,3 +59,17 @@ query TransactionDetail($hash: String!){
     }
   }
 }
+
+query richestAccounts($paging: PageInput) {
+  richestAccounts(paging: $paging) {
+    data {
+      address
+      balance
+    }
+    page {
+      total
+      next
+      cursor
+    }
+  }
+}
