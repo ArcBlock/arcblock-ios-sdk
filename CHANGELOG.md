@@ -1,3 +1,6 @@
+## 0.5.1 (July 16, 2018)
+  - fix dependency
+
 ## 0.5.0 (July 13, 2018)
   - add loading footer to block detail view
   - optimize offline pagination handling
