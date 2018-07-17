@@ -17,8 +17,8 @@ public final class ListBlocksQuery: GraphQLPagedQuery {
     self.paging = paging
   }
 
-  public func copy() -> ListBlocksQuery {
-    return ListBlocksQuery(fromHeight: fromHeight, toHeight: toHeight, paging: paging)
+  public func copy() -> Self {
+    return type(of: self).init(fromHeight: fromHeight, toHeight: toHeight, paging: paging)
   }
 
   public var variables: GraphQLMap? {
@@ -190,8 +190,8 @@ public final class BlockDetailQuery: GraphQLPagedQuery {
     self.paging = paging
   }
 
-  public func copy() -> BlockDetailQuery {
-    return BlockDetailQuery(height: height, paging: paging)
+  public func copy() -> Self {
+    return type(of: self).init(height: height, paging: paging)
   }
 
   public var variables: GraphQLMap? {
@@ -746,8 +746,8 @@ public final class RichestAccountsQuery: GraphQLPagedQuery {
     self.paging = paging
   }
 
-  public func copy() -> RichestAccountsQuery {
-    return RichestAccountsQuery(paging: paging)
+  public func copy() -> Self {
+    return type(of: self).init(paging: paging)
   }
 
   public var variables: GraphQLMap? {
