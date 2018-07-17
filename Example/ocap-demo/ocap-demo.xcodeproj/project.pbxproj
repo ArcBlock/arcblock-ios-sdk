@@ -19,6 +19,7 @@
 		2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E54C20E9D2A9009EA0C3 /* API.swift */; };
 		2749C33420ED1F43001D2E3D /* BlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */; };
 		2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33520F361E1001D2E3D /* TransactionViewController.swift */; };
+		2791C21320FDD30B0011F0C0 /* RichestAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2791C21220FDD30B0011F0C0 /* RichestAccountsViewController.swift */; };
 		29922C4571AAE760FE4D1E09 /* Pods_ocap_demoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074787B86C52AD1B784E5C41 /* Pods_ocap_demoUITests.framework */; };
 		5DEE64201E6844D97EFE0EA1 /* Pods_ocap_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1632CDB0BE2616E19E781AE6 /* Pods_ocap_demo.framework */; };
 		DBD1980FE986DC499CEB3B99 /* Pods_ocap_demoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */; };
@@ -63,6 +64,7 @@
 		2739E54C20E9D2A9009EA0C3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDetailViewController.swift; sourceTree = "<group>"; };
 		2749C33520F361E1001D2E3D /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		2791C21220FDD30B0011F0C0 /* RichestAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichestAccountsViewController.swift; sourceTree = "<group>"; };
 		5E0B075F01E0409CA51F5D84 /* Pods-ocap-demoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.release.xcconfig"; sourceTree = "<group>"; };
 		9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ocap_demoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26009757EFE9BF83355D1F7 /* Pods-ocap-demoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				2722260020E32E8E00E2BBB3 /* ocap.graphql */,
 				2722260120E32E8E00E2BBB3 /* schema.json */,
 				2749C33520F361E1001D2E3D /* TransactionViewController.swift */,
+				2791C21220FDD30B0011F0C0 /* RichestAccountsViewController.swift */,
 			);
 			path = "ocap-demo";
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */,
 				2722260520E33A1200E2BBB3 /* BlockListViewController.swift in Sources */,
 				2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */,
+				2791C21320FDD30B0011F0C0 /* RichestAccountsViewController.swift in Sources */,
 				272225D020E20B7A00E2BBB3 /* AppDelegate.swift in Sources */,
 				2749C33420ED1F43001D2E3D /* BlockDetailViewController.swift in Sources */,
 			);
