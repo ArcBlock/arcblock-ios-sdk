@@ -51,6 +51,16 @@ class RichestAccountsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AccountDetailSegue" {
+            let indexPath: IndexPath = tableView.indexPathForSelectedRow!
+            let data: RichestAccountsQuery.Data.RichestAccount.Datum = dataSource.itemForIndexPath(indexPath: indexPath)!
+            let destinationViewController: AccountDetailViewController = segue.destination as! AccountDetailViewController
+            destinationViewController.address = data.address
+            destinationViewController.title = data.address
+        }
+    }
 }
 
 extension RichestAccountsViewController: UITableViewDataSource {
