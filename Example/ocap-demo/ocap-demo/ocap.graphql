@@ -59,3 +59,54 @@ query TransactionDetail($hash: String!){
     }
   }
 }
+
+query RichestAccounts($paging: PageInput) {
+  richestAccounts(paging: $paging) {
+    data {
+      address
+      balance
+    }
+    page {
+      total
+      next
+      cursor
+    }
+  }
+}
+
+query AccountByAddress($address: String!) {
+  accountByAddress(address: $address) {
+    pubKey
+    scriptType
+  }
+}
+
+query TxsReceivedByAccount($address: String!, $paging: PageInput) {
+  accountByAddress(address: $address) {
+    txsReceived(paging: $paging){
+      data {
+        hash
+      }
+      page {
+        total
+        next
+        cursor
+      }
+    }
+  }
+}
+
+query TxsSentByAccount($address: String!, $paging: PageInput) {
+  accountByAddress(address: $address) {
+    txsSent(paging: $paging){
+      data{
+        hash
+      }
+      page {
+        total
+        next
+        cursor
+      }
+    }
+  }
+}
