@@ -15,7 +15,7 @@
 		272225F020E20B7C00E2BBB3 /* ocap_demoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */; };
 		2722260220E32E8E00E2BBB3 /* ocap.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 2722260020E32E8E00E2BBB3 /* ocap.graphql */; };
 		2722260320E32E8F00E2BBB3 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 2722260120E32E8E00E2BBB3 /* schema.json */; };
-		2722260520E33A1200E2BBB3 /* BlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722260420E33A1200E2BBB3 /* BlockListViewController.swift */; };
+		2722260520E33A1200E2BBB3 /* BlocksByHeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722260420E33A1200E2BBB3 /* BlocksByHeightViewController.swift */; };
 		2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E54C20E9D2A9009EA0C3 /* API.swift */; };
 		2749C33420ED1F43001D2E3D /* BlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */; };
 		2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33520F361E1001D2E3D /* TransactionViewController.swift */; };
@@ -23,6 +23,10 @@
 		2791C21720FF269B0011F0C0 /* AccountDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2791C21620FF269B0011F0C0 /* AccountDetailViewController.swift */; };
 		2791C21920FF2EF00011F0C0 /* TxsReceivedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2791C21820FF2EF00011F0C0 /* TxsReceivedViewController.swift */; };
 		2791C21B20FF3A660011F0C0 /* TxsSentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2791C21A20FF3A660011F0C0 /* TxsSentViewController.swift */; };
+		2791C2222100361D0011F0C0 /* TransactionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2791C2202100361D0011F0C0 /* TransactionListViewController.swift */; };
+		2791C22521003CD40011F0C0 /* TransactionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2791C22421003CD40011F0C0 /* TransactionListCell.xib */; };
+		2791C22721003CEE0011F0C0 /* TransactionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2791C22621003CEE0011F0C0 /* TransactionListCell.swift */; };
+		2791C229210046B90011F0C0 /* BlockDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2791C228210046B90011F0C0 /* BlockDetailView.xib */; };
 		29922C4571AAE760FE4D1E09 /* Pods_ocap_demoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074787B86C52AD1B784E5C41 /* Pods_ocap_demoUITests.framework */; };
 		5DEE64201E6844D97EFE0EA1 /* Pods_ocap_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1632CDB0BE2616E19E781AE6 /* Pods_ocap_demo.framework */; };
 		DBD1980FE986DC499CEB3B99 /* Pods_ocap_demoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */; };
@@ -63,7 +67,7 @@
 		272225F120E20B7C00E2BBB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2722260020E32E8E00E2BBB3 /* ocap.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ocap.graphql; sourceTree = "<group>"; };
 		2722260120E32E8E00E2BBB3 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
-		2722260420E33A1200E2BBB3 /* BlockListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockListViewController.swift; sourceTree = "<group>"; };
+		2722260420E33A1200E2BBB3 /* BlocksByHeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocksByHeightViewController.swift; sourceTree = "<group>"; };
 		2739E54C20E9D2A9009EA0C3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDetailViewController.swift; sourceTree = "<group>"; };
 		2749C33520F361E1001D2E3D /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +75,10 @@
 		2791C21620FF269B0011F0C0 /* AccountDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailViewController.swift; sourceTree = "<group>"; };
 		2791C21820FF2EF00011F0C0 /* TxsReceivedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxsReceivedViewController.swift; sourceTree = "<group>"; };
 		2791C21A20FF3A660011F0C0 /* TxsSentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxsSentViewController.swift; sourceTree = "<group>"; };
+		2791C2202100361D0011F0C0 /* TransactionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListViewController.swift; sourceTree = "<group>"; };
+		2791C22421003CD40011F0C0 /* TransactionListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionListCell.xib; sourceTree = "<group>"; };
+		2791C22621003CEE0011F0C0 /* TransactionListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListCell.swift; sourceTree = "<group>"; };
+		2791C228210046B90011F0C0 /* BlockDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockDetailView.xib; sourceTree = "<group>"; };
 		5E0B075F01E0409CA51F5D84 /* Pods-ocap-demoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.release.xcconfig"; sourceTree = "<group>"; };
 		9F5FDA6EEDD7FB855B9511E5 /* Pods_ocap_demoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ocap_demoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26009757EFE9BF83355D1F7 /* Pods-ocap-demoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demoTests/Pods-ocap-demoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,21 +140,19 @@
 		272225CE20E20B7A00E2BBB3 /* ocap-demo */ = {
 			isa = PBXGroup;
 			children = (
-				2791C21620FF269B0011F0C0 /* AccountDetailViewController.swift */,
+				2791C22C21004F770011F0C0 /* Account */,
+				2791C22B21004F450011F0C0 /* Block Detail */,
+				2791C22A21004F290011F0C0 /* Transactions */,
 				2739E54C20E9D2A9009EA0C3 /* API.swift */,
 				272225CF20E20B7A00E2BBB3 /* AppDelegate.swift */,
 				272225D620E20B7C00E2BBB3 /* Assets.xcassets */,
-				2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */,
-				2722260420E33A1200E2BBB3 /* BlockListViewController.swift */,
+				2722260420E33A1200E2BBB3 /* BlocksByHeightViewController.swift */,
+				2791C21220FDD30B0011F0C0 /* RichestAccountsViewController.swift */,
 				272225DB20E20B7C00E2BBB3 /* Info.plist */,
 				272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */,
 				272225D320E20B7A00E2BBB3 /* Main.storyboard */,
 				2722260020E32E8E00E2BBB3 /* ocap.graphql */,
-				2791C21220FDD30B0011F0C0 /* RichestAccountsViewController.swift */,
 				2722260120E32E8E00E2BBB3 /* schema.json */,
-				2749C33520F361E1001D2E3D /* TransactionViewController.swift */,
-				2791C21820FF2EF00011F0C0 /* TxsReceivedViewController.swift */,
-				2791C21A20FF3A660011F0C0 /* TxsSentViewController.swift */,
 			);
 			path = "ocap-demo";
 			sourceTree = "<group>";
@@ -167,6 +173,36 @@
 				272225F120E20B7C00E2BBB3 /* Info.plist */,
 			);
 			path = "ocap-demoUITests";
+			sourceTree = "<group>";
+		};
+		2791C22A21004F290011F0C0 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				2749C33520F361E1001D2E3D /* TransactionViewController.swift */,
+				2791C2202100361D0011F0C0 /* TransactionListViewController.swift */,
+				2791C22421003CD40011F0C0 /* TransactionListCell.xib */,
+				2791C22621003CEE0011F0C0 /* TransactionListCell.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		2791C22B21004F450011F0C0 /* Block Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */,
+				2791C228210046B90011F0C0 /* BlockDetailView.xib */,
+			);
+			path = "Block Detail";
+			sourceTree = "<group>";
+		};
+		2791C22C21004F770011F0C0 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				2791C21620FF269B0011F0C0 /* AccountDetailViewController.swift */,
+				2791C21820FF2EF00011F0C0 /* TxsReceivedViewController.swift */,
+				2791C21A20FF3A660011F0C0 /* TxsSentViewController.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		B7A80E925FCC96866083AF02 /* Pods */ = {
@@ -303,6 +339,8 @@
 				2722260220E32E8E00E2BBB3 /* ocap.graphql in Resources */,
 				2722260320E32E8F00E2BBB3 /* schema.json in Resources */,
 				272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */,
+				2791C22521003CD40011F0C0 /* TransactionListCell.xib in Resources */,
+				2791C229210046B90011F0C0 /* BlockDetailView.xib in Resources */,
 				272225D720E20B7C00E2BBB3 /* Assets.xcassets in Resources */,
 				272225D520E20B7A00E2BBB3 /* Main.storyboard in Resources */,
 			);
@@ -411,8 +449,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2791C21720FF269B0011F0C0 /* AccountDetailViewController.swift in Sources */,
+				2791C22721003CEE0011F0C0 /* TransactionListCell.swift in Sources */,
+				2791C2222100361D0011F0C0 /* TransactionListViewController.swift in Sources */,
 				2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */,
-				2722260520E33A1200E2BBB3 /* BlockListViewController.swift in Sources */,
+				2722260520E33A1200E2BBB3 /* BlocksByHeightViewController.swift in Sources */,
 				2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */,
 				2791C21320FDD30B0011F0C0 /* RichestAccountsViewController.swift in Sources */,
 				272225D020E20B7A00E2BBB3 /* AppDelegate.swift in Sources */,
