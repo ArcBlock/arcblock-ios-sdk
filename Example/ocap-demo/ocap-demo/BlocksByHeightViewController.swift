@@ -73,7 +73,29 @@ class BlocksByHeightViewController: UIViewController {
             return data.blocksByHeight?.data
         }
         let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
-            self?.tableView.reloadData()
+            let changes: [RowChange] = (self?.dataSource.getChanges())!
+
+            self?.tableView.beginUpdates()
+            for change in changes {
+                switch change.type {
+                case .delete:
+                    self?.tableView .deleteRows(at: [change.indexPath!], with: UITableViewRowAnimation.automatic)
+                    break
+                case .insert:
+                    self?.tableView .insertRows(at: [change.newIndexPath!], with: UITableViewRowAnimation.automatic)
+                    break
+                case .move:
+                    self?.tableView.moveRow(at: change.indexPath!, to: change.newIndexPath!)
+                    break
+                case .update:
+                    self?.tableView.reloadRows(at: [change.indexPath!], with: UITableViewRowAnimation.none)
+                    break
+                default:
+                    break
+                }
+            }
+            self?.tableView.endUpdates()
+
             if let hasMore: Bool = self?.dataSource.hasMore {
                 self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
             }
@@ -82,6 +104,13 @@ class BlocksByHeightViewController: UIViewController {
             return (data.blocksByHeight?.page)!
         }
         dataSource = ABSDKArrayViewPagedDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 500000, toHeight: 500099), dataSourceMapper: dataSourceMapper, pageMapper: pageMapper, dataSourceUpdateHandler: dataSourceUpdateHandler)
+        let keyEqualChecker: KeyEqualChecker<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (object1, object2) in
+            if (object1 != nil) && (object2 != nil) {
+                return object1?.height == object2?.height
+            }
+            return false
+        }
+        dataSource.keyEqualChecker = keyEqualChecker
         dataSource.refresh()
     }
 
