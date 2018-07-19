@@ -21,20 +21,8 @@
 // THE SOFTWARE.
 
 import Apollo
-import UIKit
-
-public protocol GraphQLPagedQuery: GraphQLQuery {
-    var paging: PageInput? { get set }
-    func copy() -> Self
-}
-
-public protocol PagedData: GraphQLSelectionSet {
-    var page: Page? { get }
-}
 
 public typealias ArrayDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
-
-public typealias PageMapper<Query: GraphQLPagedQuery> = (_ data: Query.Data) -> Page
 
 public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> Data?
 
@@ -120,115 +108,6 @@ final public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSe
                 }
             }
         })
-    }
-
-    public func numberOfSections() -> Int {
-        return 1
-    }
-
-    public func numberOfRows(section: Int) -> Int {
-        return array.count
-    }
-
-    public func itemForIndexPath(indexPath: IndexPath) -> Data? {
-        return array[indexPath.row]
-    }
-}
-
-final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
-    var array: [Data?] = [] {
-        didSet {
-            dataSourceUpdateHandler()
-        }
-    }
-
-    public var hasMore: Bool = true
-
-    public var isLoading = false
-
-    var page: Page?
-    var pageCursors: [String] = []
-    var pages: [String: [Data?]] = [:] {
-        didSet {
-            var newArray: [Data?] = []
-            for pageCursor in pageCursors {
-                if let items: [Data?] = pages[pageCursor] {
-                    newArray += items
-                }
-            }
-            array = newArray
-        }
-    }
-
-    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>!
-    var pageMapper: PageMapper<Query>!
-    var watchers: [String: GraphQLQueryWatcher<Query>] = [:]
-
-    let client: ABSDKClient
-    let query: Query
-    let dataSourceUpdateHandler: DataSourceUpdateHandler
-
-    init(client: ABSDKClient, query: Query, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
-        self.client = client
-        self.query = query
-        self.dataSourceUpdateHandler = dataSourceUpdateHandler
-    }
-
-    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, pageMapper: @escaping PageMapper<Query>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
-        self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
-        self.dataSourceMapper = dataSourceMapper
-        self.pageMapper = pageMapper
-    }
-
-    func load() {
-        var pageCursor: String = ""
-        if page != nil {
-            pageCursor = (page?.cursor)!
-        }
-        if let watcher: GraphQLQueryWatcher<Query> = watchers[pageCursor] {
-            isLoading = true
-            watcher.refetch()
-        } else {
-            let pagedQuery: Query = query.copy()
-            pagedQuery.paging = PageInput(cursor: pageCursor)
-
-            let watcher: GraphQLQueryWatcher<Query> = client.watch(query: pagedQuery, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
-                if err == nil {
-                    if result?.source == .server {
-                        self?.isLoading = false
-                        if let data: Query.Data = result?.data, let page: Page = self?.pageMapper(data) {
-                            self?.page = page
-                            self?.hasMore = page.next
-                        }
-                    }
-                    if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
-                        self?.addPage(pageCursor: pageCursor, items: items)
-                    }
-                }
-            })
-            watchers[pageCursor] = watcher
-        }
-    }
-
-    func addPage(pageCursor: String!, items: [Data?]?) {
-        if !pages.keys.contains(pageCursor) {
-            pageCursors.append(pageCursor)
-        }
-        pages[pageCursor] = items
-    }
-
-    public func refresh() {
-        page = nil
-        array = []
-        pages = [:]
-        pageCursors = []
-        load()
-    }
-
-    public func loadMore() {
-        if !isLoading && hasMore {
-            load()
-        }
     }
 
     public func numberOfSections() -> Int {

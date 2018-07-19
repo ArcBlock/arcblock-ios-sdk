@@ -38,6 +38,7 @@
 		279CD45220ACB307009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
 		279CD45320ACB31A009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		279CD45420ACB31A009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
+		27B60BFF210066C20079352C /* ABSDKArrayViewPagedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B60BFE210066C20079352C /* ABSDKArrayViewPagedDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		279CD43C20AC9F37009E1348 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		27B60BFE210066C20079352C /* ABSDKArrayViewPagedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKArrayViewPagedDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +234,7 @@
 				2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */,
 				277E6B7920A0DE340054707E /* Info.plist */,
 				275EC94C20F61C7100CAF356 /* ABSDKPagination.swift */,
+				27B60BFE210066C20079352C /* ABSDKArrayViewPagedDataSource.swift */,
 			);
 			path = ABSDKCoreKit;
 			sourceTree = "<group>";
@@ -780,6 +783,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B60BFF210066C20079352C /* ABSDKArrayViewPagedDataSource.swift in Sources */,
 				274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */,
 				2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */,
 				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
