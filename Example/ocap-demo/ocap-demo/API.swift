@@ -17,6 +17,10 @@ public final class ListBlocksQuery: GraphQLPagedQuery {
     self.paging = paging
   }
 
+  public func copy() -> Self {
+    return type(of: self).init(fromHeight: fromHeight, toHeight: toHeight, paging: paging)
+  }
+
   public var variables: GraphQLMap? {
     return ["fromHeight": fromHeight, "toHeight": toHeight, "paging": paging]
   }
@@ -184,6 +188,10 @@ public final class BlockDetailQuery: GraphQLPagedQuery {
   public init(height: Int, paging: PageInput? = nil) {
     self.height = height
     self.paging = paging
+  }
+
+  public func copy() -> Self {
+    return type(of: self).init(height: height, paging: paging)
   }
 
   public var variables: GraphQLMap? {
@@ -720,6 +728,577 @@ public final class TransactionDetailQuery: GraphQLQuery {
             }
             set {
               resultMap.updateValue(newValue, forKey: "value")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class RichestAccountsQuery: GraphQLPagedQuery {
+  public let operationDefinition =
+    "query RichestAccounts($paging: PageInput) {\n  richestAccounts(paging: $paging) {\n    __typename\n    data {\n      __typename\n      address\n      balance\n    }\n    page {\n      __typename\n      total\n      next\n      cursor\n    }\n  }\n}"
+
+  public var paging: PageInput?
+
+  public init(paging: PageInput? = nil) {
+    self.paging = paging
+  }
+
+  public func copy() -> Self {
+    return type(of: self).init(paging: paging)
+  }
+
+  public var variables: GraphQLMap? {
+    return ["paging": paging]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootQueryType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("richestAccounts", arguments: ["paging": GraphQLVariable("paging")], type: .object(RichestAccount.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(richestAccounts: RichestAccount? = nil) {
+      self.init(unsafeResultMap: ["__typename": "RootQueryType", "richestAccounts": richestAccounts.flatMap { (value: RichestAccount) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns richest accounts, order by balance.
+    public var richestAccounts: RichestAccount? {
+      get {
+        return (resultMap["richestAccounts"] as? ResultMap).flatMap { RichestAccount(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "richestAccounts")
+      }
+    }
+
+    public struct RichestAccount: PagedData {
+      public static let possibleTypes = ["PagedBitcoinAccounts"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("data", type: .list(.object(Datum.selections))),
+        GraphQLField("page", type: .object(Page.selections)),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(data: [Datum?]? = nil, page: Page? = nil) {
+        self.init(unsafeResultMap: ["__typename": "PagedBitcoinAccounts", "data": data.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, "page": page.flatMap { (value: Page) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var data: [Datum?]? {
+        get {
+          return (resultMap["data"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Datum?] in value.map { (value: ResultMap?) -> Datum? in value.flatMap { (value: ResultMap) -> Datum in Datum(unsafeResultMap: value) } } }
+        }
+        set {
+          resultMap.updateValue(newValue.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, forKey: "data")
+        }
+      }
+
+      public var page: Page? {
+        get {
+          return (resultMap["page"] as? ResultMap).flatMap { Page(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "page")
+        }
+      }
+
+      public struct Datum: GraphQLSelectionSet {
+        public static let possibleTypes = ["BitcoinAccount"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("address", type: .nonNull(.scalar(String.self))),
+          GraphQLField("balance", type: .scalar(Int.self)),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(address: String, balance: Int? = nil) {
+          self.init(unsafeResultMap: ["__typename": "BitcoinAccount", "address": address, "balance": balance])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var address: String {
+          get {
+            return resultMap["address"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "address")
+          }
+        }
+
+        public var balance: Int? {
+          get {
+            return resultMap["balance"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "balance")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class AccountByAddressQuery: GraphQLQuery {
+  public let operationDefinition =
+    "query AccountByAddress($address: String!) {\n  accountByAddress(address: $address) {\n    __typename\n    pubKey\n    scriptType\n  }\n}"
+
+  public var address: String
+
+  public init(address: String) {
+    self.address = address
+  }
+
+  public var variables: GraphQLMap? {
+    return ["address": address]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootQueryType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("accountByAddress", arguments: ["address": GraphQLVariable("address")], type: .object(AccountByAddress.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(accountByAddress: AccountByAddress? = nil) {
+      self.init(unsafeResultMap: ["__typename": "RootQueryType", "accountByAddress": accountByAddress.flatMap { (value: AccountByAddress) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns information of an account.
+    public var accountByAddress: AccountByAddress? {
+      get {
+        return (resultMap["accountByAddress"] as? ResultMap).flatMap { AccountByAddress(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "accountByAddress")
+      }
+    }
+
+    public struct AccountByAddress: GraphQLSelectionSet {
+      public static let possibleTypes = ["BitcoinAccount"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("pubKey", type: .scalar(String.self)),
+        GraphQLField("scriptType", type: .scalar(String.self)),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(pubKey: String? = nil, scriptType: String? = nil) {
+        self.init(unsafeResultMap: ["__typename": "BitcoinAccount", "pubKey": pubKey, "scriptType": scriptType])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var pubKey: String? {
+        get {
+          return resultMap["pubKey"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "pubKey")
+        }
+      }
+
+      public var scriptType: String? {
+        get {
+          return resultMap["scriptType"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "scriptType")
+        }
+      }
+    }
+  }
+}
+
+public final class TxsReceivedByAccountQuery: GraphQLPagedQuery {
+  public let operationDefinition =
+    "query TxsReceivedByAccount($address: String!, $paging: PageInput) {\n  accountByAddress(address: $address) {\n    __typename\n    txsReceived(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
+
+  public var address: String
+  public var paging: PageInput?
+
+  public init(address: String, paging: PageInput? = nil) {
+    self.address = address
+    self.paging = paging
+  }
+
+  public func copy() -> Self {
+    return type(of: self).init(address: address, paging: paging)
+  }
+
+  public var variables: GraphQLMap? {
+    return ["address": address, "paging": paging]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootQueryType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("accountByAddress", arguments: ["address": GraphQLVariable("address")], type: .object(AccountByAddress.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(accountByAddress: AccountByAddress? = nil) {
+      self.init(unsafeResultMap: ["__typename": "RootQueryType", "accountByAddress": accountByAddress.flatMap { (value: AccountByAddress) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns information of an account.
+    public var accountByAddress: AccountByAddress? {
+      get {
+        return (resultMap["accountByAddress"] as? ResultMap).flatMap { AccountByAddress(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "accountByAddress")
+      }
+    }
+
+    public struct AccountByAddress: GraphQLSelectionSet {
+      public static let possibleTypes = ["BitcoinAccount"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("txsReceived", arguments: ["paging": GraphQLVariable("paging")], type: .object(TxsReceived.selections)),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(txsReceived: TxsReceived? = nil) {
+        self.init(unsafeResultMap: ["__typename": "BitcoinAccount", "txsReceived": txsReceived.flatMap { (value: TxsReceived) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var txsReceived: TxsReceived? {
+        get {
+          return (resultMap["txsReceived"] as? ResultMap).flatMap { TxsReceived(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "txsReceived")
+        }
+      }
+
+      public struct TxsReceived: PagedData {
+        public static let possibleTypes = ["PagedBitcoinTransactions"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("data", type: .list(.object(Datum.selections))),
+          GraphQLField("page", type: .object(Page.selections)),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(data: [Datum?]? = nil, page: Page? = nil) {
+          self.init(unsafeResultMap: ["__typename": "PagedBitcoinTransactions", "data": data.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, "page": page.flatMap { (value: Page) -> ResultMap in value.resultMap }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var data: [Datum?]? {
+          get {
+            return (resultMap["data"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Datum?] in value.map { (value: ResultMap?) -> Datum? in value.flatMap { (value: ResultMap) -> Datum in Datum(unsafeResultMap: value) } } }
+          }
+          set {
+            resultMap.updateValue(newValue.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, forKey: "data")
+          }
+        }
+
+        public var page: Page? {
+          get {
+            return (resultMap["page"] as? ResultMap).flatMap { Page(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "page")
+          }
+        }
+
+        public struct Datum: GraphQLSelectionSet {
+          public static let possibleTypes = ["BitcoinTransaction"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hash", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(hash: String) {
+            self.init(unsafeResultMap: ["__typename": "BitcoinTransaction", "hash": hash])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var hash: String {
+            get {
+              return resultMap["hash"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "hash")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class TxsSentByAccountQuery: GraphQLPagedQuery {
+  public let operationDefinition =
+    "query TxsSentByAccount($address: String!, $paging: PageInput) {\n  accountByAddress(address: $address) {\n    __typename\n    txsSent(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
+
+  public var address: String
+  public var paging: PageInput?
+
+  public init(address: String, paging: PageInput? = nil) {
+    self.address = address
+    self.paging = paging
+  }
+
+  public func copy() -> Self {
+    return type(of: self).init(address: address, paging: paging)
+  }
+
+  public var variables: GraphQLMap? {
+    return ["address": address, "paging": paging]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootQueryType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("accountByAddress", arguments: ["address": GraphQLVariable("address")], type: .object(AccountByAddress.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(accountByAddress: AccountByAddress? = nil) {
+      self.init(unsafeResultMap: ["__typename": "RootQueryType", "accountByAddress": accountByAddress.flatMap { (value: AccountByAddress) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns information of an account.
+    public var accountByAddress: AccountByAddress? {
+      get {
+        return (resultMap["accountByAddress"] as? ResultMap).flatMap { AccountByAddress(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "accountByAddress")
+      }
+    }
+
+    public struct AccountByAddress: GraphQLSelectionSet {
+      public static let possibleTypes = ["BitcoinAccount"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("txsSent", arguments: ["paging": GraphQLVariable("paging")], type: .object(TxsSent.selections)),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(txsSent: TxsSent? = nil) {
+        self.init(unsafeResultMap: ["__typename": "BitcoinAccount", "txsSent": txsSent.flatMap { (value: TxsSent) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var txsSent: TxsSent? {
+        get {
+          return (resultMap["txsSent"] as? ResultMap).flatMap { TxsSent(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "txsSent")
+        }
+      }
+
+      public struct TxsSent: PagedData {
+        public static let possibleTypes = ["PagedBitcoinTransactions"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("data", type: .list(.object(Datum.selections))),
+          GraphQLField("page", type: .object(Page.selections)),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(data: [Datum?]? = nil, page: Page? = nil) {
+          self.init(unsafeResultMap: ["__typename": "PagedBitcoinTransactions", "data": data.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, "page": page.flatMap { (value: Page) -> ResultMap in value.resultMap }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var data: [Datum?]? {
+          get {
+            return (resultMap["data"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Datum?] in value.map { (value: ResultMap?) -> Datum? in value.flatMap { (value: ResultMap) -> Datum in Datum(unsafeResultMap: value) } } }
+          }
+          set {
+            resultMap.updateValue(newValue.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, forKey: "data")
+          }
+        }
+
+        public var page: Page? {
+          get {
+            return (resultMap["page"] as? ResultMap).flatMap { Page(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "page")
+          }
+        }
+
+        public struct Datum: GraphQLSelectionSet {
+          public static let possibleTypes = ["BitcoinTransaction"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hash", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(hash: String) {
+            self.init(unsafeResultMap: ["__typename": "BitcoinTransaction", "hash": hash])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var hash: String {
+            get {
+              return resultMap["hash"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "hash")
             }
           }
         }
