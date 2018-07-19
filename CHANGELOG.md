@@ -1,3 +1,10 @@
+## 0.5.2 (July 19, 2018)
+  - abstract transaction list view controller for reuse
+  - add account detail page
+  - update paged query copy function declaration
+  - create a unique query object for each page
+  - add richest account view
+
 ## 0.5.1 (July 16, 2018)
   - fix dependency
 
