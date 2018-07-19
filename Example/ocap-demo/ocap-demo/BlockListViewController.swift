@@ -57,7 +57,7 @@ class BlockListCell: UITableViewCell {
     }
 }
 
-class BlockListViewController: UIViewController {
+class BlocksByHeightViewController: UIViewController {
     @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
@@ -101,7 +101,7 @@ class BlockListViewController: UIViewController {
     }
 }
 
-extension BlockListViewController: UITableViewDataSource {
+extension BlocksByHeightViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.numberOfSections()
     }
@@ -118,7 +118,7 @@ extension BlockListViewController: UITableViewDataSource {
     }
 }
 
-extension BlockListViewController: UITableViewDelegate {
+extension BlocksByHeightViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
             dataSource.loadMore()
