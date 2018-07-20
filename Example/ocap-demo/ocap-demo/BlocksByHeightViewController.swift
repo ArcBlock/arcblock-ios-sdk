@@ -103,14 +103,13 @@ class BlocksByHeightViewController: UIViewController {
         let pageMapper: PageMapper<ListBlocksQuery> = { (data) in
             return (data.blocksByHeight?.page)!
         }
-        dataSource = ABSDKArrayViewPagedDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 500000, toHeight: 500099), dataSourceMapper: dataSourceMapper, pageMapper: pageMapper, dataSourceUpdateHandler: dataSourceUpdateHandler)
-        let keyEqualChecker: KeyEqualChecker<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (object1, object2) in
+        let checker: ArrayDataKeyEqualChecker<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (object1, object2) in
             if (object1 != nil) && (object2 != nil) {
                 return object1?.height == object2?.height
             }
             return false
         }
-        dataSource.keyEqualChecker = keyEqualChecker
+        dataSource = ABSDKArrayViewPagedDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 500000, toHeight: 500099), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
         dataSource.refresh()
     }
 
