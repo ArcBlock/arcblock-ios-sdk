@@ -1,3 +1,7 @@
+## 0.6.0 (July 20, 2018)
+  - refactor data source codes
+  - calculate row changes
+
 ## 0.5.2 (July 19, 2018)
   - abstract transaction list view controller for reuse
   - add account detail page
