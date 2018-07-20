@@ -43,7 +43,7 @@ class RichestAccountsViewController: UIViewController {
         let pageMapper: PageMapper<RichestAccountsQuery> = { (data) in
             return (data.richestAccounts?.page)!
         }
-        dataSource = ABSDKArrayViewPagedDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, query: RichestAccountsQuery(), dataSourceMapper: dataSourceMapper, pageMapper: pageMapper, dataSourceUpdateHandler: dataSourceUpdateHandler)
+        dataSource = ABSDKArrayViewPagedDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, query: RichestAccountsQuery(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, pageMapper: pageMapper)
         dataSource.refresh()
     }
 

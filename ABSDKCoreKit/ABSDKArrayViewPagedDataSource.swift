@@ -23,7 +23,6 @@
 import Apollo
 
 public typealias PageMapper<Query: GraphQLPagedQuery> = (_ data: Query.Data) -> Page
-public typealias KeyEqualChecker<Data: GraphQLSelectionSet> = (_ object1: Data?, _ object2: Data?) -> Bool
 
 public protocol GraphQLPagedQuery: GraphQLQuery {
     var paging: PageInput? { get set }
@@ -34,33 +33,7 @@ public protocol PagedData: GraphQLSelectionSet {
     var page: Page? { get }
 }
 
-public struct RowChange {
-    public enum RowChangeType {
-        case insert
-        case delete
-        case move
-        case update
-    }
-
-    public var type: RowChangeType!
-    public var indexPath: IndexPath?
-    public var newIndexPath: IndexPath?
-
-    init(type: RowChangeType, indexPath: IndexPath? = nil, newIndexPath: IndexPath? = nil) {
-        self.type = type
-        self.indexPath = indexPath
-        self.newIndexPath = newIndexPath
-    }
-}
-
-final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
-    var array: [Data?] = [] {
-        didSet {
-            dataSourceUpdateHandler()
-        }
-    }
-
-    var changes: [RowChange] = []
+final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKArrayViewDataSource<Query, Data> {
 
     public var hasMore: Bool = true
 
@@ -76,77 +49,15 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
                     newArray += items
                 }
             }
-
-            if let checker: KeyEqualChecker = keyEqualChecker {
-                var newChanges: [RowChange] = []
-                var inNewArrayIndexes:[Int] = []
-                if array.count == 0 && newArray.count != 0 {
-                    for index in 0...newArray.count-1 {
-                        newChanges.append(RowChange(type: .insert, newIndexPath: IndexPath(row: index, section: 0)))
-                    }
-                }
-                else if array.count != 0 && newArray.count == 0 {
-                    for index in 0...array.count-1 {
-                        newChanges.append(RowChange(type: .delete, indexPath: IndexPath(row: index, section: 0)))
-                    }
-                }
-                else if (array.count != 0 && newArray.count != 0) {
-                    for i in 0...newArray.count-1 {
-                        var inOldArray: Bool = false
-                        for j in 0...array.count-1{
-                            if checker(newArray[i], array[j]) {
-                                if i == j {
-                                    let value1: JSONObject = (newArray[i]?.jsonObject)!
-                                    let value2: JSONObject = (array[j]?.jsonObject)!
-                                    if !NSDictionary(dictionary: value1).isEqual(to: value2) {
-                                        newChanges.append(RowChange(type: .update, indexPath: IndexPath(row: j, section: 0)))
-                                    }
-                                }
-                                else {
-                                    newChanges.append(RowChange(type: .move, indexPath: IndexPath(row: j, section: 0), newIndexPath: IndexPath(row: i, section: 0)))
-                                }
-                                inOldArray = true
-                                inNewArrayIndexes.append(j)
-                            }
-                        }
-                        if !inOldArray {
-                            newChanges.append(RowChange(type: .insert, newIndexPath: IndexPath(row: i, section: 0)))
-                        }
-                    }
-
-                    for index in 0...array.count-1 {
-                        if !inNewArrayIndexes.contains(index) {
-                            newChanges.append(RowChange(type: .delete, indexPath: IndexPath(row: index, section: 0)))
-                        }
-                    }
-                }
-
-                changes = newChanges
-            }
-
             array = newArray
         }
     }
 
-    var dataSourceMapper: ArrayDataSourceMapper<Query, Data>!
     var pageMapper: PageMapper<Query>!
     var watchers: [String: GraphQLQueryWatcher<Query>] = [:]
 
-    public var keyEqualChecker: KeyEqualChecker<Data>?
-
-    let client: ABSDKClient
-    let query: Query
-    let dataSourceUpdateHandler: DataSourceUpdateHandler
-
-    init(client: ABSDKClient, query: Query, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
-        self.client = client
-        self.query = query
-        self.dataSourceUpdateHandler = dataSourceUpdateHandler
-    }
-
-    public convenience init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, pageMapper: @escaping PageMapper<Query>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
-        self.init(client: client, query: query, dataSourceUpdateHandler: dataSourceUpdateHandler)
-        self.dataSourceMapper = dataSourceMapper
+    public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil, pageMapper: @escaping PageMapper<Query>) {
+        super.init(client: client, query: query, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: arrayDataKeyEqualChecker)
         self.pageMapper = pageMapper
     }
 
@@ -198,18 +109,6 @@ final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data:
         if !isLoading && hasMore {
             load()
         }
-    }
-
-    public func numberOfSections() -> Int {
-        return 1
-    }
-
-    public func numberOfRows(section: Int) -> Int {
-        return array.count
-    }
-
-    public func itemForIndexPath(indexPath: IndexPath) -> Data? {
-        return array[indexPath.row]
     }
 
     public func getChanges() -> [RowChange] {
