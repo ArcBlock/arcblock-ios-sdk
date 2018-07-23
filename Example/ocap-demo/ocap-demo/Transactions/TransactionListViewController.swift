@@ -34,7 +34,10 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
         tableView.register(UINib.init(nibName: "TransactionListCell", bundle: nil), forCellReuseIdentifier: "TransactionListCell")
         self.view.addSubview(tableView)
 
-        let transactionDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+        let transactionDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
+            if err != nil {
+                return
+            }
             self?.tableView.reloadData()
             if let hasMore: Bool = self?.transactionDataSource.hasMore {
                 self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
