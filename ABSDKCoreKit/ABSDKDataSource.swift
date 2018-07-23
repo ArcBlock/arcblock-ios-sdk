@@ -91,7 +91,7 @@ public struct RowChange {
     }
 }
 
-public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
+public class ABSDKArrayDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var array: [Data?] = [] {
         willSet(newValue) {
             calculateChanges(oldArray: array, newArray: newValue)
