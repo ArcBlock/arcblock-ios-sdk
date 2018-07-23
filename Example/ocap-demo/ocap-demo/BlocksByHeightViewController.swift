@@ -72,7 +72,14 @@ class BlocksByHeightViewController: UIViewController {
         let dataSourceMapper: ArrayDataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
-        let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+        let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
+            if err != nil {
+                let alert = UIAlertController.init(title: "Oops", message: err?.localizedDescription , preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "OK", style: .cancel, handler: nil))
+                self?.present(alert, animated: true)
+                return
+            }
+
             let changes: [RowChange] = (self?.dataSource.getChanges())!
 
             self?.tableView.beginUpdates()

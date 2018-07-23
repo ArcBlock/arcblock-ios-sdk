@@ -22,7 +22,7 @@
 
 import Apollo
 
-public typealias DataSourceUpdateHandler = () -> Void
+public typealias DataSourceUpdateHandler = (_ err: Error?) -> Void
 
 protocol ABSDKDataSource {
     associatedtype Query: GraphQLQuery
@@ -38,7 +38,7 @@ public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelect
 final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var object: Data? = nil {
         didSet {
-            dataSourceUpdateHandler()
+            dataSourceUpdateHandler(nil)
         }
     }
 
@@ -97,7 +97,7 @@ public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectio
             calculateChanges(oldArray: array, newArray: newValue)
         }
         didSet {
-            dataSourceUpdateHandler()
+            dataSourceUpdateHandler(nil)
         }
     }
 
@@ -123,6 +123,9 @@ public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectio
                 if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
                     self?.array = items
                 }
+            }
+            else {
+                self?.dataSourceUpdateHandler(err)
             }
         })
     }

@@ -54,7 +54,10 @@ class BlockDetailViewController: TransactionListViewController<BlockDetailQuery,
         let detailSourceMapper: ObjectDataSourceMapper<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight> = { (data) in
             return data.blockByHeight
         }
-        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
+            if err != nil {
+                return
+            }
             self?.detailView.updateBlockData(block: (self?.detailDataSource.getObject()!)!)
         }
         detailDataSource = ABSDKObjectDataSource<BlockDetailQuery, BlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: BlockDetailQuery(height: height), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
