@@ -41,7 +41,10 @@ class AccountDetailViewController: UIViewController {
         let detailSourceMapper: ObjectDataSourceMapper<AccountByAddressQuery, AccountByAddressQuery.Data.AccountByAddress> = { (data) in
             return data.accountByAddress
         }
-        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
+            if err != nil {
+                return
+            }
             self?.detailView.updateAddressData(address: (self?.detailDataSource.getObject())!)
         }
         detailDataSource = ABSDKObjectDataSource<AccountByAddressQuery, AccountByAddressQuery.Data.AccountByAddress>(client: arcblockClient, query: AccountByAddressQuery(address: address), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)

@@ -34,7 +34,13 @@ class RichestAccountsViewController: UIViewController {
         let dataSourceMapper: ArrayDataSourceMapper<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum> = { (data) in
             return data.richestAccounts?.data
         }
-        let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] in
+        let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
+            if err != nil {
+                let alert = UIAlertController.init(title: "Oops", message: err?.localizedDescription , preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "OK", style: .cancel, handler: nil))
+                self?.present(alert, animated: true)
+                return
+            }
             self?.tableView.reloadData()
             if let hasMore: Bool = self?.dataSource.hasMore {
                 self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
