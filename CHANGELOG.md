@@ -1,3 +1,6 @@
+## 0.6.1 (July 23, 2018)
+  - add Error parameter in dataSourceUpdateHandler callback
+
 ## 0.6.0 (July 20, 2018)
   - refactor data source codes
   - calculate row changes
