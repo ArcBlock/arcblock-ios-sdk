@@ -51,7 +51,7 @@ After you've done the codegen, you can now use our SDK API to write your UIViewC
 An ABSDKClient is a GraphQL client that's responsible for sending queries, resolving results, managing caches, etc.. You can create one client for each request, or share one across your app:
 
 ``` Swift
-# in AppDelegate.swift
+// in AppDelegate.swift
 
 var arcblockClient: ABSDKClient!
 
@@ -78,7 +78,7 @@ In your UIViewControllers, you want to send a **query** and display its result i
 ABSDKDataSource takes care of it. Let's see how it works.
 
 ``` Swift
-# in a ViewController.swift
+// in a ViewController.swift
 
 var arcblockClient: ABSDKClient!
 
