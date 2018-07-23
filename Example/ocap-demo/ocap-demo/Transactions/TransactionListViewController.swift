@@ -20,7 +20,7 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
     var tableView: UITableView!
     var loadingFooter: UIView!
 
-    var transactionDataSource: ABSDKArrayViewPagedDataSource<Query, Data>!
+    var transactionDataSource: ABSDKPagedArrayDataSource<Query, Data>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
                 self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
             }
         }
-        transactionDataSource = ABSDKArrayViewPagedDataSource<Query, Data>(client: arcblockClient, query: query, dataSourceMapper: transactionsSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler, pageMapper: transactionsPageMapper)
+        transactionDataSource = ABSDKPagedArrayDataSource<Query, Data>(client: arcblockClient, query: query, dataSourceMapper: transactionsSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler, pageMapper: transactionsPageMapper)
 
         loadingFooter = UIView.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.view.bounds.size.width, height: 44)))
         let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)

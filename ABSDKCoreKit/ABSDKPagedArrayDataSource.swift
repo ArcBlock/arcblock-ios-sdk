@@ -33,7 +33,7 @@ public protocol PagedData: GraphQLSelectionSet {
     var page: Page? { get }
 }
 
-final public class ABSDKArrayViewPagedDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKArrayViewDataSource<Query, Data> {
+final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKArrayDataSource<Query, Data> {
 
     public var hasMore: Bool = true
 
