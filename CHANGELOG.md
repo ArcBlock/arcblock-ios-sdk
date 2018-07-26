@@ -1,3 +1,9 @@
+## 0.6.2 (July 26, 2018)
+  - update documentation for corekit class reference
+  - update readme to demonstrate how to codegen in playbook
+  - fix typo
+  - rename data sources and update readme
+
 ## 0.6.1 (July 23, 2018)
   - add Error parameter in dataSourceUpdateHandler callback
 
