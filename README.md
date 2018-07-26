@@ -40,7 +40,8 @@ To communicate with ArcBlock platform, you will need to use ArcBlock's Open Chai
 
 One of the great things about GraphQL is that after the queries and schema is finalized, the data are strongly typed. So is Swift! That is to say, we can enforce the queries arguments and the return data type during compile time. This is why we provide this codegen tool to help you generate Swift codes that wraps your queries and works with this iOS SDK. No more type error in runtime!
 
-TBD: codegen workflow for developer.
+The swift codegen is directly integrated into the OCAP Playground. After testing your queries, you can save them together as a playbook. Inside the playbook, you can see a **Generate Codes** button. Choose Swift as Language and generate, and an API.swift file will be downloaded to your local machine. Finally, you just need to drag the file to your project folder.
+
 
 ### Write your UIViewControllers
 
@@ -56,19 +57,19 @@ An ABSDKClient is a GraphQL client that's responsible for sending queries, resol
 var arcblockClient: ABSDKClient!
 
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        let databaseURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("YOUR_DB_NAME")
-        do {
-            // initialize the AppSync client configuration configuration
-            let arcblockConfiguration = try ABSDKClientConfiguration(url: URL(string: "YOUR_OCAP_ENDPOINT")!,
-                                                           databaseURL: databaseURL)
-            // initialize app sync client
-            arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
-        } catch {
-            print("Error initializing AppSync client. \(error)")
-        }
-        return true
+    // Override point for customization after application launch.
+    let databaseURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("YOUR_DB_NAME")
+    do {
+        // initialize the AppSync client configuration configuration
+        let arcblockConfiguration = try ABSDKClientConfiguration(url: URL(string: "YOUR_OCAP_ENDPOINT")!,
+                                                       databaseURL: databaseURL)
+        // initialize app sync client
+        arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
+    } catch {
+        print("Error initializing AppSync client. \(error)")
     }
+    return true
+}
 ```
 
 #### Data binding with ABSDKDataSource
@@ -89,7 +90,7 @@ var detailDataSource: ABSDKObjectDataSource<AccountByAddressQuery, AccountByAddr
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    // get the shaared client
+    // get the shared client
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     arcblockClient = appDelegate.arcblockClient
 
