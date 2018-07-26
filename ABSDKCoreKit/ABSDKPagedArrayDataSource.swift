@@ -22,21 +22,30 @@
 
 import Apollo
 
+/// The callback to extract page info from query result
 public typealias PageMapper<Query: GraphQLPagedQuery> = (_ data: Query.Data) -> Page
 
+/// A protocol for GraphQL queries with paged results
 public protocol GraphQLPagedQuery: GraphQLQuery {
+    /// The query argument related to page
     var paging: PageInput? { get set }
+    /// copy an idential query
     func copy() -> Self
 }
 
+/// A protocol for GraphQL result data the contains page info
 public protocol PagedData: GraphQLSelectionSet {
+    /// The field for page info
     var page: Page? { get }
 }
 
+/// A ABSDKArrayDataSource that supports paging
 final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet>: ABSDKArrayDataSource<Query, Data> {
 
+    /// Flag indicates whether there're more pages
     public var hasMore: Bool = true
 
+    /// Flag indicates is the data source currently loading a page
     public var isLoading = false
 
     var page: Page?
@@ -56,6 +65,15 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
     var pageMapper: PageMapper<Query>!
     var watchers: [String: GraphQLQueryWatcher<Query>] = [:]
 
+    /// init a paged array data source
+    ///
+    /// - Parameters:
+    ///     client: an ABSDKClient for sending requests
+    ///     query: a GraphQL query to get the array
+    ///     dataSourceMapper: a callback to extract the concerned array from the query result
+    ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned array gets update
+    ///     arrayDataKeyEqualCHecker: an optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
+    ///     pageMapper: a callback to extract page info from the query result
     public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil, pageMapper: @escaping PageMapper<Query>) {
         super.init(client: client, query: query, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: arrayDataKeyEqualChecker)
         self.pageMapper = pageMapper
@@ -98,6 +116,7 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
         pages[pageCursor] = items
     }
 
+    /// Load from the first page again
     public func refresh() {
         page = nil
         pages = [:]
@@ -105,13 +124,10 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
         load()
     }
 
+    /// Load next page
     public func loadMore() {
         if !isLoading && hasMore {
             load()
         }
-    }
-
-    public func getChanges() -> [RowChange] {
-        return changes
     }
 }

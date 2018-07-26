@@ -23,15 +23,21 @@
 import Reachability
 import Apollo
 
+/// Enum to describe client's network access state
 public enum ClientNetworkAccessState {
+    /// the client is online
     case online
+    /// the client is offline
     case offline
 }
 
+/// Protocol to handle connection state change
 public protocol ConnectionStateChangeHandler {
+    /// A function to handle connection state change
     func stateChanged(networkState: ClientNetworkAccessState)
 }
 
+/// An optional closure which gets executed before making the network call, should be used to make local cache update
 public typealias OptimisticResponseBlock = (ApolloStore.ReadWriteTransaction?) -> Void
 
 enum ABSDKGraphQLOperation {
@@ -100,6 +106,7 @@ class SnapshotProcessController {
     }
 }
 
+/// Configuration for initializing a ABSDKClient
 public class ABSDKClientConfiguration {
     fileprivate var url: URL
     fileprivate var store: ApolloStore
@@ -115,7 +122,7 @@ public class ABSDKClientConfiguration {
     /// Creates a configuration object for the `ABSDKClient`.
     ///
     /// - Parameters:
-    ///   - url: The endpoint url for Appsync endpoint.
+    ///   - url: The endpoint url for ArcBlock endpoint.
     ///   - urlSessionConfiguration: A `URLSessionConfiguration` configuration object for custom HTTP configuration.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     ///   - connectionStateChangeHandler: The delegate object to be notified when client network state changes.
@@ -139,6 +146,7 @@ public class ABSDKClientConfiguration {
     }
 }
 
+/// Customized ABSDKClient error structure
 public struct ABSDKClientError: Error, LocalizedError {
 
     /// The body of the response.
@@ -148,6 +156,7 @@ public struct ABSDKClientError: Error, LocalizedError {
     let isInternalError: Bool
     let additionalInfo: String?
 
+    /// The human readable error description
     public var errorDescription: String? {
         if isInternalError {
             return additionalInfo
@@ -156,11 +165,12 @@ public struct ABSDKClientError: Error, LocalizedError {
     }
 }
 
-// The client for making `Mutation`, `Query` and `Subscription` requests.
+/// The ABSDKClient handles network connection, making `Query`, `Mutation` and `Subscription` requests, and resolving the results.
+/// The ABSDKClient also manages local caches.
 public class ABSDKClient: NetworkConnectionNotification {
 
-    public let apolloClient: ApolloClient?
-    public let store: ApolloStore?
+    let apolloClient: ApolloClient?
+    let store: ApolloStore?
 
     var reachability: Reachability?
 
@@ -254,7 +264,7 @@ public class ABSDKClient: NetworkConnectionNotification {
     /// - Parameters:
     ///   - mutation: The mutation to perform.
     ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
-    ///   - optimisticUpdate: An optional closure which gets executed before making the network call, should b
+    ///   - optimisticUpdate: An optional closure which gets executed before making the network call, should be used to make local cache update
     ///   - resultHandler: An optional closure that is called when mutation results are available or when an error occurs.
     ///   - result: The result of the performed mutation, or `nil` if an error occurred.
     ///   - error: An error that indicates why the mutation failed, or `nil` if the mutation was succesful.
