@@ -24,7 +24,7 @@
 
 import Apollo
 
-/// The common arguments for quering data with pagination.
+/// A custom type that used in query arguments for requesting paged data
 public struct PageInput: GraphQLMapConvertible {
     public var graphQLMap: GraphQLMap
 
@@ -102,6 +102,7 @@ public struct PageOrder: GraphQLMapConvertible {
     }
 }
 
+/// A custom type that returns from server describing the page info
 public struct Page: GraphQLSelectionSet {
     public static let possibleTypes = ["PageInfo"]
 

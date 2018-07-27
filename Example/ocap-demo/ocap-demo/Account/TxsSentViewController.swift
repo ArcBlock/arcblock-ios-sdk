@@ -12,7 +12,7 @@ import ArcBlockSDK
 class TxsSentViewController: TransactionListViewController<TxsSentByAccountQuery, TxsSentByAccountQuery.Data.AccountByAddress.TxsSent.Datum> {
     var address: String!
 
-    var txsSentDataSource: ABSDKArrayViewPagedDataSource<TxsSentByAccountQuery, TxsSentByAccountQuery.Data.AccountByAddress.TxsSent.Datum>!
+    var txsSentDataSource: ABSDKPagedArrayDataSource<TxsSentByAccountQuery, TxsSentByAccountQuery.Data.AccountByAddress.TxsSent.Datum>!
 
     override func viewDidLoad() {
         self.query = TxsSentByAccountQuery(address: address)

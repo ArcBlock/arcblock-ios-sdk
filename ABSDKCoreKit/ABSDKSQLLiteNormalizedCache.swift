@@ -23,29 +23,49 @@
 import Apollo
 import SQLite
 
+/// Custom errors related to ABSDKSQLLiteNormalizedCache
 public enum ABSDKSQLLiteNormalizedCacheError: Error {
+    /// record encoding error
     case invalidRecordEncoding(record: String)
+    /// record shape error
     case invalidRecordShape(object: Any)
+    /// record value error
     case invalidRecordValue(value: Any)
 }
 
+/// A SQLLite based normalized cache module for apollo store
 public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
 
+    /// init a cache instance with a file URL
+    ///
+    /// - Parameters:
+    ///   - fileURL: The URL to the local sqlite db file
     public init(fileURL: URL) throws {
         database = try Connection(.uri(fileURL.absoluteString), readonly: false)
         try createTableIfNeeded()
     }
 
+    /// Merge a set of cached records
+    ///
+    /// - Parameters:
+    ///   - records: records to merge
+    /// - Returns: A promise that returns a set of cache keys of merged records
     public func merge(records: RecordSet) -> Promise<Set<CacheKey>> {
         return Promise { try mergeRecords(records: records) }
     }
 
+    /// Clear the cache
     public func clear() -> Promise<Void> {
         return Promise {
             return try clearRecords()
         }
     }
 
+    /// load a set of cached records with the keys
+    ///
+    /// - Parameters:
+    ///   - keys: the keys of the caches to load
+    /// - Returns: A promise that returns a set of records loaded
     public func loadRecords(forKeys keys: [CacheKey]) -> Promise<[Record?]> {
         return Promise {
             let records = try selectRecords(forKeys: keys)

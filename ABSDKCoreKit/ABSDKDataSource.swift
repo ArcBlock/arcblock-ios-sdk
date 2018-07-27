@@ -22,6 +22,7 @@
 
 import Apollo
 
+/// The callback that gets called when there's a data update(err=nil), or there's an error during data update(err!=nil)
 public typealias DataSourceUpdateHandler = (_ err: Error?) -> Void
 
 protocol ABSDKDataSource {
@@ -33,8 +34,10 @@ protocol ABSDKDataSource {
     var dataSourceUpdateHandler: DataSourceUpdateHandler { get }
 }
 
+/// The callback to extract the object in query result
 public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> Data?
 
+/// A data source that binds with an object type of data in a GraphQL query and monitors its update
 final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var object: Data? = nil {
         didSet {
@@ -49,6 +52,13 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
 
     var watcher: GraphQLQueryWatcher<Query>?
 
+    /// init an object data source
+    ///
+    /// - Parameters:
+    ///     client: an ABSDKClient for sending requests
+    ///     query: a GraphQL query to get the object
+    ///     dataSourceMapper: a callback to extract the concerned object from the query result
+    ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned object gets update
     public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ObjectDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.client = client
         self.query = query
@@ -64,24 +74,38 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
         })
     }
 
+    /// Get the concerned object
     public func getObject() -> Data? {
         return object
     }
 }
 
+/// The callback to extract the array in query result
 public typealias ArrayDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
+
+/// The callback to check whether two elements in the array has the same key
 public typealias ArrayDataKeyEqualChecker<Data: GraphQLSelectionSet> = (_ object1: Data?, _ object2: Data?) -> Bool
 
+/// A structure to describe a row change
 public struct RowChange {
+
+    /// Enum of type of row change
     public enum RowChangeType {
+        /// A row should be inserted
         case insert
+        /// A row should be deleted
         case delete
+        /// A row should be moved
         case move
+        /// A row should be updated
         case update
     }
 
+    /// The type of the row change
     public var type: RowChangeType!
+    /// The indexPath of the row before change
     public var indexPath: IndexPath?
+    /// The indexPath of the row after change
     public var newIndexPath: IndexPath?
 
     init(type: RowChangeType, indexPath: IndexPath? = nil, newIndexPath: IndexPath? = nil) {
@@ -91,7 +115,8 @@ public struct RowChange {
     }
 }
 
-public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
+/// A data source that binds with an array type of data in a GraphQL query and monitors its update
+public class ABSDKArrayDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var array: [Data?] = [] {
         willSet(newValue) {
             calculateChanges(oldArray: array, newArray: newValue)
@@ -111,6 +136,14 @@ public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectio
 
     var watcher: GraphQLQueryWatcher<Query>?
 
+    /// init an array data source
+    ///
+    /// - Parameters:
+    ///     client: an ABSDKClient for sending requests
+    ///     query: a GraphQL query to get the array
+    ///     dataSourceMapper: a callback to extract the concerned array from the query result
+    ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned array gets update
+    ///     arrayDataKeyEqualCHecker: an optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
     public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil) {
         self.client = client
         self.query = query
@@ -180,15 +213,26 @@ public class ABSDKArrayViewDataSource<Query: GraphQLQuery, Data: GraphQLSelectio
         }
     }
 
+    /// Get number of sections in the array, for tableView/CollectionView. default is 1
     public func numberOfSections() -> Int {
         return 1
     }
 
+    /// Get number of rows in the array, for tableView/CollectionView.
     public func numberOfRows(section: Int) -> Int {
         return array.count
     }
 
+    /// Get the element in the array, for tableView/CollectionView. 
+    /// - Parameters:
+    ///     indexPath: the indexPath of the item
+    /// - Returns: The element at the indexPath
     public func itemForIndexPath(indexPath: IndexPath) -> Data? {
         return array[indexPath.row]
+    }
+
+    /// Get row changes, usually get called in DataSourceUpdateHandler
+    public func getChanges() -> [RowChange] {
+        return changes
     }
 }
