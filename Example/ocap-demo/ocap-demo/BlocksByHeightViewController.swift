@@ -61,7 +61,7 @@ class BlocksByHeightViewController: UIViewController {
     @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
-    var dataSource: ABSDKArrayViewPagedDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
+    var dataSource: ABSDKPagedArrayDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +116,7 @@ class BlocksByHeightViewController: UIViewController {
             }
             return false
         }
-        dataSource = ABSDKArrayViewPagedDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 500000, toHeight: 500099), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
+        dataSource = ABSDKPagedArrayDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 500000, toHeight: 500099), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
         dataSource.refresh()
     }
 

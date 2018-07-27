@@ -23,7 +23,7 @@ class RichestAccountsViewController: UIViewController {
     @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
-    var dataSource: ABSDKArrayViewPagedDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>!
+    var dataSource: ABSDKPagedArrayDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,7 @@ class RichestAccountsViewController: UIViewController {
         let pageMapper: PageMapper<RichestAccountsQuery> = { (data) in
             return (data.richestAccounts?.page)!
         }
-        dataSource = ABSDKArrayViewPagedDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, query: RichestAccountsQuery(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, pageMapper: pageMapper)
+        dataSource = ABSDKPagedArrayDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, query: RichestAccountsQuery(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, pageMapper: pageMapper)
         dataSource.refresh()
     }
 

@@ -51,8 +51,8 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var detailView: TransactionDetailView!
 
     var detailDataSource: ABSDKObjectDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash>!
-    var inputDataSource: ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>!
-    var outputDataSource: ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum>!
+    var inputDataSource: ABSDKArrayDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>!
+    var outputDataSource: ABSDKArrayDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +82,7 @@ class TransactionViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        inputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
+        inputDataSource = ABSDKArrayDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
 
         let outputSourceMapper: ArrayDataSourceMapper<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum> = { (data) in
             return data.transactionByHash?.outputs?.data
@@ -93,7 +93,7 @@ class TransactionViewController: UIViewController {
             }
             self?.tableView.reloadData()
         }
-        outputDataSource = ABSDKArrayViewDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: outputSourceMapper, dataSourceUpdateHandler: outputDataSourceUpdateHandler)
+        outputDataSource = ABSDKArrayDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Output.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: outputSourceMapper, dataSourceUpdateHandler: outputDataSourceUpdateHandler)
     }
 
     override func didReceiveMemoryWarning() {
