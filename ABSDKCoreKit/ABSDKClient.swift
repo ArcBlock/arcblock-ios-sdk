@@ -23,6 +23,25 @@
 import Reachability
 import Apollo
 
+let ocapBaseUrl = "https://ocap.arcblock.io/"
+
+/// Enum for ArcBlock supported endpoints
+public enum ABSDKEndpoint {
+    /// the Bitcoin endpoint
+    case btc
+    /// the Ethereum endpoint
+    case eth
+
+    var url: URL {
+        switch self {
+        case .btc:
+            return URL(string:ocapBaseUrl + "api/btc")!
+        case .eth:
+            return URL(string:ocapBaseUrl + "api/eth")!
+        }
+    }
+}
+
 /// Enum to describe client's network access state
 public enum ClientNetworkAccessState {
     /// the client is online
@@ -118,6 +137,16 @@ public class ABSDKClientConfiguration {
 
     fileprivate var allowsCellularAccess: Bool = true
     fileprivate var autoSubmitOfflineMutations: Bool = true
+
+    /// Creates a configuration object for the `ABSDKClient`.
+    ///
+    /// - Parameters:
+    ///   - endpoint: The ArcBlock endpoint.
+    ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
+    public convenience init(endpoint: ABSDKEndpoint,
+                databaseURL: URL? = nil) throws {
+        try self.init(url: endpoint.url, databaseURL: databaseURL)
+    }
 
     /// Creates a configuration object for the `ABSDKClient`.
     ///
