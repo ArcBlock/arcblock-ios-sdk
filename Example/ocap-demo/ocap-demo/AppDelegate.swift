@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // initialize app sync client
             arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
         } catch {
-            print("Error initializing AppSync client. \(error)")
+            print("Error initializing ABSDKClient. \(error)")
         }
         return true
     }
