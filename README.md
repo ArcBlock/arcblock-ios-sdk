@@ -58,15 +58,14 @@ var arcblockClient: ABSDKClient!
 
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    let databaseURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("YOUR_DB_NAME")
+    let databaseURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("ocap-demo-db")
     do {
         // initialize the AppSync client configuration configuration
-        let arcblockConfiguration = try ABSDKClientConfiguration(url: URL(string: "YOUR_OCAP_ENDPOINT")!,
-                                                       databaseURL: databaseURL)
+        let arcblockConfiguration = try ABSDKClientConfiguration(endpoint: .btc, databaseURL: databaseURL)
         // initialize app sync client
         arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
     } catch {
-        print("Error initializing AppSync client. \(error)")
+        print("Error initializing ABSDKClient. \(error)")
     }
     return true
 }
