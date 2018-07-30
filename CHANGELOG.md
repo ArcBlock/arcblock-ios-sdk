@@ -1,3 +1,7 @@
+## 0.6.3 (July 30, 2018)
+  - update README
+  - provide convinient initializer to init ABSDKClient
+
 ## 0.6.2 (July 26, 2018)
   - update documentation for corekit class reference
   - update readme to demonstrate how to codegen in playbook
