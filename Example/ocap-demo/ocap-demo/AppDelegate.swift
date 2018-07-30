@@ -21,12 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(databaseURL)
         do {
             // initialize the AppSync client configuration configuration
-            let arcblockConfiguration = try ABSDKClientConfiguration(url: URL(string: "https://ocap.arcblock.io/api/btc")!,
-                                                           databaseURL: databaseURL)
+            let arcblockConfiguration = try ABSDKClientConfiguration(endpoint: .btc, databaseURL: databaseURL)
             // initialize app sync client
             arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
         } catch {
-            print("Error initializing AppSync client. \(error)")
+            print("Error initializing ABSDKClient. \(error)")
         }
         return true
     }
