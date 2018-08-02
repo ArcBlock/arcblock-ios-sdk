@@ -1307,27 +1307,29 @@ public final class BtcTxsSentByAccountQuery: GraphQLPagedQuery {
 
 public final class ListEthBlocksQuery: GraphQLPagedQuery {
   public let operationDefinition =
-    "query ListETHBlocks($paging: PageInput) {\n  blocksByHeight(fromHeight: 0, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      numberTxs\n      total\n      time\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
+    "query ListETHBlocks($fromHeight: Int!, $paging: PageInput) {\n  blocksByHeight(fromHeight: $fromHeight, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      time\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
 
+  public var fromHeight: Int
   public var paging: PageInput?
 
-  public init(paging: PageInput? = nil) {
+  public init(fromHeight: Int, paging: PageInput? = nil) {
+    self.fromHeight = fromHeight
     self.paging = paging
   }
 
   public func copy() -> Self {
-    return type(of: self).init(paging: paging)
+    return type(of: self).init(fromHeight: fromHeight, paging: paging)
   }
 
   public var variables: GraphQLMap? {
-    return ["paging": paging]
+    return ["fromHeight": fromHeight, "paging": paging]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["RootQueryType"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("blocksByHeight", arguments: ["fromHeight": 0, "paging": GraphQLVariable("paging")], type: .object(BlocksByHeight.selections)),
+      GraphQLField("blocksByHeight", arguments: ["fromHeight": GraphQLVariable("fromHeight"), "paging": GraphQLVariable("paging")], type: .object(BlocksByHeight.selections)),
     ]
 
     public private(set) var resultMap: ResultMap
@@ -1351,7 +1353,7 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
     }
 
     public struct BlocksByHeight: PagedData {
-      public static let possibleTypes = ["PagedBitcoinBlocks"]
+      public static let possibleTypes = ["PagedEthereumBlocks"]
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
@@ -1366,7 +1368,7 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
       }
 
       public init(data: [Datum?]? = nil, page: Page? = nil) {
-        self.init(unsafeResultMap: ["__typename": "PagedBitcoinBlocks", "data": data.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, "page": page.flatMap { (value: Page) -> ResultMap in value.resultMap }])
+        self.init(unsafeResultMap: ["__typename": "PagedEthereumBlocks", "data": data.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, "page": page.flatMap { (value: Page) -> ResultMap in value.resultMap }])
       }
 
       public var __typename: String {
@@ -1397,14 +1399,12 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
       }
 
       public struct Datum: GraphQLSelectionSet {
-        public static let possibleTypes = ["BitcoinBlock"]
+        public static let possibleTypes = ["EthereumBlock"]
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("height", type: .nonNull(.scalar(Int.self))),
           GraphQLField("hash", type: .nonNull(.scalar(String.self))),
-          GraphQLField("numberTxs", type: .nonNull(.scalar(Int.self))),
-          GraphQLField("total", type: .nonNull(.scalar(Int.self))),
           GraphQLField("time", type: .nonNull(.scalar(String.self))),
         ]
 
@@ -1414,8 +1414,8 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(height: Int, hash: String, numberTxs: Int, total: Int, time: String) {
-          self.init(unsafeResultMap: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "numberTxs": numberTxs, "total": total, "time": time])
+        public init(height: Int, hash: String, time: String) {
+          self.init(unsafeResultMap: ["__typename": "EthereumBlock", "height": height, "hash": hash, "time": time])
         }
 
         public var __typename: String {
@@ -1442,24 +1442,6 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
           }
           set {
             resultMap.updateValue(newValue, forKey: "hash")
-          }
-        }
-
-        public var numberTxs: Int {
-          get {
-            return resultMap["numberTxs"]! as! Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "numberTxs")
-          }
-        }
-
-        public var total: Int {
-          get {
-            return resultMap["total"]! as! Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "total")
           }
         }
 

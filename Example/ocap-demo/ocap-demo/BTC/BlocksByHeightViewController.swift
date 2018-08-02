@@ -67,7 +67,7 @@ class BlocksByHeightViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        arcblockClient = appDelegate.arcblockClient
+        arcblockClient = appDelegate.btcClient
 
         let dataSourceMapper: ArrayDataSourceMapper<ListBtcBlocksQuery, ListBtcBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data

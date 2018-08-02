@@ -26,7 +26,7 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
         super.viewDidLoad()
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        arcblockClient = appDelegate.arcblockClient
+        arcblockClient = appDelegate.btcClient
 
         tableView = UITableView.init(frame: self.view.bounds)
         tableView.delegate = self

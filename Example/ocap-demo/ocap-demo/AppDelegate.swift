@@ -13,17 +13,20 @@ import ArcBlockSDK
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var arcblockClient: ABSDKClient!
+    var btcClient: ABSDKClient!
+    var ethClient: ABSDKClient!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let databaseURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("ocap-demo-db")
         print(databaseURL)
         do {
-            // initialize the AppSync client configuration configuration
-            let arcblockConfiguration = try ABSDKClientConfiguration(endpoint: .btc, databaseURL: databaseURL)
+            // initialize the ArcBlock client configuration configuration
+            let btcConfiguration = try ABSDKClientConfiguration(endpoint: .btc, databaseURL: databaseURL)
+            let ethConfiguration = try ABSDKClientConfiguration(endpoint: .eth, databaseURL: databaseURL)
             // initialize app sync client
-            arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
+            btcClient = try ABSDKClient(configuration: btcConfiguration)
+            ethClient = try ABSDKClient(configuration: ethConfiguration)
         } catch {
             print("Error initializing ABSDKClient. \(error)")
         }

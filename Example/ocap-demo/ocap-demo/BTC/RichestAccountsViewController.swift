@@ -29,7 +29,7 @@ class RichestAccountsViewController: UIViewController {
         super.viewDidLoad()
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        arcblockClient = appDelegate.arcblockClient
+        arcblockClient = appDelegate.btcClient
 
         let dataSourceMapper: ArrayDataSourceMapper<BtcRichestAccountsQuery, BtcRichestAccountsQuery.Data.RichestAccount.Datum> = { (data) in
             return data.richestAccounts?.data

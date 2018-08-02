@@ -36,7 +36,7 @@ class AccountDetailViewController: UIViewController {
         super.viewDidLoad()
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        arcblockClient = appDelegate.arcblockClient
+        arcblockClient = appDelegate.btcClient
 
         let detailSourceMapper: ObjectDataSourceMapper<BtcAccountByAddressQuery, BtcAccountByAddressQuery.Data.AccountByAddress> = { (data) in
             return data.accountByAddress
