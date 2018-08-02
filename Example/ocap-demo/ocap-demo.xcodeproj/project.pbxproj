@@ -13,8 +13,6 @@
 		272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */; };
 		272225E520E20B7C00E2BBB3 /* ocap_demoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225E420E20B7C00E2BBB3 /* ocap_demoTests.swift */; };
 		272225F020E20B7C00E2BBB3 /* ocap_demoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */; };
-		2722260220E32E8E00E2BBB3 /* ocap.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 2722260020E32E8E00E2BBB3 /* ocap.graphql */; };
-		2722260320E32E8F00E2BBB3 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 2722260120E32E8E00E2BBB3 /* schema.json */; };
 		2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E54C20E9D2A9009EA0C3 /* API.swift */; };
 		2749C33420ED1F43001D2E3D /* BlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */; };
 		2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33520F361E1001D2E3D /* TransactionViewController.swift */; };
@@ -65,8 +63,6 @@
 		272225EB20E20B7C00E2BBB3 /* ocap-demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ocap-demoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ocap_demoUITests.swift; sourceTree = "<group>"; };
 		272225F120E20B7C00E2BBB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2722260020E32E8E00E2BBB3 /* ocap.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ocap.graphql; sourceTree = "<group>"; };
-		2722260120E32E8E00E2BBB3 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		2739E54C20E9D2A9009EA0C3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDetailViewController.swift; sourceTree = "<group>"; };
 		2749C33520F361E1001D2E3D /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
@@ -151,8 +147,6 @@
 				272225DB20E20B7C00E2BBB3 /* Info.plist */,
 				272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */,
 				272225D320E20B7A00E2BBB3 /* Main.storyboard */,
-				2722260020E32E8E00E2BBB3 /* ocap.graphql */,
-				2722260120E32E8E00E2BBB3 /* schema.json */,
 			);
 			path = "ocap-demo";
 			sourceTree = "<group>";
@@ -336,8 +330,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2722260220E32E8E00E2BBB3 /* ocap.graphql in Resources */,
-				2722260320E32E8F00E2BBB3 /* schema.json in Resources */,
 				272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */,
 				2791C22521003CD40011F0C0 /* TransactionListCell.xib in Resources */,
 				2791C229210046B90011F0C0 /* BlockDetailView.xib in Resources */,

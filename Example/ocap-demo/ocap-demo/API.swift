@@ -3,33 +3,31 @@
 import Apollo
 import ArcBlockSDK
 
-public final class ListBlocksQuery: GraphQLPagedQuery {
+public final class ListBtcBlocksQuery: GraphQLPagedQuery {
   public let operationDefinition =
-    "query ListBlocks($fromHeight: Int!, $toHeight: Int!, $paging: PageInput) {\n  blocksByHeight(fromHeight: $fromHeight, toHeight: $toHeight, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      numberTxs\n      total\n      time\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
+    "query ListBTCBlocks($fromHeight: Int!, $paging: PageInput) {\n  blocksByHeight(fromHeight: $fromHeight, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      numberTxs\n      total\n      time\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
 
   public var fromHeight: Int
-  public var toHeight: Int
   public var paging: PageInput?
 
-  public init(fromHeight: Int, toHeight: Int, paging: PageInput? = nil) {
+  public init(fromHeight: Int, paging: PageInput? = nil) {
     self.fromHeight = fromHeight
-    self.toHeight = toHeight
     self.paging = paging
   }
 
   public func copy() -> Self {
-    return type(of: self).init(fromHeight: fromHeight, toHeight: toHeight, paging: paging)
+    return type(of: self).init(fromHeight: fromHeight, paging: paging)
   }
 
   public var variables: GraphQLMap? {
-    return ["fromHeight": fromHeight, "toHeight": toHeight, "paging": paging]
+    return ["fromHeight": fromHeight, "paging": paging]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["RootQueryType"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("blocksByHeight", arguments: ["fromHeight": GraphQLVariable("fromHeight"), "toHeight": GraphQLVariable("toHeight"), "paging": GraphQLVariable("paging")], type: .object(BlocksByHeight.selections)),
+      GraphQLField("blocksByHeight", arguments: ["fromHeight": GraphQLVariable("fromHeight"), "paging": GraphQLVariable("paging")], type: .object(BlocksByHeight.selections)),
     ]
 
     public private(set) var resultMap: ResultMap
@@ -178,9 +176,9 @@ public final class ListBlocksQuery: GraphQLPagedQuery {
   }
 }
 
-public final class BlockDetailQuery: GraphQLPagedQuery {
+public final class BtcBlockDetailQuery: GraphQLPagedQuery {
   public let operationDefinition =
-    "query BlockDetail($height: Int!, $paging: PageInput) {\n  blockByHeight(height: $height) {\n    __typename\n    height\n    hash\n    preHash\n    numberTxs\n    total\n    fees\n    merkleRoot\n    time\n    transactions(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n        lockTime\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
+    "query BTCBlockDetail($height: Int!, $paging: PageInput) {\n  blockByHeight(height: $height) {\n    __typename\n    height\n    hash\n    preHash\n    numberTxs\n    total\n    fees\n    merkleRoot\n    time\n    transactions(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n        lockTime\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
 
   public var height: Int
   public var paging: PageInput?
@@ -438,9 +436,9 @@ public final class BlockDetailQuery: GraphQLPagedQuery {
   }
 }
 
-public final class TransactionDetailQuery: GraphQLQuery {
+public final class BtcTransactionDetailQuery: GraphQLQuery {
   public let operationDefinition =
-    "query TransactionDetail($hash: String!) {\n  transactionByHash(hash: $hash) {\n    __typename\n    fees\n    total\n    numberInputs\n    numberOutputs\n    inputs {\n      __typename\n      data {\n        __typename\n        account\n        value\n      }\n    }\n    outputs {\n      __typename\n      data {\n        __typename\n        account\n        value\n      }\n    }\n  }\n}"
+    "query BTCTransactionDetail($hash: String!) {\n  transactionByHash(hash: $hash) {\n    __typename\n    fees\n    total\n    numberInputs\n    numberOutputs\n    inputs {\n      __typename\n      data {\n        __typename\n        account\n        value\n      }\n    }\n    outputs {\n      __typename\n      data {\n        __typename\n        account\n        value\n      }\n    }\n  }\n}"
 
   public var hash: String
 
@@ -736,9 +734,9 @@ public final class TransactionDetailQuery: GraphQLQuery {
   }
 }
 
-public final class RichestAccountsQuery: GraphQLPagedQuery {
+public final class BtcRichestAccountsQuery: GraphQLPagedQuery {
   public let operationDefinition =
-    "query RichestAccounts($paging: PageInput) {\n  richestAccounts(paging: $paging) {\n    __typename\n    data {\n      __typename\n      address\n      balance\n    }\n    page {\n      __typename\n      total\n      next\n      cursor\n    }\n  }\n}"
+    "query BTCRichestAccounts($paging: PageInput) {\n  richestAccounts(paging: $paging) {\n    __typename\n    data {\n      __typename\n      address\n      balance\n    }\n    page {\n      __typename\n      total\n      next\n      cursor\n    }\n  }\n}"
 
   public var paging: PageInput?
 
@@ -877,9 +875,9 @@ public final class RichestAccountsQuery: GraphQLPagedQuery {
   }
 }
 
-public final class AccountByAddressQuery: GraphQLQuery {
+public final class BtcAccountByAddressQuery: GraphQLQuery {
   public let operationDefinition =
-    "query AccountByAddress($address: String!) {\n  accountByAddress(address: $address) {\n    __typename\n    pubKey\n    scriptType\n  }\n}"
+    "query BTCAccountByAddress($address: String!) {\n  accountByAddress(address: $address) {\n    __typename\n    pubKey\n    scriptType\n  }\n}"
 
   public var address: String
 
@@ -967,9 +965,9 @@ public final class AccountByAddressQuery: GraphQLQuery {
   }
 }
 
-public final class TxsReceivedByAccountQuery: GraphQLPagedQuery {
+public final class BtcTxsReceivedByAccountQuery: GraphQLPagedQuery {
   public let operationDefinition =
-    "query TxsReceivedByAccount($address: String!, $paging: PageInput) {\n  accountByAddress(address: $address) {\n    __typename\n    txsReceived(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
+    "query BTCTxsReceivedByAccount($address: String!, $paging: PageInput) {\n  accountByAddress(address: $address) {\n    __typename\n    txsReceived(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
 
   public var address: String
   public var paging: PageInput?
@@ -1137,9 +1135,9 @@ public final class TxsReceivedByAccountQuery: GraphQLPagedQuery {
   }
 }
 
-public final class TxsSentByAccountQuery: GraphQLPagedQuery {
+public final class BtcTxsSentByAccountQuery: GraphQLPagedQuery {
   public let operationDefinition =
-    "query TxsSentByAccount($address: String!, $paging: PageInput) {\n  accountByAddress(address: $address) {\n    __typename\n    txsSent(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
+    "query BTCTxsSentByAccount($address: String!, $paging: PageInput) {\n  accountByAddress(address: $address) {\n    __typename\n    txsSent(paging: $paging) {\n      __typename\n      data {\n        __typename\n        hash\n      }\n      page {\n        __typename\n        total\n        next\n        cursor\n      }\n    }\n  }\n}"
 
   public var address: String
   public var paging: PageInput?
@@ -1300,6 +1298,177 @@ public final class TxsSentByAccountQuery: GraphQLPagedQuery {
             set {
               resultMap.updateValue(newValue, forKey: "hash")
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class ListEthBlocksQuery: GraphQLPagedQuery {
+  public let operationDefinition =
+    "query ListETHBlocks($paging: PageInput) {\n  blocksByHeight(fromHeight: 0, paging: $paging) {\n    __typename\n    data {\n      __typename\n      height\n      hash\n      numberTxs\n      total\n      time\n    }\n    page {\n      __typename\n      cursor\n      next\n      total\n    }\n  }\n}"
+
+  public var paging: PageInput?
+
+  public init(paging: PageInput? = nil) {
+    self.paging = paging
+  }
+
+  public func copy() -> Self {
+    return type(of: self).init(paging: paging)
+  }
+
+  public var variables: GraphQLMap? {
+    return ["paging": paging]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootQueryType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("blocksByHeight", arguments: ["fromHeight": 0, "paging": GraphQLVariable("paging")], type: .object(BlocksByHeight.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(blocksByHeight: BlocksByHeight? = nil) {
+      self.init(unsafeResultMap: ["__typename": "RootQueryType", "blocksByHeight": blocksByHeight.flatMap { (value: BlocksByHeight) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns blockks with paginations based on their height.
+    public var blocksByHeight: BlocksByHeight? {
+      get {
+        return (resultMap["blocksByHeight"] as? ResultMap).flatMap { BlocksByHeight(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "blocksByHeight")
+      }
+    }
+
+    public struct BlocksByHeight: PagedData {
+      public static let possibleTypes = ["PagedBitcoinBlocks"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("data", type: .list(.object(Datum.selections))),
+        GraphQLField("page", type: .object(Page.selections)),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(data: [Datum?]? = nil, page: Page? = nil) {
+        self.init(unsafeResultMap: ["__typename": "PagedBitcoinBlocks", "data": data.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, "page": page.flatMap { (value: Page) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var data: [Datum?]? {
+        get {
+          return (resultMap["data"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Datum?] in value.map { (value: ResultMap?) -> Datum? in value.flatMap { (value: ResultMap) -> Datum in Datum(unsafeResultMap: value) } } }
+        }
+        set {
+          resultMap.updateValue(newValue.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, forKey: "data")
+        }
+      }
+
+      public var page: Page? {
+        get {
+          return (resultMap["page"] as? ResultMap).flatMap { Page(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "page")
+        }
+      }
+
+      public struct Datum: GraphQLSelectionSet {
+        public static let possibleTypes = ["BitcoinBlock"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("height", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("hash", type: .nonNull(.scalar(String.self))),
+          GraphQLField("numberTxs", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("total", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("time", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(height: Int, hash: String, numberTxs: Int, total: Int, time: String) {
+          self.init(unsafeResultMap: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "numberTxs": numberTxs, "total": total, "time": time])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var height: Int {
+          get {
+            return resultMap["height"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "height")
+          }
+        }
+
+        public var hash: String {
+          get {
+            return resultMap["hash"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "hash")
+          }
+        }
+
+        public var numberTxs: Int {
+          get {
+            return resultMap["numberTxs"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "numberTxs")
+          }
+        }
+
+        public var total: Int {
+          get {
+            return resultMap["total"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "total")
+          }
+        }
+
+        public var time: String {
+          get {
+            return resultMap["time"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "time")
           }
         }
       }
