@@ -9,13 +9,13 @@
 import UIKit
 import ArcBlockSDK
 
-class TxsSentViewController: TransactionListViewController<TxsSentByAccountQuery, TxsSentByAccountQuery.Data.AccountByAddress.TxsSent.Datum> {
+class TxsSentViewController: TransactionListViewController<BtcTxsSentByAccountQuery, BtcTxsSentByAccountQuery.Data.AccountByAddress.TxsSent.Datum> {
     var address: String!
 
-    var txsSentDataSource: ABSDKPagedArrayDataSource<TxsSentByAccountQuery, TxsSentByAccountQuery.Data.AccountByAddress.TxsSent.Datum>!
+    var txsSentDataSource: ABSDKPagedArrayDataSource<BtcTxsSentByAccountQuery, BtcTxsSentByAccountQuery.Data.AccountByAddress.TxsSent.Datum>!
 
     override func viewDidLoad() {
-        self.query = TxsSentByAccountQuery(address: address)
+        self.query = BtcTxsSentByAccountQuery(address: address)
 
         self.transactionsSourceMapper = { (data) in
             return data.accountByAddress?.txsSent?.data

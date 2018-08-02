@@ -13,7 +13,7 @@ class AccountListCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
 
-    public func updateAccountData(account: RichestAccountsQuery.Data.RichestAccount.Datum) {
+    public func updateAccountData(account: BtcRichestAccountsQuery.Data.RichestAccount.Datum) {
         addressLabel.text = account.address
         balanceLabel.text = "Balance: " + String(account.balance!) + " BTC"
     }
@@ -23,7 +23,7 @@ class RichestAccountsViewController: UIViewController {
     @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
-    var dataSource: ABSDKPagedArrayDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>!
+    var dataSource: ABSDKPagedArrayDataSource<BtcRichestAccountsQuery, BtcRichestAccountsQuery.Data.RichestAccount.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class RichestAccountsViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         arcblockClient = appDelegate.arcblockClient
 
-        let dataSourceMapper: ArrayDataSourceMapper<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum> = { (data) in
+        let dataSourceMapper: ArrayDataSourceMapper<BtcRichestAccountsQuery, BtcRichestAccountsQuery.Data.RichestAccount.Datum> = { (data) in
             return data.richestAccounts?.data
         }
         let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
@@ -46,10 +46,10 @@ class RichestAccountsViewController: UIViewController {
                 self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
             }
         }
-        let pageMapper: PageMapper<RichestAccountsQuery> = { (data) in
+        let pageMapper: PageMapper<BtcRichestAccountsQuery> = { (data) in
             return (data.richestAccounts?.page)!
         }
-        dataSource = ABSDKPagedArrayDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, query: RichestAccountsQuery(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, pageMapper: pageMapper)
+        dataSource = ABSDKPagedArrayDataSource<BtcRichestAccountsQuery, BtcRichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, query: BtcRichestAccountsQuery(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, pageMapper: pageMapper)
         dataSource.refresh()
     }
 
@@ -61,7 +61,7 @@ class RichestAccountsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AccountDetailSegue" {
             let indexPath: IndexPath = tableView.indexPathForSelectedRow!
-            let data: RichestAccountsQuery.Data.RichestAccount.Datum = dataSource.itemForIndexPath(indexPath: indexPath)!
+            let data: BtcRichestAccountsQuery.Data.RichestAccount.Datum = dataSource.itemForIndexPath(indexPath: indexPath)!
             let destinationViewController: AccountDetailViewController = segue.destination as! AccountDetailViewController
             destinationViewController.address = data.address
             destinationViewController.title = data.address

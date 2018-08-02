@@ -9,11 +9,11 @@
 import UIKit
 import ArcBlockSDK
 
-class TxsReceivedViewController: TransactionListViewController<TxsReceivedByAccountQuery, TxsReceivedByAccountQuery.Data.AccountByAddress.TxsReceived.Datum> {
+class TxsReceivedViewController: TransactionListViewController<BtcTxsReceivedByAccountQuery, BtcTxsReceivedByAccountQuery.Data.AccountByAddress.TxsReceived.Datum> {
     var address: String!
 
     override func viewDidLoad() {
-        self.query = TxsReceivedByAccountQuery(address: address)
+        self.query = BtcTxsReceivedByAccountQuery(address: address)
 
         self.transactionsSourceMapper = { (data) in
             return data.accountByAddress?.txsReceived?.data
