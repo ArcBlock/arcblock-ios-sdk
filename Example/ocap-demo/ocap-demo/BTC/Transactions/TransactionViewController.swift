@@ -60,7 +60,7 @@ class TransactionViewController: UIViewController {
         self.title = txHash
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        arcblockClient = appDelegate.arcblockClient
+        arcblockClient = appDelegate.btcClient
 
         transactionDetailQuery = BtcTransactionDetailQuery(hash: txHash!)
 
