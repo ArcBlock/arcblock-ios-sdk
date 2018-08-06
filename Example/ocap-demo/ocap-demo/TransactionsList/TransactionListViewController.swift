@@ -25,9 +25,6 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        arcblockClient = appDelegate.arcblockClient
-
         tableView = UITableView.init(frame: self.view.bounds)
         tableView.delegate = self
         tableView.dataSource = self
@@ -82,9 +79,7 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath: IndexPath = tableView.indexPathForSelectedRow!
         let data: Data = transactionDataSource.itemForIndexPath(indexPath: indexPath)!
-        let transactionViewController: TransactionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TransactionViewController") as! TransactionViewController
-        transactionViewController.txHash = data.resultMap["hash"] as! String
-        self.navigationController?.pushViewController(transactionViewController, animated: true)
+        self.transactionSelected(transation: data)
         tableView .deselectRow(at: indexPath, animated: false)
     }
 
@@ -92,5 +87,9 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
         if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
             transactionDataSource.loadMore()
         }
+    }
+
+    public func transactionSelected(transation: Data) {
+
     }
 }

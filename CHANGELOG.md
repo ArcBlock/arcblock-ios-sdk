@@ -1,3 +1,9 @@
+## 0.6.4 (August 06, 2018)
+  - add ethereum transaction detail page
+  - support ethereum block detail
+  - implement ethereum block list
+  - add ethereum list block query
+
 ## 0.6.3 (July 30, 2018)
   - update README
   - provide convinient initializer to init ABSDKClient
