@@ -50,7 +50,7 @@ class BlockListCell: UITableViewCell {
 
     fileprivate static let timeConverter: TimeConverter = TimeConverter()
 
-    public func updateBlockData(block: ListBlocksQuery.Data.BlocksByHeight.Datum) {
+    public func updateBlockData(block: ListBtcBlocksQuery.Data.BlocksByHeight.Datum) {
         heightLabel.text = "Block Height: " + String(block.height)
         transactionLabel.text = String(block.numberTxs) + " txs " + String(block.total) + " BTC"
         timeLabel.text = type(of: self).timeConverter.convertTime(time: block.time)
@@ -61,15 +61,15 @@ class BlocksByHeightViewController: UIViewController {
     @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
     var arcblockClient: ABSDKClient!
-    var dataSource: ABSDKPagedArrayDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>!
+    var dataSource: ABSDKPagedArrayDataSource<ListBtcBlocksQuery, ListBtcBlocksQuery.Data.BlocksByHeight.Datum>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        arcblockClient = appDelegate.arcblockClient
+        arcblockClient = appDelegate.btcClient
 
-        let dataSourceMapper: ArrayDataSourceMapper<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
+        let dataSourceMapper: ArrayDataSourceMapper<ListBtcBlocksQuery, ListBtcBlocksQuery.Data.BlocksByHeight.Datum> = { (data) in
             return data.blocksByHeight?.data
         }
         let dataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
@@ -107,16 +107,16 @@ class BlocksByHeightViewController: UIViewController {
                 self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
             }
         }
-        let pageMapper: PageMapper<ListBlocksQuery> = { (data) in
+        let pageMapper: PageMapper<ListBtcBlocksQuery> = { (data) in
             return (data.blocksByHeight?.page)!
         }
-        let checker: ArrayDataKeyEqualChecker<ListBlocksQuery.Data.BlocksByHeight.Datum> = { (object1, object2) in
+        let checker: ArrayDataKeyEqualChecker<ListBtcBlocksQuery.Data.BlocksByHeight.Datum> = { (object1, object2) in
             if (object1 != nil) && (object2 != nil) {
                 return object1?.height == object2?.height
             }
             return false
         }
-        dataSource = ABSDKPagedArrayDataSource<ListBlocksQuery, ListBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBlocksQuery(fromHeight: 500000, toHeight: 500099), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
+        dataSource = ABSDKPagedArrayDataSource<ListBtcBlocksQuery, ListBtcBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListBtcBlocksQuery(fromHeight: 500000), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
         dataSource.refresh()
     }
 
@@ -128,7 +128,7 @@ class BlocksByHeightViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "BlockDetailSegue" {
             let indexPath: IndexPath = tableView.indexPathForSelectedRow!
-            let data: ListBlocksQuery.Data.BlocksByHeight.Datum = dataSource.itemForIndexPath(indexPath: indexPath)!
+            let data: ListBtcBlocksQuery.Data.BlocksByHeight.Datum = dataSource.itemForIndexPath(indexPath: indexPath)!
             let destinationViewController: BlockDetailViewController = segue.destination as! BlockDetailViewController
             destinationViewController.height = data.height
             destinationViewController.title = "Block " + String(data.height)
