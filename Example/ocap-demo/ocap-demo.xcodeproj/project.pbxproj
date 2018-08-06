@@ -13,7 +13,9 @@
 		272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272225D820E20B7C00E2BBB3 /* LaunchScreen.storyboard */; };
 		272225E520E20B7C00E2BBB3 /* ocap_demoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225E420E20B7C00E2BBB3 /* ocap_demoTests.swift */; };
 		272225F020E20B7C00E2BBB3 /* ocap_demoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */; };
-		27240D7E2113274B00A4D2A2 /* ETHBlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D7D2113274B00A4D2A2 /* ETHBlockListViewController.swift */; };
+		27240D7E2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D7D2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift */; };
+		27240D812117D53000A4D2A2 /* ETHBlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D802117D53000A4D2A2 /* ETHBlockDetailViewController.swift */; };
+		27240D832117F02600A4D2A2 /* ETHBlockDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27240D822117F02600A4D2A2 /* ETHBlockDetailView.xib */; };
 		2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E54C20E9D2A9009EA0C3 /* API.swift */; };
 		2749C33420ED1F43001D2E3D /* BlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */; };
 		2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33520F361E1001D2E3D /* TransactionViewController.swift */; };
@@ -64,7 +66,9 @@
 		272225EB20E20B7C00E2BBB3 /* ocap-demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ocap-demoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		272225EF20E20B7C00E2BBB3 /* ocap_demoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ocap_demoUITests.swift; sourceTree = "<group>"; };
 		272225F120E20B7C00E2BBB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27240D7D2113274B00A4D2A2 /* ETHBlockListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHBlockListViewController.swift; sourceTree = "<group>"; };
+		27240D7D2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHBlocksByHeightViewController.swift; sourceTree = "<group>"; };
+		27240D802117D53000A4D2A2 /* ETHBlockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHBlockDetailViewController.swift; sourceTree = "<group>"; };
+		27240D822117F02600A4D2A2 /* ETHBlockDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ETHBlockDetailView.xib; sourceTree = "<group>"; };
 		2739E54C20E9D2A9009EA0C3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDetailViewController.swift; sourceTree = "<group>"; };
 		2749C33520F361E1001D2E3D /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
@@ -182,10 +186,10 @@
 		27240D7B21131C7200A4D2A2 /* BTC */ = {
 			isa = PBXGroup;
 			children = (
-				27B60BFC210063700079352C /* BlocksByHeightViewController.swift */,
-				2791C21220FDD30B0011F0C0 /* RichestAccountsViewController.swift */,
 				2791C22C21004F770011F0C0 /* Account */,
 				2791C22B21004F450011F0C0 /* Block Detail */,
+				27B60BFC210063700079352C /* BlocksByHeightViewController.swift */,
+				2791C21220FDD30B0011F0C0 /* RichestAccountsViewController.swift */,
 				2791C22A21004F290011F0C0 /* Transactions */,
 			);
 			path = BTC;
@@ -194,9 +198,19 @@
 		27240D7C21131C9D00A4D2A2 /* ETH */ = {
 			isa = PBXGroup;
 			children = (
-				27240D7D2113274B00A4D2A2 /* ETHBlockListViewController.swift */,
+				27240D7F2117D4F600A4D2A2 /* Block Detail */,
+				27240D7D2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift */,
 			);
 			path = ETH;
+			sourceTree = "<group>";
+		};
+		27240D7F2117D4F600A4D2A2 /* Block Detail */ = {
+			isa = PBXGroup;
+			children = (
+				27240D802117D53000A4D2A2 /* ETHBlockDetailViewController.swift */,
+				27240D822117F02600A4D2A2 /* ETHBlockDetailView.xib */,
+			);
+			path = "Block Detail";
 			sourceTree = "<group>";
 		};
 		2791C22A21004F290011F0C0 /* Transactions */ = {
@@ -360,6 +374,7 @@
 				272225DA20E20B7C00E2BBB3 /* LaunchScreen.storyboard in Resources */,
 				2791C22521003CD40011F0C0 /* TransactionListCell.xib in Resources */,
 				2791C229210046B90011F0C0 /* BlockDetailView.xib in Resources */,
+				27240D832117F02600A4D2A2 /* ETHBlockDetailView.xib in Resources */,
 				272225D720E20B7C00E2BBB3 /* Assets.xcassets in Resources */,
 				272225D520E20B7A00E2BBB3 /* Main.storyboard in Resources */,
 			);
@@ -468,10 +483,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2791C21720FF269B0011F0C0 /* AccountDetailViewController.swift in Sources */,
+				27240D812117D53000A4D2A2 /* ETHBlockDetailViewController.swift in Sources */,
 				2791C22721003CEE0011F0C0 /* TransactionListCell.swift in Sources */,
 				2791C2222100361D0011F0C0 /* TransactionListViewController.swift in Sources */,
 				2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */,
-				27240D7E2113274B00A4D2A2 /* ETHBlockListViewController.swift in Sources */,
+				27240D7E2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift in Sources */,
 				27B60BFD210063700079352C /* BlocksByHeightViewController.swift in Sources */,
 				2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */,
 				2791C21320FDD30B0011F0C0 /* RichestAccountsViewController.swift in Sources */,

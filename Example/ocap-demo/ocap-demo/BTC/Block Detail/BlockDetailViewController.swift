@@ -16,7 +16,7 @@ class BlockDetailView: UIView {
     @IBOutlet weak var feesLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
 
-    fileprivate static let timeConverter: TimeConverter = {
+    static let timeConverter: TimeConverter = {
         var timeConverter = TimeConverter()
         timeConverter.dateStyle = .medium
         timeConverter.timeStyle = .medium
