@@ -16,6 +16,7 @@
 		27240D7E2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D7D2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift */; };
 		27240D812117D53000A4D2A2 /* ETHBlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D802117D53000A4D2A2 /* ETHBlockDetailViewController.swift */; };
 		27240D832117F02600A4D2A2 /* ETHBlockDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27240D822117F02600A4D2A2 /* ETHBlockDetailView.xib */; };
+		27240D852117FA0B00A4D2A2 /* ETHTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D842117FA0B00A4D2A2 /* ETHTransactionViewController.swift */; };
 		2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E54C20E9D2A9009EA0C3 /* API.swift */; };
 		2749C33420ED1F43001D2E3D /* BlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */; };
 		2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749C33520F361E1001D2E3D /* TransactionViewController.swift */; };
@@ -69,6 +70,7 @@
 		27240D7D2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHBlocksByHeightViewController.swift; sourceTree = "<group>"; };
 		27240D802117D53000A4D2A2 /* ETHBlockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHBlockDetailViewController.swift; sourceTree = "<group>"; };
 		27240D822117F02600A4D2A2 /* ETHBlockDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ETHBlockDetailView.xib; sourceTree = "<group>"; };
+		27240D842117FA0B00A4D2A2 /* ETHTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHTransactionViewController.swift; sourceTree = "<group>"; };
 		2739E54C20E9D2A9009EA0C3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		2749C33320ED1F43001D2E3D /* BlockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDetailViewController.swift; sourceTree = "<group>"; };
 		2749C33520F361E1001D2E3D /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			children = (
 				27240D7F2117D4F600A4D2A2 /* Block Detail */,
 				27240D7D2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift */,
+				27240D842117FA0B00A4D2A2 /* ETHTransactionViewController.swift */,
 			);
 			path = ETH;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				2791C21720FF269B0011F0C0 /* AccountDetailViewController.swift in Sources */,
 				27240D812117D53000A4D2A2 /* ETHBlockDetailViewController.swift in Sources */,
 				2791C22721003CEE0011F0C0 /* TransactionListCell.swift in Sources */,
+				27240D852117FA0B00A4D2A2 /* ETHTransactionViewController.swift in Sources */,
 				2791C2222100361D0011F0C0 /* TransactionListViewController.swift in Sources */,
 				2749C33620F361E1001D2E3D /* TransactionViewController.swift in Sources */,
 				27240D7E2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift in Sources */,

@@ -1680,7 +1680,7 @@ public final class EthBlockDetailQuery: GraphQLPagedQuery {
 
 public final class EthTransactionDetailQuery: GraphQLQuery {
   public let operationDefinition =
-    "query ETHTransactionDetail($hash: String!) {\n  transactionByHash(hash: $hash) {\n    __typename\n    fees\n    total\n    from {\n      __typename\n      address\n      balance\n      isContract\n      numberTxsSent\n      numberTxsReceived\n      pubKey\n    }\n    to {\n      __typename\n      address\n      balance\n      isContract\n      numberTxsSent\n      numberTxsReceived\n      pubKey\n    }\n  }\n}"
+    "query ETHTransactionDetail($hash: String!) {\n  transactionByHash(hash: $hash) {\n    __typename\n    fees\n    total\n    from {\n      __typename\n      address\n      balance\n      isContract\n    }\n    to {\n      __typename\n      address\n      balance\n      isContract\n    }\n  }\n}"
 
   public var hash: String
 
@@ -1793,9 +1793,6 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           GraphQLField("address", type: .nonNull(.scalar(String.self))),
           GraphQLField("balance", type: .scalar(Int.self)),
           GraphQLField("isContract", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("numberTxsSent", type: .scalar(Int.self)),
-          GraphQLField("numberTxsReceived", type: .scalar(Int.self)),
-          GraphQLField("pubKey", type: .scalar(String.self)),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -1804,8 +1801,8 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(address: String, balance: Int? = nil, isContract: Bool, numberTxsSent: Int? = nil, numberTxsReceived: Int? = nil, pubKey: String? = nil) {
-          self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract, "numberTxsSent": numberTxsSent, "numberTxsReceived": numberTxsReceived, "pubKey": pubKey])
+        public init(address: String, balance: Int? = nil, isContract: Bool) {
+          self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract])
         }
 
         public var __typename: String {
@@ -1841,33 +1838,6 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue, forKey: "isContract")
-          }
-        }
-
-        public var numberTxsSent: Int? {
-          get {
-            return resultMap["numberTxsSent"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "numberTxsSent")
-          }
-        }
-
-        public var numberTxsReceived: Int? {
-          get {
-            return resultMap["numberTxsReceived"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "numberTxsReceived")
-          }
-        }
-
-        public var pubKey: String? {
-          get {
-            return resultMap["pubKey"] as? String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "pubKey")
           }
         }
       }
@@ -1880,9 +1850,6 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           GraphQLField("address", type: .nonNull(.scalar(String.self))),
           GraphQLField("balance", type: .scalar(Int.self)),
           GraphQLField("isContract", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("numberTxsSent", type: .scalar(Int.self)),
-          GraphQLField("numberTxsReceived", type: .scalar(Int.self)),
-          GraphQLField("pubKey", type: .scalar(String.self)),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -1891,8 +1858,8 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(address: String, balance: Int? = nil, isContract: Bool, numberTxsSent: Int? = nil, numberTxsReceived: Int? = nil, pubKey: String? = nil) {
-          self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract, "numberTxsSent": numberTxsSent, "numberTxsReceived": numberTxsReceived, "pubKey": pubKey])
+        public init(address: String, balance: Int? = nil, isContract: Bool) {
+          self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract])
         }
 
         public var __typename: String {
@@ -1928,33 +1895,6 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue, forKey: "isContract")
-          }
-        }
-
-        public var numberTxsSent: Int? {
-          get {
-            return resultMap["numberTxsSent"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "numberTxsSent")
-          }
-        }
-
-        public var numberTxsReceived: Int? {
-          get {
-            return resultMap["numberTxsReceived"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "numberTxsReceived")
-          }
-        }
-
-        public var pubKey: String? {
-          get {
-            return resultMap["pubKey"] as? String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "pubKey")
           }
         }
       }

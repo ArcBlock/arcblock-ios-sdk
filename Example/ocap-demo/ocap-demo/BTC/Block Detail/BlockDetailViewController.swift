@@ -49,6 +49,9 @@ class BlockDetailViewController: TransactionListViewController<BtcBlockDetailQue
             return (data.blockByHeight?.transactions?.page)!
         }
 
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        arcblockClient = appDelegate.btcClient
+
         super.viewDidLoad()
 
         let detailSourceMapper: ObjectDataSourceMapper<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight> = { (data) in
@@ -66,8 +69,9 @@ class BlockDetailViewController: TransactionListViewController<BtcBlockDetailQue
         self.tableView.tableHeaderView = detailView
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func transactionSelected(transation: BtcBlockDetailQuery.Data.BlockByHeight.Transaction.Datum) {
+        let transactionViewController: TransactionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TransactionViewController") as! TransactionViewController
+        transactionViewController.txHash = transation.hash
+        self.navigationController?.pushViewController(transactionViewController, animated: true)
     }
 }

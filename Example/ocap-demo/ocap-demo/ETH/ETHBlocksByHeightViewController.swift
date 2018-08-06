@@ -47,7 +47,7 @@ class ETHBlocksByHeightViewController: UIViewController {
             }
             return false
         }
-        dataSource = ABSDKPagedArrayDataSource<ListEthBlocksQuery, ListEthBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListEthBlocksQuery(fromHeight: 500000), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
+        dataSource = ABSDKPagedArrayDataSource<ListEthBlocksQuery, ListEthBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListEthBlocksQuery(fromHeight: 5000000), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
         dataSource.refresh()
     }
 
