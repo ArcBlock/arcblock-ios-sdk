@@ -609,7 +609,7 @@
         <!--Blocks-->
         <scene sceneID="uE8-qs-Npp">
             <objects>
-                <viewController title="Blocks" id="2mp-14-lFA" customClass="ETHBlockListViewController" customModule="ocap_demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Blocks" id="2mp-14-lFA" customClass="ETHBlocksByHeightViewController" customModule="ocap_demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rxk-h8-fVB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -632,11 +632,11 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETHBlockList" textLabel="iYp-fv-sJv" detailTextLabel="ZIs-hE-Yub" style="IBUITableViewCellStyleSubtitle" id="IQw-AM-pgP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ETHBlockList" textLabel="iYp-fv-sJv" detailTextLabel="ZIs-hE-Yub" style="IBUITableViewCellStyleSubtitle" id="IQw-AM-pgP">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IQw-AM-pgP" id="Pp2-EP-bQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iYp-fv-sJv">
@@ -655,6 +655,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="n8Q-xo-ffl" kind="show" identifier="ETHBlockDetailSegue" id="uJK-nh-7HA"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -680,6 +683,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="522-LQ-wJW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3213.5999999999999" y="2325.7871064467768"/>
+        </scene>
+        <!--Block Detail View Controller-->
+        <scene sceneID="JLw-dF-epq">
+            <objects>
+                <viewController id="n8Q-xo-ffl" customClass="ETHBlockDetailViewController" customModule="ocap_demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2G0-p6-cvw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="25s-gR-nPw"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yY6-iD-jK0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3950" y="2326"/>
         </scene>
         <!--Bitcoin-->
         <scene sceneID="IKu-bH-z8O">

@@ -1,5 +1,5 @@
 //
-//  ETHBlockListViewController.swift
+//  ETHBlocksByHeightViewController.swift
 //  ocap-demo
 //
 //  Created by Jonathan Lu on 2/8/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import ArcBlockSDK
 
-class ETHBlockListViewController: UIViewController {
+class ETHBlocksByHeightViewController: UIViewController {
 
     @IBOutlet weak var loadingFooter: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -47,7 +47,7 @@ class ETHBlockListViewController: UIViewController {
             }
             return false
         }
-        dataSource = ABSDKPagedArrayDataSource<ListEthBlocksQuery, ListEthBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListEthBlocksQuery(fromHeight: 0), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
+        dataSource = ABSDKPagedArrayDataSource<ListEthBlocksQuery, ListEthBlocksQuery.Data.BlocksByHeight.Datum>(client: arcblockClient, query: ListEthBlocksQuery(fromHeight: 500000), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: checker, pageMapper: pageMapper)
         dataSource.refresh()
     }
 
@@ -56,9 +56,18 @@ class ETHBlockListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ETHBlockDetailSegue" {
+            let indexPath: IndexPath = tableView.indexPathForSelectedRow!
+            let data: ListEthBlocksQuery.Data.BlocksByHeight.Datum = dataSource.itemForIndexPath(indexPath: indexPath)!
+            let destinationViewController: ETHBlockDetailViewController = segue.destination as! ETHBlockDetailViewController
+            destinationViewController.height = data.height
+            destinationViewController.title = "Block " + String(data.height)
+        }
+    }
 }
 
-extension ETHBlockListViewController: UITableViewDataSource {
+extension ETHBlocksByHeightViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.numberOfSections()
     }
@@ -78,7 +87,7 @@ extension ETHBlockListViewController: UITableViewDataSource {
     }
 }
 
-extension ETHBlockListViewController: UITableViewDelegate {
+extension ETHBlocksByHeightViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
             dataSource.loadMore()
