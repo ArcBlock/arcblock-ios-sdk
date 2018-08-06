@@ -16,6 +16,7 @@ class EthBlockDetailView: UIView {
 
     static let timeConverter: TimeConverter = {
         var timeConverter = TimeConverter()
+        timeConverter.inputDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         timeConverter.dateStyle = .medium
         timeConverter.timeStyle = .medium
         return timeConverter
@@ -23,7 +24,7 @@ class EthBlockDetailView: UIView {
 
     public func updateBlockData(block: EthBlockDetailQuery.Data.BlockByHeight) {
         hashLabel.text = block.hash
-        feesLabel.text = String(block.fees)
+        feesLabel.text = String(format: "%f", block.fees)
         timeLabel.text = type(of: self).timeConverter.convertTime(time: block.time)
     }
 }
@@ -46,6 +47,9 @@ class ETHBlockDetailViewController: TransactionListViewController<EthBlockDetail
             return (data.blockByHeight?.transactions?.page)!
         }
 
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        arcblockClient = appDelegate.ethClient
+
         super.viewDidLoad()
 
         let detailSourceMapper: ObjectDataSourceMapper<EthBlockDetailQuery, EthBlockDetailQuery.Data.BlockByHeight> = { (data) in
@@ -63,4 +67,9 @@ class ETHBlockDetailViewController: TransactionListViewController<EthBlockDetail
         self.tableView.tableHeaderView = detailView
     }
 
+    override func transactionSelected(transation: EthBlockDetailQuery.Data.BlockByHeight.Transaction.Datum) {
+        let transactionViewController: ETHTransactionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ETHTransactionViewController") as! ETHTransactionViewController
+        transactionViewController.txHash = transation.hash
+        self.navigationController?.pushViewController(transactionViewController, animated: true)
+    }
 }

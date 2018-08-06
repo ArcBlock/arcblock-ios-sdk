@@ -22,6 +22,9 @@ class TxsReceivedViewController: TransactionListViewController<BtcTxsReceivedByA
             return (data.accountByAddress?.txsReceived?.page)!
         }
 
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        arcblockClient = appDelegate.btcClient
+
         super.viewDidLoad()
     }
 
@@ -31,8 +34,9 @@ class TxsReceivedViewController: TransactionListViewController<BtcTxsReceivedByA
         self.tableView.frame = self.view.bounds
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func transactionSelected(transation: BtcTxsReceivedByAccountQuery.Data.AccountByAddress.TxsReceived.Datum) {
+        let transactionViewController: TransactionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TransactionViewController") as! TransactionViewController
+        transactionViewController.txHash = transation.hash
+        self.navigationController?.pushViewController(transactionViewController, animated: true)
     }
 }
