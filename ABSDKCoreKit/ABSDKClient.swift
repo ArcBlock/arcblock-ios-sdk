@@ -24,6 +24,7 @@ import Reachability
 import Apollo
 
 let ocapBaseUrl = "https://ocap.arcblock.io/"
+let websocketUrl = "wss://ocap.arcblock.io/api/socket/websocket"
 
 /// Enum for ArcBlock supported endpoints
 public enum ABSDKEndpoint {
@@ -205,7 +206,7 @@ public class ABSDKClient: NetworkConnectionNotification {
 
     private var networkStatusWatchers: [NetworkConnectionNotification] = []
     private var configuration: ABSDKClientConfiguration
-    internal var httpTransport: HTTPNetworkTransport?
+    internal var networkTransport: ABSDKSplitNetworkTransport?
     internal var connectionStateChangeHandler: ConnectionStateChangeHandler?
 
     /// Creates a client with the specified `ABSDKClientConfiguration`.
@@ -217,9 +218,11 @@ public class ABSDKClient: NetworkConnectionNotification {
 
         reachability = Reachability(hostname: self.configuration.url.host!)
         self.store = configuration.store
-        self.httpTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+        let httpTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+        let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: URL(string: websocketUrl)!)
+        self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
 
-        self.apolloClient = ApolloClient(networkTransport: self.httpTransport!, store: self.configuration.store)
+        self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.configuration.store)
 
         NotificationCenter.default.addObserver(self, selector: #selector(checkForReachability(note:)), name: .reachabilityChanged, object: reachability)
         do {
@@ -312,5 +315,11 @@ public class ABSDKClient: NetworkConnectionNotification {
         }
 
         return apolloClient!.perform(mutation: mutation, queue: queue, resultHandler: resultHandler)
+    }
+
+    @discardableResult public func subscribe<Subscription: GraphQLSubscription>(subscription: Subscription,
+                                                                      queue: DispatchQueue = DispatchQueue.main,
+                                                                      resultHandler: @escaping OperationResultHandler<Subscription>) -> Cancellable {
+        return apolloClient!.subscribe(subscription: subscription, queue: queue, resultHandler: resultHandler)
     }
 }

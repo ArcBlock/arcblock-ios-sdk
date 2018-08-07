@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */; };
 		2712818420A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712818320A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift */; };
+		27240D8B2119419400A4D2A2 /* ABSDKWebSocketTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D8A2119419400A4D2A2 /* ABSDKWebSocketTransport.swift */; };
+		27240D8D211942ED00A4D2A2 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27240D8C211942ED00A4D2A2 /* Starscream.framework */; };
 		2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */; };
 		2739E55720EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E55620EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift */; };
 		274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B185920E4D06A00884659 /* ABSDKClient.swift */; };
@@ -75,6 +77,8 @@
 /* Begin PBXFileReference section */
 		2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectDataSourceSpec.swift; sourceTree = "<group>"; };
 		2712818320A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKTableViewDataSourceSpec.swift; sourceTree = "<group>"; };
+		27240D8A2119419400A4D2A2 /* ABSDKWebSocketTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKWebSocketTransport.swift; sourceTree = "<group>"; };
+		27240D8C211942ED00A4D2A2 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKDataSource.swift; sourceTree = "<group>"; };
 		2739E55620EC6FD0009EA0C3 /* ABSDKCollectionViewDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKCollectionViewDataSourceSpec.swift; sourceTree = "<group>"; };
 		274B185920E4D06A00884659 /* ABSDKClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKClient.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27240D8D211942ED00A4D2A2 /* Starscream.framework in Frameworks */,
 				274B186020E603F700884659 /* Reachability.framework in Frameworks */,
 				274B185D20E4DD8900884659 /* SQLite.framework in Frameworks */,
 				274B185E20E4DD8900884659 /* Apollo.framework in Frameworks */,
@@ -234,6 +239,7 @@
 				27B58379210972040095EDC1 /* ABSDKPagedArrayDataSource.swift */,
 				275EC94C20F61C7100CAF356 /* ABSDKPagination.swift */,
 				274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */,
+				27240D8A2119419400A4D2A2 /* ABSDKWebSocketTransport.swift */,
 				277E6B7920A0DE340054707E /* Info.plist */,
 			);
 			path = ABSDKCoreKit;
@@ -310,6 +316,7 @@
 		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27240D8C211942ED00A4D2A2 /* Starscream.framework */,
 				274B185F20E603F700884659 /* Reachability.framework */,
 				274B185C20E4DD8900884659 /* Apollo.framework */,
 				274B185B20E4DD8900884659 /* SQLite.framework */,
@@ -697,12 +704,14 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SQLite.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Starscream.framework",
 			);
 			name = "Copy Framework";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Apollo.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SQLite.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Reachability.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -786,6 +795,7 @@
 				27B5837A210972040095EDC1 /* ABSDKPagedArrayDataSource.swift in Sources */,
 				274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */,
 				2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */,
+				27240D8B2119419400A4D2A2 /* ABSDKWebSocketTransport.swift in Sources */,
 				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				275EC94D20F61C7100CAF356 /* ABSDKPagination.swift in Sources */,
 			);
