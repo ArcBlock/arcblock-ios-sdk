@@ -1901,3 +1901,220 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
     }
   }
 }
+
+public final class NewEthBlockMinedSubscription: GraphQLSubscription {
+  public let operationDefinition =
+    "subscription newETHBlockMined {\n  newBlockMined {\n    __typename\n    author {\n      __typename\n      address\n    }\n    fees\n    hash\n    height\n    miner {\n      __typename\n      address\n    }\n    reward\n    size\n    time\n  }\n}"
+
+  public init() {
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootSubscriptionType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("newBlockMined", type: .object(NewBlockMined.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(newBlockMined: NewBlockMined? = nil) {
+      self.init(unsafeResultMap: ["__typename": "RootSubscriptionType", "newBlockMined": newBlockMined.flatMap { (value: NewBlockMined) -> ResultMap in value.resultMap }])
+    }
+
+    /// return block data once a new block is mined
+    public var newBlockMined: NewBlockMined? {
+      get {
+        return (resultMap["newBlockMined"] as? ResultMap).flatMap { NewBlockMined(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "newBlockMined")
+      }
+    }
+
+    public struct NewBlockMined: GraphQLSelectionSet {
+      public static let possibleTypes = ["EthereumBlock"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("author", type: .object(Author.selections)),
+        GraphQLField("fees", type: .nonNull(.scalar(Int.self))),
+        GraphQLField("hash", type: .nonNull(.scalar(String.self))),
+        GraphQLField("height", type: .nonNull(.scalar(Int.self))),
+        GraphQLField("miner", type: .object(Miner.selections)),
+        GraphQLField("reward", type: .nonNull(.scalar(Int.self))),
+        GraphQLField("size", type: .nonNull(.scalar(Int.self))),
+        GraphQLField("time", type: .nonNull(.scalar(String.self))),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(author: Author? = nil, fees: Int, hash: String, height: Int, miner: Miner? = nil, reward: Int, size: Int, time: String) {
+        self.init(unsafeResultMap: ["__typename": "EthereumBlock", "author": author.flatMap { (value: Author) -> ResultMap in value.resultMap }, "fees": fees, "hash": hash, "height": height, "miner": miner.flatMap { (value: Miner) -> ResultMap in value.resultMap }, "reward": reward, "size": size, "time": time])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var author: Author? {
+        get {
+          return (resultMap["author"] as? ResultMap).flatMap { Author(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "author")
+        }
+      }
+
+      public var fees: Int {
+        get {
+          return resultMap["fees"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "fees")
+        }
+      }
+
+      public var hash: String {
+        get {
+          return resultMap["hash"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "hash")
+        }
+      }
+
+      public var height: Int {
+        get {
+          return resultMap["height"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "height")
+        }
+      }
+
+      public var miner: Miner? {
+        get {
+          return (resultMap["miner"] as? ResultMap).flatMap { Miner(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "miner")
+        }
+      }
+
+      public var reward: Int {
+        get {
+          return resultMap["reward"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "reward")
+        }
+      }
+
+      public var size: Int {
+        get {
+          return resultMap["size"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "size")
+        }
+      }
+
+      public var time: String {
+        get {
+          return resultMap["time"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "time")
+        }
+      }
+
+      public struct Author: GraphQLSelectionSet {
+        public static let possibleTypes = ["EthereumAccount"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("address", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(address: String) {
+          self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var address: String {
+          get {
+            return resultMap["address"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "address")
+          }
+        }
+      }
+
+      public struct Miner: GraphQLSelectionSet {
+        public static let possibleTypes = ["EthereumAccount"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("address", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(address: String) {
+          self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var address: String {
+          get {
+            return resultMap["address"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "address")
+          }
+        }
+      }
+    }
+  }
+}

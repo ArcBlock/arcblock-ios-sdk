@@ -40,6 +40,7 @@ TODO: Add long description of the pod here.
     sc.dependency 'Apollo'
     sc.dependency 'SQLite.swift'
     sc.dependency 'ReachabilitySwift'
+    sc.dependency 'SwiftPhoenixClient'
   end
 
   # s.subspec 'AccountKit' do |sa|
