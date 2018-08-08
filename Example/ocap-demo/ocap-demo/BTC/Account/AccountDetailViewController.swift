@@ -47,7 +47,8 @@ class AccountDetailViewController: UIViewController {
             }
             self?.detailView.updateAddressData(address: (self?.detailDataSource.getObject())!)
         }
-        detailDataSource = ABSDKObjectDataSource<BtcAccountByAddressQuery, BtcAccountByAddressQuery.Data.AccountByAddress>(client: arcblockClient, query: BtcAccountByAddressQuery(address: address), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource = ABSDKObjectDataSource<BtcAccountByAddressQuery, BtcAccountByAddressQuery.Data.AccountByAddress>(client: arcblockClient, operation: BtcAccountByAddressQuery(address: address), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource.observe()
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         receivedTxsViewController = storyboard.instantiateViewController(withIdentifier: "TxsReceivedViewController") as! TxsReceivedViewController
