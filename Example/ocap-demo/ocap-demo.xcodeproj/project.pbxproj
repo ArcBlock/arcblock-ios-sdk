@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2715D3A0211AAD4F00C631DB /* ETHNewBlockMinedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2715D39F211AAD4F00C631DB /* ETHNewBlockMinedViewController.swift */; };
 		272225D020E20B7A00E2BBB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272225CF20E20B7A00E2BBB3 /* AppDelegate.swift */; };
 		272225D520E20B7A00E2BBB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272225D320E20B7A00E2BBB3 /* Main.storyboard */; };
 		272225D720E20B7C00E2BBB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272225D620E20B7C00E2BBB3 /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		07151DC0A5D45AE65E6638E8 /* Pods-ocap-demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ocap-demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ocap-demo/Pods-ocap-demo.debug.xcconfig"; sourceTree = "<group>"; };
 		074787B86C52AD1B784E5C41 /* Pods_ocap_demoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ocap_demoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1632CDB0BE2616E19E781AE6 /* Pods_ocap_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ocap_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2715D39F211AAD4F00C631DB /* ETHNewBlockMinedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHNewBlockMinedViewController.swift; sourceTree = "<group>"; };
 		272225CC20E20B7A00E2BBB3 /* ocap-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ocap-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		272225CF20E20B7A00E2BBB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		272225D420E20B7A00E2BBB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				27240D7F2117D4F600A4D2A2 /* Block Detail */,
 				27240D7D2113274B00A4D2A2 /* ETHBlocksByHeightViewController.swift */,
 				27240D842117FA0B00A4D2A2 /* ETHTransactionViewController.swift */,
+				2715D39F211AAD4F00C631DB /* ETHNewBlockMinedViewController.swift */,
 			);
 			path = ETH;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				2739E54D20E9D2A9009EA0C3 /* API.swift in Sources */,
 				2791C21320FDD30B0011F0C0 /* RichestAccountsViewController.swift in Sources */,
 				272225D020E20B7A00E2BBB3 /* AppDelegate.swift in Sources */,
+				2715D3A0211AAD4F00C631DB /* ETHNewBlockMinedViewController.swift in Sources */,
 				2749C33420ED1F43001D2E3D /* BlockDetailViewController.swift in Sources */,
 				2791C21920FF2EF00011F0C0 /* TxsReceivedViewController.swift in Sources */,
 				2791C21B20FF3A660011F0C0 /* TxsSentViewController.swift in Sources */,

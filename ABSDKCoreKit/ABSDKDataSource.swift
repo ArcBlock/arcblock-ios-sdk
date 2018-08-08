@@ -78,6 +78,24 @@ public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
                     self?.object = object
                 }
             }
+            else {
+                self?.dataSourceUpdateHandler(err)
+            }
+        })
+    }
+}
+
+public extension ABSDKObjectDataSource where Operation: GraphQLSubscription {
+    func observe() {
+        self.client.subscribe(subscription: self.operation, resultHandler: { [weak self] (result, err) in
+            if err == nil {
+                if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
+                    self?.object = object
+                }
+            }
+            else {
+                self?.dataSourceUpdateHandler(err)
+            }
         })
     }
 }
