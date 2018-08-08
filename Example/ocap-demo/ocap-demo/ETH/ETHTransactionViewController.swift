@@ -47,7 +47,8 @@ class ETHTransactionViewController: UITableViewController {
             self?.updateTransaction(data: self?.transactionDataSource.getObject())
         }
 
-        transactionDataSource = ABSDKObjectDataSource<EthTransactionDetailQuery, EthTransactionDetailQuery.Data.TransactionByHash>(client: arcblockClient, query: EthTransactionDetailQuery(hash: txHash!), dataSourceMapper: transactionSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler);
+        transactionDataSource = ABSDKObjectDataSource<EthTransactionDetailQuery, EthTransactionDetailQuery.Data.TransactionByHash>(client: arcblockClient, operation: EthTransactionDetailQuery(hash: txHash!), dataSourceMapper: transactionSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler)
+        transactionDataSource.observe()
     }
 
     func updateTransaction(data: EthTransactionDetailQuery.Data.TransactionByHash?) {
