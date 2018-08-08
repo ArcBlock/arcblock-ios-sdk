@@ -1,3 +1,9 @@
+## 0.7.0 (August 08, 2018)
+  - fix framework building issue fix linter warning
+  - add new block mined view in demo
+  - refactor ABSDKObjectDataSource and ABSDKArrayDataSource to support GraphQLOperation
+  - connect to ocap subscription endpoint with SwiftPhoenixClient
+
 ## 0.6.4 (August 06, 2018)
   - add ethereum transaction detail page
   - support ethereum block detail
