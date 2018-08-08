@@ -36,9 +36,9 @@ public enum ABSDKEndpoint {
     var url: URL {
         switch self {
         case .btc:
-            return URL(string:ocapBaseUrl + "api/btc")!
+            return URL(string: ocapBaseUrl + "api/btc")!
         case .eth:
-            return URL(string:ocapBaseUrl + "api/eth")!
+            return URL(string: ocapBaseUrl + "api/eth")!
         }
     }
 }
@@ -145,7 +145,7 @@ public class ABSDKClientConfiguration {
     ///   - endpoint: The ArcBlock endpoint.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public convenience init(endpoint: ABSDKEndpoint,
-                databaseURL: URL? = nil) throws {
+                            databaseURL: URL? = nil) throws {
         try self.init(url: endpoint.url, databaseURL: databaseURL)
     }
 
@@ -318,8 +318,8 @@ public class ABSDKClient: NetworkConnectionNotification {
     }
 
     @discardableResult public func subscribe<Subscription: GraphQLSubscription>(subscription: Subscription,
-                                                                      queue: DispatchQueue = DispatchQueue.main,
-                                                                      resultHandler: @escaping OperationResultHandler<Subscription>) -> Cancellable {
+                                                                                queue: DispatchQueue = DispatchQueue.main,
+                                                                                resultHandler: @escaping OperationResultHandler<Subscription>) -> Cancellable {
         return apolloClient!.subscribe(subscription: subscription, queue: queue, resultHandler: resultHandler)
     }
 }

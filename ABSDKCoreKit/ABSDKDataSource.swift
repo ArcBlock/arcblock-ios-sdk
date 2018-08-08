@@ -77,8 +77,7 @@ public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
                 if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
                     self?.object = object
                 }
-            }
-            else {
+            } else {
                 self?.dataSourceUpdateHandler(err)
             }
         })
@@ -92,8 +91,7 @@ public extension ABSDKObjectDataSource where Operation: GraphQLSubscription {
                 if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
                     self?.object = object
                 }
-            }
-            else {
+            } else {
                 self?.dataSourceUpdateHandler(err)
             }
         })
@@ -251,8 +249,7 @@ public extension ABSDKArrayDataSource where Operation: GraphQLQuery {
                 if let data: Operation.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
                     self?.array = items
                 }
-            }
-            else {
+            } else {
                 self?.dataSourceUpdateHandler(err)
             }
         })
