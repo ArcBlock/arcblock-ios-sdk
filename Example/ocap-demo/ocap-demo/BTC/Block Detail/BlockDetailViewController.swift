@@ -63,7 +63,8 @@ class BlockDetailViewController: TransactionListViewController<BtcBlockDetailQue
             }
             self?.detailView.updateBlockData(block: (self?.detailDataSource.getObject()!)!)
         }
-        detailDataSource = ABSDKObjectDataSource<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: BtcBlockDetailQuery(height: height), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource = ABSDKObjectDataSource<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, operation: BtcBlockDetailQuery(height: height), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource.observe()
 
         detailView = Bundle.main.loadNibNamed("BlockDetailView", owner: self, options: nil)![0] as! BlockDetailView
         self.tableView.tableHeaderView = detailView

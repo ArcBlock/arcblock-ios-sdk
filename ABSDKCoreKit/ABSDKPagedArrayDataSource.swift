@@ -75,7 +75,7 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
     ///     arrayDataKeyEqualCHecker: an optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
     ///     pageMapper: a callback to extract page info from the query result
     public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil, pageMapper: @escaping PageMapper<Query>) {
-        super.init(client: client, query: query, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: arrayDataKeyEqualChecker)
+        super.init(client: client, operation: query, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: arrayDataKeyEqualChecker)
         self.pageMapper = pageMapper
     }
 
@@ -88,7 +88,7 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
             isLoading = true
             watcher.refetch()
         } else {
-            let pagedQuery: Query = query.copy()
+            let pagedQuery: Query = operation.copy()
             pagedQuery.paging = PageInput(cursor: pageCursor)
 
             let watcher: GraphQLQueryWatcher<Query> = client.watch(query: pagedQuery, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
