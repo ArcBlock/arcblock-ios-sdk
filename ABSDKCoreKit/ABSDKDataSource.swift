@@ -26,19 +26,19 @@ import Apollo
 public typealias DataSourceUpdateHandler = (_ err: Error?) -> Void
 
 protocol ABSDKDataSource {
-    associatedtype Query: GraphQLQuery
+    associatedtype Operation: GraphQLOperation
     associatedtype Data: GraphQLSelectionSet
 
     var client: ABSDKClient { get }
-    var query: Query { get }
+    var operation: Operation { get }
     var dataSourceUpdateHandler: DataSourceUpdateHandler { get }
 }
 
 /// The callback to extract the object in query result
-public typealias ObjectDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> Data?
+public typealias ObjectDataSourceMapper<Operation: GraphQLOperation, Data: GraphQLSelectionSet> = (_ data: Operation.Data) -> Data?
 
 /// A data source that binds with an object type of data in a GraphQL query and monitors its update
-final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
+final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var object: Data? = nil {
         didSet {
             dataSourceUpdateHandler(nil)
@@ -46,11 +46,9 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
     }
 
     let client: ABSDKClient
-    let query: Query
+    let operation: Operation
     let dataSourceUpdateHandler: DataSourceUpdateHandler
-    let dataSourceMapper: ObjectDataSourceMapper<Query, Data>
-
-    var watcher: GraphQLQueryWatcher<Query>?
+    let dataSourceMapper: ObjectDataSourceMapper<Operation, Data>
 
     /// init an object data source
     ///
@@ -59,19 +57,11 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
     ///     query: a GraphQL query to get the object
     ///     dataSourceMapper: a callback to extract the concerned object from the query result
     ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned object gets update
-    public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ObjectDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
+    public init(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.client = client
-        self.query = query
+        self.operation = operation
         self.dataSourceUpdateHandler = dataSourceUpdateHandler
         self.dataSourceMapper = dataSourceMapper
-
-        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
-            if err == nil {
-                if let data: Query.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
-                    self?.object = object
-                }
-            }
-        })
     }
 
     /// Get the concerned object
@@ -80,8 +70,20 @@ final public class ABSDKObjectDataSource<Query: GraphQLQuery, Data: GraphQLSelec
     }
 }
 
+public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
+    func observe() {
+        self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
+            if err == nil {
+                if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
+                    self?.object = object
+                }
+            }
+        })
+    }
+}
+
 /// The callback to extract the array in query result
-public typealias ArrayDataSourceMapper<Query: GraphQLQuery, Data: GraphQLSelectionSet> = (_ data: Query.Data) -> [Data?]?
+public typealias ArrayDataSourceMapper<Operation: GraphQLOperation, Data: GraphQLSelectionSet> = (_ data: Operation.Data) -> [Data?]?
 
 /// The callback to check whether two elements in the array has the same key
 public typealias ArrayDataKeyEqualChecker<Data: GraphQLSelectionSet> = (_ object1: Data?, _ object2: Data?) -> Bool
@@ -116,7 +118,7 @@ public struct RowChange {
 }
 
 /// A data source that binds with an array type of data in a GraphQL query and monitors its update
-public class ABSDKArrayDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet>: ABSDKDataSource {
+public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var array: [Data?] = [] {
         willSet(newValue) {
             calculateChanges(oldArray: array, newArray: newValue)
@@ -129,12 +131,10 @@ public class ABSDKArrayDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet
     var changes: [RowChange] = []
 
     let client: ABSDKClient
-    let query: Query
+    let operation: Operation
     let dataSourceUpdateHandler: DataSourceUpdateHandler
-    let dataSourceMapper: ArrayDataSourceMapper<Query, Data>
+    let dataSourceMapper: ArrayDataSourceMapper<Operation, Data>
     var arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>?
-
-    var watcher: GraphQLQueryWatcher<Query>?
 
     /// init an array data source
     ///
@@ -144,23 +144,12 @@ public class ABSDKArrayDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet
     ///     dataSourceMapper: a callback to extract the concerned array from the query result
     ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned array gets update
     ///     arrayDataKeyEqualCHecker: an optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
-    public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil) {
+    public init(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ArrayDataSourceMapper<Operation, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil) {
         self.client = client
-        self.query = query
+        self.operation = operation
         self.dataSourceUpdateHandler = dataSourceUpdateHandler
         self.dataSourceMapper = dataSourceMapper
         self.arrayDataKeyEqualChecker = arrayDataKeyEqualChecker
-
-        self.watcher = self.client.watch(query: self.query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
-            if err == nil {
-                if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
-                    self?.array = items
-                }
-            }
-            else {
-                self?.dataSourceUpdateHandler(err)
-            }
-        })
     }
 
     func calculateChanges(oldArray: [Data?], newArray: [Data?]) {
@@ -234,5 +223,20 @@ public class ABSDKArrayDataSource<Query: GraphQLQuery, Data: GraphQLSelectionSet
     /// Get row changes, usually get called in DataSourceUpdateHandler
     public func getChanges() -> [RowChange] {
         return changes
+    }
+}
+
+public extension ABSDKArrayDataSource where Operation: GraphQLQuery {
+    public func observe() {
+        self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
+            if err == nil {
+                if let data: Operation.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
+                    self?.array = items
+                }
+            }
+            else {
+                self?.dataSourceUpdateHandler(err)
+            }
+        })
     }
 }

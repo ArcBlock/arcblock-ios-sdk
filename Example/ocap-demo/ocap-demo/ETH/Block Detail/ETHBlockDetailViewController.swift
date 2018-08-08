@@ -61,7 +61,8 @@ class ETHBlockDetailViewController: TransactionListViewController<EthBlockDetail
             }
             self?.detailView.updateBlockData(block: (self?.detailDataSource.getObject()!)!)
         }
-        detailDataSource = ABSDKObjectDataSource<EthBlockDetailQuery, EthBlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, query: EthBlockDetailQuery(height: height), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource = ABSDKObjectDataSource<EthBlockDetailQuery, EthBlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, operation: EthBlockDetailQuery(height: height), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource.observe()
 
         detailView = Bundle.main.loadNibNamed("ETHBlockDetailView", owner: self, options: nil)![0] as! EthBlockDetailView
         self.tableView.tableHeaderView = detailView

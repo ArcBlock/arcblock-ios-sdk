@@ -72,7 +72,8 @@ class TransactionViewController: UIViewController {
                 self?.detailView.updateTransactionData(transaction: (self?.detailDataSource.getObject()!)!)
             }
         }
-        detailDataSource = ABSDKObjectDataSource<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource = ABSDKObjectDataSource<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash>(client: arcblockClient, operation: transactionDetailQuery, dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+        detailDataSource.observe()
 
         let inputSourceMapper: ArrayDataSourceMapper<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash.Input.Datum> = { (data) in
             return data.transactionByHash?.inputs?.data
@@ -82,7 +83,8 @@ class TransactionViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        inputDataSource = ABSDKArrayDataSource<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
+        inputDataSource = ABSDKArrayDataSource<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, operation: transactionDetailQuery, dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
+        inputDataSource.observe()
 
         let outputSourceMapper: ArrayDataSourceMapper<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash.Output.Datum> = { (data) in
             return data.transactionByHash?.outputs?.data
@@ -93,7 +95,8 @@ class TransactionViewController: UIViewController {
             }
             self?.tableView.reloadData()
         }
-        outputDataSource = ABSDKArrayDataSource<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash.Output.Datum>(client: arcblockClient, query: transactionDetailQuery, dataSourceMapper: outputSourceMapper, dataSourceUpdateHandler: outputDataSourceUpdateHandler)
+        outputDataSource = ABSDKArrayDataSource<BtcTransactionDetailQuery, BtcTransactionDetailQuery.Data.TransactionByHash.Output.Datum>(client: arcblockClient, operation: transactionDetailQuery, dataSourceMapper: outputSourceMapper, dataSourceUpdateHandler: outputDataSourceUpdateHandler)
+        outputDataSource.observe()
     }
 
     override func didReceiveMemoryWarning() {

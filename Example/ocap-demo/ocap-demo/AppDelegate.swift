@@ -27,10 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // initialize app sync client
             btcClient = try ABSDKClient(configuration: btcConfiguration)
             ethClient = try ABSDKClient(configuration: ethConfiguration)
-
-            ethClient.subscribe(subscription: NewEthBlockMinedSubscription()) { (result, err) in
-                
-            }
         } catch {
             print("Error initializing ABSDKClient. \(error)")
         }
