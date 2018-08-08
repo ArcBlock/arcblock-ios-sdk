@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2712815D20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */; };
 		2712818420A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712818320A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift */; };
+		2715D3A2211ADBB700C631DB /* SwiftPhoenixClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2715D3A1211ADBB700C631DB /* SwiftPhoenixClient.framework */; };
 		27240D8B2119419400A4D2A2 /* ABSDKWebSocketTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27240D8A2119419400A4D2A2 /* ABSDKWebSocketTransport.swift */; };
 		27240D8D211942ED00A4D2A2 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27240D8C211942ED00A4D2A2 /* Starscream.framework */; };
 		2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		2712815C20A2483400530FB6 /* ABSDKObjectDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectDataSourceSpec.swift; sourceTree = "<group>"; };
 		2712818320A4F3B500530FB6 /* ABSDKTableViewDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKTableViewDataSourceSpec.swift; sourceTree = "<group>"; };
+		2715D3A1211ADBB700C631DB /* SwiftPhoenixClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftPhoenixClient.framework; path = Carthage/Build/iOS/SwiftPhoenixClient.framework; sourceTree = "<group>"; };
 		27240D8A2119419400A4D2A2 /* ABSDKWebSocketTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKWebSocketTransport.swift; sourceTree = "<group>"; };
 		27240D8C211942ED00A4D2A2 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKDataSource.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2715D3A2211ADBB700C631DB /* SwiftPhoenixClient.framework in Frameworks */,
 				27240D8D211942ED00A4D2A2 /* Starscream.framework in Frameworks */,
 				274B186020E603F700884659 /* Reachability.framework in Frameworks */,
 				274B185D20E4DD8900884659 /* SQLite.framework in Frameworks */,
@@ -316,6 +319,7 @@
 		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2715D3A1211ADBB700C631DB /* SwiftPhoenixClient.framework */,
 				27240D8C211942ED00A4D2A2 /* Starscream.framework */,
 				274B185F20E603F700884659 /* Reachability.framework */,
 				274B185C20E4DD8900884659 /* Apollo.framework */,
@@ -705,6 +709,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SQLite.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Starscream.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftPhoenixClient.framework",
 			);
 			name = "Copy Framework";
 			outputPaths = (
@@ -712,6 +717,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SQLite.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Reachability.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Starscream.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftPhoenixClient.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

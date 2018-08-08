@@ -23,6 +23,7 @@ install:
 dep:
 	@echo "Install dependencies required for this repo..."
 	@carthage update --platform ios --cache-builds
+	@rm -rf Carthage/Checkouts/SwiftPhoenixClient/Example/Pods/
 
 pre-build: install dep
 	@echo "Running scripts before the build..."

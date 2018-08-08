@@ -108,6 +108,7 @@ override func viewDidLoad() {
 
     // create the data source
     detailDataSource = ABSDKObjectDataSource<AccountByAddressQuery, AccountByAddressQuery.Data.AccountByAddress>(client: arcblockClient, query: AccountByAddressQuery(address: address), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+    detailDataSource.observe()
 
     ...
 }
@@ -145,6 +146,7 @@ class TransactionViewController: UIViewController {
             }
         }
         inputDataSource = ABSDKArrayDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: TransactionDetailQuery(hash: txHash!), dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
+        inputDataSource.observe()
     }
 }
 

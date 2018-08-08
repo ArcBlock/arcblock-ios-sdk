@@ -54,25 +54,25 @@ struct ABSDKSubscription {
 /// A network transport that uses web sockets requests to send GraphQL subscription operations to a server, and that uses the Starscream implementation of web sockets.
 public class ABSDKWebSocketTransport: NetworkTransport {
 
-    var socket: Socket? = nil
-    var channel: Channel? = nil
-    var error : Error? = nil
+    var socket: Socket?
+    var channel: Channel?
+    var error: Error?
 
     let serializationFormat = JSONSerializationFormat.self
     let topic = "doc"
 
-    var reconnect : Bool = false
+    var reconnect: Bool = false
     var joined: Bool = false
 
-    private var params: [String:String]?
-    private var connectingParams: [String:String]?
+    private var params: [String: String]?
+    private var connectingParams: [String: String]?
 
     private var subscribers = [String: (JSONObject?, Error?) -> Void]()
-    private var subscriptions : [String: ABSDKSubscription] = [:]
+    private var subscriptions: [String: ABSDKSubscription] = [:]
 
     private let sendOperationIdentifiers: Bool
 
-    public init(url: URL, sendOperationIdentifiers: Bool = false, params: [String:String]? = nil, connectingParams: [String:String]? = [:]) {
+    public init(url: URL, sendOperationIdentifiers: Bool = false, params: [String: String]? = nil, connectingParams: [String: String]? = [:]) {
         self.params = params
         self.connectingParams = connectingParams
         self.sendOperationIdentifiers = sendOperationIdentifiers
@@ -99,7 +99,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
             if message.event == "subscription:data" {
                 if let subscriptionId: String = message.payload["subscriptionId"] as? String,
                     let callback: (JSONObject?, Error?) -> Void = self?.subscribers[subscriptionId],
-                    let result: JSONObject = message.payload["result"] as? JSONObject{
+                    let result: JSONObject = message.payload["result"] as? JSONObject {
                     callback(result, nil)
                 }
             }
@@ -118,7 +118,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
 
     fileprivate func joinChannel() {
         self.channel = self.socket?.channel("__absinthe__:control")
-        self.channel?.join().receive("ok", callback: { [weak self] (message) in
+        self.channel?.join().receive("ok", callback: { [weak self] (_) in
             self?.joined = true
 
             // re-send the subscriptions whenever we are re-connected
@@ -126,7 +126,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
             for (id, subscription) in (self?.subscriptions)! {
                 self?.write(subscription.payload, id: id)
             }
-        }).receive("error", callback: { [weak self] (message) in
+        }).receive("error", callback: { [weak self] (_) in
             print("join channel failed")
             self?.joined = false
         })
@@ -148,23 +148,23 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     fileprivate func websocketDidFailed(error: Error) {
         self.error = WebSocketError(payload: nil, error: error, kind: .networkError)
         joined = false
-        for (_,responseHandler) in subscribers {
-            responseHandler(nil,error)
+        for (_, responseHandler) in subscribers {
+            responseHandler(nil, error)
         }
     }
 
     public func send<Operation>(operation: Operation, completionHandler: @escaping (_ response: GraphQLResponse<Operation>?, _ error: Error?) -> Void) -> Cancellable {
 
         if let error = self.error {
-            completionHandler(nil,error)
+            completionHandler(nil, error)
         }
 
         return WebSocketTask(self, operation) { (body, error) in
             if let body = body {
                 let response = GraphQLResponse(operation: operation, body: body)
-                completionHandler(response,error)
+                completionHandler(response, error)
             } else {
-                completionHandler(nil,error)
+                completionHandler(nil, error)
             }
         }
 
@@ -172,7 +172,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
 
     fileprivate final class WebSocketTask<Operation: GraphQLOperation> : Cancellable {
 
-        let seqNo : String?
+        let seqNo: String?
         let wst: ABSDKWebSocketTransport
 
         init(_ ws: ABSDKWebSocketTransport, _ operation: Operation, _ completionHandler: @escaping (_ response: JSONObject?, _ error: Error?) -> Void) {
@@ -213,13 +213,12 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         return seqNo
     }
 
-    fileprivate var sequenceNumber : Int = 0
+    fileprivate var sequenceNumber: Int = 0
 
     fileprivate func nextSeqNo() -> Int {
         sequenceNumber += 1
         return sequenceNumber
     }
-
 
     public func unsubscribe(_ subscriptionId: String) {
         // TODO: send unsubscribe message
@@ -228,8 +227,8 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     }
 
     func notifyErrorAllHandlers(_ error: Error) {
-        for (_,handler) in subscribers {
-            handler(nil,error)
+        for (_, handler) in subscribers {
+            handler(nil, error)
         }
     }
 
@@ -252,7 +251,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
                         let subscriptionId: String = response["subscriptionId"] {
                         self?.subscribers[subscriptionId] = callback
                     }
-                }).receive("error", callback: { (message) in
+                }).receive("error", callback: { (_) in
                     // TODO: handle error
                 })
             }

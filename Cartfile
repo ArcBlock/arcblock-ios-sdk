@@ -1,4 +1,4 @@
 github "ArcBlock/apollo-ios"
 github "stephencelis/SQLite.swift"
 github "ashleymills/Reachability.swift"
-github "davidstump/SwiftPhoenixClient" ~> 0.8
+github "davidstump/SwiftPhoenixClient" ~> 0.9
