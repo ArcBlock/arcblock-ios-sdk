@@ -9,10 +9,11 @@
 import UIKit
 import ArcBlockSDK
 
-class ETHNewBlockMinedViewController: UITableViewController {
+class ETHNewBlockMinedViewController: UIViewController {
 
     var arcblockClient: ABSDKClient!
     var dataSource: ABSDKObjectDataSource<NewEthBlockMinedSubscription, NewEthBlockMinedSubscription.Data.NewBlockMined>!
+    var transactionsDataSource: ABSDKArrayDataSource<NewEthBlockMinedSubscription, NewEthBlockMinedSubscription.Data.NewBlockMined.Transaction.Datum>!
 
     @IBOutlet weak var hashLabel: UILabel!
     @IBOutlet weak var sizeLabel: UILabel!
@@ -21,6 +22,8 @@ class ETHNewBlockMinedViewController: UITableViewController {
     @IBOutlet weak var feesLabel: UILabel!
     @IBOutlet weak var minerLabel: UILabel!
     @IBOutlet weak var rewardLabel: UILabel!
+
+    @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +44,20 @@ class ETHNewBlockMinedViewController: UITableViewController {
 
         dataSource = ABSDKObjectDataSource<NewEthBlockMinedSubscription, NewEthBlockMinedSubscription.Data.NewBlockMined>(client: arcblockClient, operation: NewEthBlockMinedSubscription(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler)
         dataSource.observe()
+
+        let transactionsDataSourceMapper: ArrayDataSourceMapper<NewEthBlockMinedSubscription, NewEthBlockMinedSubscription.Data.NewBlockMined.Transaction.Datum> = { (data) in
+            return data.newBlockMined?.transactions?.data
+        }
+        let transactionsDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
+            if err != nil {
+                return
+            }
+
+            self?.tableView.reloadData()
+        }
+
+        transactionsDataSource = ABSDKArrayDataSource<NewEthBlockMinedSubscription, NewEthBlockMinedSubscription.Data.NewBlockMined.Transaction.Datum>(client: arcblockClient, operation: NewEthBlockMinedSubscription(), dataSourceMapper: transactionsDataSourceMapper, dataSourceUpdateHandler: transactionsDataSourceUpdateHandler)
+        transactionsDataSource.observe()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,4 +76,27 @@ class ETHNewBlockMinedViewController: UITableViewController {
         rewardLabel.text = String(block.reward)
     }
 
+}
+
+extension ETHNewBlockMinedViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return transactionsDataSource.numberOfSections()
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return transactionsDataSource.numberOfRows(section: section)
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewBlockTransactions", for: indexPath)
+        let data = transactionsDataSource.itemForIndexPath(indexPath: indexPath)
+        if let block: NewEthBlockMinedSubscription.Data.NewBlockMined.Transaction.Datum = data {
+            cell.textLabel?.text = block.hash
+        }
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Transactions"
+    }
 }
