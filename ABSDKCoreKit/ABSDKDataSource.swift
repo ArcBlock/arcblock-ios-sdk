@@ -32,6 +32,7 @@ protocol ABSDKDataSource {
     var client: ABSDKClient { get }
     var operation: Operation { get }
     var dataSourceUpdateHandler: DataSourceUpdateHandler { get }
+    var observer: Cancellable? { get }
 }
 
 /// The callback to extract the object in query result
@@ -49,6 +50,7 @@ final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: Grap
     let operation: Operation
     let dataSourceUpdateHandler: DataSourceUpdateHandler
     let dataSourceMapper: ObjectDataSourceMapper<Operation, Data>
+    var observer: Cancellable?
 
     /// init an object data source
     ///
@@ -64,6 +66,10 @@ final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: Grap
         self.dataSourceMapper = dataSourceMapper
     }
 
+    deinit {
+        observer?.cancel()
+    }
+
     /// Get the concerned object
     public func getObject() -> Data? {
         return object
@@ -72,7 +78,7 @@ final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: Grap
 
 public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
     func observe() {
-        self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
+        self.observer = self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
             if err == nil {
                 if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
                     self?.object = object
@@ -86,7 +92,7 @@ public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
 
 public extension ABSDKObjectDataSource where Operation: GraphQLSubscription {
     func observe() {
-        self.client.subscribe(subscription: self.operation, resultHandler: { [weak self] (result, err) in
+        self.observer = self.client.subscribe(subscription: self.operation, resultHandler: { [weak self] (result, err) in
             if err == nil {
                 if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
                     self?.object = object
@@ -151,6 +157,7 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
     let dataSourceUpdateHandler: DataSourceUpdateHandler
     let dataSourceMapper: ArrayDataSourceMapper<Operation, Data>
     var arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>?
+    var observer: Cancellable?
 
     /// init an array data source
     ///
@@ -166,6 +173,10 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
         self.dataSourceUpdateHandler = dataSourceUpdateHandler
         self.dataSourceMapper = dataSourceMapper
         self.arrayDataKeyEqualChecker = arrayDataKeyEqualChecker
+    }
+
+    deinit {
+        self.observer?.cancel()
     }
 
     func calculateChanges(oldArray: [Data?], newArray: [Data?]) {
@@ -244,7 +255,21 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
 
 public extension ABSDKArrayDataSource where Operation: GraphQLQuery {
     public func observe() {
-        self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
+        self.observer = self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
+            if err == nil {
+                if let data: Operation.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
+                    self?.array = items
+                }
+            } else {
+                self?.dataSourceUpdateHandler(err)
+            }
+        })
+    }
+}
+
+public extension ABSDKArrayDataSource where Operation: GraphQLSubscription {
+    public func observe() {
+        self.observer = self.client.subscribe(subscription: self.operation, resultHandler: { [weak self] (result, err) in
             if err == nil {
                 if let data: Operation.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
                     self?.array = items

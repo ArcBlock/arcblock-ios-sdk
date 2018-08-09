@@ -1904,7 +1904,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
 
 public final class NewEthBlockMinedSubscription: GraphQLSubscription {
   public let operationDefinition =
-    "subscription newETHBlockMined {\n  newBlockMined {\n    __typename\n    author {\n      __typename\n      address\n    }\n    fees\n    hash\n    height\n    miner {\n      __typename\n      address\n    }\n    reward\n    size\n    time\n  }\n}"
+    "subscription newETHBlockMined {\n  newBlockMined {\n    __typename\n    author {\n      __typename\n      address\n    }\n    fees\n    hash\n    height\n    miner {\n      __typename\n      address\n    }\n    reward\n    size\n    time\n    transactions {\n      __typename\n      data {\n        __typename\n        hash\n      }\n    }\n  }\n}"
 
   public init() {
   }
@@ -1949,6 +1949,7 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         GraphQLField("reward", type: .nonNull(.scalar(Int.self))),
         GraphQLField("size", type: .nonNull(.scalar(Int.self))),
         GraphQLField("time", type: .nonNull(.scalar(String.self))),
+        GraphQLField("transactions", type: .object(Transaction.selections)),
       ]
 
       public private(set) var resultMap: ResultMap
@@ -1957,8 +1958,8 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         self.resultMap = unsafeResultMap
       }
 
-      public init(author: Author? = nil, fees: Int, hash: String, height: Int, miner: Miner? = nil, reward: Int, size: Int, time: String) {
-        self.init(unsafeResultMap: ["__typename": "EthereumBlock", "author": author.flatMap { (value: Author) -> ResultMap in value.resultMap }, "fees": fees, "hash": hash, "height": height, "miner": miner.flatMap { (value: Miner) -> ResultMap in value.resultMap }, "reward": reward, "size": size, "time": time])
+      public init(author: Author? = nil, fees: Int, hash: String, height: Int, miner: Miner? = nil, reward: Int, size: Int, time: String, transactions: Transaction? = nil) {
+        self.init(unsafeResultMap: ["__typename": "EthereumBlock", "author": author.flatMap { (value: Author) -> ResultMap in value.resultMap }, "fees": fees, "hash": hash, "height": height, "miner": miner.flatMap { (value: Miner) -> ResultMap in value.resultMap }, "reward": reward, "size": size, "time": time, "transactions": transactions.flatMap { (value: Transaction) -> ResultMap in value.resultMap }])
       }
 
       public var __typename: String {
@@ -2042,6 +2043,15 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         }
       }
 
+      public var transactions: Transaction? {
+        get {
+          return (resultMap["transactions"] as? ResultMap).flatMap { Transaction(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "transactions")
+        }
+      }
+
       public struct Author: GraphQLSelectionSet {
         public static let possibleTypes = ["EthereumAccount"]
 
@@ -2112,6 +2122,80 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
           }
           set {
             resultMap.updateValue(newValue, forKey: "address")
+          }
+        }
+      }
+
+      public struct Transaction: GraphQLSelectionSet {
+        public static let possibleTypes = ["PagedEthereumTransactions"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("data", type: .list(.object(Datum.selections))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(data: [Datum?]? = nil) {
+          self.init(unsafeResultMap: ["__typename": "PagedEthereumTransactions", "data": data.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var data: [Datum?]? {
+          get {
+            return (resultMap["data"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Datum?] in value.map { (value: ResultMap?) -> Datum? in value.flatMap { (value: ResultMap) -> Datum in Datum(unsafeResultMap: value) } } }
+          }
+          set {
+            resultMap.updateValue(newValue.flatMap { (value: [Datum?]) -> [ResultMap?] in value.map { (value: Datum?) -> ResultMap? in value.flatMap { (value: Datum) -> ResultMap in value.resultMap } } }, forKey: "data")
+          }
+        }
+
+        public struct Datum: GraphQLSelectionSet {
+          public static let possibleTypes = ["EthereumTransaction"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hash", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(hash: String) {
+            self.init(unsafeResultMap: ["__typename": "EthereumTransaction", "hash": hash])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var hash: String {
+            get {
+              return resultMap["hash"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "hash")
+            }
           }
         }
       }
