@@ -24,10 +24,10 @@ import Apollo
 import SwiftPhoenixClient
 
 public class ABSDKSplitNetworkTransport: NetworkTransport {
-    private let httpNetworkTransport: NetworkTransport
-    private let webSocketNetworkTransport: NetworkTransport
+    private let httpNetworkTransport: HTTPNetworkTransport
+    private let webSocketNetworkTransport: ABSDKWebSocketTransport
 
-    public init(httpNetworkTransport: NetworkTransport, webSocketNetworkTransport: NetworkTransport) {
+    public init(httpNetworkTransport: HTTPNetworkTransport, webSocketNetworkTransport: ABSDKWebSocketTransport) {
         self.httpNetworkTransport = httpNetworkTransport
         self.webSocketNetworkTransport = webSocketNetworkTransport
     }
@@ -38,6 +38,10 @@ public class ABSDKSplitNetworkTransport: NetworkTransport {
         } else {
             return httpNetworkTransport.send(operation: operation, completionHandler: completionHandler)
         }
+    }
+
+    public func reconnect() {
+        webSocketNetworkTransport.connect()
     }
 }
 
@@ -74,6 +78,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     let topic = "doc"
 
     var joined: Bool = false
+    var connecting = false
 
     private var params: [String: String]?
     private var connectingParams: [String: String]?
@@ -99,7 +104,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         }
 
         self.socket?.onError(callback: { [weak self] (err) in
-            self?.websocketDidFailed(error: err)
+            self?.websocketDidFailed(err: err)
         })
 
         self.socket?.onMessage(callback: { [weak self] (message) in
@@ -116,6 +121,15 @@ public class ABSDKWebSocketTransport: NetworkTransport {
             }
         })
 
+        connect()
+    }
+
+    fileprivate func connect() {
+        if self.isConnected() || connecting {
+            return
+        }
+
+        connecting = true
         self.socket?.connect()
     }
 
@@ -128,19 +142,22 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     }
 
     private func websocketDidConnect() {
-        self.error = nil
+        connecting = false
+        error = nil
         self.joinChannel()
     }
 
     private func websocketDidDisconnect() {
-        self.error = nil
         joined = false
+        connecting = false
+        error = nil
     }
 
-    private func websocketDidFailed(error: Error) {
+    private func websocketDidFailed(err: Error) {
         joined = false
-        self.error = WebSocketError(payload: nil, error: error, kind: .networkError)
-        self.notifyWithError(error: self.error!)
+        connecting = false
+        error = WebSocketError(payload: nil, error: err, kind: .networkError)
+        self.notifyWithError(error: error!)
     }
 
     private func joinChannel() {
@@ -191,27 +208,6 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         }
     }
 
-    private final class WebSocketTask<Operation: GraphQLOperation> : Cancellable {
-
-        let subscriptionSeqNo: String
-        let handlerSeqNo: String
-        let wst: ABSDKWebSocketTransport
-
-        init(_ ws: ABSDKWebSocketTransport, _ operation: Operation, _ completionHandler: @escaping (_ response: JSONObject?, _ error: Error?) -> Void) {
-            (subscriptionSeqNo, handlerSeqNo) = ws.sendHelper(operation: operation, resultHandler: completionHandler)
-            wst = ws
-        }
-
-        public func cancel() {
-            wst.unsubscribe(subscriptionSeqNo: subscriptionSeqNo, handlerSeqNo: handlerSeqNo)
-        }
-
-        // unsubscribe same as cancel
-        public func unsubscribe() {
-            cancel()
-        }
-    }
-
     private func requestBody<Operation: GraphQLOperation>(for operation: Operation) -> Payload {
         if let variables: GraphQLMap = operation.variables {
             return ["query": operation.queryDocument, "variables": variables]
@@ -235,7 +231,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         return sequenceNumber
     }
 
-    private func sendHelper<Operation: GraphQLOperation>(operation: Operation, resultHandler: @escaping (_ response: JSONObject?, _ error: Error?) -> Void) -> (subscriptionSeqNo: String, handlerSeqNo: String) {
+    fileprivate func sendHelper<Operation: GraphQLOperation>(operation: Operation, resultHandler: @escaping (_ response: JSONObject?, _ error: Error?) -> Void) -> (subscriptionSeqNo: String, handlerSeqNo: String) {
         let payload = requestBody(for: operation)
 
         var sub: ABSDKSubscription!
@@ -298,6 +294,27 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         self.socket?.disconnect()
         self.subscriptionIds.removeAll()
         self.subscriptions.removeAll()
+    }
+}
+
+private final class WebSocketTask<Operation: GraphQLOperation> : Cancellable {
+
+    let subscriptionSeqNo: String
+    let handlerSeqNo: String
+    let wst: ABSDKWebSocketTransport
+
+    init(_ ws: ABSDKWebSocketTransport, _ operation: Operation, _ completionHandler: @escaping (_ response: JSONObject?, _ error: Error?) -> Void) {
+        (subscriptionSeqNo, handlerSeqNo) = ws.sendHelper(operation: operation, resultHandler: completionHandler)
+        wst = ws
+    }
+
+    public func cancel() {
+        wst.unsubscribe(subscriptionSeqNo: subscriptionSeqNo, handlerSeqNo: handlerSeqNo)
+    }
+
+    // unsubscribe same as cancel
+    public func unsubscribe() {
+        cancel()
     }
 }
 
