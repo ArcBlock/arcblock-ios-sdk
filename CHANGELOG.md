@@ -1,3 +1,7 @@
+## 0.7.1 (August 10, 2018)
+  - monitor reachability and app state to auto reconnect websocket
+  - support subscription:datasource 1:n relationship locally and send subscription request once handle network error, join channel error and subscription error
+
 ## 0.7.0 (August 08, 2018)
   - fix framework building issue fix linter warning
   - add new block mined view in demo
