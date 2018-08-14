@@ -241,7 +241,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
             if self.equals(subscription.payload, payload) {
                 sub = subscription
                 subscriptionSeqNo = seqNo
-                break;
+                break
             }
         }
 
@@ -278,12 +278,10 @@ public class ABSDKWebSocketTransport: NetworkTransport {
 
         if subscription.handlers.count == 0 {
             subscriptions.removeValue(forKey: subscriptionSeqNo)
-            for (subscriptionId, seqNo) in subscriptionIds {
-                if seqNo == subscriptionSeqNo {
-                    // TODO: send unsubscribe message
-                    subscriptionIds.removeValue(forKey: subscriptionId)
-                    break
-                }
+            for (subscriptionId, seqNo) in subscriptionIds where seqNo == subscriptionSeqNo {
+                // TODO: send unsubscribe message
+                subscriptionIds.removeValue(forKey: subscriptionId)
+                break
             }
         }
     }
@@ -301,15 +299,15 @@ private final class WebSocketTask<Operation: GraphQLOperation> : Cancellable {
 
     let subscriptionSeqNo: String
     let handlerSeqNo: String
-    let wst: ABSDKWebSocketTransport
+    let websocketTransport: ABSDKWebSocketTransport
 
-    init(_ ws: ABSDKWebSocketTransport, _ operation: Operation, _ completionHandler: @escaping (_ response: JSONObject?, _ error: Error?) -> Void) {
-        (subscriptionSeqNo, handlerSeqNo) = ws.sendHelper(operation: operation, resultHandler: completionHandler)
-        wst = ws
+    init(_ wst: ABSDKWebSocketTransport, _ operation: Operation, _ completionHandler: @escaping (_ response: JSONObject?, _ error: Error?) -> Void) {
+        (subscriptionSeqNo, handlerSeqNo) = wst.sendHelper(operation: operation, resultHandler: completionHandler)
+        websocketTransport = wst
     }
 
     public func cancel() {
-        wst.unsubscribe(subscriptionSeqNo: subscriptionSeqNo, handlerSeqNo: handlerSeqNo)
+        websocketTransport.unsubscribe(subscriptionSeqNo: subscriptionSeqNo, handlerSeqNo: handlerSeqNo)
     }
 
     // unsubscribe same as cancel

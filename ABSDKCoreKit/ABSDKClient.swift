@@ -137,6 +137,7 @@ public class ABSDKClient {
     let reachability: Reachability!
     var accessState: ClientNetworkAccessState = .offline
     var appInForeground: Bool!
+    var observers: [Any] = []
 
     /// Creates a client with the specified `ABSDKClientConfiguration`.
     ///
@@ -153,22 +154,33 @@ public class ABSDKClient {
         self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.configuration.store)
 
         reachability = Reachability()
-        NotificationCenter.default.addObserver(self, selector: #selector(checkForReachability(notification:)), name: .reachabilityChanged, object: reachability)
+        var observer = NotificationCenter.default.addObserver(forName: .reachabilityChanged, object: nil, queue: nil) { [weak self] (notification) in
+            self?.checkForReachability(notification: notification)
+        }
+        observers.append(observer)
+
+        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] _ in
+            self?.appInForeground = true
+            self?.handleStateChange()
+        }
+        observers.append(observer)
+
+        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self] _ in
+            self?.appInForeground = false
+        }
+        observers.append(observer)
+
         do {
             try reachability?.startNotifier()
         } catch {
         }
-
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] notification in
-            self?.appInForeground = true
-            self?.handleStateChange()
-        }
-
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self] notification in
-            self?.appInForeground = false
-        }
-
         appInForeground = UIApplication.shared.applicationState == .active
+    }
+
+    deinit {
+        for observer in observers {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 
     @objc func checkForReachability(notification: Notification) {
