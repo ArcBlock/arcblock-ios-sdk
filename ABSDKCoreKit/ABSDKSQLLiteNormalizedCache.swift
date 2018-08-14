@@ -25,18 +25,18 @@ import SQLite
 
 /// Custom errors related to ABSDKSQLLiteNormalizedCache
 public enum ABSDKSQLLiteNormalizedCacheError: Error {
-    /// record encoding error
+    /// Record encoding error
     case invalidRecordEncoding(record: String)
-    /// record shape error
+    /// Record shape error
     case invalidRecordShape(object: Any)
-    /// record value error
+    /// Record value error
     case invalidRecordValue(value: Any)
 }
 
 /// A SQLLite based normalized cache module for apollo store
 public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
 
-    /// init a cache instance with a file URL
+    /// Init a cache instance with a file URL
     ///
     /// - Parameters:
     ///   - fileURL: The URL to the local sqlite db file
@@ -48,7 +48,7 @@ public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
     /// Merge a set of cached records
     ///
     /// - Parameters:
-    ///   - records: records to merge
+    ///   - records: Records to merge
     /// - Returns: A promise that returns a set of cache keys of merged records
     public func merge(records: RecordSet) -> Promise<Set<CacheKey>> {
         return Promise { try mergeRecords(records: records) }
@@ -61,10 +61,10 @@ public final class ABSDKSQLLiteNormalizedCache: NormalizedCache {
         }
     }
 
-    /// load a set of cached records with the keys
+    /// Load a set of cached records with the keys
     ///
     /// - Parameters:
-    ///   - keys: the keys of the caches to load
+    ///   - keys: The keys of the caches to load
     /// - Returns: A promise that returns a set of records loaded
     public func loadRecords(forKeys keys: [CacheKey]) -> Promise<[Record?]> {
         return Promise {

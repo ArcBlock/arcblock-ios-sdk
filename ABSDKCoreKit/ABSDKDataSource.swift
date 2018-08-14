@@ -52,13 +52,13 @@ final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: Grap
     let dataSourceMapper: ObjectDataSourceMapper<Operation, Data>
     var observer: Cancellable?
 
-    /// init an object data source
+    /// Init an object data source
     ///
     /// - Parameters:
-    ///     client: an ABSDKClient for sending requests
-    ///     query: a GraphQL query to get the object
-    ///     dataSourceMapper: a callback to extract the concerned object from the query result
-    ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned object gets update
+    ///     client: An ABSDKClient for sending requests
+    ///     query: A GraphQL query to get the object
+    ///     dataSourceMapper: A callback to extract the concerned object from the query result
+    ///     dataSourceUpdateHandler: A callback that gets called whenever the concerned object gets update
     public init(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.client = client
         self.operation = operation
@@ -77,7 +77,8 @@ final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: Grap
 }
 
 public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
-    func observe() {
+    /// Start observing on the operation related data
+    public func observe() {
         self.observer = self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
             if err == nil {
                 if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
@@ -91,7 +92,8 @@ public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
 }
 
 public extension ABSDKObjectDataSource where Operation: GraphQLSubscription {
-    func observe() {
+    /// Start observing on the operation related data
+    public func observe() {
         self.observer = self.client.subscribe(subscription: self.operation, resultHandler: { [weak self] (result, err) in
             if err == nil {
                 if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
@@ -159,14 +161,14 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
     var arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>?
     var observer: Cancellable?
 
-    /// init an array data source
+    /// Init an array data source
     ///
     /// - Parameters:
     ///     client: an ABSDKClient for sending requests
-    ///     query: a GraphQL query to get the array
-    ///     dataSourceMapper: a callback to extract the concerned array from the query result
-    ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned array gets update
-    ///     arrayDataKeyEqualCHecker: an optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
+    ///     query: A GraphQL query to get the array
+    ///     dataSourceMapper: A callback to extract the concerned array from the query result
+    ///     dataSourceUpdateHandler: A callback that gets called whenever the concerned array gets update
+    ///     arrayDataKeyEqualCHecker: An optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
     public init(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ArrayDataSourceMapper<Operation, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil) {
         self.client = client
         self.operation = operation
@@ -241,7 +243,7 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
 
     /// Get the element in the array, for tableView/CollectionView. 
     /// - Parameters:
-    ///     indexPath: the indexPath of the item
+    ///     indexPath: The indexPath of the item
     /// - Returns: The element at the indexPath
     public func itemForIndexPath(indexPath: IndexPath) -> Data? {
         return array[indexPath.row]
@@ -254,6 +256,7 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
 }
 
 public extension ABSDKArrayDataSource where Operation: GraphQLQuery {
+    /// Start observing on the operation related data
     public func observe() {
         self.observer = self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
             if err == nil {
@@ -268,6 +271,7 @@ public extension ABSDKArrayDataSource where Operation: GraphQLQuery {
 }
 
 public extension ABSDKArrayDataSource where Operation: GraphQLSubscription {
+    /// Start observing on the operation related data
     public func observe() {
         self.observer = self.client.subscribe(subscription: self.operation, resultHandler: { [weak self] (result, err) in
             if err == nil {

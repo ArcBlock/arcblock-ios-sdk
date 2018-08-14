@@ -87,7 +87,6 @@ public class ABSDKClientConfiguration {
     ///   - url: The endpoint url for ArcBlock endpoint.
     ///   - urlSessionConfiguration: A `URLSessionConfiguration` configuration object for custom HTTP configuration.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
-    ///   - connectionStateChangeHandler: The delegate object to be notified when client network state changes.
     public init(url: URL,
                 urlSessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default,
                 databaseURL: URL? = nil) throws {
@@ -237,8 +236,6 @@ public class ABSDKClient {
     ///   - cachePolicy: A cache policy that specifies when results should be fetched from the server or from the local cache.
     ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
     ///   - resultHandler: An optional closure that is called when query results are available or when an error occurs.
-    ///   - result: The result of the fetched query, or `nil` if an error occurred.
-    ///   - error: An error that indicates why the fetch failed, or `nil` if the fetch was succesful.
     /// - Returns: A query watcher object that can be used to control the watching behavior.
     @discardableResult public func watch<Query: GraphQLQuery>(query: Query, cachePolicy: CachePolicy = .returnCacheDataElseFetch, queue: DispatchQueue = DispatchQueue.main, resultHandler: @escaping OperationResultHandler<Query>) -> GraphQLQueryWatcher<Query> {
         return apolloClient!.watch(query: query, cachePolicy: cachePolicy, queue: queue, resultHandler: resultHandler)
@@ -251,8 +248,6 @@ public class ABSDKClient {
     ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
     ///   - optimisticUpdate: An optional closure which gets executed before making the network call, should be used to make local cache update
     ///   - resultHandler: An optional closure that is called when mutation results are available or when an error occurs.
-    ///   - result: The result of the performed mutation, or `nil` if an error occurred.
-    ///   - error: An error that indicates why the mutation failed, or `nil` if the mutation was succesful.
     /// - Returns: An object that can be used to cancel an in progress mutation.
     @discardableResult public func perform<Mutation: GraphQLMutation>(mutation: Mutation,
                                                                       queue: DispatchQueue = DispatchQueue.main,
@@ -270,6 +265,13 @@ public class ABSDKClient {
         return apolloClient!.perform(mutation: mutation, queue: queue, resultHandler: resultHandler)
     }
 
+    /// Subscribe to a query on the server.
+    ///
+    /// - Parameters:
+    ///   - subscription: The subscription to perform.
+    ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
+    ///   - resultHandler: An optional closure that is called when mutation results are available or when an error occurs.
+    /// - Returns: An object that can be used to cancel/unsubscribe an established subscription.
     @discardableResult public func subscribe<Subscription: GraphQLSubscription>(subscription: Subscription,
                                                                                 queue: DispatchQueue = DispatchQueue.main,
                                                                                 resultHandler: @escaping OperationResultHandler<Subscription>) -> Cancellable {
