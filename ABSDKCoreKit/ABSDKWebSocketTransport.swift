@@ -23,15 +23,28 @@
 import Apollo
 import SwiftPhoenixClient
 
+/// A network transport that wraps a http transport and a websocket transport to cover query, mutation and subscription
 public class ABSDKSplitNetworkTransport: NetworkTransport {
     private let httpNetworkTransport: HTTPNetworkTransport
     private let webSocketNetworkTransport: ABSDKWebSocketTransport
 
+    /// Initialize a split transport with a http transport and a websocket transport
+    ///
+    /// - Parameters:
+    ///   - httpNetworkTransport: The http network transport
+    ///   - websocketNetworkTransport: The websocket network transport
+    /// - Returns: The split network transport
     public init(httpNetworkTransport: HTTPNetworkTransport, webSocketNetworkTransport: ABSDKWebSocketTransport) {
         self.httpNetworkTransport = httpNetworkTransport
         self.webSocketNetworkTransport = webSocketNetworkTransport
     }
 
+    /// Send an operation to server
+    ///
+    /// - Parameters:
+    ///   - operation: The operation to send
+    ///   - completionHandler: An optional closure that is called when mutation results are available or when an error occurs.
+    /// - Returns: An object that can be used to cancel the operation.
     public func send<Operation>(operation: Operation, completionHandler: @escaping (GraphQLResponse<Operation>?, Error?) -> Void) -> Cancellable {
         if operation.operationType == .subscription {
             return webSocketNetworkTransport.send(operation: operation, completionHandler: completionHandler)
@@ -40,6 +53,7 @@ public class ABSDKSplitNetworkTransport: NetworkTransport {
         }
     }
 
+    /// Recover the connection status of the websocket transport
     public func reconnect() {
         webSocketNetworkTransport.connect()
     }
@@ -67,7 +81,7 @@ final class ABSDKSubscription {
     }
 }
 
-/// A network transport that uses web sockets requests to send GraphQL subscription operations to a server, and that uses the Starscream implementation of web sockets.
+/// A network transport that uses web sockets requests to send GraphQL subscription operations to a server, and that uses the SwiftPhoenixClient implementation of Phoenix client.
 public class ABSDKWebSocketTransport: NetworkTransport {
 
     var socket: Socket?
@@ -81,14 +95,18 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     var connecting = false
 
     private var params: [String: String]?
-    private var connectingParams: [String: String]?
 
     private var subscriptions: [String: ABSDKSubscription] = [:]
     private var subscriptionIds: [String: String] = [:]
 
-    public init(url: URL, params: [String: String]? = nil, connectingParams: [String: String]? = [:]) {
+    /// Initialize a websocket network transport
+    ///
+    /// - Parameters:
+    ///   - url: Websocket url
+    ///   - params: Parameters for the socket connection
+    /// - Returns: The websocket network transport
+    public init(url: URL, params: [String: String]? = nil) {
         self.params = params
-        self.connectingParams = connectingParams
         var request = URLRequest(url: url)
         if let params = self.params {
             request.allHTTPHeaderFields = params
@@ -137,6 +155,9 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         socket?.disconnect()
     }
 
+    /// The socket connection status
+    ///
+    /// - Returns: If the socket is connected
     public func isConnected() -> Bool {
         return socket?.isConnected ?? false
     }
@@ -156,7 +177,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     private func websocketDidFailed(err: Error) {
         joined = false
         connecting = false
-        error = WebSocketError(payload: nil, error: err, kind: .networkError)
+        error = WebSocketError(payload: nil, error: err, type: .networkError)
         self.notifyWithError(error: error!)
     }
 
@@ -168,7 +189,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         }).receive("error", callback: { [weak self] (message) in
             print("join channel failed")
             self?.joined = false
-            self?.notifyWithError(error: WebSocketError(payload: message.payload, error: nil, kind: .joinChannelError))
+            self?.notifyWithError(error: WebSocketError(payload: message.payload, error: nil, type: .joinChannelError))
         })
     }
 
@@ -193,6 +214,12 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         }
     }
 
+    /// Send an subscription request
+    ///
+    /// - Parameters:
+    ///   - operation: The subscription to send
+    ///   - resultHandler: An optional closure that is called when mutation results are available or when an error occurs.
+    /// - Returns: An object that can be used to cancel the subscription.
     public func send<Operation>(operation: Operation, completionHandler: @escaping (_ response: GraphQLResponse<Operation>?, _ error: Error?) -> Void) -> Cancellable {
         if let error = self.error {
             completionHandler(nil, error)
@@ -266,12 +293,17 @@ public class ABSDKWebSocketTransport: NetworkTransport {
                         self?.subscriptionIds[subscriptionId] = seqNo
                     }
                 }).receive("error", callback: { [weak self] (message) in
-                    self?.notifyWithError(subscriptionSeqNo: seqNo, error: WebSocketError(payload: message.payload, error: nil, kind: .subscriptionError))
+                    self?.notifyWithError(subscriptionSeqNo: seqNo, error: WebSocketError(payload: message.payload, error: nil, type: .subscriptionError))
                 })
             }
         }
     }
 
+    /// Unsubscribe a subscription
+    ///
+    /// - Parameters:
+    ///   - subscriptionSeqNo: The sequence number of a subscription
+    ///   - handlerSeqNo: The sequence number of the handler
     public func unsubscribe(subscriptionSeqNo: String, handlerSeqNo: String) {
         let subscription: ABSDKSubscription = subscriptions[subscriptionSeqNo]!
         subscription.handlers.removeValue(forKey: handlerSeqNo)
@@ -286,6 +318,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         }
     }
 
+    /// Close the socket connection and reset the state
     public func closeConnection() {
         self.joined = false
         self.channel?.leave()
@@ -316,10 +349,16 @@ private final class WebSocketTask<Operation: GraphQLOperation> : Cancellable {
     }
 }
 
+/// Struct to wrap websocket related errors
 public struct WebSocketError: Error, LocalizedError {
-    public enum ErrorKind {
+
+    /// The type of the websocket error
+    public enum ErrorType {
+        /// Network error, connection can't be established
         case networkError
+        /// Join channel error, can't not join the Pheonix channel
         case joinChannelError
+        /// Subscription error, can't execute subscription
         case subscriptionError
 
         var description: String {
@@ -336,6 +375,8 @@ public struct WebSocketError: Error, LocalizedError {
 
     /// The payload of the response.
     public let payload: JSONObject?
+    /// The error object of the response
     public let error: Error?
-    public let kind: ErrorKind
+    /// They type of the error
+    public let type: ErrorType
 }

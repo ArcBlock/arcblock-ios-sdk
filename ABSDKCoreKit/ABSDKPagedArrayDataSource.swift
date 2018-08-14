@@ -29,7 +29,7 @@ public typealias PageMapper<Query: GraphQLPagedQuery> = (_ data: Query.Data) -> 
 public protocol GraphQLPagedQuery: GraphQLQuery {
     /// The query argument related to page
     var paging: PageInput? { get set }
-    /// copy an idential query
+    /// Copy an idential query
     func copy() -> Self
 }
 
@@ -65,15 +65,15 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
     var pageMapper: PageMapper<Query>!
     var watchers: [String: GraphQLQueryWatcher<Query>] = [:]
 
-    /// init a paged array data source
+    /// Init a paged array data source
     ///
     /// - Parameters:
-    ///     client: an ABSDKClient for sending requests
-    ///     query: a GraphQL query to get the array
-    ///     dataSourceMapper: a callback to extract the concerned array from the query result
-    ///     dataSourceUpdateHandler: a callback that gets called whenever the concerned array gets update
-    ///     arrayDataKeyEqualCHecker: an optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
-    ///     pageMapper: a callback to extract page info from the query result
+    ///     client: An ABSDKClient for sending requests
+    ///     query: A GraphQL query to get the array
+    ///     dataSourceMapper: A callback to extract the concerned array from the query result
+    ///     dataSourceUpdateHandler: A callback that gets called whenever the concerned array gets update
+    ///     arrayDataKeyEqualCHecker: An optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
+    ///     pageMapper: A callback to extract page info from the query result
     public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil, pageMapper: @escaping PageMapper<Query>) {
         super.init(client: client, operation: query, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: arrayDataKeyEqualChecker)
         self.pageMapper = pageMapper
