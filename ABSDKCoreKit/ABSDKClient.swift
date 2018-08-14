@@ -51,78 +51,12 @@ public enum ClientNetworkAccessState {
     case offline
 }
 
-/// Protocol to handle connection state change
-public protocol ConnectionStateChangeHandler {
-    /// A function to handle connection state change
-    func stateChanged(networkState: ClientNetworkAccessState)
-}
-
 /// An optional closure which gets executed before making the network call, should be used to make local cache update
 public typealias OptimisticResponseBlock = (ApolloStore.ReadWriteTransaction?) -> Void
-
-enum ABSDKGraphQLOperation {
-    case mutation
-    case query
-    case subscription
-}
-
-protocol NetworkConnectionNotification {
-    func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool)
-}
 
 extension HTTPURLResponse {
     var statusCodeDescription: String {
         return HTTPURLResponse.localizedString(forStatusCode: statusCode)
-    }
-}
-
-class SnapshotProcessController {
-    let endpointURL: URL
-    var reachability: Reachability?
-    private var networkStatusWatchers: [NetworkConnectionNotification] = []
-    let allowsCellularAccess: Bool
-
-    init(endpointURL: URL, allowsCellularAccess: Bool = true) {
-        self.endpointURL = endpointURL
-        self.allowsCellularAccess = allowsCellularAccess
-        reachability = Reachability(hostname: endpointURL.host!)
-        reachability?.allowsCellularConnection = allowsCellularAccess
-        NotificationCenter.default.addObserver(self, selector: #selector(checkForReachability(note:)), name: .reachabilityChanged, object: reachability)
-        do {
-            try reachability?.startNotifier()
-        } catch {
-        }
-    }
-
-    @objc func checkForReachability(note: Notification) {
-        if let reachability = note.object as? Reachability {
-            var isReachable = true
-            switch reachability.connection {
-            case .none:
-                isReachable = false
-            default:
-                break
-            }
-
-            for watchers in networkStatusWatchers {
-                watchers.onNetworkAvailabilityStatusChanged(isEndpointReachable: isReachable)
-            }
-        }
-    }
-
-    func shouldExecuteOperation(operation: ABSDKGraphQLOperation) -> Bool {
-        switch operation {
-        case .mutation:
-            if !(reachability?.connection.description == "No Connection") {
-                return true
-            } else {
-                return false
-            }
-        case .query:
-            return true
-        case .subscription:
-            return true
-        }
     }
 }
 
@@ -133,8 +67,6 @@ public class ABSDKClientConfiguration {
     fileprivate var urlSessionConfiguration: URLSessionConfiguration
 
     fileprivate var databaseURL: URL?
-    fileprivate var snapshotController: SnapshotProcessController?
-    fileprivate var connectionStateChangeHandler: ConnectionStateChangeHandler?
 
     fileprivate var allowsCellularAccess: Bool = true
     fileprivate var autoSubmitOfflineMutations: Bool = true
@@ -155,16 +87,13 @@ public class ABSDKClientConfiguration {
     ///   - url: The endpoint url for ArcBlock endpoint.
     ///   - urlSessionConfiguration: A `URLSessionConfiguration` configuration object for custom HTTP configuration.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
-    ///   - connectionStateChangeHandler: The delegate object to be notified when client network state changes.
     public init(url: URL,
                 urlSessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default,
-                databaseURL: URL? = nil,
-                connectionStateChangeHandler: ConnectionStateChangeHandler? = nil) throws {
+                databaseURL: URL? = nil) throws {
         self.url = url
         self.urlSessionConfiguration = urlSessionConfiguration
         self.databaseURL = databaseURL
         self.store = ApolloStore(cache: InMemoryNormalizedCache())
-        self.connectionStateChangeHandler = connectionStateChangeHandler
         if let databaseURL = databaseURL {
             do {
                 self.store = try ApolloStore(cache: ABSDKSQLLiteNormalizedCache(fileURL: databaseURL))
@@ -172,7 +101,6 @@ public class ABSDKClientConfiguration {
                 // Use in memory cache incase database init fails
             }
         }
-        self.snapshotController = SnapshotProcessController(endpointURL: url)
     }
 }
 
@@ -197,17 +125,18 @@ public struct ABSDKClientError: Error, LocalizedError {
 
 /// The ABSDKClient handles network connection, making `Query`, `Mutation` and `Subscription` requests, and resolving the results.
 /// The ABSDKClient also manages local caches.
-public class ABSDKClient: NetworkConnectionNotification {
+public class ABSDKClient {
 
     let apolloClient: ApolloClient?
     let store: ApolloStore?
 
-    var reachability: Reachability?
-
-    private var networkStatusWatchers: [NetworkConnectionNotification] = []
     private var configuration: ABSDKClientConfiguration
     internal var networkTransport: ABSDKSplitNetworkTransport?
-    internal var connectionStateChangeHandler: ConnectionStateChangeHandler?
+
+    let reachability: Reachability!
+    var accessState: ClientNetworkAccessState = .offline
+    var appInForeground: Bool!
+    var observers: [Any] = []
 
     /// Creates a client with the specified `ABSDKClientConfiguration`.
     ///
@@ -216,7 +145,6 @@ public class ABSDKClient: NetworkConnectionNotification {
     public init(configuration: ABSDKClientConfiguration) throws {
         self.configuration = configuration
 
-        reachability = Reachability(hostname: self.configuration.url.host!)
         self.store = configuration.store
         let httpTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
         let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: URL(string: websocketUrl)!)
@@ -224,16 +152,39 @@ public class ABSDKClient: NetworkConnectionNotification {
 
         self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.configuration.store)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(checkForReachability(note:)), name: .reachabilityChanged, object: reachability)
+        reachability = Reachability()
+        var observer = NotificationCenter.default.addObserver(forName: .reachabilityChanged, object: nil, queue: nil) { [weak self] (notification) in
+            self?.checkForReachability(notification: notification)
+        }
+        observers.append(observer)
+
+        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] _ in
+            self?.appInForeground = true
+            self?.handleStateChange()
+        }
+        observers.append(observer)
+
+        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self] _ in
+            self?.appInForeground = false
+        }
+        observers.append(observer)
+
         do {
             try reachability?.startNotifier()
         } catch {
         }
+        appInForeground = UIApplication.shared.applicationState == .active
     }
 
-    @objc func checkForReachability(note: Notification) {
+    deinit {
+        for observer in observers {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
 
-        guard let reachability = note.object as? Reachability else {
+    @objc func checkForReachability(notification: Notification) {
+
+        guard let reachability = notification.object as? Reachability else {
             return
         }
 
@@ -250,17 +201,18 @@ public class ABSDKClient: NetworkConnectionNotification {
             print("")
         }
 
-        for watchers in networkStatusWatchers {
-            watchers.onNetworkAvailabilityStatusChanged(isEndpointReachable: isReachable)
-        }
+        self.onNetworkAvailabilityStatusChanged(isEndpointReachable: isReachable)
     }
 
     func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
-        var accessState: ClientNetworkAccessState = .offline
-        if isEndpointReachable {
-            accessState = .offline
+        accessState = isEndpointReachable ? .online : .offline
+        self.handleStateChange()
+    }
+
+    func handleStateChange() {
+        if appInForeground && accessState == .online {
+            networkTransport?.reconnect()
         }
-        self.connectionStateChangeHandler?.stateChanged(networkState: accessState)
     }
 
     /// Fetches a query from the server or from the local cache, depending on the current contents of the cache and the specified cache policy.
@@ -284,8 +236,6 @@ public class ABSDKClient: NetworkConnectionNotification {
     ///   - cachePolicy: A cache policy that specifies when results should be fetched from the server or from the local cache.
     ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
     ///   - resultHandler: An optional closure that is called when query results are available or when an error occurs.
-    ///   - result: The result of the fetched query, or `nil` if an error occurred.
-    ///   - error: An error that indicates why the fetch failed, or `nil` if the fetch was succesful.
     /// - Returns: A query watcher object that can be used to control the watching behavior.
     @discardableResult public func watch<Query: GraphQLQuery>(query: Query, cachePolicy: CachePolicy = .returnCacheDataElseFetch, queue: DispatchQueue = DispatchQueue.main, resultHandler: @escaping OperationResultHandler<Query>) -> GraphQLQueryWatcher<Query> {
         return apolloClient!.watch(query: query, cachePolicy: cachePolicy, queue: queue, resultHandler: resultHandler)
@@ -298,8 +248,6 @@ public class ABSDKClient: NetworkConnectionNotification {
     ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
     ///   - optimisticUpdate: An optional closure which gets executed before making the network call, should be used to make local cache update
     ///   - resultHandler: An optional closure that is called when mutation results are available or when an error occurs.
-    ///   - result: The result of the performed mutation, or `nil` if an error occurred.
-    ///   - error: An error that indicates why the mutation failed, or `nil` if the mutation was succesful.
     /// - Returns: An object that can be used to cancel an in progress mutation.
     @discardableResult public func perform<Mutation: GraphQLMutation>(mutation: Mutation,
                                                                       queue: DispatchQueue = DispatchQueue.main,
@@ -317,6 +265,13 @@ public class ABSDKClient: NetworkConnectionNotification {
         return apolloClient!.perform(mutation: mutation, queue: queue, resultHandler: resultHandler)
     }
 
+    /// Subscribe to a query on the server.
+    ///
+    /// - Parameters:
+    ///   - subscription: The subscription to perform.
+    ///   - queue: A dispatch queue on which the result handler will be called. Defaults to the main queue.
+    ///   - resultHandler: An optional closure that is called when mutation results are available or when an error occurs.
+    /// - Returns: An object that can be used to cancel/unsubscribe an established subscription.
     @discardableResult public func subscribe<Subscription: GraphQLSubscription>(subscription: Subscription,
                                                                                 queue: DispatchQueue = DispatchQueue.main,
                                                                                 resultHandler: @escaping OperationResultHandler<Subscription>) -> Cancellable {
