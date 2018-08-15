@@ -1,3 +1,6 @@
+## 0.7.2 (August 15, 2018)
+  - send unsubscribe message
+
 ## 0.7.1 (August 10, 2018)
   - monitor reachability and app state to auto reconnect websocket
   - support subscription:datasource 1:n relationship locally and send subscription request once handle network error, join channel error and subscription error
