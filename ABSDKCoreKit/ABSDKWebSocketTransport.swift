@@ -311,7 +311,11 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         if subscription.handlers.count == 0 {
             subscriptions.removeValue(forKey: subscriptionSeqNo)
             for (subscriptionId, seqNo) in subscriptionIds where seqNo == subscriptionSeqNo {
-                // TODO: send unsubscribe message
+                channel?.push("unsubscribe", payload: ["subscriptionId": subscriptionId]).receive("ok", callback: { (message) in
+                    print(message.payload)
+                }).receive("error", callback: { (message) in
+                    print(message.payload)
+                })
                 subscriptionIds.removeValue(forKey: subscriptionId)
                 break
             }
