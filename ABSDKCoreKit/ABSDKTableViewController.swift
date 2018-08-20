@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 import UIKit
 import Apollo
 
@@ -33,7 +32,7 @@ open class ABSDKTableViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
     public var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
     public var pageMapper: PageMapper<Query>?
     public var dataSource: ABSDKPagedArrayDataSource<Query, Data>?
-    
+
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,8 +41,7 @@ open class ABSDKTableViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
         tableView.delegate = self
         if let nibName: String = Cell.nibName {
             tableView.register(UINib.init(nibName: nibName, bundle: nil), forCellReuseIdentifier: "Cell")
-        }
-        else {
+        } else {
             tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
         }
         self.view.addSubview(tableView)
@@ -86,15 +84,16 @@ open class ABSDKTableViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! ABSDKTableViewCell<Data>
-        if let data: Data = self.dataSource?.itemForIndexPath(indexPath: indexPath) {
-            cell.updateView(data: data)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+        if  let data: Data = self.dataSource?.itemForIndexPath(indexPath: indexPath),
+            let cellForData: ABSDKTableViewCell<Data> = cell as? ABSDKTableViewCell<Data> {
+            cellForData.updateView(data: data)
         }
         return cell
     }
 
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
