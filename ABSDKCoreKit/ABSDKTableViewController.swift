@@ -22,89 +22,80 @@
 
 
 import UIKit
+import Apollo
 
-class ABSDKTableViewController: UITableViewController {
+open class ABSDKTableViewController<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet, Cell: ABSDKTableViewCell<Data> & CellWithNib>: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var tableView: UITableView!
+    var loadingFooter: UIView!
 
-    override func viewDidLoad() {
+    public var client: ABSDKClient?
+    public var query: Query?
+    public var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
+    public var pageMapper: PageMapper<Query>?
+    public var dataSource: ABSDKPagedArrayDataSource<Query, Data>?
+    
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        tableView = UITableView.init(frame: self.view.bounds)
+        tableView.dataSource = self
+        tableView.delegate = self
+        if let nibName: String = Cell.nibName {
+            tableView.register(UINib.init(nibName: nibName, bundle: nil), forCellReuseIdentifier: "Cell")
+        }
+        else {
+            tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
+        }
+        self.view.addSubview(tableView)
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.configDataSource()
+        self.setupDataSource()
+
+        loadingFooter = UIView.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.view.bounds.size.width, height: 44)))
+        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+        activityIndicator.center = loadingFooter.center
+        activityIndicator.startAnimating()
+        loadingFooter.addSubview(activityIndicator)
+        tableView.tableFooterView = loadingFooter
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    open func configDataSource() {
+        // base class
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    open func setupDataSource() {
+        if  let client: ABSDKClient = self.client,
+            let query: Query = self.query,
+            let dataSourceMapper: ArrayDataSourceMapper<Query, Data> = self.dataSourceMapper,
+            let pageMapper: PageMapper<Query> = self.pageMapper {
+            dataSource = ABSDKPagedArrayDataSource<Query, Data>(client: client, query: query, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: { [weak self] (err) in
+                if err != nil {
+                    return
+                }
+                self?.tableView.reloadData()
+                if let hasMore: Bool = self?.dataSource?.hasMore {
+                    self?.tableView.tableFooterView = hasMore ? self?.loadingFooter : nil
+                }
+            }, pageMapper: pageMapper)
+            dataSource?.refresh()
+        }
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataSource?.numberOfRows(section: section) ?? 0
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! ABSDKTableViewCell<Data>
+        if let data: Data = self.dataSource?.itemForIndexPath(indexPath: indexPath) {
+            cell.updateView(data: data)
+        }
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
+            dataSource?.loadMore()
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

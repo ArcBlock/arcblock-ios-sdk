@@ -68,6 +68,10 @@ public extension ABSDKObjectView where Operation: GraphQLSubscription {
     }
 }
 
+public protocol CellWithNib {
+    static var nibName: String? { get }
+}
+
 open class ABSDKTableViewCell<Data: GraphQLSelectionSet>: UITableViewCell, ABSDKViewBinding {
     open func updateView(data: Data) {
         // base class
