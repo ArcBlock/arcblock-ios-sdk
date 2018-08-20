@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Kind</key>
+	<string>Xcode.IDEFoundation.TextSubstitutionFileTemplateKind</string>
+	<key>Description</key>
+	<string>An ABSDKTableViewController file.</string>
+	<key>Summary</key>
+	<string>An ABSDKTableViewController file</string>
+	<key>SortOrder</key>
+	<string>30</string>
+	<key>AllowedTypes</key>
+	<array>
+		<string>public.swift-source</string>
+	</array>
+	<key>DefaultCompletionName</key>
+	<string>File</string>
+	<key>MainTemplateFile</key>
+	<string>___FILEBASENAME___.swift</string>
+	<key>Options</key>
+        <array>
+			<dict>
+				<key>Identifier</key>
+				<string>Query</string>
+				<key>Required</key>
+				<true/>
+				<key>Name</key>
+				<string>Query:</string>
+				<key>Description</key>
+				<string>The query to get data</string>
+				<key>Type</key>
+				<string>text</string>
+				<key>NotPersisted</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>Identifier</key>
+				<string>Data</string>
+				<key>Required</key>
+				<true/>
+				<key>Name</key>
+				<string>Array Data Field:</string>
+				<key>Description</key>
+				<string>The field of the array data in the query result</string>
+				<key>Type</key>
+				<string>text</string>
+				<key>NotPersisted</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>Identifier</key>
+				<string>Cell</string>
+				<key>Required</key>
+				<true/>
+				<key>Name</key>
+				<string>Cell Class:</string>
+				<key>Description</key>
+				<string>The cell class for table view</string>
+				<key>Type</key>
+				<string>text</string>
+				<key>NotPersisted</key>
+				<true/>
+			</dict>
+        </array>
+</dict>
+</plist>
