@@ -9,12 +9,23 @@
 import UIKit
 import ArcBlockSDK
 
-class BlockDetailView: UIView {
+class BlockDetailView: ABSDKObjectView<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight> {
     @IBOutlet weak var hashLabel: UILabel!
     @IBOutlet weak var numberOfTxsLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var feesLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+
+    var height: Int? {
+        didSet {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let client: ABSDKClient = appDelegate.btcClient
+            let detailDataSourceMapper: ObjectDataSourceMapper<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight> = { (data) in
+                return data.blockByHeight
+            }
+            self.configureDataSource(client: client, operation: BtcBlockDetailQuery(height: height!), dataSourceMapper: detailDataSourceMapper)
+        }
+    }
 
     static let timeConverter: TimeConverter = {
         var timeConverter = TimeConverter()
@@ -23,12 +34,12 @@ class BlockDetailView: UIView {
         return timeConverter
     }()
 
-    public func updateBlockData(block: BtcBlockDetailQuery.Data.BlockByHeight) {
-        hashLabel.text = block.hash
-        numberOfTxsLabel.text = String(block.numberTxs)
-        totalLabel.text = String(block.total)
-        feesLabel.text = String(block.fees)
-        timeLabel.text = type(of: self).timeConverter.convertTime(time: block.time)
+    override func updateView(data: BtcBlockDetailQuery.Data.BlockByHeight) {
+        hashLabel.text = data.hash
+        numberOfTxsLabel.text = String(data.numberTxs)
+        totalLabel.text = String(data.total)
+        feesLabel.text = String(data.fees)
+        timeLabel.text = type(of: self).timeConverter.convertTime(time: data.time)
     }
 }
 
@@ -36,8 +47,6 @@ class BlockDetailViewController: TransactionListViewController<BtcBlockDetailQue
     public var height: Int = 0
 
     var detailView: BlockDetailView!
-
-    var detailDataSource: ABSDKObjectDataSource<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight>!
 
     override func viewDidLoad() {
         self.query = BtcBlockDetailQuery(height: height)
@@ -54,19 +63,8 @@ class BlockDetailViewController: TransactionListViewController<BtcBlockDetailQue
 
         super.viewDidLoad()
 
-        let detailSourceMapper: ObjectDataSourceMapper<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight> = { (data) in
-            return data.blockByHeight
-        }
-        let detailDataSourceUpdateHandler: DataSourceUpdateHandler = { [weak self] (err) in
-            if err != nil {
-                return
-            }
-            self?.detailView.updateBlockData(block: (self?.detailDataSource.getObject()!)!)
-        }
-        detailDataSource = ABSDKObjectDataSource<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight>(client: arcblockClient, operation: BtcBlockDetailQuery(height: height), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
-        detailDataSource.observe()
-
         detailView = Bundle.main.loadNibNamed("BlockDetailView", owner: self, options: nil)![0] as! BlockDetailView
+        detailView.height = height
         self.tableView.tableHeaderView = detailView
     }
 

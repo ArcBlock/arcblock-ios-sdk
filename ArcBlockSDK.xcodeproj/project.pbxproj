@@ -30,6 +30,8 @@
 		278EF3BA20A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3B920A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift */; };
 		278EF3BD20A1009000C99C1F /* ABSDKWalletKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BC20A1009000C99C1F /* ABSDKWalletKitSpec.swift */; };
 		278EF3C020A100E000C99C1F /* ABSDKAccountKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */; };
+		278FA9F921269C5900C560FB /* ABSDKObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278FA9F821269C5900C560FB /* ABSDKObjectView.swift */; };
+		278FA9FB21269CA500C560FB /* ABSDKTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278FA9FA21269CA500C560FB /* ABSDKTableViewController.swift */; };
 		279CD44220AC9F46009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		279CD44320AC9F46009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
 		279CD44620ACA967009E1348 /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
@@ -114,6 +116,8 @@
 		278EF3BC20A1009000C99C1F /* ABSDKWalletKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKWalletKitSpec.swift; sourceTree = "<group>"; };
 		278EF3BE20A100DF00C99C1F /* ABSDKAccountKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKAccountKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKAccountKitSpec.swift; sourceTree = "<group>"; };
+		278FA9F821269C5900C560FB /* ABSDKObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectView.swift; sourceTree = "<group>"; };
+		278FA9FA21269CA500C560FB /* ABSDKTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKTableViewController.swift; sourceTree = "<group>"; };
 		279CD42D20AC9EB5009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YapDatabase.framework; path = Carthage/Build/iOS/YapDatabase.framework; sourceTree = "<group>"; };
 		279CD43A20AC9F37009E1348 /* KVOController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KVOController.framework; path = Carthage/Build/iOS/KVOController.framework; sourceTree = "<group>"; };
 		279CD43B20AC9F37009E1348 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
@@ -244,6 +248,8 @@
 				274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */,
 				27240D8A2119419400A4D2A2 /* ABSDKWebSocketTransport.swift */,
 				277E6B7920A0DE340054707E /* Info.plist */,
+				278FA9F821269C5900C560FB /* ABSDKObjectView.swift */,
+				278FA9FA21269CA500C560FB /* ABSDKTableViewController.swift */,
 			);
 			path = ABSDKCoreKit;
 			sourceTree = "<group>";
@@ -803,6 +809,8 @@
 				2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */,
 				27240D8B2119419400A4D2A2 /* ABSDKWebSocketTransport.swift in Sources */,
 				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
+				278FA9FB21269CA500C560FB /* ABSDKTableViewController.swift in Sources */,
+				278FA9F921269C5900C560FB /* ABSDKObjectView.swift in Sources */,
 				275EC94D20F61C7100CAF356 /* ABSDKPagination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
