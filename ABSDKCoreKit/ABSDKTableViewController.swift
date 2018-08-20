@@ -93,6 +93,10 @@ open class ABSDKTableViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
         return cell
     }
 
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.size.height {
             dataSource?.loadMore()
