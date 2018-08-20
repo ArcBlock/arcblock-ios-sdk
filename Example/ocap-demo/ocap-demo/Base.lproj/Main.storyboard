@@ -228,7 +228,7 @@
         <!--Block Detail View Controller-->
         <scene sceneID="OhS-ce-xcL">
             <objects>
-                <viewController id="gfs-9P-8HF" customClass="BlockDetailViewController" customModule="ocap_demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BlockDetailViewController" id="gfs-9P-8HF" customClass="BlockDetailViewController" customModule="ocap_demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zb4-PU-Fph">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

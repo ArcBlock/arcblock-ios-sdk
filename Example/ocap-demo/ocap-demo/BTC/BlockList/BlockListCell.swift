@@ -56,6 +56,10 @@ class BlockListCell: ABSDKTableViewCell<ListBtcBlocksQuery.Data.BlocksByHeight.D
         }
     }
 
+    override func awakeFromNib() {
+        self.accessoryType = .disclosureIndicator
+    }
+
     override func updateView(data: ListBtcBlocksQuery.Data.BlocksByHeight.Datum) {
         heightLabel.text = "Block Height: " + String(data.height)
         transactionLabel.text = String(data.numberTxs) + " txs " + String(data.total) + " BTC"

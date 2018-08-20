@@ -29,10 +29,11 @@ class BlockListViewController: ABSDKTableViewController<ListBtcBlocksQuery, List
         query = ListBtcBlocksQuery(fromHeight: 500000)
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data: ListBtcBlocksQuery.Data.BlocksByHeight.Datum = self.dataSource!.itemForIndexPath(indexPath: indexPath)!
         let destinationViewController: BlockDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BlockDetailViewController") as! BlockDetailViewController
         destinationViewController.height = data.height
         destinationViewController.title = "Block " + String(data.height)
+        self.navigationController?.pushViewController(destinationViewController, animated: true)
     }
 }
