@@ -3,7 +3,7 @@
 import UIKit
 import ArcBlockSDK
 
-class BlockListViewController: ABSDKTableViewController<___VARIABLE_Query___, ___VARIABLE_Data___, ___VARIABLE_Cell___> {
+class ___FILEBASENAME___: ABSDKTableViewController<___VARIABLE_Query___, ___VARIABLE_Data___, ___VARIABLE_Cell___> {
 
     override func viewDidLoad() {
         super.viewDidLoad()

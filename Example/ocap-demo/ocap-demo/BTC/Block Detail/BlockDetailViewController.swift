@@ -9,7 +9,7 @@
 import UIKit
 import ArcBlockSDK
 
-class BlockDetailView: ABSDKObjectView<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight> {
+class BlockDetailView: ABSDKView<BtcBlockDetailQuery, BtcBlockDetailQuery.Data.BlockByHeight> {
     @IBOutlet weak var hashLabel: UILabel!
     @IBOutlet weak var numberOfTxsLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
