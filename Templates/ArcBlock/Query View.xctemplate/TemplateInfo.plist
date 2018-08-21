@@ -24,11 +24,11 @@
 				<key>Name</key>
 				<string>Name:</string>
 				<key>Description</key>
-				<string>The name of the view controller to create</string>
+				<string>The name of the view to create</string>
 				<key>Type</key>
 				<string>text</string>
 				<key>Default</key>
-				<string>PagedQueryViewController</string>
+				<string>QueryView</string>
 			</dict>
 			<dict>
 				<key>Identifier</key>
@@ -56,23 +56,11 @@
 			</dict>
 			<dict>
 				<key>Identifier</key>
-				<string>Cell</string>
-				<key>Required</key>
-				<true/>
+				<string>GenerateXIB</string>
 				<key>Name</key>
-				<string>Cell class:</string>
+				<string>Generate XIB for view</string>
 				<key>Description</key>
-				<string>The cell class for table view</string>
-				<key>Type</key>
-				<string>text</string>
-			</dict>
-			<dict>
-				<key>Identifier</key>
-				<string>GenerateCell</string>
-				<key>Name</key>
-				<string>Generate new cell class</string>
-				<key>Description</key>
-				<string>Should generate new cell class from template?</string>
+				<string>Should generate XIB file for view</string>
 				<key>Type</key>
 				<string>checkbox</string>
 			</dict>

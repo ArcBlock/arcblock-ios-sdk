@@ -28,17 +28,15 @@ protocol ABSDKViewBinding {
     func updateView(data: Data)
 }
 
-open class ABSDKObjectView<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: UIView, ABSDKViewBinding {
+open class ABSDKView<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: UIView, ABSDKViewBinding {
 
     var dataSource: ABSDKObjectDataSource<Operation, Data>?
 
     open func updateView(data: Data) {
         // base class
     }
-}
 
-public extension ABSDKObjectView where Operation: GraphQLQuery {
-    public func configureDataSource(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>) {
+    func setupDataSource(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>) {
         if self.dataSource != nil {
             return
         }
@@ -48,21 +46,19 @@ public extension ABSDKObjectView where Operation: GraphQLQuery {
             }
             self?.updateView(data: (self?.dataSource?.getObject())!)
         })
+    }
+}
+
+public extension ABSDKView where Operation: GraphQLQuery {
+    public func configureDataSource(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>) {
+        self.setupDataSource(client: client, operation: operation, dataSourceMapper: dataSourceMapper)
         self.dataSource?.observe()
     }
 }
 
-public extension ABSDKObjectView where Operation: GraphQLSubscription {
+public extension ABSDKView where Operation: GraphQLSubscription {
     public func configureDataSource(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>) {
-        if self.dataSource != nil {
-            return
-        }
-        self.dataSource = ABSDKObjectDataSource<Operation, Data>(client: client, operation: operation, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: { [weak self] (err) in
-            if err != nil {
-                return
-            }
-            self?.updateView(data: (self?.dataSource?.getObject())!)
-        })
+        self.setupDataSource(client: client, operation: operation, dataSourceMapper: dataSourceMapper)
         self.dataSource?.observe()
     }
 }
