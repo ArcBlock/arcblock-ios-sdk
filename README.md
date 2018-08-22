@@ -44,9 +44,9 @@ rm Templates.tar.gz
 
 ## Usage
 
-For a quick start, please check our [Quick Start Guide](./QuickStart.md). It will walk you through the easiest way to build an app that connects to the  ArcBlock platform.
+For a quick start, please check our [Quick Start Guide](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/QuickStart.md). It will walk you through the easiest way to build an app that connects to the  ArcBlock platform.
 
-If you want to be more flexible and use the SDK in a lower level, please check out [Data Binding](./DataBinding.md) and [Client](./Client.md) documentation.
+If you want to be more flexible and use the SDK in a lower level, please check out [Data Binding](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/DataBinding.md) and [Client](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/Client.md) documentation.
 
 ## FAQ
 
