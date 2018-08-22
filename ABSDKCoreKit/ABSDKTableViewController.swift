@@ -23,16 +23,24 @@
 import UIKit
 import Apollo
 
+/// A base class for custom TableViewController that supports data binding and pagination
 open class ABSDKTableViewController<Query: GraphQLPagedQuery, Data: GraphQLSelectionSet, Cell: ABSDKTableViewCell<Data> & CellWithNib>: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var tableView: UITableView!
     var loadingFooter: UIView!
 
+    /// The ABSDKClient for sending requests
     public var client: ABSDKClient?
+    /// The GraphQL query to get the array
     public var query: Query?
+    /// The callback to extract the concerned array from the query result
     public var dataSourceMapper: ArrayDataSourceMapper<Query, Data>?
+    /// The callback to extract page info from the query result
     public var pageMapper: PageMapper<Query>?
-    public var dataSource: ABSDKPagedArrayDataSource<Query, Data>?
 
+    /// The dataSource the performs data binding
+    public private(set) var dataSource: ABSDKPagedArrayDataSource<Query, Data>?
+
+    /// Override to perform custom setup
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,11 +65,12 @@ open class ABSDKTableViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
         tableView.tableFooterView = loadingFooter
     }
 
+    /// Override to configure the data source
     open func configDataSource() {
         // base class
     }
 
-    open func setupDataSource() {
+    func setupDataSource() {
         if  let client: ABSDKClient = self.client,
             let query: Query = self.query,
             let dataSourceMapper: ArrayDataSourceMapper<Query, Data> = self.dataSourceMapper,
