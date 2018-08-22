@@ -1,6 +1,6 @@
 # Data binding with ABSDKDataSource
 
-In your UIViewControllers, you want to send a **query**/**subscription** and display its result in a **view**. You also want the result to be cached, so that when the users went offline, they can still see the data, but when they get online, the view will be updated if there's a difference between the cache and the server result.
+In your UIViewControllers, you want to send a **query** or **subscription** and display its result in a **view**. You also want the result to be cached, so that when the users went offline, they can still see the data, but when they get online, the view will be updated if there's a difference between the cache and the server result.
 
 ABSDKDataSource takes care of it. Let's see how it works.
 
@@ -34,14 +34,14 @@ override func viewDidLoad() {
     }
 
     // create the data source
-    detailDataSource = ABSDKObjectDataSource<AccountByAddressQuery, AccountByAddressQuery.Data.AccountByAddress>(client: arcblockClient, query: AccountByAddressQuery(address: address), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
+    detailDataSource = ABSDKObjectDataSource<AccountByAddressQuery, AccountByAddressQuery.Data.AccountByAddress>(client: arcblockClient, operation: AccountByAddressQuery(address: address), dataSourceMapper: detailSourceMapper, dataSourceUpdateHandler: detailDataSourceUpdateHandler)
     detailDataSource.observe()
 
     ...
 }
 ```
 
-That's it! You create a ABSDKObjectDataSource, with a client, a query, a mapper callback and a update handler, and the data source will handle networking, caching and live update for you.
+The above codes create an ABSDKObjectDataSource, with a client, a query(or a subscription), a mapper closure and an update handler. Now the data source will handle networking, caching and live update for you.
 
 #### TableView/CollectionView
 
@@ -72,7 +72,7 @@ class TransactionViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        inputDataSource = ABSDKArrayDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, query: TransactionDetailQuery(hash: txHash!), dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
+        inputDataSource = ABSDKArrayDataSource<TransactionDetailQuery, TransactionDetailQuery.Data.TransactionByHash.Input.Datum>(client: arcblockClient, operation: TransactionDetailQuery(hash: txHash!), dataSourceMapper: inputSourceMapper, dataSourceUpdateHandler: inputDataSourceUpdateHandler)
         inputDataSource.observe()
     }
 }
@@ -99,7 +99,7 @@ As you can see the usage is very similar to ABSDKObjectDataSource, except that t
 
 #### Pagination
 
-Pagination is also supported. You can use ABSDKPagedArrayDataSource to render paged arrays with UITableView or UICollectionView. It supports infinite scroll:
+Pagination is also supported in data source level. You can use ABSDKPagedArrayDataSource to render paged arrays with UITableView or UICollectionView. It supports infinite scroll:
 
 ``` Swift
 
@@ -130,7 +130,7 @@ class RichestAccountsViewController: UIViewController {
         let pageMapper: PageMapper<RichestAccountsQuery> = { (data) in
             return (data.richestAccounts?.page)!
         }
-        dataSource = ABSDKPagedArrayDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, query: RichestAccountsQuery(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, pageMapper: pageMapper)
+        dataSource = ABSDKPagedArrayDataSource<RichestAccountsQuery, RichestAccountsQuery.Data.RichestAccount.Datum>(client: arcblockClient, operation: RichestAccountsQuery(), dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, pageMapper: pageMapper)
         dataSource.refresh()
     }
 }
@@ -162,4 +162,6 @@ extension RichestAccountsViewController: UITableViewDelegate {
 
 ```
 
-You need to specify a PageMapper for data source to extra the paging info in the query result, and you can call the loadMore method in the UIScrollViewDelegate method. Now the tableView supports infinite scroll!
+You need to specify a pageMapper closure for data source to extra the paging info in the query result, and you can call the loadMore method in the UIScrollViewDelegate method. Now the tableView supports infinite scroll.
+
+More code examples can be found [here](./Example/ocap-demo)
