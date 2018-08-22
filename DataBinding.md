@@ -1,6 +1,6 @@
 # Data binding with ABSDKDataSource
 
-In your UIViewControllers, you want to send a **query** or **subscription** and display its result in a **view**. You also want the result to be cached, so that when the users went offline, they can still see the data, but when they get online, the view will be updated if there's a difference between the cache and the server result.
+In your UIViewControllers, you want to send a **query** or **subscription** and display its result in a **view**. You also want the result to be cached so that when the users went offline, they can still see the data, but when they get online, the view will be updated if there's a difference between the cache and the server result.
 
 ABSDKDataSource takes care of it. Let's see how it works.
 
@@ -95,7 +95,7 @@ extension TransactionViewController: UITableViewDataSource {
 }
 ```
 
-As you can see the usage is very similar to ABSDKObjectDataSource, except that the ABSDKArrayDataSource provides interface for you to use in UITableViewDataSource protocol.
+As you can see the usage is very similar to ABSDKObjectDataSource, except that the ABSDKArrayDataSource provides the interface for you to use in UITableViewDataSource protocol.
 
 #### Pagination
 
@@ -162,6 +162,6 @@ extension RichestAccountsViewController: UITableViewDelegate {
 
 ```
 
-You need to specify a pageMapper closure for data source to extra the paging info in the query result, and you can call the loadMore method in the UIScrollViewDelegate method. Now the tableView supports infinite scroll.
+You need to specify a pageMapper closure for the data source to extra the paging info in the query result, and you can call the loadMore method in the UIScrollViewDelegate method. Now the tableView supports infinite scroll.
 
 More code examples can be found [here](./Example/ocap-demo)
