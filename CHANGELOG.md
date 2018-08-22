@@ -1,3 +1,10 @@
+## 0.7.4 (August 22, 2018)
+  - update class reference
+  - add FAQ
+  - fix documentation url
+  - update data binding documentation
+  - add quick start example and restructure documentation
+
 ## 0.7.3 (August 20, 2018)
   - fix linter error
   - fix cell selection
