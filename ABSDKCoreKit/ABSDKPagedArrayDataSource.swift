@@ -68,12 +68,12 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
     /// Init a paged array data source
     ///
     /// - Parameters:
-    ///     client: An ABSDKClient for sending requests
-    ///     query: A GraphQL query to get the array
-    ///     dataSourceMapper: A callback to extract the concerned array from the query result
-    ///     dataSourceUpdateHandler: A callback that gets called whenever the concerned array gets update
-    ///     arrayDataKeyEqualCHecker: An optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
-    ///     pageMapper: A callback to extract page info from the query result
+    ///     - client: An ABSDKClient for sending requests
+    ///     - query: A GraphQL query to get the array
+    ///     - dataSourceMapper: A callback to extract the concerned array from the query result
+    ///     - dataSourceUpdateHandler: A callback that gets called whenever the concerned array gets update
+    ///     - arrayDataKeyEqualCHecker: An optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
+    ///     - pageMapper: A callback to extract page info from the query result
     public init(client: ABSDKClient, query: Query, dataSourceMapper: @escaping ArrayDataSourceMapper<Query, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil, pageMapper: @escaping PageMapper<Query>) {
         super.init(client: client, operation: query, dataSourceMapper: dataSourceMapper, dataSourceUpdateHandler: dataSourceUpdateHandler, arrayDataKeyEqualChecker: arrayDataKeyEqualChecker)
         self.pageMapper = pageMapper

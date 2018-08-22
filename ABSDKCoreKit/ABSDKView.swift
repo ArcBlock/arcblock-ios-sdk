@@ -28,10 +28,15 @@ protocol ABSDKViewBinding {
     func updateView(data: Data)
 }
 
+/// A base class for custom views that supports data binding
 open class ABSDKView<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: UIView, ABSDKViewBinding {
 
     var dataSource: ABSDKObjectDataSource<Operation, Data>?
 
+    /// update view with data
+    ///
+    /// - Parameters:
+    ///     - data: the latest data to update the view with
     open func updateView(data: Data) {
         // base class
     }
@@ -50,6 +55,12 @@ open class ABSDKView<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: UI
 }
 
 public extension ABSDKView where Operation: GraphQLQuery {
+    /// configure the data source of the view
+    ///
+    /// - Parameters:
+    ///     - client: An ABSDKClient for sending requests
+    ///     - operation: A GraphQL operation to get the object
+    ///     - dataSourceMapper: A callback to extract the concerned object from the operation result
     public func configureDataSource(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>) {
         self.setupDataSource(client: client, operation: operation, dataSourceMapper: dataSourceMapper)
         self.dataSource?.observe()
@@ -57,6 +68,12 @@ public extension ABSDKView where Operation: GraphQLQuery {
 }
 
 public extension ABSDKView where Operation: GraphQLSubscription {
+    /// configure the data source of the view
+    ///
+    /// - Parameters:
+    ///     - client: An ABSDKClient for sending requests
+    ///     - operation: A GraphQL operation to get the object
+    ///     - dataSourceMapper: A callback to extract the concerned object from the operation result
     public func configureDataSource(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>) {
         self.setupDataSource(client: client, operation: operation, dataSourceMapper: dataSourceMapper)
         self.dataSource?.observe()
