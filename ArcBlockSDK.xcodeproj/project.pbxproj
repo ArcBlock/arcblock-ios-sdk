@@ -21,6 +21,7 @@
 		274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */; };
 		275EC94D20F61C7100CAF356 /* ABSDKPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EC94C20F61C7100CAF356 /* ABSDKPagination.swift */; };
 		277E6B7F20A0DE340054707E /* ABSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277E6B7620A0DE340054707E /* ABSDKCoreKit.framework */; };
+		27878F83212CFEB400341023 /* ABSDKView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27878F82212CFEB400341023 /* ABSDKView.swift */; };
 		278EF37220A0F54D00C99C1F /* ABSDKAccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EF36920A0F54D00C99C1F /* ABSDKAccountKit.framework */; };
 		278EF37920A0F54D00C99C1F /* ABSDKAccountKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EF36B20A0F54D00C99C1F /* ABSDKAccountKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		278EF38E20A0F5AC00C99C1F /* ABSDKMessagingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 278EF38520A0F5AC00C99C1F /* ABSDKMessagingKit.framework */; };
@@ -30,7 +31,6 @@
 		278EF3BA20A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3B920A0FC6500C99C1F /* ABSDKMessagingKitSpec.swift */; };
 		278EF3BD20A1009000C99C1F /* ABSDKWalletKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BC20A1009000C99C1F /* ABSDKWalletKitSpec.swift */; };
 		278EF3C020A100E000C99C1F /* ABSDKAccountKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */; };
-		278FA9F921269C5900C560FB /* ABSDKObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278FA9F821269C5900C560FB /* ABSDKObjectView.swift */; };
 		278FA9FB21269CA500C560FB /* ABSDKTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278FA9FA21269CA500C560FB /* ABSDKTableViewController.swift */; };
 		279CD44220AC9F46009E1348 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		279CD44320AC9F46009E1348 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
@@ -95,6 +95,7 @@
 		277E6B7920A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		277E6B7E20A0DE340054707E /* ABSDKCoreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABSDKCoreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		277E6B8520A0DE340054707E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27878F82212CFEB400341023 /* ABSDKView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKView.swift; sourceTree = "<group>"; };
 		278EF36920A0F54D00C99C1F /* ABSDKAccountKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ABSDKAccountKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		278EF36B20A0F54D00C99C1F /* ABSDKAccountKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABSDKAccountKit.h; sourceTree = "<group>"; };
 		278EF36C20A0F54D00C99C1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,7 +117,6 @@
 		278EF3BC20A1009000C99C1F /* ABSDKWalletKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKWalletKitSpec.swift; sourceTree = "<group>"; };
 		278EF3BE20A100DF00C99C1F /* ABSDKAccountKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ABSDKAccountKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		278EF3BF20A100E000C99C1F /* ABSDKAccountKitSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKAccountKitSpec.swift; sourceTree = "<group>"; };
-		278FA9F821269C5900C560FB /* ABSDKObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKObjectView.swift; sourceTree = "<group>"; };
 		278FA9FA21269CA500C560FB /* ABSDKTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABSDKTableViewController.swift; sourceTree = "<group>"; };
 		279CD42D20AC9EB5009E1348 /* YapDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YapDatabase.framework; path = Carthage/Build/iOS/YapDatabase.framework; sourceTree = "<group>"; };
 		279CD43A20AC9F37009E1348 /* KVOController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KVOController.framework; path = Carthage/Build/iOS/KVOController.framework; sourceTree = "<group>"; };
@@ -241,6 +241,7 @@
 		277E6B7720A0DE340054707E /* ABSDKCoreKit */ = {
 			isa = PBXGroup;
 			children = (
+				27878F82212CFEB400341023 /* ABSDKView.swift */,
 				274B185920E4D06A00884659 /* ABSDKClient.swift */,
 				2739E55420EB5F49009EA0C3 /* ABSDKDataSource.swift */,
 				27B58379210972040095EDC1 /* ABSDKPagedArrayDataSource.swift */,
@@ -248,7 +249,6 @@
 				274B186120E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift */,
 				27240D8A2119419400A4D2A2 /* ABSDKWebSocketTransport.swift */,
 				277E6B7920A0DE340054707E /* Info.plist */,
-				278FA9F821269C5900C560FB /* ABSDKObjectView.swift */,
 				278FA9FA21269CA500C560FB /* ABSDKTableViewController.swift */,
 			);
 			path = ABSDKCoreKit;
@@ -806,11 +806,11 @@
 			files = (
 				27B5837A210972040095EDC1 /* ABSDKPagedArrayDataSource.swift in Sources */,
 				274B185A20E4D06A00884659 /* ABSDKClient.swift in Sources */,
+				27878F83212CFEB400341023 /* ABSDKView.swift in Sources */,
 				2739E55520EB5F49009EA0C3 /* ABSDKDataSource.swift in Sources */,
 				27240D8B2119419400A4D2A2 /* ABSDKWebSocketTransport.swift in Sources */,
 				274B186220E6084700884659 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				278FA9FB21269CA500C560FB /* ABSDKTableViewController.swift in Sources */,
-				278FA9F921269C5900C560FB /* ABSDKObjectView.swift in Sources */,
 				275EC94D20F61C7100CAF356 /* ABSDKPagination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
