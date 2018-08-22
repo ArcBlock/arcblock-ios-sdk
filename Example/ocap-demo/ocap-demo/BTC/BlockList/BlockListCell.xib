@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="agh-ID-K3j" customClass="BlockListCell" customModule="ocap_demo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="agh-ID-K3j" id="Cb6-FY-ttA">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7IA-o8-Vs7">
+                        <rect key="frame" x="16" y="8" width="343" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmT-a7-Low">
+                        <rect key="frame" x="16" y="34" width="343" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AmB-zf-tDD">
+                        <rect key="frame" x="16" y="60" width="343" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="AmB-zf-tDD" firstAttribute="leading" secondItem="hmT-a7-Low" secondAttribute="leading" id="3OS-V1-aVe"/>
+                    <constraint firstItem="AmB-zf-tDD" firstAttribute="top" secondItem="hmT-a7-Low" secondAttribute="bottom" constant="5" id="KI0-WB-hPU"/>
+                    <constraint firstItem="7IA-o8-Vs7" firstAttribute="leading" secondItem="Cb6-FY-ttA" secondAttribute="leading" constant="16" id="XHk-et-Gxr"/>
+                    <constraint firstItem="7IA-o8-Vs7" firstAttribute="top" secondItem="Cb6-FY-ttA" secondAttribute="top" constant="8" id="aZs-01-97b"/>
+                    <constraint firstItem="AmB-zf-tDD" firstAttribute="trailing" secondItem="hmT-a7-Low" secondAttribute="trailing" id="arx-2Y-90l"/>
+                    <constraint firstItem="hmT-a7-Low" firstAttribute="top" secondItem="7IA-o8-Vs7" secondAttribute="bottom" constant="5" id="cHk-9M-gyz"/>
+                    <constraint firstItem="hmT-a7-Low" firstAttribute="leading" secondItem="7IA-o8-Vs7" secondAttribute="leading" id="hKc-5V-KdI"/>
+                    <constraint firstAttribute="bottom" secondItem="AmB-zf-tDD" secondAttribute="bottom" constant="8" id="lwI-V1-fMd"/>
+                    <constraint firstAttribute="trailing" secondItem="7IA-o8-Vs7" secondAttribute="trailing" constant="16" id="oda-Vg-3uX"/>
+                    <constraint firstItem="hmT-a7-Low" firstAttribute="trailing" secondItem="7IA-o8-Vs7" secondAttribute="trailing" id="r5O-Dm-GmB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="heightLabel" destination="7IA-o8-Vs7" id="e1T-ZF-F0c"/>
+                <outlet property="timeLabel" destination="AmB-zf-tDD" id="Ix6-zs-iDP"/>
+                <outlet property="transactionLabel" destination="hmT-a7-Low" id="PW9-Lu-YU5"/>
+            </connections>
+            <point key="canvasLocation" x="54.5" y="53"/>
+        </tableViewCell>
+    </objects>
+</document>

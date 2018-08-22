@@ -2,6 +2,7 @@ excluded:
   - Pods
   - Carthage
   - Example
+  - Templates
 
 line_length:
   warning: 200

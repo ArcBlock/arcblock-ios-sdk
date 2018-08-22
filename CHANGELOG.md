@@ -1,3 +1,9 @@
+## 0.7.3 (August 20, 2018)
+  - fix linter error
+  - fix cell selection
+  - add paged view controller tempalte
+  - base class for object view
+
 ## 0.7.2 (August 15, 2018)
   - send unsubscribe message
 
