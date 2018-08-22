@@ -35,10 +35,10 @@ protocol ABSDKDataSource {
     var observer: Cancellable? { get }
 }
 
-/// The callback to extract the object in query result
+/// The callback to extract the object in operation result
 public typealias ObjectDataSourceMapper<Operation: GraphQLOperation, Data: GraphQLSelectionSet> = (_ data: Operation.Data) -> Data?
 
-/// A data source that binds with an object type of data in a GraphQL query and monitors its update
+/// A data source that binds with an object type of data in a GraphQL operation and monitors its update
 final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var object: Data? = nil {
         didSet {
@@ -55,10 +55,10 @@ final public class ABSDKObjectDataSource<Operation: GraphQLOperation, Data: Grap
     /// Init an object data source
     ///
     /// - Parameters:
-    ///     client: An ABSDKClient for sending requests
-    ///     query: A GraphQL query to get the object
-    ///     dataSourceMapper: A callback to extract the concerned object from the query result
-    ///     dataSourceUpdateHandler: A callback that gets called whenever the concerned object gets update
+    ///     - client: An ABSDKClient for sending requests
+    ///     - operation: A GraphQL operation to get the object
+    ///     - dataSourceMapper: A callback to extract the concerned object from the operation result
+    ///     - dataSourceUpdateHandler: A callback that gets called whenever the concerned object gets update
     public init(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ObjectDataSourceMapper<Operation, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler) {
         self.client = client
         self.operation = operation
@@ -106,7 +106,7 @@ public extension ABSDKObjectDataSource where Operation: GraphQLSubscription {
     }
 }
 
-/// The callback to extract the array in query result
+/// The callback to extract the array in operation result
 public typealias ArrayDataSourceMapper<Operation: GraphQLOperation, Data: GraphQLSelectionSet> = (_ data: Operation.Data) -> [Data?]?
 
 /// The callback to check whether two elements in the array has the same key
@@ -141,7 +141,7 @@ public struct RowChange {
     }
 }
 
-/// A data source that binds with an array type of data in a GraphQL query and monitors its update
+/// A data source that binds with an array type of data in a GraphQL operation and monitors its update
 public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSelectionSet>: ABSDKDataSource {
     var array: [Data?] = [] {
         willSet(newValue) {
@@ -164,11 +164,11 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
     /// Init an array data source
     ///
     /// - Parameters:
-    ///     client: an ABSDKClient for sending requests
-    ///     query: A GraphQL query to get the array
-    ///     dataSourceMapper: A callback to extract the concerned array from the query result
-    ///     dataSourceUpdateHandler: A callback that gets called whenever the concerned array gets update
-    ///     arrayDataKeyEqualCHecker: An optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
+    ///     - client: an ABSDKClient for sending requests
+    ///     - operation: A GraphQL operation to get the array
+    ///     - dataSourceMapper: A callback to extract the concerned array from the operation result
+    ///     - dataSourceUpdateHandler: A callback that gets called whenever the concerned array gets update
+    ///     - arrayDataKeyEqualCHecker: An optional callback to check whether two elements in the concerned array are with the same key. This is used to calculate the row changes to update view dynamically.
     public init(client: ABSDKClient, operation: Operation, dataSourceMapper: @escaping ArrayDataSourceMapper<Operation, Data>, dataSourceUpdateHandler: @escaping DataSourceUpdateHandler, arrayDataKeyEqualChecker: ArrayDataKeyEqualChecker<Data>? = nil) {
         self.client = client
         self.operation = operation
@@ -243,7 +243,7 @@ public class ABSDKArrayDataSource<Operation: GraphQLOperation, Data: GraphQLSele
 
     /// Get the element in the array, for tableView/CollectionView. 
     /// - Parameters:
-    ///     indexPath: The indexPath of the item
+    ///     - indexPath: The indexPath of the item
     /// - Returns: The element at the indexPath
     public func itemForIndexPath(indexPath: IndexPath) -> Data? {
         return array[indexPath.row]

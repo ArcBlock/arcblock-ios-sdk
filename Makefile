@@ -60,6 +60,7 @@ travis-deploy:
 		echo "Preparing for deployment..."; \
 		make release; \
 		rm -rf Carthage; \
+		tar -zcvf docs/Templates.tar.gz Templates; \
 		make doc; \
 	fi
 
