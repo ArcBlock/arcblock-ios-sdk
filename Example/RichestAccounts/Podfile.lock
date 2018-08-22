@@ -1,0 +1,50 @@
+PODS:
+  - Apollo (0.9.1)
+  - ArcBlockSDK (0.7.3):
+    - ArcBlockSDK/CoreKit (= 0.7.3)
+  - ArcBlockSDK/CoreKit (0.7.3):
+    - Apollo
+    - ReachabilitySwift
+    - SQLite.swift
+    - SwiftPhoenixClient
+  - ReachabilitySwift (4.1.0)
+  - SQLite.swift (0.11.5):
+    - SQLite.swift/standard (= 0.11.5)
+  - SQLite.swift/standard (0.11.5)
+  - Starscream (3.0.5)
+  - SwiftPhoenixClient (0.9.0):
+    - Starscream (~> 3.0.5)
+
+DEPENDENCIES:
+  - Apollo (from `https://github.com/ArcBlock/apollo-ios.git`)
+  - ArcBlockSDK (from `../../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ReachabilitySwift
+    - SQLite.swift
+    - Starscream
+    - SwiftPhoenixClient
+
+EXTERNAL SOURCES:
+  Apollo:
+    :git: https://github.com/ArcBlock/apollo-ios.git
+  ArcBlockSDK:
+    :path: "../../"
+
+CHECKOUT OPTIONS:
+  Apollo:
+    :commit: 14f4e2ffbc7ad58f17dbb3b54e2e4ab416163e46
+    :git: https://github.com/ArcBlock/apollo-ios.git
+
+SPEC CHECKSUMS:
+  Apollo: 3e5119ee033bb5c50d5e69529c24a7a4059abd43
+  ArcBlockSDK: 841d4b5e11b7fdba60137ed38315ae2574f7b120
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
+  SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
+  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
+  SwiftPhoenixClient: 3d6504ecb096192b9f8f0cb5c8646da739c7ad11
+
+PODFILE CHECKSUM: 0949bc2b9efc7569940fd7cd1eff928375bb6206
+
+COCOAPODS: 1.5.3
