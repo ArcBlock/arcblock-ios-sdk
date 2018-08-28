@@ -50,10 +50,6 @@ If you want to be more flexible and use the SDK in a lower level, please check o
 
 ## FAQ
 
-### Q: Why can't I download the SDK via Cocoapods/Carthage
-
-The SDK is currently in beta and not open to public yet. For the hackathon participants, please contact the organizers to grant you access to the SDK Github repo.
-
 ### Q: What kind of things I can do with this SDK?
 
 This SDK helps you connect to the ArcBlock OCAP service, and the OCAP service capabilities can be found in its [documentation](https://ocap.arcblock.io/docs).
