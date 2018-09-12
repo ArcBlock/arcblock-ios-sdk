@@ -55,7 +55,7 @@ class ETHTransactionViewController: UITableViewController {
         hashLabel.text = txHash
 
         if let transaction: EthTransactionDetailQuery.Data.TransactionByHash = data {
-            totalLabel.text = String(transaction.total)
+            totalLabel.text = String(transaction.total ?? 0)
             feesLabel.text = String(transaction.fees)
 
             fromAddressLabel.text = transaction.from.address
