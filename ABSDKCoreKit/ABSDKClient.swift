@@ -88,7 +88,7 @@ public class ABSDKClientConfiguration {
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public convenience init(endpoint: ABSDKEndpoint,
                             databaseURL: URL? = nil) throws {
-        try self.init(url: endpoint.url, webSocketUrl: endpoint.webSocketUrl , databaseURL: databaseURL)
+        try self.init(url: endpoint.url, webSocketUrl: endpoint.webSocketUrl, databaseURL: databaseURL)
     }
 
     /// Creates a configuration object for the `ABSDKClient`.
