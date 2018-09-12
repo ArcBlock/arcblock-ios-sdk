@@ -18,7 +18,6 @@ class ETHNewBlockMinedViewController: UIViewController {
     @IBOutlet weak var hashLabel: UILabel!
     @IBOutlet weak var sizeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var feesLabel: UILabel!
     @IBOutlet weak var minerLabel: UILabel!
     @IBOutlet weak var rewardLabel: UILabel!
@@ -70,7 +69,6 @@ class ETHNewBlockMinedViewController: UIViewController {
         hashLabel.text = block.hash
         sizeLabel.text = String(block.size)
         timeLabel.text = block.time
-        authorLabel.text = block.author?.address
         feesLabel.text = String(block.fees)
         minerLabel.text = block.miner?.address
         rewardLabel.text = String(block.reward)
