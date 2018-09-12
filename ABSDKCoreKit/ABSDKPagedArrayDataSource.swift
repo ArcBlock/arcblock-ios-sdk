@@ -104,6 +104,10 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
                         self?.addPage(pageCursor: pageCursor, items: items)
                     }
                 }
+                else {
+                    print("paged query error: " + err!.localizedDescription)
+                    self?.dataSourceUpdateHandler(err)
+                }
             })
             watchers[pageCursor] = watcher
         }

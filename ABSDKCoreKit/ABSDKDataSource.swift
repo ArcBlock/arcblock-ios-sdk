@@ -80,11 +80,10 @@ public extension ABSDKObjectDataSource where Operation: GraphQLQuery {
     /// Start observing on the operation related data
     public func observe() {
         self.observer = self.client.watch(query: self.operation, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
-            if err == nil {
-                if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
-                    self?.object = object
-                }
+            if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
+                self?.object = object
             } else {
+                print("object query err: " + err!.localizedDescription)
                 self?.dataSourceUpdateHandler(err)
             }
         })
@@ -95,11 +94,10 @@ public extension ABSDKObjectDataSource where Operation: GraphQLSubscription {
     /// Start observing on the operation related data
     public func observe() {
         self.observer = self.client.subscribe(subscription: self.operation, resultHandler: { [weak self] (result, err) in
-            if err == nil {
-                if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
-                    self?.object = object
-                }
+            if let data: Operation.Data = result?.data, let object: Data = self?.dataSourceMapper(data) {
+                self?.object = object
             } else {
+                print("object subscription err: " + err!.localizedDescription)
                 self?.dataSourceUpdateHandler(err)
             }
         })
@@ -264,6 +262,7 @@ public extension ABSDKArrayDataSource where Operation: GraphQLQuery {
                     self?.array = items
                 }
             } else {
+                print("array query err: " + err!.localizedDescription)
                 self?.dataSourceUpdateHandler(err)
             }
         })
@@ -279,6 +278,7 @@ public extension ABSDKArrayDataSource where Operation: GraphQLSubscription {
                     self?.array = items
                 }
             } else {
+                print("array subscription err: " + err!.localizedDescription)
                 self?.dataSourceUpdateHandler(err)
             }
         })
