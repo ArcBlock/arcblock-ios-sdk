@@ -1,3 +1,14 @@
+## 0.7.5 (September 13, 2018)
+  - Update QuickStart.CN.md
+  - Update DataBinding.CN.md
+  - add chinese version for data binding he quick start document
+  - Update README.CN.md
+  - add chinese readme
+  - log query/subscription error
+  - fix linter error
+  - fix subscription url
+  - Update README.md
+
 ## 0.7.4 (August 22, 2018)
   - update class reference
   - add FAQ
