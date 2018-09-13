@@ -8,6 +8,8 @@
 
 Welcome to ArcBlock iOS SDK! This is what you need to integrate your iOS apps with ArcBlock Platform. The ArcBlock iOS SDK is based on the Apollo project found [here](https://github.com/apollographql/apollo-ios).
 
+For Chinese version of this document, please go [here](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/README.CN.md)
+
 ## Requirements
 The ArcBlock iOS SDK is compatible with apps supporting iOS 9 and above and requires Xcode 9 to build from source.
 
