@@ -24,7 +24,7 @@ import Reachability
 import Apollo
 
 let ocapBaseUrl = "https://ocap.arcblock.io/"
-let websocketUrl = "wss://ocap.arcblock.io/api/socket/websocket"
+let websocketBaseUrl = "wss://ocap.arcblock.io/"
 
 /// Enum for ArcBlock supported endpoints
 public enum ABSDKEndpoint {
@@ -39,6 +39,15 @@ public enum ABSDKEndpoint {
             return URL(string: ocapBaseUrl + "api/btc")!
         case .eth:
             return URL(string: ocapBaseUrl + "api/eth")!
+        }
+    }
+
+    var webSocketUrl: URL {
+        switch self {
+        case .btc:
+            return URL(string: websocketBaseUrl + "api/btc/socket/websocket")!
+        case .eth:
+            return URL(string: websocketBaseUrl + "api/eth/socket/websocket")!
         }
     }
 }
@@ -63,6 +72,7 @@ extension HTTPURLResponse {
 /// Configuration for initializing a ABSDKClient
 public class ABSDKClientConfiguration {
     fileprivate var url: URL
+    fileprivate var webSocketUrl: URL
     fileprivate var store: ApolloStore
     fileprivate var urlSessionConfiguration: URLSessionConfiguration
 
@@ -78,19 +88,22 @@ public class ABSDKClientConfiguration {
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public convenience init(endpoint: ABSDKEndpoint,
                             databaseURL: URL? = nil) throws {
-        try self.init(url: endpoint.url, databaseURL: databaseURL)
+        try self.init(url: endpoint.url, webSocketUrl: endpoint.webSocketUrl, databaseURL: databaseURL)
     }
 
     /// Creates a configuration object for the `ABSDKClient`.
     ///
     /// - Parameters:
     ///   - url: The endpoint url for ArcBlock endpoint.
+    ///   - webSocketUrl: The websocket endpoint url for ArcBlock endpoint.
     ///   - urlSessionConfiguration: A `URLSessionConfiguration` configuration object for custom HTTP configuration.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public init(url: URL,
+                webSocketUrl: URL,
                 urlSessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default,
                 databaseURL: URL? = nil) throws {
         self.url = url
+        self.webSocketUrl = webSocketUrl
         self.urlSessionConfiguration = urlSessionConfiguration
         self.databaseURL = databaseURL
         self.store = ApolloStore(cache: InMemoryNormalizedCache())
@@ -147,7 +160,7 @@ public class ABSDKClient {
 
         self.store = configuration.store
         let httpTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
-        let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: URL(string: websocketUrl)!)
+        let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: self.configuration.webSocketUrl)
         self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
 
         self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.configuration.store)
