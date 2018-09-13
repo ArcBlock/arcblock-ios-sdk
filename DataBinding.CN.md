@@ -95,11 +95,11 @@ extension TransactionViewController: UITableViewDataSource {
 }
 ```
 
-您可以看到ABSDKArrayDataSource的使用方法类似于ABSDKObjectDataSource。它提供了一些额外的结构，供您在UITableViewDataSource扩展中使用。
+您可以看到ABSDKArrayDataSource的使用方法类似于ABSDKObjectDataSource。它提供了一些额外的结构，供您在UITableViewDataSource扩展中使用。
 
 #### 分页
 
-在data source层面上，我们也支持分页。您可以使用ABSDKPagedArrayDataSource在UITableView或UICollectionView中展示分页的数组结果。它目前支持无限滚动：
+在data source层面上，我们也支持分页。您可以使用ABSDKPagedArrayDataSource在UITableView或UICollectionView中展示分页的数组结果。它目前支持无限滚动：
 
 ``` Swift
 
@@ -162,6 +162,6 @@ extension RichestAccountsViewController: UITableViewDelegate {
 
 ```
 
-和ABSDKArrayDataSource略有不同的地方在于，您需要额外指定一个pageMapper闭包，用于提取结果中的分页信息相关字段。此外，如果需要支持无限滚动，您需要在UIScrollViewDelegate扩展中调用data source的loadMore方法。
+和ABSDKArrayDataSource略有不同的地方在于，您需要额外指定一个pageMapper闭包，用于提取结果中的分页信息相关字段。此外，如果需要支持无限滚动，您需要在UIScrollViewDelegate扩展中调用data source的loadMore方法。
 
 更多的示例代码可以查看[这里](./Example/ocap-demo)
