@@ -48,7 +48,7 @@ rm Templates.tar.gz
 
 如果您想快速入门，请阅读我们的[快速入门文档](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/QuickStart.CN.md)。这篇文档将会为您介绍最简单的连接到ArcBlock平台的方法。
 
-如果您希望更灵活地使用我们的SDK，我们也准备了一些底层部件的相关使用说明。您可以阅读[数据绑定](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/DataBinding.md), [客户端](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/Client.md)文档查看相关使用说明。另外也可以查看我们的[类参考](http://ios-docs.arcblock.io/)
+如果您希望更灵活地使用我们的SDK，我们也准备了一些底层部件的相关使用说明。您可以阅读[数据绑定](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/DataBinding.CN.md), [客户端](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/Client.CN.md)文档查看相关使用说明。另外也可以查看我们的[类参考](http://ios-docs.arcblock.io/)
 
 ## 常见问题
 
@@ -98,7 +98,7 @@ query RichestAccounts {
 
 ### Q：我不想继承那些UI基类，他们耦合度太高太不灵活了，我想自己写，需要怎么做？
 
-完全没有问题。那些UI基类是为了让大家快速入门而设计的，如果您已经有了一定的了解，您可以自己设计实现UI，而只使用SDK提供的部件来处理数据，详情请参考[数据绑定](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/DataBinding.md)相关文档。
+完全没有问题。那些UI基类是为了让大家快速入门而设计的，如果您已经有了一定的了解，您可以自己设计实现UI，而只使用SDK提供的部件来处理数据，详情请参考[数据绑定](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/DataBinding.CN.md)相关文档。
 
 ### Q：SDK支持什么类型的GraphQL操作？
 
