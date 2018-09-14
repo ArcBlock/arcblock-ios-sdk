@@ -1,3 +1,6 @@
+## 0.7.7 (September 14, 2018)
+  - fix build error
+
 ## 0.7.6 (September 14, 2018)
   - fix fees field typ
 
