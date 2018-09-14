@@ -22,6 +22,7 @@
 
 import Reachability
 import Apollo
+import UIKit
 
 let ocapBaseUrl = "https://ocap.arcblock.io/"
 let websocketBaseUrl = "wss://ocap.arcblock.io/"
