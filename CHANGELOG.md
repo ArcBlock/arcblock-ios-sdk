@@ -1,3 +1,6 @@
+## 0.7.6 (September 14, 2018)
+  - fix fees field typ
+
 ## 0.7.5 (September 13, 2018)
   - Update QuickStart.CN.md
   - Update DataBinding.CN.md
