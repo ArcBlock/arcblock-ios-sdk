@@ -38,8 +38,10 @@ struct TimeConverter {
     }()
 
     func convertTime(time: String) -> String {
-        let date: Date = inputDateFormatter.date(from: time)!
-        return outputDateFormatter.string(from: date)
+        if let date: Date = inputDateFormatter.date(from: time) {
+            return outputDateFormatter.string(from: date)
+        }
+        return time
     }
 }
 
