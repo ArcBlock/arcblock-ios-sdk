@@ -1513,7 +1513,7 @@ public final class EthBlockDetailQuery: GraphQLPagedQuery {
         GraphQLField("height", type: .nonNull(.scalar(Int.self))),
         GraphQLField("hash", type: .nonNull(.scalar(String.self))),
         GraphQLField("preHash", type: .nonNull(.scalar(String.self))),
-        GraphQLField("fees", type: .nonNull(.scalar(Double.self))),
+        GraphQLField("fees", type: .nonNull(.scalar(String.self))),
         GraphQLField("time", type: .nonNull(.scalar(String.self))),
         GraphQLField("transactions", arguments: ["paging": GraphQLVariable("paging")], type: .object(Transaction.selections)),
       ]
@@ -1524,7 +1524,7 @@ public final class EthBlockDetailQuery: GraphQLPagedQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(height: Int, hash: String, preHash: String, fees: Double, time: String, transactions: Transaction? = nil) {
+      public init(height: Int, hash: String, preHash: String, fees: String, time: String, transactions: Transaction? = nil) {
         self.init(unsafeResultMap: ["__typename": "EthereumBlock", "height": height, "hash": hash, "preHash": preHash, "fees": fees, "time": time, "transactions": transactions.flatMap { (value: Transaction) -> ResultMap in value.resultMap }])
       }
 
@@ -1564,9 +1564,9 @@ public final class EthBlockDetailQuery: GraphQLPagedQuery {
         }
       }
 
-      public var fees: Double {
+      public var fees: String {
         get {
-          return resultMap["fees"]! as! Double
+          return resultMap["fees"]! as! String
         }
         set {
           resultMap.updateValue(newValue, forKey: "fees")
@@ -1724,8 +1724,8 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("fees", type: .nonNull(.scalar(Double.self))),
-        GraphQLField("total", type: .scalar(Double.self)),
+        GraphQLField("fees", type: .nonNull(.scalar(String.self))),
+        GraphQLField("total", type: .scalar(String.self)),
         GraphQLField("from", type: .nonNull(.object(From.selections))),
         GraphQLField("to", type: .object(To.selections)),
       ]
@@ -1736,7 +1736,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(fees: Double, total: Double? = nil, from: From, to: To? = nil) {
+      public init(fees: String, total: String? = nil, from: From, to: To? = nil) {
         self.init(unsafeResultMap: ["__typename": "EthereumTransaction", "fees": fees, "total": total, "from": from.resultMap, "to": to.flatMap { (value: To) -> ResultMap in value.resultMap }])
       }
 
@@ -1749,18 +1749,18 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         }
       }
 
-      public var fees: Double {
+      public var fees: String {
         get {
-          return resultMap["fees"]! as! Double
+          return resultMap["fees"]! as! String
         }
         set {
           resultMap.updateValue(newValue, forKey: "fees")
         }
       }
 
-      public var total: Double? {
+      public var total: String? {
         get {
-          return resultMap["total"] as? Double
+          return resultMap["total"] as? String
         }
         set {
           resultMap.updateValue(newValue, forKey: "total")
@@ -1791,7 +1791,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("address", type: .nonNull(.scalar(String.self))),
-          GraphQLField("balance", type: .scalar(Double.self)),
+          GraphQLField("balance", type: .scalar(String.self)),
           GraphQLField("isContract", type: .nonNull(.scalar(Bool.self))),
         ]
 
@@ -1801,7 +1801,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(address: String, balance: Double? = nil, isContract: Bool) {
+        public init(address: String, balance: String? = nil, isContract: Bool) {
           self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract])
         }
 
@@ -1823,9 +1823,9 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           }
         }
 
-        public var balance: Double? {
+        public var balance: String? {
           get {
-            return resultMap["balance"] as? Double
+            return resultMap["balance"] as? String
           }
           set {
             resultMap.updateValue(newValue, forKey: "balance")
@@ -1848,7 +1848,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("address", type: .nonNull(.scalar(String.self))),
-          GraphQLField("balance", type: .scalar(Double.self)),
+          GraphQLField("balance", type: .scalar(String.self)),
           GraphQLField("isContract", type: .nonNull(.scalar(Bool.self))),
         ]
 
@@ -1858,7 +1858,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(address: String, balance: Double? = nil, isContract: Bool) {
+        public init(address: String, balance: String? = nil, isContract: Bool) {
           self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract])
         }
 
@@ -1880,9 +1880,9 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           }
         }
 
-        public var balance: Double? {
+        public var balance: String? {
           get {
-            return resultMap["balance"] as? Double
+            return resultMap["balance"] as? String
           }
           set {
             resultMap.updateValue(newValue, forKey: "balance")
@@ -1941,11 +1941,11 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("fees", type: .nonNull(.scalar(Double.self))),
+        GraphQLField("fees", type: .nonNull(.scalar(String.self))),
         GraphQLField("hash", type: .nonNull(.scalar(String.self))),
         GraphQLField("height", type: .nonNull(.scalar(Int.self))),
         GraphQLField("miner", type: .object(Miner.selections)),
-        GraphQLField("reward", type: .nonNull(.scalar(Double.self))),
+        GraphQLField("reward", type: .nonNull(.scalar(String.self))),
         GraphQLField("size", type: .nonNull(.scalar(Int.self))),
         GraphQLField("time", type: .nonNull(.scalar(String.self))),
         GraphQLField("transactions", type: .object(Transaction.selections)),
@@ -1957,7 +1957,7 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         self.resultMap = unsafeResultMap
       }
 
-      public init(fees: Double, hash: String, height: Int, miner: Miner? = nil, reward: Double, size: Int, time: String, transactions: Transaction? = nil) {
+      public init(fees: String, hash: String, height: Int, miner: Miner? = nil, reward: String, size: Int, time: String, transactions: Transaction? = nil) {
         self.init(unsafeResultMap: ["__typename": "EthereumBlock", "fees": fees, "hash": hash, "height": height, "miner": miner.flatMap { (value: Miner) -> ResultMap in value.resultMap }, "reward": reward, "size": size, "time": time, "transactions": transactions.flatMap { (value: Transaction) -> ResultMap in value.resultMap }])
       }
 
@@ -1970,9 +1970,9 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         }
       }
 
-      public var fees: Double {
+      public var fees: String {
         get {
-          return resultMap["fees"]! as! Double
+          return resultMap["fees"]! as! String
         }
         set {
           resultMap.updateValue(newValue, forKey: "fees")
@@ -2006,9 +2006,9 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         }
       }
 
-      public var reward: Double {
+      public var reward: String {
         get {
-          return resultMap["reward"]! as! Double
+          return resultMap["reward"]! as! String
         }
         set {
           resultMap.updateValue(newValue, forKey: "reward")

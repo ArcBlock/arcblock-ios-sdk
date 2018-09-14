@@ -24,7 +24,7 @@ class EthBlockDetailView: UIView {
 
     public func updateBlockData(block: EthBlockDetailQuery.Data.BlockByHeight) {
         hashLabel.text = block.hash
-        feesLabel.text = String(format: "%f", block.fees)
+        feesLabel.text = block.fees
         timeLabel.text = type(of: self).timeConverter.convertTime(time: block.time)
     }
 }
