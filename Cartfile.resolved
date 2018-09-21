@@ -1,5 +1,5 @@
-github "ArcBlock/apollo-ios" "0.9.1"
-github "Quick/Nimble" "v7.3.0"
+github "ArcBlock/apollo-ios" "0.9.3"
+github "Quick/Nimble" "v7.3.1"
 github "Quick/Quick" "v1.3.1"
 github "ashleymills/Reachability.swift" "v4.2.1"
 github "daltoniam/Starscream" "3.0.5"
