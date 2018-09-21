@@ -1,8 +1,8 @@
 PODS:
   - Apollo (0.9.1)
-  - ArcBlockSDK (0.7.3):
-    - ArcBlockSDK/CoreKit (= 0.7.3)
-  - ArcBlockSDK/CoreKit (0.7.3):
+  - ArcBlockSDK (0.7.7):
+    - ArcBlockSDK/CoreKit (= 0.7.7)
+  - ArcBlockSDK/CoreKit (0.7.7):
     - Apollo
     - ReachabilitySwift
     - SQLite.swift
@@ -39,7 +39,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Apollo: 3e5119ee033bb5c50d5e69529c24a7a4059abd43
-  ArcBlockSDK: 841d4b5e11b7fdba60137ed38315ae2574f7b120
+  ArcBlockSDK: 4111159d1c6395d84d139ba1bac4c218c28e198a
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd

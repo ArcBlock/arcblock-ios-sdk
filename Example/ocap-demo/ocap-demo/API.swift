@@ -105,7 +105,7 @@ public final class ListBtcBlocksQuery: GraphQLPagedQuery {
           GraphQLField("hash", type: .nonNull(.scalar(String.self))),
           GraphQLField("numberTxs", type: .nonNull(.scalar(Int.self))),
           GraphQLField("total", type: .nonNull(.scalar(Int.self))),
-          GraphQLField("time", type: .nonNull(.scalar(String.self))),
+          GraphQLField("time", type: .nonNull(.scalar(DateTime.self))),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -114,7 +114,7 @@ public final class ListBtcBlocksQuery: GraphQLPagedQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(height: Int, hash: String, numberTxs: Int, total: Int, time: String) {
+        public init(height: Int, hash: String, numberTxs: Int, total: Int, time: DateTime) {
           self.init(unsafeResultMap: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "numberTxs": numberTxs, "total": total, "time": time])
         }
 
@@ -163,9 +163,9 @@ public final class ListBtcBlocksQuery: GraphQLPagedQuery {
           }
         }
 
-        public var time: String {
+        public var time: DateTime {
           get {
-            return resultMap["time"]! as! String
+            return resultMap["time"]! as! DateTime
           }
           set {
             resultMap.updateValue(newValue, forKey: "time")
@@ -235,7 +235,7 @@ public final class BtcBlockDetailQuery: GraphQLPagedQuery {
         GraphQLField("total", type: .nonNull(.scalar(Int.self))),
         GraphQLField("fees", type: .nonNull(.scalar(Int.self))),
         GraphQLField("merkleRoot", type: .nonNull(.scalar(String.self))),
-        GraphQLField("time", type: .nonNull(.scalar(String.self))),
+        GraphQLField("time", type: .nonNull(.scalar(DateTime.self))),
         GraphQLField("transactions", arguments: ["paging": GraphQLVariable("paging")], type: .object(Transaction.selections)),
       ]
 
@@ -245,7 +245,7 @@ public final class BtcBlockDetailQuery: GraphQLPagedQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(height: Int, hash: String, preHash: String, numberTxs: Int, total: Int, fees: Int, merkleRoot: String, time: String, transactions: Transaction? = nil) {
+      public init(height: Int, hash: String, preHash: String, numberTxs: Int, total: Int, fees: Int, merkleRoot: String, time: DateTime, transactions: Transaction? = nil) {
         self.init(unsafeResultMap: ["__typename": "BitcoinBlock", "height": height, "hash": hash, "preHash": preHash, "numberTxs": numberTxs, "total": total, "fees": fees, "merkleRoot": merkleRoot, "time": time, "transactions": transactions.flatMap { (value: Transaction) -> ResultMap in value.resultMap }])
       }
 
@@ -321,9 +321,9 @@ public final class BtcBlockDetailQuery: GraphQLPagedQuery {
         }
       }
 
-      public var time: String {
+      public var time: DateTime {
         get {
-          return resultMap["time"]! as! String
+          return resultMap["time"]! as! DateTime
         }
         set {
           resultMap.updateValue(newValue, forKey: "time")
@@ -1405,7 +1405,7 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("height", type: .nonNull(.scalar(Int.self))),
           GraphQLField("hash", type: .nonNull(.scalar(String.self))),
-          GraphQLField("time", type: .nonNull(.scalar(String.self))),
+          GraphQLField("time", type: .nonNull(.scalar(DateTime.self))),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -1414,7 +1414,7 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(height: Int, hash: String, time: String) {
+        public init(height: Int, hash: String, time: DateTime) {
           self.init(unsafeResultMap: ["__typename": "EthereumBlock", "height": height, "hash": hash, "time": time])
         }
 
@@ -1445,9 +1445,9 @@ public final class ListEthBlocksQuery: GraphQLPagedQuery {
           }
         }
 
-        public var time: String {
+        public var time: DateTime {
           get {
-            return resultMap["time"]! as! String
+            return resultMap["time"]! as! DateTime
           }
           set {
             resultMap.updateValue(newValue, forKey: "time")
@@ -1513,8 +1513,8 @@ public final class EthBlockDetailQuery: GraphQLPagedQuery {
         GraphQLField("height", type: .nonNull(.scalar(Int.self))),
         GraphQLField("hash", type: .nonNull(.scalar(String.self))),
         GraphQLField("preHash", type: .nonNull(.scalar(String.self))),
-        GraphQLField("fees", type: .nonNull(.scalar(String.self))),
-        GraphQLField("time", type: .nonNull(.scalar(String.self))),
+        GraphQLField("fees", type: .nonNull(.scalar(BigNumber.self))),
+        GraphQLField("time", type: .nonNull(.scalar(DateTime.self))),
         GraphQLField("transactions", arguments: ["paging": GraphQLVariable("paging")], type: .object(Transaction.selections)),
       ]
 
@@ -1524,7 +1524,7 @@ public final class EthBlockDetailQuery: GraphQLPagedQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(height: Int, hash: String, preHash: String, fees: String, time: String, transactions: Transaction? = nil) {
+      public init(height: Int, hash: String, preHash: String, fees: BigNumber, time: DateTime, transactions: Transaction? = nil) {
         self.init(unsafeResultMap: ["__typename": "EthereumBlock", "height": height, "hash": hash, "preHash": preHash, "fees": fees, "time": time, "transactions": transactions.flatMap { (value: Transaction) -> ResultMap in value.resultMap }])
       }
 
@@ -1564,18 +1564,18 @@ public final class EthBlockDetailQuery: GraphQLPagedQuery {
         }
       }
 
-      public var fees: String {
+      public var fees: BigNumber {
         get {
-          return resultMap["fees"]! as! String
+          return resultMap["fees"]! as! BigNumber
         }
         set {
           resultMap.updateValue(newValue, forKey: "fees")
         }
       }
 
-      public var time: String {
+      public var time: DateTime {
         get {
-          return resultMap["time"]! as! String
+          return resultMap["time"]! as! DateTime
         }
         set {
           resultMap.updateValue(newValue, forKey: "time")
@@ -1724,8 +1724,8 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("fees", type: .nonNull(.scalar(String.self))),
-        GraphQLField("total", type: .scalar(String.self)),
+        GraphQLField("fees", type: .nonNull(.scalar(BigNumber.self))),
+        GraphQLField("total", type: .scalar(BigNumber.self)),
         GraphQLField("from", type: .nonNull(.object(From.selections))),
         GraphQLField("to", type: .object(To.selections)),
       ]
@@ -1736,7 +1736,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(fees: String, total: String? = nil, from: From, to: To? = nil) {
+      public init(fees: BigNumber, total: BigNumber? = nil, from: From, to: To? = nil) {
         self.init(unsafeResultMap: ["__typename": "EthereumTransaction", "fees": fees, "total": total, "from": from.resultMap, "to": to.flatMap { (value: To) -> ResultMap in value.resultMap }])
       }
 
@@ -1749,18 +1749,18 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         }
       }
 
-      public var fees: String {
+      public var fees: BigNumber {
         get {
-          return resultMap["fees"]! as! String
+          return resultMap["fees"]! as! BigNumber
         }
         set {
           resultMap.updateValue(newValue, forKey: "fees")
         }
       }
 
-      public var total: String? {
+      public var total: BigNumber? {
         get {
-          return resultMap["total"] as? String
+          return resultMap["total"] as? BigNumber
         }
         set {
           resultMap.updateValue(newValue, forKey: "total")
@@ -1791,7 +1791,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("address", type: .nonNull(.scalar(String.self))),
-          GraphQLField("balance", type: .scalar(String.self)),
+          GraphQLField("balance", type: .scalar(BigNumber.self)),
           GraphQLField("isContract", type: .nonNull(.scalar(Bool.self))),
         ]
 
@@ -1801,7 +1801,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(address: String, balance: String? = nil, isContract: Bool) {
+        public init(address: String, balance: BigNumber? = nil, isContract: Bool) {
           self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract])
         }
 
@@ -1823,9 +1823,9 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           }
         }
 
-        public var balance: String? {
+        public var balance: BigNumber? {
           get {
-            return resultMap["balance"] as? String
+            return resultMap["balance"] as? BigNumber
           }
           set {
             resultMap.updateValue(newValue, forKey: "balance")
@@ -1848,7 +1848,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("address", type: .nonNull(.scalar(String.self))),
-          GraphQLField("balance", type: .scalar(String.self)),
+          GraphQLField("balance", type: .scalar(BigNumber.self)),
           GraphQLField("isContract", type: .nonNull(.scalar(Bool.self))),
         ]
 
@@ -1858,7 +1858,7 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(address: String, balance: String? = nil, isContract: Bool) {
+        public init(address: String, balance: BigNumber? = nil, isContract: Bool) {
           self.init(unsafeResultMap: ["__typename": "EthereumAccount", "address": address, "balance": balance, "isContract": isContract])
         }
 
@@ -1880,9 +1880,9 @@ public final class EthTransactionDetailQuery: GraphQLQuery {
           }
         }
 
-        public var balance: String? {
+        public var balance: BigNumber? {
           get {
-            return resultMap["balance"] as? String
+            return resultMap["balance"] as? BigNumber
           }
           set {
             resultMap.updateValue(newValue, forKey: "balance")
@@ -1941,13 +1941,13 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("fees", type: .nonNull(.scalar(String.self))),
+        GraphQLField("fees", type: .nonNull(.scalar(BigNumber.self))),
         GraphQLField("hash", type: .nonNull(.scalar(String.self))),
         GraphQLField("height", type: .nonNull(.scalar(Int.self))),
         GraphQLField("miner", type: .object(Miner.selections)),
-        GraphQLField("reward", type: .nonNull(.scalar(String.self))),
+        GraphQLField("reward", type: .nonNull(.scalar(BigNumber.self))),
         GraphQLField("size", type: .nonNull(.scalar(Int.self))),
-        GraphQLField("time", type: .nonNull(.scalar(String.self))),
+        GraphQLField("time", type: .nonNull(.scalar(DateTime.self))),
         GraphQLField("transactions", type: .object(Transaction.selections)),
       ]
 
@@ -1957,7 +1957,7 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         self.resultMap = unsafeResultMap
       }
 
-      public init(fees: String, hash: String, height: Int, miner: Miner? = nil, reward: String, size: Int, time: String, transactions: Transaction? = nil) {
+      public init(fees: BigNumber, hash: String, height: Int, miner: Miner? = nil, reward: BigNumber, size: Int, time: DateTime, transactions: Transaction? = nil) {
         self.init(unsafeResultMap: ["__typename": "EthereumBlock", "fees": fees, "hash": hash, "height": height, "miner": miner.flatMap { (value: Miner) -> ResultMap in value.resultMap }, "reward": reward, "size": size, "time": time, "transactions": transactions.flatMap { (value: Transaction) -> ResultMap in value.resultMap }])
       }
 
@@ -1970,9 +1970,9 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         }
       }
 
-      public var fees: String {
+      public var fees: BigNumber {
         get {
-          return resultMap["fees"]! as! String
+          return resultMap["fees"]! as! BigNumber
         }
         set {
           resultMap.updateValue(newValue, forKey: "fees")
@@ -2006,9 +2006,9 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         }
       }
 
-      public var reward: String {
+      public var reward: BigNumber {
         get {
-          return resultMap["reward"]! as! String
+          return resultMap["reward"]! as! BigNumber
         }
         set {
           resultMap.updateValue(newValue, forKey: "reward")
@@ -2024,9 +2024,9 @@ public final class NewEthBlockMinedSubscription: GraphQLSubscription {
         }
       }
 
-      public var time: String {
+      public var time: DateTime {
         get {
-          return resultMap["time"]! as! String
+          return resultMap["time"]! as! DateTime
         }
         set {
           resultMap.updateValue(newValue, forKey: "time")
