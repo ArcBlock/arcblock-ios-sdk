@@ -1,3 +1,8 @@
+## 0.7.8 (September 21, 2018)
+  - fix linter error
+  - ABSDKCLient supports custom endpoint URL
+  - support custom scalar types
+
 ## 0.7.7 (September 14, 2018)
   - fix build error
 

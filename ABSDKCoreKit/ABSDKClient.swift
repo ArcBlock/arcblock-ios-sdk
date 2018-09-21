@@ -73,7 +73,7 @@ extension HTTPURLResponse {
 /// Configuration for initializing a ABSDKClient
 public class ABSDKClientConfiguration {
     fileprivate var url: URL
-    fileprivate var webSocketUrl: URL
+    fileprivate var webSocketUrl: URL?
     fileprivate var store: ApolloStore
     fileprivate var urlSessionConfiguration: URLSessionConfiguration
 
@@ -100,7 +100,7 @@ public class ABSDKClientConfiguration {
     ///   - urlSessionConfiguration: A `URLSessionConfiguration` configuration object for custom HTTP configuration.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public init(url: URL,
-                webSocketUrl: URL,
+                webSocketUrl: URL? = nil,
                 urlSessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default,
                 databaseURL: URL? = nil) throws {
         self.url = url
@@ -145,7 +145,7 @@ public class ABSDKClient {
     let store: ApolloStore?
 
     private var configuration: ABSDKClientConfiguration
-    internal var networkTransport: ABSDKSplitNetworkTransport?
+    internal var networkTransport: NetworkTransport?
 
     let reachability: Reachability!
     var accessState: ClientNetworkAccessState = .offline
@@ -160,9 +160,14 @@ public class ABSDKClient {
         self.configuration = configuration
 
         self.store = configuration.store
-        let httpTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
-        let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: self.configuration.webSocketUrl)
-        self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
+
+        if let webSocketUrl: URL = self.configuration.webSocketUrl {
+            let httpTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+            let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: webSocketUrl)
+            self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
+        } else {
+            self.networkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+        }
 
         self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.configuration.store)
 
@@ -224,8 +229,11 @@ public class ABSDKClient {
     }
 
     func handleStateChange() {
+        guard let networkTransport: ABSDKSplitNetworkTransport = self.networkTransport as? ABSDKSplitNetworkTransport else {
+            return
+        }
         if appInForeground && accessState == .online {
-            networkTransport?.reconnect()
+            networkTransport.reconnect()
         }
     }
 

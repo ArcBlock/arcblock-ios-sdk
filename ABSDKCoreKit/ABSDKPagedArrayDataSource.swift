@@ -103,8 +103,7 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
                     if let data: Query.Data = result?.data, let items: [Data?] = self?.dataSourceMapper(data) {
                         self?.addPage(pageCursor: pageCursor, items: items)
                     }
-                }
-                else {
+                } else {
                     print("paged query error: " + err!.localizedDescription)
                     self?.dataSourceUpdateHandler(err)
                 }

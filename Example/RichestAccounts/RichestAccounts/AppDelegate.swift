@@ -20,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let databaseURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("richest-accounts.sql")
         do {
             // initialize the AppSync client configuration configuration
-            let arcblockConfiguration = try ABSDKClientConfiguration(url: URL(string: "https://ocap.arcblock.io/api/btc/")!,
-                                                                     databaseURL: databaseURL)
+            let arcblockConfiguration = try ABSDKClientConfiguration(url: URL(string: "https://ocap.arcblock.io/api/btc/")!, databaseURL: databaseURL)
             // initialize app sync client
             arcblockClient = try ABSDKClient(configuration: arcblockConfiguration)
         } catch {

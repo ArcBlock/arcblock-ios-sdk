@@ -18,7 +18,7 @@
 		27878F8E212D3D1E00341023 /* AccountListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27878F8B212D3D1E00341023 /* AccountListCell.xib */; };
 		27878F8F212D3D1E00341023 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27878F8C212D3D1E00341023 /* ViewController.swift */; };
 		7C98107244CA6356B0E1DD1A /* Pods_RichestAccountsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C828631D6C467AC4A8AF3E14 /* Pods_RichestAccountsUITests.framework */; };
-		87B6F9049F057DC968E6B1E6 /* Pods_RichestAccounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C0E65EC2A9FE4A5BCB92DB /* Pods_RichestAccounts.framework */; };
+		86671DE9CF085F8C6328113E /* Pods_RichestAccounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C0E65EC2A9FE4A5BCB92DB /* Pods_RichestAccounts.framework */; };
 		A1A6DF3D91832B3732DD3519 /* Pods_RichestAccountsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F425EB30D050525C172ACD10 /* Pods_RichestAccountsTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87B6F9049F057DC968E6B1E6 /* Pods_RichestAccounts.framework in Frameworks */,
+				86671DE9CF085F8C6328113E /* Pods_RichestAccounts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
