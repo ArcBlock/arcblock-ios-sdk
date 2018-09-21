@@ -165,8 +165,7 @@ public class ABSDKClient {
             let httpTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
             let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: webSocketUrl)
             self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
-        }
-        else {
+        } else {
             self.networkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
         }
 
