@@ -63,6 +63,7 @@ public enum ClientNetworkAccessState {
 
 /// An optional closure which gets executed before making the network call, should be used to make local cache update
 public typealias OptimisticResponseBlock = (ApolloStore.ReadWriteTransaction?) -> Void
+public typealias OperationResultHandler<Operation: GraphQLOperation> = (_ result: GraphQLResult<Operation.Data>?, _ error: Error?) -> Void
 
 extension HTTPURLResponse {
     var statusCodeDescription: String {
