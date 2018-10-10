@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ArcBlockSDK'
-  s.version          = '0.7.9'
+  s.version          = '0.7.10'
   s.summary          = 'Used to integrate iOS apps with ArcBlock Platform.'
 
 # This description is used to generate tags and improve search results.
@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '10.0'
 
-  s.swift_version = '4.0'
+  s.swift_version = '4.2'
   s.pod_target_xcconfig = {'DEFINES_MODULE' => 'YES'}
 
   s.default_subspec = 'CoreKit'
