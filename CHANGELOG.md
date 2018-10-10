@@ -1,3 +1,6 @@
+## 0.7.10 (October 10, 2018)
+  - support swift 4.2
+
 ## 0.7.9 (October 10, 2018)
   - expose result handler typealias
 
