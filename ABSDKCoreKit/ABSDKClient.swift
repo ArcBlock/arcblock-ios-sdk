@@ -178,13 +178,13 @@ public class ABSDKClient {
         }
         observers.append(observer)
 
-        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] _ in
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [weak self] _ in
             self?.appInForeground = true
             self?.handleStateChange()
         }
         observers.append(observer)
 
-        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self] _ in
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: nil) { [weak self] _ in
             self?.appInForeground = false
         }
         observers.append(observer)
