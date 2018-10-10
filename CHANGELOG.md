@@ -1,3 +1,6 @@
+## 0.7.9 (October 10, 2018)
+  - expose result handler typealias
+
 ## 0.7.8 (September 21, 2018)
   - fix linter error
   - ABSDKCLient supports custom endpoint URL
