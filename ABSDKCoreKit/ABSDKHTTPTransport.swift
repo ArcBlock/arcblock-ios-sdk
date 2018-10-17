@@ -23,8 +23,20 @@
 import Apollo
 
 extension HTTPURLResponse {
-    var isSuccessful: Bool {
-        return (200..<300).contains(statusCode)
+    func isSuccessful(_ data: Data?) -> Bool {
+        if (200..<300).contains(statusCode) {
+            do {
+                if  let data = data,
+                    let body = try JSONSerializationFormat.deserialize(data: data) as? JSONObject,
+                    let errors = body["errors"] as? [JSONObject] {
+                    return errors.count == 0
+                }
+            } catch {
+
+            }
+            return true
+        }
+        return false
     }
 
     var statusCodeDescription: String {
@@ -79,6 +91,20 @@ public struct GraphQLHTTPResponseError: Error, LocalizedError {
     }
 
     public var errorDescription: String? {
+        if (200..<300).contains(response.statusCode) {
+            do {
+                if  let data = body,
+                    let body = try JSONSerializationFormat.deserialize(data: data) as? JSONObject,
+                    let errors = body["errors"] as? [JSONObject],
+                    let error = errors.first,
+                    let statusCode = error["status"] as? Int,
+                    let description = error["message"] as? String {
+                    return "\(kind.description) (\(statusCode) \(description))"
+                }
+            } catch {
+
+            }
+        }
         return "\(kind.description) (\(response.statusCode) \(response.statusCodeDescription)): \(bodyDescription)"
     }
 }
@@ -96,7 +122,6 @@ public class ABSDKHTTPNetworkTransport: NetworkTransport {
     ///   - configuration: A session configuration used to configure the session. Defaults to `URLSessionConfiguration.default`.
     ///   - sendOperationIdentifiers: Whether to send operation identifiers rather than full operation text, for use with servers that support query persistence. Defaults to false.
     public init(url: URL, configuration: URLSessionConfiguration = URLSessionConfiguration.default, sendOperationIdentifiers: Bool = false) {
-        print("init ABSDKHTTPNetworkTransport")
         self.url = url
         self.session = URLSession(configuration: configuration)
         self.sendOperationIdentifiers = sendOperationIdentifiers
@@ -133,7 +158,8 @@ public class ABSDKHTTPNetworkTransport: NetworkTransport {
                 fatalError("Response should be an HTTPURLResponse")
             }
 
-            if !httpResponse.isSuccessful {
+            let success = httpResponse.isSuccessful(data)
+            if !success {
                 completionHandler(nil, GraphQLHTTPResponseError(body: data, response: httpResponse, kind: .errorResponse))
                 return
             }
