@@ -65,12 +65,6 @@ public enum ClientNetworkAccessState {
 public typealias OptimisticResponseBlock = (ApolloStore.ReadWriteTransaction?) -> Void
 public typealias OperationResultHandler<Operation: GraphQLOperation> = (_ result: GraphQLResult<Operation.Data>?, _ error: Error?) -> Void
 
-extension HTTPURLResponse {
-    var statusCodeDescription: String {
-        return HTTPURLResponse.localizedString(forStatusCode: statusCode)
-    }
-}
-
 /// Configuration for initializing a ABSDKClient
 public class ABSDKClientConfiguration {
     fileprivate var url: URL
@@ -163,11 +157,11 @@ public class ABSDKClient {
         self.store = configuration.store
 
         if let webSocketUrl: URL = self.configuration.webSocketUrl {
-            let httpTransport: HTTPNetworkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+            let httpTransport: ABSDKHTTPNetworkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
             let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: webSocketUrl)
             self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
         } else {
-            self.networkTransport = HTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+            self.networkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
         }
 
         self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.configuration.store)

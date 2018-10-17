@@ -25,7 +25,7 @@ import SwiftPhoenixClient
 
 /// A network transport that wraps a http transport and a websocket transport to cover query, mutation and subscription
 public class ABSDKSplitNetworkTransport: NetworkTransport {
-    private let httpNetworkTransport: HTTPNetworkTransport
+    private let httpNetworkTransport: ABSDKHTTPNetworkTransport
     private let webSocketNetworkTransport: ABSDKWebSocketTransport
 
     /// Initialize a split transport with a http transport and a websocket transport
@@ -34,7 +34,7 @@ public class ABSDKSplitNetworkTransport: NetworkTransport {
     ///   - httpNetworkTransport: The http network transport
     ///   - websocketNetworkTransport: The websocket network transport
     /// - Returns: The split network transport
-    public init(httpNetworkTransport: HTTPNetworkTransport, webSocketNetworkTransport: ABSDKWebSocketTransport) {
+    public init(httpNetworkTransport: ABSDKHTTPNetworkTransport, webSocketNetworkTransport: ABSDKWebSocketTransport) {
         self.httpNetworkTransport = httpNetworkTransport
         self.webSocketNetworkTransport = webSocketNetworkTransport
     }
