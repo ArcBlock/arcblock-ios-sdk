@@ -43,7 +43,7 @@ class TransactionListViewController<Query: GraphQLPagedQuery, Data: GraphQLSelec
         transactionDataSource = ABSDKPagedArrayDataSource<Query, Data>(client: arcblockClient, query: query, dataSourceMapper: transactionsSourceMapper, dataSourceUpdateHandler: transactionDataSourceUpdateHandler, pageMapper: transactionsPageMapper)
 
         loadingFooter = UIView.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.view.bounds.size.width, height: 44)))
-        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .gray)
         activityIndicator.center = loadingFooter.center
         activityIndicator.startAnimating()
         loadingFooter.addSubview(activityIndicator)

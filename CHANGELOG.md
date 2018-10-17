@@ -1,3 +1,7 @@
+## 0.7.11 (October 17, 2018)
+  - handle error in body when status code is 200
+  - setup ABSDKHTTPTransport fix ocam-demo
+
 ## 0.7.10 (October 10, 2018)
   - support swift 4.2
 
