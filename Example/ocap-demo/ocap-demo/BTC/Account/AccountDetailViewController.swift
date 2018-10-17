@@ -67,15 +67,15 @@ class AccountDetailViewController: UIViewController {
     }
 
     func showChildViewController(viewContoller: UIViewController) {
-        addChildViewController(viewContoller)
+        addChild(viewContoller)
         viewContoller.view.frame = contentView.bounds
         contentView.addSubview(viewContoller.view)
-        viewContoller.didMove(toParentViewController: self)
+        viewContoller.didMove(toParent: self)
     }
 
     func removeChildViewController(viewContoller: UIViewController) {
-        viewContoller.willMove(toParentViewController: nil)
-        viewContoller.removeFromParentViewController()
+        viewContoller.willMove(toParent: nil)
+        viewContoller.removeFromParent()
         viewContoller.view.removeFromSuperview()
     }
 
