@@ -97,9 +97,12 @@ public struct GraphQLHTTPResponseError: Error, LocalizedError {
                     let body = try JSONSerializationFormat.deserialize(data: data) as? JSONObject,
                     let errors = body["errors"] as? [JSONObject],
                     let error = errors.first,
-                    let statusCode = error["status"] as? Int,
                     let description = error["message"] as? String {
-                    return "\(kind.description) (\(statusCode) \(description))"
+                    if let statusCode = error["status"] as? Int {
+                        return "\(kind.description) (\(statusCode) \(description))"
+                    } else {
+                        return "\(kind.description) (\(response.statusCode) \(description))"
+                    }
                 }
             } catch {
 
