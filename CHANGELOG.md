@@ -1,3 +1,6 @@
+## 0.7.12 (October 18, 2018)
+  - handle errors in body without status code
+
 ## 0.7.11 (October 17, 2018)
   - handle error in body when status code is 200
   - setup ABSDKHTTPTransport fix ocam-demo
