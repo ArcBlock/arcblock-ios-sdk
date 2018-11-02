@@ -1,3 +1,6 @@
+## 0.8.0 (November 02, 2018)
+  - support hmac authorization
+
 ## 0.7.12 (October 18, 2018)
   - handle errors in body without status code
 
