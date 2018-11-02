@@ -21,13 +21,14 @@
 // THE SOFTWARE.
 
 import Apollo
+import CryptoSwift
 
 extension HTTPURLResponse {
     func isSuccessful(_ data: Data?) -> Bool {
         if (200..<300).contains(statusCode) {
             do {
                 if  let data = data,
-                    let body = try JSONSerializationFormat.deserialize(data: data) as? JSONObject,
+                    let body = try ABSDKJSONSerializationFormat.deserialize(data: data) as? JSONObject,
                     let errors = body["errors"] as? [JSONObject] {
                     return errors.count == 0
                 }
@@ -94,7 +95,7 @@ public struct GraphQLHTTPResponseError: Error, LocalizedError {
         if (200..<300).contains(response.statusCode) {
             do {
                 if  let data = body,
-                    let body = try JSONSerializationFormat.deserialize(data: data) as? JSONObject,
+                    let body = try ABSDKJSONSerializationFormat.deserialize(data: data) as? JSONObject,
                     let errors = body["errors"] as? [JSONObject],
                     let error = errors.first,
                     let description = error["message"] as? String {
@@ -112,11 +113,24 @@ public struct GraphQLHTTPResponseError: Error, LocalizedError {
     }
 }
 
+public final class ABSDKJSONSerializationFormat {
+    public class func serialize(value: JSONEncodable) throws -> Data {
+        return try JSONSerialization.data(withJSONObject: value.jsonValue, options: [.sortedKeys])
+    }
+
+    public class func deserialize(data: Data) throws -> JSONValue {
+        return try JSONSerialization.jsonObject(with: data, options: [])
+    }
+}
+
 /// A network transport that uses HTTP POST requests to send GraphQL operations to a server, and that uses `URLSession` as the networking implementation.
 public class ABSDKHTTPNetworkTransport: NetworkTransport {
     let url: URL
     let session: URLSession
-    let serializationFormat = JSONSerializationFormat.self
+    let serializationFormat = ABSDKJSONSerializationFormat.self
+
+    var accessKey: String?
+    var accessSecret: String?
 
     /// Creates a network transport with the specified server URL and session configuration.
     ///
@@ -124,10 +138,13 @@ public class ABSDKHTTPNetworkTransport: NetworkTransport {
     ///   - url: The URL of a GraphQL server to connect to.
     ///   - configuration: A session configuration used to configure the session. Defaults to `URLSessionConfiguration.default`.
     ///   - sendOperationIdentifiers: Whether to send operation identifiers rather than full operation text, for use with servers that support query persistence. Defaults to false.
-    public init(url: URL, configuration: URLSessionConfiguration = URLSessionConfiguration.default, sendOperationIdentifiers: Bool = false) {
+    public init(url: URL, configuration: URLSessionConfiguration = URLSessionConfiguration.default, sendOperationIdentifiers: Bool = false,
+                accessKey: String? = nil, accessSecret: String? = nil) {
         self.url = url
         self.session = URLSession(configuration: configuration)
         self.sendOperationIdentifiers = sendOperationIdentifiers
+        self.accessKey = accessKey
+        self.accessSecret = accessSecret
     }
 
     /// Send a GraphQL operation to a server and return a response.
@@ -149,6 +166,10 @@ public class ABSDKHTTPNetworkTransport: NetworkTransport {
             request.httpBody = try serializationFormat.serialize(value: body)
         } catch {
             print("Error serializing request body. \(error)")
+        }
+
+        if let authHeader = getAuthHeaderValue(body: request.httpBody) {
+            request.setValue(authHeader, forHTTPHeaderField: "Authorization")
         }
 
         let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
@@ -198,5 +219,35 @@ public class ABSDKHTTPNetworkTransport: NetworkTransport {
             return ["id": operationIdentifier, "variables": operation.variables]
         }
         return ["query": operation.queryDocument, "variables": operation.variables]
+    }
+
+    private func getAuthHeaderValue(body: Data?) -> String? {
+        guard let accessKey = self.accessKey, let accessSecret = self.accessSecret else { return nil}
+
+        do {
+            let timestamp = String(format: "%.0f", floor(Date().timeIntervalSince1970))
+            let hmac = HMAC(key: accessSecret.bytes, variant: .sha256)
+            guard let body = body, let query = String(data: body, encoding: String.Encoding.utf8) else { return nil }
+
+            let params = ["accessKey": accessKey, "query": query, "timestamp": timestamp].sorted { (arg0, arg1) -> Bool in
+                let (key1, _) = arg1
+                let (key2, _) = arg0
+                return key1 > key2
+            }
+            var keyPairs: [String] = []
+            let percentageEncodingAllowCharacterSet = CharacterSet.urlPathAllowed.subtracting(CharacterSet(charactersIn: ":,@#$&+"))
+            for (key, value) in params {
+                let keyPair = key + "=" + (value.addingPercentEncoding(withAllowedCharacters: percentageEncodingAllowCharacterSet) ?? "")
+                keyPairs.append(keyPair)
+            }
+            let message = keyPairs.joined(separator: "&")
+            guard let digest: String = try hmac.authenticate(message.bytes).toBase64() else { return nil }
+
+            return "AB1-HMAC-SHA256 access_key=" + accessKey + ",timestamp=" + timestamp + ",signature=" + digest
+        } catch {
+            print("Error calculating hmac. \(error)")
+        }
+
+        return nil
     }
 }
