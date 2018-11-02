@@ -1,12 +1,14 @@
 PODS:
   - Apollo (0.9.3)
-  - ArcBlockSDK (0.7.10):
-    - ArcBlockSDK/CoreKit (= 0.7.10)
-  - ArcBlockSDK/CoreKit (0.7.10):
+  - ArcBlockSDK (0.7.12):
+    - ArcBlockSDK/CoreKit (= 0.7.12)
+  - ArcBlockSDK/CoreKit (0.7.12):
     - Apollo
+    - CryptoSwift
     - ReachabilitySwift
     - SQLite.swift
     - SwiftPhoenixClient
+  - CryptoSwift (0.12.0)
   - ReachabilitySwift (4.2.1)
   - SQLite.swift (0.11.5):
     - SQLite.swift/standard (= 0.11.5)
@@ -21,6 +23,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - CryptoSwift
     - ReachabilitySwift
     - SQLite.swift
     - Starscream
@@ -39,7 +42,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Apollo: fd28e323d946b2e7f086b8a38133a623fb4e7f25
-  ArcBlockSDK: 62945719e6f2dcab1fa5c61801d76f816b45c8fc
+  ArcBlockSDK: bc240d7b7e22b7f2f2f76e96c055f8cf9c55f508
+  CryptoSwift: 1c07ca50843dd48bc54e6ea53d7a4dba3b645716
   ReachabilitySwift: 35720ffea59c1c76d15f885be77fd33e33985427
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd

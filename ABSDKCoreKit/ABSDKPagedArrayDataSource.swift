@@ -89,7 +89,7 @@ final public class ABSDKPagedArrayDataSource<Query: GraphQLPagedQuery, Data: Gra
             watcher.refetch()
         } else {
             let pagedQuery: Query = operation.copy()
-            pagedQuery.paging = PageInput(cursor: pageCursor)
+            pagedQuery.paging = PageInput(cursor: pageCursor, size: 50)
 
             let watcher: GraphQLQueryWatcher<Query> = client.watch(query: pagedQuery, cachePolicy: .returnCacheDataAndFetch, resultHandler: { [weak self] (result, err) in
                 if err == nil {
