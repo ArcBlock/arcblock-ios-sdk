@@ -2,3 +2,4 @@ github "ArcBlock/apollo-ios"
 github "stephencelis/SQLite.swift"
 github "ashleymills/Reachability.swift"
 github "davidstump/SwiftPhoenixClient" ~> 0.9
+github "krzyzanowskim/CryptoSwift"

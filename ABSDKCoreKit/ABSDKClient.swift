@@ -69,8 +69,9 @@ public typealias OperationResultHandler<Operation: GraphQLOperation> = (_ result
 public class ABSDKClientConfiguration {
     fileprivate var url: URL
     fileprivate var webSocketUrl: URL?
-    fileprivate var store: ApolloStore
     fileprivate var urlSessionConfiguration: URLSessionConfiguration
+    fileprivate var accessKey: String?
+    fileprivate var accessSecret: String?
 
     fileprivate var databaseURL: URL?
 
@@ -83,8 +84,10 @@ public class ABSDKClientConfiguration {
     ///   - endpoint: The ArcBlock endpoint.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public convenience init(endpoint: ABSDKEndpoint,
-                            databaseURL: URL? = nil) throws {
-        try self.init(url: endpoint.url, webSocketUrl: endpoint.webSocketUrl, databaseURL: databaseURL)
+                            databaseURL: URL? = nil,
+                            accessKey: String? = nil,
+                            accessSecret: String? = nil) throws {
+        self.init(url: endpoint.url, webSocketUrl: endpoint.webSocketUrl, databaseURL: databaseURL, accessKey: accessKey, accessSecret: accessSecret)
     }
 
     /// Creates a configuration object for the `ABSDKClient`.
@@ -97,19 +100,15 @@ public class ABSDKClientConfiguration {
     public init(url: URL,
                 webSocketUrl: URL? = nil,
                 urlSessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default,
-                databaseURL: URL? = nil) throws {
+                databaseURL: URL? = nil,
+                accessKey: String? = nil,
+                accessSecret: String? = nil) {
         self.url = url
         self.webSocketUrl = webSocketUrl
         self.urlSessionConfiguration = urlSessionConfiguration
         self.databaseURL = databaseURL
-        self.store = ApolloStore(cache: InMemoryNormalizedCache())
-        if let databaseURL = databaseURL {
-            do {
-                self.store = try ApolloStore(cache: ABSDKSQLLiteNormalizedCache(fileURL: databaseURL))
-            } catch {
-                // Use in memory cache incase database init fails
-            }
-        }
+        self.accessKey = accessKey
+        self.accessSecret = accessSecret
     }
 }
 
@@ -137,7 +136,7 @@ public struct ABSDKClientError: Error, LocalizedError {
 public class ABSDKClient {
 
     let apolloClient: ApolloClient?
-    let store: ApolloStore?
+    let store: ApolloStore
 
     private var configuration: ABSDKClientConfiguration
     internal var networkTransport: NetworkTransport?
@@ -154,17 +153,31 @@ public class ABSDKClient {
     public init(configuration: ABSDKClientConfiguration) throws {
         self.configuration = configuration
 
-        self.store = configuration.store
+        var store = ApolloStore(cache: InMemoryNormalizedCache())
+        if let databaseURL = self.configuration.databaseURL {
+            do {
+                store = try ApolloStore(cache: ABSDKSQLLiteNormalizedCache(fileURL: databaseURL))
+            } catch {
+                // Use in memory cache incase database init fails
+            }
+        }
+        self.store = store
 
         if let webSocketUrl: URL = self.configuration.webSocketUrl {
-            let httpTransport: ABSDKHTTPNetworkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+            let httpTransport: ABSDKHTTPNetworkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url,
+                                                                                     configuration: self.configuration.urlSessionConfiguration,
+                                                                                     accessKey: self.configuration.accessKey,
+                                                                                     accessSecret: self.configuration.accessSecret)
             let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: webSocketUrl)
             self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
         } else {
-            self.networkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url, configuration: self.configuration.urlSessionConfiguration)
+            self.networkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url,
+                                                              configuration: self.configuration.urlSessionConfiguration,
+                                                              accessKey: self.configuration.accessKey,
+                                                              accessSecret: self.configuration.accessSecret)
         }
 
-        self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.configuration.store)
+        self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.store)
 
         reachability = Reachability()
         var observer = NotificationCenter.default.addObserver(forName: .reachabilityChanged, object: nil, queue: nil) { [weak self] (notification) in
@@ -272,7 +285,7 @@ public class ABSDKClient {
                                                                       resultHandler: OperationResultHandler<Mutation>? = nil) -> Cancellable {
         if let optimisticUpdate = optimisticUpdate {
             do {
-                _ = try self.store?.withinReadWriteTransaction { transaction in
+                _ = try self.store.withinReadWriteTransaction { transaction in
                     optimisticUpdate(transaction)
                     }.await()
             } catch {

@@ -88,7 +88,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     var channel: Channel?
     var error: WebSocketError?
 
-    let serializationFormat = JSONSerializationFormat.self
+    let serializationFormat = ABSDKJSONSerializationFormat.self
     let topic = "doc"
 
     var joined: Bool = false
