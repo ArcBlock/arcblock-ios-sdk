@@ -177,10 +177,10 @@ private final class SQLiteSerialization {
     private static func deserialize(fieldJSONValue: JSONValue) throws -> Record.Value {
         switch fieldJSONValue {
         case let dictionary as JSONObject:
-            guard let reference = dictionary[serializedReferenceKey] as? String else {
-                throw ABSDKSQLLiteNormalizedCacheError.invalidRecordValue(value: fieldJSONValue)
+            if let reference = dictionary[serializedReferenceKey] as? String {
+                return Reference(key: reference)
             }
-            return Reference(key: reference)
+            return fieldJSONValue
         case let array as [JSONValue]:
             return try array.map { try deserialize(fieldJSONValue: $0) }
         default:

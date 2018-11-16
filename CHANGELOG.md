@@ -1,3 +1,6 @@
+## 0.8.1 (November 16, 2018)
+  - support function input
+
 ## 0.8.0 (November 02, 2018)
   - support hmac authorization
 

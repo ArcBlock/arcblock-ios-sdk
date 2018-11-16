@@ -59,12 +59,14 @@ class ETHTransactionViewController: UITableViewController {
             feesLabel.text = transaction.fees
 
             fromAddressLabel.text = transaction.from.address
-            fromBalanceLabel.text = String(transaction.from.balance!)
+            fromBalanceLabel.text = transaction.from.balance
             fromContractLabel.text = transaction.from.isContract ? "Yes" : "No"
 
             toAddressLabel.text = transaction.to?.address
             toBalanceLabel.text = String((transaction.to?.balance)!)
             toContractLabel.text = (transaction.to?.isContract)! ? "Yes" : "No"
+
+            print("action function input: \(data?.traces?.data?.first??.actionFunctionInput)")
         }
     }
 
