@@ -70,7 +70,7 @@ class ETHNewBlockMinedViewController: UIViewController {
         sizeLabel.text = String(block.size)
         timeLabel.text = block.time
         feesLabel.text = block.fees
-        minerLabel.text = block.miner?.address
+        minerLabel.text = block.miner.address
         rewardLabel.text = String(block.reward)
     }
 
