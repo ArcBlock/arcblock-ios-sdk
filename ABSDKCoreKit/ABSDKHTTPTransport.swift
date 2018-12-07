@@ -212,13 +212,27 @@ public class ABSDKHTTPNetworkTransport: NetworkTransport {
     private let sendOperationIdentifiers: Bool
 
     private func requestBody<Operation: GraphQLOperation>(for operation: Operation) -> GraphQLMap {
+        var deduplicatedVariables: GraphQLMap = GraphQLMap.init()
+        if let variables = operation.variables {
+            for (key, value) in variables where value != nil {
+                deduplicatedVariables[key] = value
+            }
+        }
         if sendOperationIdentifiers {
             guard let operationIdentifier = operation.operationIdentifier else {
                 preconditionFailure("To send operation identifiers, Apollo types must be generated with operationIdentifiers")
             }
-            return ["id": operationIdentifier, "variables": operation.variables]
+            if deduplicatedVariables.count > 0 {
+                return ["id": operationIdentifier, "variables": deduplicatedVariables]
+            } else {
+                return ["id": operationIdentifier]
+            }
         }
-        return ["query": operation.queryDocument, "variables": operation.variables]
+        if deduplicatedVariables.count > 0 {
+            return ["query": operation.queryDocument, "variables": deduplicatedVariables]
+        } else {
+            return ["query": operation.queryDocument]
+        }
     }
 
     private func getAuthHeaderValue(body: Data?) -> String? {
