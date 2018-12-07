@@ -1,3 +1,6 @@
+## 0.8.2 (December 07, 2018)
+  - remove nil query variables in request body
+
 ## 0.8.1 (November 16, 2018)
   - support function input
 
