@@ -10,4 +10,4 @@ github_url: https://github.com/ArcBlock/arcblock-ios-sdk
 github_file_prefix: https://github.com/ArcBlock/arcblock-ios-sdk/tree/master
 exclude:
   - ABSDKCoreKit/ABSDKPagination.swift
-module_version: 0.8.2
+module_version: 0.8.3

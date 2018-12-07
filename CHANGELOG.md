@@ -1,3 +1,6 @@
+## 0.8.3 (December 07, 2018)
+  - change default query cache policy
+
 ## 0.8.2 (December 07, 2018)
   - remove nil query variables in request body
 
