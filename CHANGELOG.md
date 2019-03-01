@@ -1,3 +1,6 @@
+## 0.8.4 (March 01, 2019)
+  - update dependency
+
 ## 0.8.3 (December 07, 2018)
   - change default query cache policy
 
