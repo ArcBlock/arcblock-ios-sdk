@@ -38,7 +38,7 @@ TODO: Add long description of the pod here.
   s.subspec 'CoreKit' do |sc|
     sc.source_files = 'ABSDKCoreKit/**/*.{h,m,swift}'
     sc.dependency 'Apollo'
-    sc.dependency 'SQLite.swift'
+    sc.dependency 'SQLite.swift/SQLCipher'
     sc.dependency 'ReachabilitySwift'
     sc.dependency 'SwiftPhoenixClient'
     sc.dependency 'CryptoSwift'
