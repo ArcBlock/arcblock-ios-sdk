@@ -111,7 +111,7 @@ public class ABSDKWebSocketTransport: NetworkTransport {
         if let params = self.params {
             request.allHTTPHeaderFields = params
         }
-        self.socket = Socket(url: url, params: params)
+        self.socket = Socket(url.absoluteString, params: params)
 
         self.socket?.onOpen { [weak self] in
             self?.websocketDidConnect()
