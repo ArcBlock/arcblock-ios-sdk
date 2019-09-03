@@ -1,0 +1,13 @@
+syntax = "proto3";
+package abt_did_workshop;
+
+message WorkshopAsset {
+  string from = 1;
+  string to = 2;
+  uint64 iat = 3;
+  uint64 nbf = 4;
+  uint64 exp = 5;
+  string title = 6;
+  int64 content = 7;
+  bytes sig = 8;
+}
