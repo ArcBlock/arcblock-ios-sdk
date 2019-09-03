@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ArcBlockSDK'
-  s.version          = '0.8.5'
+  s.version          = '0.9.0'
   s.summary          = 'Used to integrate iOS apps with ArcBlock Platform.'
 
 # This description is used to generate tags and improve search results.
@@ -36,12 +36,19 @@ TODO: Add long description of the pod here.
   s.default_subspec = 'CoreKit'
 
   s.subspec 'CoreKit' do |sc|
-    sc.source_files = 'ABSDKCoreKit/**/*.{h,m,swift}'
+    sc.source_files = 'ArcBlockSDK/ABSDKCoreKit/**/*.{h,m,swift}'
     sc.dependency 'Apollo'
     sc.dependency 'SQLite.swift/SQLCipher'
     sc.dependency 'ReachabilitySwift'
     sc.dependency 'SwiftPhoenixClient'
     sc.dependency 'CryptoSwift'
+    sc.dependency 'web3.swift.pod', '~> 2.2.0'
+  end
+
+  s.subspec 'WalletKit' do |sc|
+    sc.source_files = 'ArcBlockSDK/ABSDKWalletKit/**/*.{h,m,swift}'
+    sc.dependency 'SwiftProtobuf', '~> 1.0'
+    sc.dependency 'ArcBlockSDK/CoreKit'
   end
 
   # s.subspec 'AccountKit' do |sa|
