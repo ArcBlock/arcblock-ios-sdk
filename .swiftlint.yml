@@ -3,6 +3,9 @@ excluded:
   - Carthage
   - Example
   - Templates
+  - ArcBlockSDK/ABSDKWalletKit/protobuf
+  - ArcBlockSDK/ABSDKCoreKit/ed25519swift
+  - ArcBlockSDK/ABSDKCoreKit/Multibase
 
 line_length:
   warning: 200

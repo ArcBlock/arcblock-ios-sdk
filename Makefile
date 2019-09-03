@@ -36,10 +36,7 @@ all: pre-build build post-build
 
 test:
 	@echo "Running test suites..."
-	@xcodebuild -project ArcBlockSDK.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' -configuration Debug -scheme ABSDKCoreKit build test | xcpretty -c
-	@xcodebuild -project ArcBlockSDK.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' -configuration Debug -scheme ABSDKAccountKit build test | xcpretty -c
-	@xcodebuild -project ArcBlockSDK.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' -configuration Debug -scheme ABSDKMessagingKit build test | xcpretty -c
-	@xcodebuild -project ArcBlockSDK.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' -configuration Debug -scheme ABSDKWalletKit build test | xcpretty -c
+	@xcodebuild -project ArcBlockSDK.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' -configuration Debug -scheme ArcBlockSDK build test | xcpretty -c
 
 lint:
 	@echo "Linting the software..."
@@ -63,6 +60,10 @@ travis-deploy:
 		tar -zcvf docs/Templates.tar.gz Templates; \
 		make doc; \
 	fi
+
+protobuf-codegen:
+	@echo "Generating protobuf swift codes..."
+	@protoc --swift_out=ABSDKWalletKit/protobuf/ --proto_path=ABSDKWalletKit/protobuf ABSDKWalletKit/protobuf/*.proto --swift_opt=Visibility=Public
 
 clean:
 	@echo "Cleaning the build..."
