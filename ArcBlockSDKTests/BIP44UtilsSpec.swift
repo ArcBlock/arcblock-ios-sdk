@@ -35,9 +35,12 @@ class BIP44UtilsSpec: QuickSpec {
                     _ = throwAssertion()
                     return
                 }
-                let privateKey = BIP44Utils.generatePrivateKey(seed: seed, path: HDNode.defaultPathMetamask)
+                let path = HDNode.defaultPathMetamask
+                let childSeed = BIP44Utils.generateChildSeed(seed: seed, path: path)
+                let privateKey = BIP44Utils.generatePrivateKey(seed: seed, path: path)
                 expect(seed.base64EncodedString()).to(equal("NxwhITc5zKDVZvvM1661+HZ/zz9M2my9e6zkgMF/uhKOldgHEi1m5sxX/XuhPamdyjJq/XRiHQMZelTlEYI3tA=="))
                 expect(privateKey?.toHexString()).to(equal("7e72fea21398acd41cdccad0ea8797d2aac82ff08308ab75045e3a054997ef35"))
+                expect(privateKey?.toHexString()).to(equal(BIP44Utils.generatePrivateKey(data: childSeed!)?.toHexString()))
             })
         }
 

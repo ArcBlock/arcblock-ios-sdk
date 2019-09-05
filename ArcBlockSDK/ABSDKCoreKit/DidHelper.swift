@@ -111,21 +111,6 @@ public class DidHelper {
         return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: userPrivateKey)
     }
 
-    public static func keyDerivePathForAppDid(appDid: String, index: Int) -> String? {
-        if appDid == "eth" {
-            return HDNode.defaultPathMetamask
-        } else {
-            guard let appDidHash = appDid.components(separatedBy: ":").last,
-                let appDidBytes = Data.init(multibaseEncoded: appDidHash) else {
-                    return nil
-            }
-            let appDidSha3Prefix = MCrypto.Hasher.Sha3.sha256(appDidBytes).prefix(8)
-            let sk1 = (UInt32(bigEndian: appDidSha3Prefix.prefix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
-            let sk2 = (UInt32(bigEndian: appDidSha3Prefix.suffix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
-            return "m/44'/260'/\(String(sk1))'/\(String(sk2))'/\(index)"
-        }
-    }
-
     private static func pkToAddress(roleType: RoleType, keyType: KeyType, hashType: HashType, publicKey: Data) -> String? {
         if let hash = hashType.hash(data: publicKey) {
             return hashToAddress(roleType: roleType, keyType: keyType, hashType: hashType, hash: hash)
