@@ -43,9 +43,40 @@ public class BIP44Utils {
         return hdNode.derive(path: path)?.privateKey
     }
 
+    public static func generatePrivateKey(data: Data) -> Data? {
+        guard let hdNode = HDNode.init(data) else {
+            return nil
+        }
+        return hdNode.privateKey
+    }
+
+    public static func generateChildSeed(seed: Data, path: String) -> Data? {
+        guard let hdNode = HDNode.init(seed: seed) else { return nil }
+        return hdNode.derive(path: path)?.serialize(serializePublic: false)
+    }
+
     private static func getEntropy(secretCode: String, recoveryCode: String) -> Data? {
         var entropy = (secretCode.sha3(.keccak256).uppercased() + recoveryCode).sha3(.keccak256).uppercased()
         entropy = String(entropy.prefix(32))
         return entropy.data(using: .ascii)
+    }
+
+    public static func keyDerivePathFor(account: String, change: String, index: Int) -> String {
+        return "m/44'/260'/\(account)'/\(change)'/\(index)"
+    }
+
+    public static func keyDerivePathForAppDid(appDid: String, index: Int) -> String? {
+        if appDid == "eth" {
+            return HDNode.defaultPathMetamask
+        } else {
+            guard let appDidHash = appDid.components(separatedBy: ":").last,
+                let appDidBytes = Data.init(multibaseEncoded: appDidHash) else {
+                    return nil
+            }
+            let appDidSha3Prefix = MCrypto.Hasher.Sha3.sha256(appDidBytes).prefix(8)
+            let sk1 = (UInt32(bigEndian: appDidSha3Prefix.prefix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
+            let sk2 = (UInt32(bigEndian: appDidSha3Prefix.suffix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
+            return keyDerivePathFor(account: String(sk1), change: String(sk2), index: index)
+        }
     }
 }
