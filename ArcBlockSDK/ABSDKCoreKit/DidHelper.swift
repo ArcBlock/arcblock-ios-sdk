@@ -85,7 +85,7 @@ public enum HashType: Int8 {
 }
 
 public class DidHelper {
-    public static func getUserDid(appDid: String, userPrivateKey: Data) -> String? {
+    public static func getUserDid(userPrivateKey: Data) -> String? {
         return getUserDid(roleType: .account, keyType: .ed25519, hashType: .sha3, privateKey: userPrivateKey)
     }
 
