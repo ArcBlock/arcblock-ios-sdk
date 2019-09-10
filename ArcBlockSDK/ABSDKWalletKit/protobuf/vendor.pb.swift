@@ -170,6 +170,20 @@ public struct AbciVendor_LastCommitInfo {
   public init() {}
 }
 
+public struct AbciVendor_Event {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var type: String = String()
+
+  public var attributes: [AbciVendor_KVPair] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct AbciVendor_Version {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -975,7 +989,7 @@ public struct AbciVendor_ResponseBeginBlock {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var tags: [AbciVendor_KVPair] = []
+  public var events: [AbciVendor_Event] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1001,7 +1015,7 @@ public struct AbciVendor_ResponseCheckTx {
 
   public var gasUsed: Int64 = 0
 
-  public var tags: [AbciVendor_KVPair] = []
+  public var events: [AbciVendor_Event] = []
 
   public var codespace: String = String()
 
@@ -1029,7 +1043,7 @@ public struct AbciVendor_ResponseDeliverTx {
 
   public var gasUsed: Int64 = 0
 
-  public var tags: [AbciVendor_KVPair] = []
+  public var events: [AbciVendor_Event] = []
 
   public var codespace: String = String()
 
@@ -1057,9 +1071,9 @@ public struct AbciVendor_ResponseEndBlock {
   /// Clears the value of `consensusParamUpdates`. Subsequent reads from it will return its default value.
   public mutating func clearConsensusParamUpdates() {_uniqueStorage()._consensusParamUpdates = nil}
 
-  public var tags: [AbciVendor_KVPair] {
-    get {return _storage._tags}
-    set {_uniqueStorage()._tags = newValue}
+  public var events: [AbciVendor_Event] {
+    get {return _storage._events}
+    set {_uniqueStorage()._events = newValue}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1606,6 +1620,41 @@ extension AbciVendor_LastCommitInfo: SwiftProtobuf.Message, SwiftProtobuf._Messa
   public static func ==(lhs: AbciVendor_LastCommitInfo, rhs: AbciVendor_LastCommitInfo) -> Bool {
     if lhs.round != rhs.round {return false}
     if lhs.votes != rhs.votes {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension AbciVendor_Event: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Event"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "attributes"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularStringField(value: &self.type)
+      case 2: try decoder.decodeRepeatedMessageField(value: &self.attributes)
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 1)
+    }
+    if !self.attributes.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.attributes, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: AbciVendor_Event, rhs: AbciVendor_Event) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.attributes != rhs.attributes {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3235,27 +3284,27 @@ extension AbciVendor_ResponseQuery: SwiftProtobuf.Message, SwiftProtobuf._Messag
 extension AbciVendor_ResponseBeginBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResponseBeginBlock"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "tags"),
+    1: .same(proto: "events"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeRepeatedMessageField(value: &self.tags)
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.events)
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.tags.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.tags, fieldNumber: 1)
+    if !self.events.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.events, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: AbciVendor_ResponseBeginBlock, rhs: AbciVendor_ResponseBeginBlock) -> Bool {
-    if lhs.tags != rhs.tags {return false}
+    if lhs.events != rhs.events {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3270,7 +3319,7 @@ extension AbciVendor_ResponseCheckTx: SwiftProtobuf.Message, SwiftProtobuf._Mess
     4: .same(proto: "info"),
     5: .standard(proto: "gas_wanted"),
     6: .standard(proto: "gas_used"),
-    7: .same(proto: "tags"),
+    7: .same(proto: "events"),
     8: .same(proto: "codespace"),
   ]
 
@@ -3283,7 +3332,7 @@ extension AbciVendor_ResponseCheckTx: SwiftProtobuf.Message, SwiftProtobuf._Mess
       case 4: try decoder.decodeSingularStringField(value: &self.info)
       case 5: try decoder.decodeSingularInt64Field(value: &self.gasWanted)
       case 6: try decoder.decodeSingularInt64Field(value: &self.gasUsed)
-      case 7: try decoder.decodeRepeatedMessageField(value: &self.tags)
+      case 7: try decoder.decodeRepeatedMessageField(value: &self.events)
       case 8: try decoder.decodeSingularStringField(value: &self.codespace)
       default: break
       }
@@ -3309,8 +3358,8 @@ extension AbciVendor_ResponseCheckTx: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.gasUsed != 0 {
       try visitor.visitSingularInt64Field(value: self.gasUsed, fieldNumber: 6)
     }
-    if !self.tags.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.tags, fieldNumber: 7)
+    if !self.events.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.events, fieldNumber: 7)
     }
     if !self.codespace.isEmpty {
       try visitor.visitSingularStringField(value: self.codespace, fieldNumber: 8)
@@ -3325,7 +3374,7 @@ extension AbciVendor_ResponseCheckTx: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.info != rhs.info {return false}
     if lhs.gasWanted != rhs.gasWanted {return false}
     if lhs.gasUsed != rhs.gasUsed {return false}
-    if lhs.tags != rhs.tags {return false}
+    if lhs.events != rhs.events {return false}
     if lhs.codespace != rhs.codespace {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3341,7 +3390,7 @@ extension AbciVendor_ResponseDeliverTx: SwiftProtobuf.Message, SwiftProtobuf._Me
     4: .same(proto: "info"),
     5: .standard(proto: "gas_wanted"),
     6: .standard(proto: "gas_used"),
-    7: .same(proto: "tags"),
+    7: .same(proto: "events"),
     8: .same(proto: "codespace"),
   ]
 
@@ -3354,7 +3403,7 @@ extension AbciVendor_ResponseDeliverTx: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 4: try decoder.decodeSingularStringField(value: &self.info)
       case 5: try decoder.decodeSingularInt64Field(value: &self.gasWanted)
       case 6: try decoder.decodeSingularInt64Field(value: &self.gasUsed)
-      case 7: try decoder.decodeRepeatedMessageField(value: &self.tags)
+      case 7: try decoder.decodeRepeatedMessageField(value: &self.events)
       case 8: try decoder.decodeSingularStringField(value: &self.codespace)
       default: break
       }
@@ -3380,8 +3429,8 @@ extension AbciVendor_ResponseDeliverTx: SwiftProtobuf.Message, SwiftProtobuf._Me
     if self.gasUsed != 0 {
       try visitor.visitSingularInt64Field(value: self.gasUsed, fieldNumber: 6)
     }
-    if !self.tags.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.tags, fieldNumber: 7)
+    if !self.events.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.events, fieldNumber: 7)
     }
     if !self.codespace.isEmpty {
       try visitor.visitSingularStringField(value: self.codespace, fieldNumber: 8)
@@ -3396,7 +3445,7 @@ extension AbciVendor_ResponseDeliverTx: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.info != rhs.info {return false}
     if lhs.gasWanted != rhs.gasWanted {return false}
     if lhs.gasUsed != rhs.gasUsed {return false}
-    if lhs.tags != rhs.tags {return false}
+    if lhs.events != rhs.events {return false}
     if lhs.codespace != rhs.codespace {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3408,13 +3457,13 @@ extension AbciVendor_ResponseEndBlock: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "validator_updates"),
     2: .standard(proto: "consensus_param_updates"),
-    3: .same(proto: "tags"),
+    3: .same(proto: "events"),
   ]
 
   fileprivate class _StorageClass {
     var _validatorUpdates: [AbciVendor_ValidatorUpdate] = []
     var _consensusParamUpdates: AbciVendor_ConsensusParams? = nil
-    var _tags: [AbciVendor_KVPair] = []
+    var _events: [AbciVendor_Event] = []
 
     static let defaultInstance = _StorageClass()
 
@@ -3423,7 +3472,7 @@ extension AbciVendor_ResponseEndBlock: SwiftProtobuf.Message, SwiftProtobuf._Mes
     init(copying source: _StorageClass) {
       _validatorUpdates = source._validatorUpdates
       _consensusParamUpdates = source._consensusParamUpdates
-      _tags = source._tags
+      _events = source._events
     }
   }
 
@@ -3441,7 +3490,7 @@ extension AbciVendor_ResponseEndBlock: SwiftProtobuf.Message, SwiftProtobuf._Mes
         switch fieldNumber {
         case 1: try decoder.decodeRepeatedMessageField(value: &_storage._validatorUpdates)
         case 2: try decoder.decodeSingularMessageField(value: &_storage._consensusParamUpdates)
-        case 3: try decoder.decodeRepeatedMessageField(value: &_storage._tags)
+        case 3: try decoder.decodeRepeatedMessageField(value: &_storage._events)
         default: break
         }
       }
@@ -3456,8 +3505,8 @@ extension AbciVendor_ResponseEndBlock: SwiftProtobuf.Message, SwiftProtobuf._Mes
       if let v = _storage._consensusParamUpdates {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
       }
-      if !_storage._tags.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._tags, fieldNumber: 3)
+      if !_storage._events.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._events, fieldNumber: 3)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -3470,7 +3519,7 @@ extension AbciVendor_ResponseEndBlock: SwiftProtobuf.Message, SwiftProtobuf._Mes
         let rhs_storage = _args.1
         if _storage._validatorUpdates != rhs_storage._validatorUpdates {return false}
         if _storage._consensusParamUpdates != rhs_storage._consensusParamUpdates {return false}
-        if _storage._tags != rhs_storage._tags {return false}
+        if _storage._events != rhs_storage._events {return false}
         return true
       }
       if !storagesAreEqual {return false}

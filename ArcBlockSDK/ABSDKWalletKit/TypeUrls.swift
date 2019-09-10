@@ -38,6 +38,8 @@ public enum TypeUrl: String, CaseIterable {
     case setupSwap = "fg:t:setup_swap"
     case retrieveSwap = "fg:t:retrieve_swap"
     case revokeSwap = "fg:t:revoke_swap"
+    case delegate = "fg:t:delegate"
+    case revokeDelegate = "fg:t:revoke_delegate"
 
     // forge state
     case accountState = "fg:s:account"
@@ -92,6 +94,16 @@ public enum TypeUrl: String, CaseIterable {
             return try? ForgeAbi_DepositTetherTx(serializedData: value)
         case .exchangeTether:
             return try? ForgeAbi_ExchangeTetherTx(serializedData: value)
+        case .setupSwap:
+            return try? ForgeAbi_SetupSwapTx(serializedData: value)
+        case .retrieveSwap:
+            return try? ForgeAbi_RetrieveSwapTx(serializedData: value)
+        case .revokeSwap:
+            return try? ForgeAbi_RevokeSwapTx(serializedData: value)
+        case .delegate:
+            return try? ForgeAbi_DelegateTx(serializedData: value)
+        case .revokeDelegate:
+            return try? ForgeAbi_RevokeDelegationTx(serializedData: value)
         default:
             return nil
         }
