@@ -494,6 +494,12 @@ public struct ForgeAbi_Multisig {
     set {_uniqueStorage()._signature = newValue}
   }
 
+  /// delegator
+  public var delegator: String {
+    get {return _storage._delegator}
+    set {_uniqueStorage()._delegator = newValue}
+  }
+
   /// extra data
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -542,6 +548,12 @@ public struct ForgeAbi_Transaction {
   public var gas: UInt32 {
     get {return _storage._gas}
     set {_uniqueStorage()._gas = newValue}
+  }
+
+  /// delegator
+  public var delegator: String {
+    get {return _storage._delegator}
+    set {_uniqueStorage()._delegator = newValue}
   }
 
   /// signature of the transaction
@@ -640,6 +652,22 @@ public struct ForgeAbi_DeclareConfig {
   public init() {}
 }
 
+public struct ForgeAbi_DelegateConfig {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// the interval used for calculate the num_txs_delta / num_tokens_delta
+  public var deltaInterval: UInt32 = 0
+
+  /// a list of type_urls that are allowed for delegation
+  public var typeUrls: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct ForgeAbi_TransactionConfig {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -673,6 +701,15 @@ public struct ForgeAbi_TransactionConfig {
   public var hasDeclare: Bool {return _storage._declare != nil}
   /// Clears the value of `declare`. Subsequent reads from it will return its default value.
   public mutating func clearDeclare() {_uniqueStorage()._declare = nil}
+
+  public var delegate: ForgeAbi_DelegateConfig {
+    get {return _storage._delegate ?? ForgeAbi_DelegateConfig()}
+    set {_uniqueStorage()._delegate = newValue}
+  }
+  /// Returns true if `delegate` has been explicitly set.
+  public var hasDelegate: Bool {return _storage._delegate != nil}
+  /// Clears the value of `delegate`. Subsequent reads from it will return its default value.
+  public mutating func clearDelegate() {_uniqueStorage()._delegate = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2429,6 +2466,7 @@ extension ForgeAbi_Multisig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     1: .same(proto: "signer"),
     2: .same(proto: "pk"),
     3: .same(proto: "signature"),
+    4: .same(proto: "delegator"),
     15: .same(proto: "data"),
   ]
 
@@ -2436,6 +2474,7 @@ extension ForgeAbi_Multisig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     var _signer: String = String()
     var _pk: Data = SwiftProtobuf.Internal.emptyData
     var _signature: Data = SwiftProtobuf.Internal.emptyData
+    var _delegator: String = String()
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -2446,6 +2485,7 @@ extension ForgeAbi_Multisig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       _signer = source._signer
       _pk = source._pk
       _signature = source._signature
+      _delegator = source._delegator
       _data = source._data
     }
   }
@@ -2465,6 +2505,7 @@ extension ForgeAbi_Multisig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
         case 1: try decoder.decodeSingularStringField(value: &_storage._signer)
         case 2: try decoder.decodeSingularBytesField(value: &_storage._pk)
         case 3: try decoder.decodeSingularBytesField(value: &_storage._signature)
+        case 4: try decoder.decodeSingularStringField(value: &_storage._delegator)
         case 15: try decoder.decodeSingularMessageField(value: &_storage._data)
         default: break
         }
@@ -2483,6 +2524,9 @@ extension ForgeAbi_Multisig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       if !_storage._signature.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._signature, fieldNumber: 3)
       }
+      if !_storage._delegator.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._delegator, fieldNumber: 4)
+      }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       }
@@ -2498,6 +2542,7 @@ extension ForgeAbi_Multisig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
         if _storage._signer != rhs_storage._signer {return false}
         if _storage._pk != rhs_storage._pk {return false}
         if _storage._signature != rhs_storage._signature {return false}
+        if _storage._delegator != rhs_storage._delegator {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -2516,6 +2561,7 @@ extension ForgeAbi_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     3: .standard(proto: "chain_id"),
     4: .same(proto: "pk"),
     5: .same(proto: "gas"),
+    6: .same(proto: "delegator"),
     13: .same(proto: "signature"),
     14: .same(proto: "signatures"),
     15: .same(proto: "itx"),
@@ -2527,6 +2573,7 @@ extension ForgeAbi_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     var _chainID: String = String()
     var _pk: Data = SwiftProtobuf.Internal.emptyData
     var _gas: UInt32 = 0
+    var _delegator: String = String()
     var _signature: Data = SwiftProtobuf.Internal.emptyData
     var _signatures: [ForgeAbi_Multisig] = []
     var _itx: SwiftProtobuf.Google_Protobuf_Any? = nil
@@ -2541,6 +2588,7 @@ extension ForgeAbi_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       _chainID = source._chainID
       _pk = source._pk
       _gas = source._gas
+      _delegator = source._delegator
       _signature = source._signature
       _signatures = source._signatures
       _itx = source._itx
@@ -2564,6 +2612,7 @@ extension ForgeAbi_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         case 3: try decoder.decodeSingularStringField(value: &_storage._chainID)
         case 4: try decoder.decodeSingularBytesField(value: &_storage._pk)
         case 5: try decoder.decodeSingularUInt32Field(value: &_storage._gas)
+        case 6: try decoder.decodeSingularStringField(value: &_storage._delegator)
         case 13: try decoder.decodeSingularBytesField(value: &_storage._signature)
         case 14: try decoder.decodeRepeatedMessageField(value: &_storage._signatures)
         case 15: try decoder.decodeSingularMessageField(value: &_storage._itx)
@@ -2590,6 +2639,9 @@ extension ForgeAbi_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       if _storage._gas != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._gas, fieldNumber: 5)
       }
+      if !_storage._delegator.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._delegator, fieldNumber: 6)
+      }
       if !_storage._signature.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._signature, fieldNumber: 13)
       }
@@ -2613,6 +2665,7 @@ extension ForgeAbi_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         if _storage._chainID != rhs_storage._chainID {return false}
         if _storage._pk != rhs_storage._pk {return false}
         if _storage._gas != rhs_storage._gas {return false}
+        if _storage._delegator != rhs_storage._delegator {return false}
         if _storage._signature != rhs_storage._signature {return false}
         if _storage._signatures != rhs_storage._signatures {return false}
         if _storage._itx != rhs_storage._itx {return false}
@@ -2769,6 +2822,41 @@ extension ForgeAbi_DeclareConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
+extension ForgeAbi_DelegateConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DelegateConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "delta_interval"),
+    2: .standard(proto: "type_urls"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt32Field(value: &self.deltaInterval)
+      case 2: try decoder.decodeRepeatedStringField(value: &self.typeUrls)
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.deltaInterval != 0 {
+      try visitor.visitSingularUInt32Field(value: self.deltaInterval, fieldNumber: 1)
+    }
+    if !self.typeUrls.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.typeUrls, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: ForgeAbi_DelegateConfig, rhs: ForgeAbi_DelegateConfig) -> Bool {
+    if lhs.deltaInterval != rhs.deltaInterval {return false}
+    if lhs.typeUrls != rhs.typeUrls {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension ForgeAbi_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TransactionConfig"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -2777,6 +2865,7 @@ extension ForgeAbi_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
     3: .standard(proto: "max_multisig"),
     4: .standard(proto: "minimum_stake"),
     5: .same(proto: "declare"),
+    6: .same(proto: "delegate"),
   ]
 
   fileprivate class _StorageClass {
@@ -2785,6 +2874,7 @@ extension ForgeAbi_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
     var _maxMultisig: UInt32 = 0
     var _minimumStake: UInt64 = 0
     var _declare: ForgeAbi_DeclareConfig? = nil
+    var _delegate: ForgeAbi_DelegateConfig? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -2796,6 +2886,7 @@ extension ForgeAbi_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
       _maxMultisig = source._maxMultisig
       _minimumStake = source._minimumStake
       _declare = source._declare
+      _delegate = source._delegate
     }
   }
 
@@ -2816,6 +2907,7 @@ extension ForgeAbi_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
         case 3: try decoder.decodeSingularUInt32Field(value: &_storage._maxMultisig)
         case 4: try decoder.decodeSingularUInt64Field(value: &_storage._minimumStake)
         case 5: try decoder.decodeSingularMessageField(value: &_storage._declare)
+        case 6: try decoder.decodeSingularMessageField(value: &_storage._delegate)
         default: break
         }
       }
@@ -2839,6 +2931,9 @@ extension ForgeAbi_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
       if let v = _storage._declare {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
       }
+      if let v = _storage._delegate {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2853,6 +2948,7 @@ extension ForgeAbi_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
         if _storage._maxMultisig != rhs_storage._maxMultisig {return false}
         if _storage._minimumStake != rhs_storage._minimumStake {return false}
         if _storage._declare != rhs_storage._declare {return false}
+        if _storage._delegate != rhs_storage._delegate {return false}
         return true
       }
       if !storagesAreEqual {return false}

@@ -130,6 +130,11 @@ public struct ForgeAbi_RequestMultisig {
     set {_uniqueStorage()._token = newValue}
   }
 
+  public var delegatee: String {
+    get {return _storage._delegatee}
+    set {_uniqueStorage()._delegatee = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -926,6 +931,48 @@ public struct ForgeAbi_ResponseGetSwapState {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
+public struct ForgeAbi_RequestGetDelegateState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var keys: [String] = []
+
+  public var height: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct ForgeAbi_ResponseGetDelegateState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: ForgeAbi_StatusCode {
+    get {return _storage._code}
+    set {_uniqueStorage()._code = newValue}
+  }
+
+  public var state: ForgeAbi_DelegateState {
+    get {return _storage._state ?? ForgeAbi_DelegateState()}
+    set {_uniqueStorage()._state = newValue}
+  }
+  /// Returns true if `state` has been explicitly set.
+  public var hasState: Bool {return _storage._state != nil}
+  /// Clears the value of `state`. Subsequent reads from it will return its default value.
+  public mutating func clearState() {_uniqueStorage()._state = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
 /// store_file(chunk): store a piece of data into ipfs, return its hash address
 public struct ForgeAbi_RequestStoreFile {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -1387,6 +1434,30 @@ public struct ForgeAbi_ResponseSubscribe {
     set {_uniqueStorage()._value = .stake(newValue)}
   }
 
+  public var delegate: ForgeAbi_Transaction {
+    get {
+      if case .delegate(let v)? = _storage._value {return v}
+      return ForgeAbi_Transaction()
+    }
+    set {_uniqueStorage()._value = .delegate(newValue)}
+  }
+
+  public var activateProtocol: ForgeAbi_Transaction {
+    get {
+      if case .activateProtocol(let v)? = _storage._value {return v}
+      return ForgeAbi_Transaction()
+    }
+    set {_uniqueStorage()._value = .activateProtocol(newValue)}
+  }
+
+  public var deactivateProtocol: ForgeAbi_Transaction {
+    get {
+      if case .deactivateProtocol(let v)? = _storage._value {return v}
+      return ForgeAbi_Transaction()
+    }
+    set {_uniqueStorage()._value = .deactivateProtocol(newValue)}
+  }
+
   public var accountState: ForgeAbi_AccountState {
     get {
       if case .accountState(let v)? = _storage._value {return v}
@@ -1427,6 +1498,14 @@ public struct ForgeAbi_ResponseSubscribe {
     set {_uniqueStorage()._value = .protocolState(newValue)}
   }
 
+  public var delegateState: ForgeAbi_DelegateState {
+    get {
+      if case .delegateState(let v)? = _storage._value {return v}
+      return ForgeAbi_DelegateState()
+    }
+    set {_uniqueStorage()._value = .delegateState(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Value: Equatable {
@@ -1445,11 +1524,15 @@ public struct ForgeAbi_ResponseSubscribe {
     case declareFile(ForgeAbi_Transaction)
     case sysUpgrade(ForgeAbi_Transaction)
     case stake(ForgeAbi_Transaction)
+    case delegate(ForgeAbi_Transaction)
+    case activateProtocol(ForgeAbi_Transaction)
+    case deactivateProtocol(ForgeAbi_Transaction)
     case accountState(ForgeAbi_AccountState)
     case assetState(ForgeAbi_AssetState)
     case forgeState(ForgeAbi_ForgeState)
     case stakeState(ForgeAbi_StakeState)
     case protocolState(ForgeAbi_ProtocolState)
+    case delegateState(ForgeAbi_DelegateState)
 
   #if !swift(>=4.1)
     public static func ==(lhs: ForgeAbi_ResponseSubscribe.OneOf_Value, rhs: ForgeAbi_ResponseSubscribe.OneOf_Value) -> Bool {
@@ -1469,11 +1552,15 @@ public struct ForgeAbi_ResponseSubscribe {
       case (.declareFile(let l), .declareFile(let r)): return l == r
       case (.sysUpgrade(let l), .sysUpgrade(let r)): return l == r
       case (.stake(let l), .stake(let r)): return l == r
+      case (.delegate(let l), .delegate(let r)): return l == r
+      case (.activateProtocol(let l), .activateProtocol(let r)): return l == r
+      case (.deactivateProtocol(let l), .deactivateProtocol(let r)): return l == r
       case (.accountState(let l), .accountState(let r)): return l == r
       case (.assetState(let l), .assetState(let r)): return l == r
       case (.forgeState(let l), .forgeState(let r)): return l == r
       case (.stakeState(let l), .stakeState(let r)): return l == r
       case (.protocolState(let l), .protocolState(let r)): return l == r
+      case (.delegateState(let l), .delegateState(let r)): return l == r
       default: return false
       }
     }
@@ -2430,6 +2517,7 @@ extension ForgeAbi_RequestMultisig: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .same(proto: "data"),
     3: .same(proto: "wallet"),
     4: .same(proto: "token"),
+    5: .same(proto: "delegatee"),
   ]
 
   fileprivate class _StorageClass {
@@ -2437,6 +2525,7 @@ extension ForgeAbi_RequestMultisig: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
     var _wallet: ForgeAbi_WalletInfo? = nil
     var _token: String = String()
+    var _delegatee: String = String()
 
     static let defaultInstance = _StorageClass()
 
@@ -2447,6 +2536,7 @@ extension ForgeAbi_RequestMultisig: SwiftProtobuf.Message, SwiftProtobuf._Messag
       _data = source._data
       _wallet = source._wallet
       _token = source._token
+      _delegatee = source._delegatee
     }
   }
 
@@ -2466,6 +2556,7 @@ extension ForgeAbi_RequestMultisig: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 2: try decoder.decodeSingularMessageField(value: &_storage._data)
         case 3: try decoder.decodeSingularMessageField(value: &_storage._wallet)
         case 4: try decoder.decodeSingularStringField(value: &_storage._token)
+        case 5: try decoder.decodeSingularStringField(value: &_storage._delegatee)
         default: break
         }
       }
@@ -2486,6 +2577,9 @@ extension ForgeAbi_RequestMultisig: SwiftProtobuf.Message, SwiftProtobuf._Messag
       if !_storage._token.isEmpty {
         try visitor.visitSingularStringField(value: _storage._token, fieldNumber: 4)
       }
+      if !_storage._delegatee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._delegatee, fieldNumber: 5)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2499,6 +2593,7 @@ extension ForgeAbi_RequestMultisig: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._data != rhs_storage._data {return false}
         if _storage._wallet != rhs_storage._wallet {return false}
         if _storage._token != rhs_storage._token {return false}
+        if _storage._delegatee != rhs_storage._delegatee {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -4449,6 +4544,116 @@ extension ForgeAbi_ResponseGetSwapState: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
+extension ForgeAbi_RequestGetDelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestGetDelegateState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "keys"),
+    3: .same(proto: "height"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularStringField(value: &self.address)
+      case 2: try decoder.decodeRepeatedStringField(value: &self.keys)
+      case 3: try decoder.decodeSingularUInt64Field(value: &self.height)
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.keys.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.keys, fieldNumber: 2)
+    }
+    if self.height != 0 {
+      try visitor.visitSingularUInt64Field(value: self.height, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: ForgeAbi_RequestGetDelegateState, rhs: ForgeAbi_RequestGetDelegateState) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.keys != rhs.keys {return false}
+    if lhs.height != rhs.height {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ForgeAbi_ResponseGetDelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseGetDelegateState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "state"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _code: ForgeAbi_StatusCode = .ok
+    var _state: ForgeAbi_DelegateState? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _code = source._code
+      _state = source._state
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeSingularEnumField(value: &_storage._code)
+        case 2: try decoder.decodeSingularMessageField(value: &_storage._state)
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if _storage._code != .ok {
+        try visitor.visitSingularEnumField(value: _storage._code, fieldNumber: 1)
+      }
+      if let v = _storage._state {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: ForgeAbi_ResponseGetDelegateState, rhs: ForgeAbi_ResponseGetDelegateState) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._code != rhs_storage._code {return false}
+        if _storage._state != rhs_storage._state {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension ForgeAbi_RequestStoreFile: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RequestStoreFile"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -5249,11 +5454,15 @@ extension ForgeAbi_ResponseSubscribe: SwiftProtobuf.Message, SwiftProtobuf._Mess
     22: .standard(proto: "declare_file"),
     23: .standard(proto: "sys_upgrade"),
     24: .same(proto: "stake"),
+    25: .same(proto: "delegate"),
+    26: .standard(proto: "activate_protocol"),
+    27: .standard(proto: "deactivate_protocol"),
     129: .standard(proto: "account_state"),
     130: .standard(proto: "asset_state"),
     131: .standard(proto: "forge_state"),
     132: .standard(proto: "stake_state"),
     133: .standard(proto: "protocol_state"),
+    134: .standard(proto: "delegate_state"),
   ]
 
   fileprivate class _StorageClass {
@@ -5400,6 +5609,30 @@ extension ForgeAbi_ResponseSubscribe: SwiftProtobuf.Message, SwiftProtobuf._Mess
           }
           try decoder.decodeSingularMessageField(value: &v)
           if let v = v {_storage._value = .stake(v)}
+        case 25:
+          var v: ForgeAbi_Transaction?
+          if let current = _storage._value {
+            try decoder.handleConflictingOneOf()
+            if case .delegate(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {_storage._value = .delegate(v)}
+        case 26:
+          var v: ForgeAbi_Transaction?
+          if let current = _storage._value {
+            try decoder.handleConflictingOneOf()
+            if case .activateProtocol(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {_storage._value = .activateProtocol(v)}
+        case 27:
+          var v: ForgeAbi_Transaction?
+          if let current = _storage._value {
+            try decoder.handleConflictingOneOf()
+            if case .deactivateProtocol(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {_storage._value = .deactivateProtocol(v)}
         case 129:
           var v: ForgeAbi_AccountState?
           if let current = _storage._value {
@@ -5440,6 +5673,14 @@ extension ForgeAbi_ResponseSubscribe: SwiftProtobuf.Message, SwiftProtobuf._Mess
           }
           try decoder.decodeSingularMessageField(value: &v)
           if let v = v {_storage._value = .protocolState(v)}
+        case 134:
+          var v: ForgeAbi_DelegateState?
+          if let current = _storage._value {
+            try decoder.handleConflictingOneOf()
+            if case .delegateState(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {_storage._value = .delegateState(v)}
         default: break
         }
       }
@@ -5482,6 +5723,12 @@ extension ForgeAbi_ResponseSubscribe: SwiftProtobuf.Message, SwiftProtobuf._Mess
         try visitor.visitSingularMessageField(value: v, fieldNumber: 23)
       case .stake(let v)?:
         try visitor.visitSingularMessageField(value: v, fieldNumber: 24)
+      case .delegate(let v)?:
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 25)
+      case .activateProtocol(let v)?:
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 26)
+      case .deactivateProtocol(let v)?:
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 27)
       case .accountState(let v)?:
         try visitor.visitSingularMessageField(value: v, fieldNumber: 129)
       case .assetState(let v)?:
@@ -5492,6 +5739,8 @@ extension ForgeAbi_ResponseSubscribe: SwiftProtobuf.Message, SwiftProtobuf._Mess
         try visitor.visitSingularMessageField(value: v, fieldNumber: 132)
       case .protocolState(let v)?:
         try visitor.visitSingularMessageField(value: v, fieldNumber: 133)
+      case .delegateState(let v)?:
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 134)
       case nil: break
       }
     }

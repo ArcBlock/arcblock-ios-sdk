@@ -63,7 +63,7 @@ travis-deploy:
 
 protobuf-codegen:
 	@echo "Generating protobuf swift codes..."
-	@protoc --swift_out=ABSDKWalletKit/protobuf/ --proto_path=ABSDKWalletKit/protobuf ABSDKWalletKit/protobuf/*.proto --swift_opt=Visibility=Public
+	@protoc --swift_out=ArcBlockSDK/ABSDKWalletKit/protobuf/ --proto_path=ArcBlockSDK/ABSDKWalletKit/protobuf ArcBlockSDK/ABSDKWalletKit/protobuf/*.proto --swift_opt=Visibility=Public
 
 clean:
 	@echo "Cleaning the build..."
