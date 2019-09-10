@@ -114,6 +114,10 @@
 		270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447FB231E00AA007BA477 /* PromiseKit.framework */; };
 		27044801231E01F4007BA477 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		27044802231E01F4007BA477 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
+		275D70B123278DF100305BB0 /* delegate.proto in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AD23278DF000305BB0 /* delegate.proto */; };
+		275D70B223278DF100305BB0 /* revoke_delegate.proto in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AE23278DF100305BB0 /* revoke_delegate.proto */; };
+		275D70B323278DF100305BB0 /* delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AF23278DF100305BB0 /* delegate.pb.swift */; };
+		275D70B423278DF100305BB0 /* revoke_delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,6 +241,10 @@
 		274B185B20E4DD8900884659 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		274B185C20E4DD8900884659 /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		274B185F20E603F700884659 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
+		275D70AD23278DF000305BB0 /* delegate.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = delegate.proto; sourceTree = "<group>"; };
+		275D70AE23278DF100305BB0 /* revoke_delegate.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_delegate.proto; sourceTree = "<group>"; };
+		275D70AF23278DF100305BB0 /* delegate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = delegate.pb.swift; sourceTree = "<group>"; };
+		275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_delegate.pb.swift; sourceTree = "<group>"; };
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -386,6 +394,10 @@
 		2704474C231E0052007BA477 /* protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				275D70AF23278DF100305BB0 /* delegate.pb.swift */,
+				275D70AD23278DF000305BB0 /* delegate.proto */,
+				275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */,
+				275D70AE23278DF100305BB0 /* revoke_delegate.proto */,
 				2704474D231E0052007BA477 /* stake.pb.swift */,
 				2704474E231E0052007BA477 /* setup_swap.pb.swift */,
 				2704474F231E0052007BA477 /* withdraw_tether.proto */,
@@ -695,6 +707,7 @@
 				270447C1231E0052007BA477 /* update_asset.proto in Sources */,
 				270447CC231E0052007BA477 /* account_migrate.pb.swift in Sources */,
 				270447CB231E0052007BA477 /* assets.proto in Sources */,
+				275D70B323278DF100305BB0 /* delegate.pb.swift in Sources */,
 				270447CE231E0052007BA477 /* service.proto in Sources */,
 				270447AE231E0052007BA477 /* rpc.pb.swift in Sources */,
 				270447D5231E0052007BA477 /* setup_swap.proto in Sources */,
@@ -704,6 +717,8 @@
 				270447A4231E0052007BA477 /* Base32String.swift in Sources */,
 				270447BE231E0052007BA477 /* acquire_asset.proto in Sources */,
 				270447B4231E0052007BA477 /* consume_asset.proto in Sources */,
+				275D70B223278DF100305BB0 /* revoke_delegate.proto in Sources */,
+				275D70B423278DF100305BB0 /* revoke_delegate.pb.swift in Sources */,
 				27044795231E0052007BA477 /* ABSDKHTTPTransport.swift in Sources */,
 				270447B2231E0052007BA477 /* stake.proto in Sources */,
 				270447BD231E0052007BA477 /* deposit_tether.proto in Sources */,
@@ -729,6 +744,7 @@
 				2704479E231E0052007BA477 /* Multibase.swift in Sources */,
 				270447AC231E0052007BA477 /* exchange_tether.pb.swift in Sources */,
 				27044794231E0052007BA477 /* ABSDKView.swift in Sources */,
+				275D70B123278DF100305BB0 /* delegate.proto in Sources */,
 				270447BB231E0052007BA477 /* revoke_swap.proto in Sources */,
 				27044793231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				2704478C231E0052007BA477 /* ed25519_ge.swift in Sources */,
