@@ -64,7 +64,7 @@ public enum HashType: Int8 {
     case sha3512 = 5
     case sha2 = 6
 
-    func hash(data: Data) -> Data? {
+    public func hash(data: Data) -> Data? {
         switch self {
         case .keccak:
             return MCrypto.Hasher.Keccakf1600.sha(data)

@@ -74,6 +74,15 @@ public enum ForgeAbi_StatusCode: SwiftProtobuf.Enum {
   case insufficientGas // = 52
   case invalidSwap // = 53
   case invalidHashkey // = 54
+  case invalidDelegation // = 55
+  case insufficientDelegation // = 56
+  case invalidDelegationRule // = 57
+  case invalidDelegationTypeURL // = 58
+  case senderNotAuthorized // = 59
+  case protocolNotRunning // = 60
+  case protocolNotPaused // = 61
+  case protocolNotActivated // = 62
+  case invalidDeactivation // = 63
   case forbidden // = 403
   case `internal` // = 500
   case timeout // = 504
@@ -133,6 +142,15 @@ public enum ForgeAbi_StatusCode: SwiftProtobuf.Enum {
     case 52: self = .insufficientGas
     case 53: self = .invalidSwap
     case 54: self = .invalidHashkey
+    case 55: self = .invalidDelegation
+    case 56: self = .insufficientDelegation
+    case 57: self = .invalidDelegationRule
+    case 58: self = .invalidDelegationTypeURL
+    case 59: self = .senderNotAuthorized
+    case 60: self = .protocolNotRunning
+    case 61: self = .protocolNotPaused
+    case 62: self = .protocolNotActivated
+    case 63: self = .invalidDeactivation
     case 403: self = .forbidden
     case 500: self = .internal
     case 504: self = .timeout
@@ -190,6 +208,15 @@ public enum ForgeAbi_StatusCode: SwiftProtobuf.Enum {
     case .insufficientGas: return 52
     case .invalidSwap: return 53
     case .invalidHashkey: return 54
+    case .invalidDelegation: return 55
+    case .insufficientDelegation: return 56
+    case .invalidDelegationRule: return 57
+    case .invalidDelegationTypeURL: return 58
+    case .senderNotAuthorized: return 59
+    case .protocolNotRunning: return 60
+    case .protocolNotPaused: return 61
+    case .protocolNotActivated: return 62
+    case .invalidDeactivation: return 63
     case .forbidden: return 403
     case .internal: return 500
     case .timeout: return 504
@@ -252,128 +279,18 @@ extension ForgeAbi_StatusCode: CaseIterable {
     .insufficientGas,
     .invalidSwap,
     .invalidHashkey,
+    .invalidDelegation,
+    .insufficientDelegation,
+    .invalidDelegationRule,
+    .invalidDelegationTypeURL,
+    .senderNotAuthorized,
+    .protocolNotRunning,
+    .protocolNotPaused,
+    .protocolNotActivated,
+    .invalidDeactivation,
     .forbidden,
     .internal,
     .timeout,
-  ]
-}
-
-#endif  // swift(>=4.2)
-
-/// event happened on Forge powered chain
-public enum ForgeAbi_TopicType: SwiftProtobuf.Enum {
-  public typealias RawValue = Int
-
-  /// most commonly used event
-  case transfer // = 0
-
-  /// 1-15 fequently used event
-  case exchange // = 1
-  case declare // = 2
-  case createAsset // = 3
-  case updateAsset // = 4
-  case stake // = 5
-  case accountMigrate // = 6
-
-  /// 16-2047 infrequently used event
-  case beginBlock // = 16
-  case endBlock // = 17
-  case consensusUpgrade // = 21
-  case declareFile // = 22
-  case sysUpgrade // = 23
-  case application // = 24
-  case consumeAsset // = 25
-  case poke // = 26
-  case accountState // = 129
-  case assetState // = 130
-  case forgeState // = 131
-  case stakeState // = 132
-  case protocolState // = 133
-  case UNRECOGNIZED(Int)
-
-  public init() {
-    self = .transfer
-  }
-
-  public init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .transfer
-    case 1: self = .exchange
-    case 2: self = .declare
-    case 3: self = .createAsset
-    case 4: self = .updateAsset
-    case 5: self = .stake
-    case 6: self = .accountMigrate
-    case 16: self = .beginBlock
-    case 17: self = .endBlock
-    case 21: self = .consensusUpgrade
-    case 22: self = .declareFile
-    case 23: self = .sysUpgrade
-    case 24: self = .application
-    case 25: self = .consumeAsset
-    case 26: self = .poke
-    case 129: self = .accountState
-    case 130: self = .assetState
-    case 131: self = .forgeState
-    case 132: self = .stakeState
-    case 133: self = .protocolState
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  public var rawValue: Int {
-    switch self {
-    case .transfer: return 0
-    case .exchange: return 1
-    case .declare: return 2
-    case .createAsset: return 3
-    case .updateAsset: return 4
-    case .stake: return 5
-    case .accountMigrate: return 6
-    case .beginBlock: return 16
-    case .endBlock: return 17
-    case .consensusUpgrade: return 21
-    case .declareFile: return 22
-    case .sysUpgrade: return 23
-    case .application: return 24
-    case .consumeAsset: return 25
-    case .poke: return 26
-    case .accountState: return 129
-    case .assetState: return 130
-    case .forgeState: return 131
-    case .stakeState: return 132
-    case .protocolState: return 133
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-}
-
-#if swift(>=4.2)
-
-extension ForgeAbi_TopicType: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  public static var allCases: [ForgeAbi_TopicType] = [
-    .transfer,
-    .exchange,
-    .declare,
-    .createAsset,
-    .updateAsset,
-    .stake,
-    .accountMigrate,
-    .beginBlock,
-    .endBlock,
-    .consensusUpgrade,
-    .declareFile,
-    .sysUpgrade,
-    .application,
-    .consumeAsset,
-    .poke,
-    .accountState,
-    .assetState,
-    .forgeState,
-    .stakeState,
-    .protocolState,
   ]
 }
 
@@ -964,34 +881,18 @@ extension ForgeAbi_StatusCode: SwiftProtobuf._ProtoNameProviding {
     52: .same(proto: "insufficient_gas"),
     53: .same(proto: "invalid_swap"),
     54: .same(proto: "invalid_hashkey"),
+    55: .same(proto: "invalid_delegation"),
+    56: .same(proto: "insufficient_delegation"),
+    57: .same(proto: "invalid_delegation_rule"),
+    58: .same(proto: "invalid_delegation_type_url"),
+    59: .same(proto: "sender_not_authorized"),
+    60: .same(proto: "protocol_not_running"),
+    61: .same(proto: "protocol_not_paused"),
+    62: .same(proto: "protocol_not_activated"),
+    63: .same(proto: "invalid_deactivation"),
     403: .same(proto: "forbidden"),
     500: .same(proto: "internal"),
     504: .same(proto: "timeout"),
-  ]
-}
-
-extension ForgeAbi_TopicType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "transfer"),
-    1: .same(proto: "exchange"),
-    2: .same(proto: "declare"),
-    3: .same(proto: "create_asset"),
-    4: .same(proto: "update_asset"),
-    5: .same(proto: "stake"),
-    6: .same(proto: "account_migrate"),
-    16: .same(proto: "begin_block"),
-    17: .same(proto: "end_block"),
-    21: .same(proto: "consensus_upgrade"),
-    22: .same(proto: "declare_file"),
-    23: .same(proto: "sys_upgrade"),
-    24: .same(proto: "application"),
-    25: .same(proto: "consume_asset"),
-    26: .same(proto: "poke"),
-    129: .same(proto: "account_state"),
-    130: .same(proto: "asset_state"),
-    131: .same(proto: "forge_state"),
-    132: .same(proto: "stake_state"),
-    133: .same(proto: "protocol_state"),
   ]
 }
 

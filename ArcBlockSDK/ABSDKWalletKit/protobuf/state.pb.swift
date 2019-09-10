@@ -214,7 +214,8 @@ public struct ForgeAbi_AssetState {
     set {_uniqueStorage()._issuer = newValue}
   }
 
-  /// parent address for the asset state, e.g. a ticket is inherited from an event
+  /// parent address for the asset state, e.g. a ticket is inherited from an
+  /// event
   public var parent: String {
     get {return _storage._parent}
     set {_uniqueStorage()._parent = newValue}
@@ -699,7 +700,7 @@ public struct ForgeAbi_TetherInfo {
 }
 
 /// TODO: [peiling] We have already defined this state in core protocols repo.
-/// The only reason we define this state here again is because the protobuf 
+/// The only reason we define this state here again is because the protobuf
 /// definition ResponseGetSwapState needs to reference to this SwapState.
 public struct ForgeAbi_SwapState {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -763,6 +764,98 @@ public struct ForgeAbi_SwapState {
   public var hasContext: Bool {return _storage._context != nil}
   /// Clears the value of `context`. Subsequent reads from it will return its default value.
   public mutating func clearContext() {_uniqueStorage()._context = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+/// a rule can check against the statistics values, e.g. state.num_txs < 10000,
+/// state.balance_delta < 50000, delta is calculated based on the
+/// configuration for interval.
+public struct ForgeAbi_DelegateOpState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// all the individual rules in DelegateTx will be concat into one per type_url
+  /// by "AND"
+  public var rule: String {
+    get {return _storage._rule}
+    set {_uniqueStorage()._rule = newValue}
+  }
+
+  public var numTxs: UInt64 {
+    get {return _storage._numTxs}
+    set {_uniqueStorage()._numTxs = newValue}
+  }
+
+  public var numTxsDelta: UInt64 {
+    get {return _storage._numTxsDelta}
+    set {_uniqueStorage()._numTxsDelta = newValue}
+  }
+
+  public var balance: ForgeAbi_BigUint {
+    get {return _storage._balance ?? ForgeAbi_BigUint()}
+    set {_uniqueStorage()._balance = newValue}
+  }
+  /// Returns true if `balance` has been explicitly set.
+  public var hasBalance: Bool {return _storage._balance != nil}
+  /// Clears the value of `balance`. Subsequent reads from it will return its default value.
+  public mutating func clearBalance() {_uniqueStorage()._balance = nil}
+
+  public var balanceDelta: ForgeAbi_BigUint {
+    get {return _storage._balanceDelta ?? ForgeAbi_BigUint()}
+    set {_uniqueStorage()._balanceDelta = newValue}
+  }
+  /// Returns true if `balanceDelta` has been explicitly set.
+  public var hasBalanceDelta: Bool {return _storage._balanceDelta != nil}
+  /// Clears the value of `balanceDelta`. Subsequent reads from it will return its default value.
+  public mutating func clearBalanceDelta() {_uniqueStorage()._balanceDelta = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct ForgeAbi_DelegateState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String {
+    get {return _storage._address}
+    set {_uniqueStorage()._address = newValue}
+  }
+
+  public var ops: Dictionary<String,ForgeAbi_DelegateOpState> {
+    get {return _storage._ops}
+    set {_uniqueStorage()._ops = newValue}
+  }
+
+  /// state context, replace exiting fields
+  public var context: ForgeAbi_StateContext {
+    get {return _storage._context ?? ForgeAbi_StateContext()}
+    set {_uniqueStorage()._context = newValue}
+  }
+  /// Returns true if `context` has been explicitly set.
+  public var hasContext: Bool {return _storage._context != nil}
+  /// Clears the value of `context`. Subsequent reads from it will return its default value.
+  public mutating func clearContext() {_uniqueStorage()._context = nil}
+
+  /// forge app can extend this
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return _storage._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {_uniqueStorage()._data = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2042,6 +2135,184 @@ extension ForgeAbi_SwapState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._locktime != rhs_storage._locktime {return false}
         if _storage._hashlock != rhs_storage._hashlock {return false}
         if _storage._context != rhs_storage._context {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ForgeAbi_DelegateOpState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DelegateOpState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "rule"),
+    2: .standard(proto: "num_txs"),
+    3: .standard(proto: "num_txs_delta"),
+    4: .same(proto: "balance"),
+    5: .standard(proto: "balance_delta"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _rule: String = String()
+    var _numTxs: UInt64 = 0
+    var _numTxsDelta: UInt64 = 0
+    var _balance: ForgeAbi_BigUint? = nil
+    var _balanceDelta: ForgeAbi_BigUint? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _rule = source._rule
+      _numTxs = source._numTxs
+      _numTxsDelta = source._numTxsDelta
+      _balance = source._balance
+      _balanceDelta = source._balanceDelta
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeSingularStringField(value: &_storage._rule)
+        case 2: try decoder.decodeSingularUInt64Field(value: &_storage._numTxs)
+        case 3: try decoder.decodeSingularUInt64Field(value: &_storage._numTxsDelta)
+        case 4: try decoder.decodeSingularMessageField(value: &_storage._balance)
+        case 5: try decoder.decodeSingularMessageField(value: &_storage._balanceDelta)
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._rule.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._rule, fieldNumber: 1)
+      }
+      if _storage._numTxs != 0 {
+        try visitor.visitSingularUInt64Field(value: _storage._numTxs, fieldNumber: 2)
+      }
+      if _storage._numTxsDelta != 0 {
+        try visitor.visitSingularUInt64Field(value: _storage._numTxsDelta, fieldNumber: 3)
+      }
+      if let v = _storage._balance {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      }
+      if let v = _storage._balanceDelta {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: ForgeAbi_DelegateOpState, rhs: ForgeAbi_DelegateOpState) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._rule != rhs_storage._rule {return false}
+        if _storage._numTxs != rhs_storage._numTxs {return false}
+        if _storage._numTxsDelta != rhs_storage._numTxsDelta {return false}
+        if _storage._balance != rhs_storage._balance {return false}
+        if _storage._balanceDelta != rhs_storage._balanceDelta {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ForgeAbi_DelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DelegateState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "ops"),
+    14: .same(proto: "context"),
+    15: .same(proto: "data"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _address: String = String()
+    var _ops: Dictionary<String,ForgeAbi_DelegateOpState> = [:]
+    var _context: ForgeAbi_StateContext? = nil
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _ops = source._ops
+      _context = source._context
+      _data = source._data
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeSingularStringField(value: &_storage._address)
+        case 2: try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,ForgeAbi_DelegateOpState>.self, value: &_storage._ops)
+        case 14: try decoder.decodeSingularMessageField(value: &_storage._context)
+        case 15: try decoder.decodeSingularMessageField(value: &_storage._data)
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._address.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
+      }
+      if !_storage._ops.isEmpty {
+        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,ForgeAbi_DelegateOpState>.self, value: _storage._ops, fieldNumber: 2)
+      }
+      if let v = _storage._context {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      }
+      if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: ForgeAbi_DelegateState, rhs: ForgeAbi_DelegateState) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._ops != rhs_storage._ops {return false}
+        if _storage._context != rhs_storage._context {return false}
+        if _storage._data != rhs_storage._data {return false}
         return true
       }
       if !storagesAreEqual {return false}
