@@ -1,3 +1,6 @@
+## 0.9.4 (October 08, 2019)
+  - support token swap related protobuf
+
 ## 0.9.3 (September 10, 2019)
 
 

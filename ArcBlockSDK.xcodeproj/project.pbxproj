@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270244FB234C9C110022D0A6 /* revoke_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F3234C9C100022D0A6 /* revoke_withdraw.proto */; };
+		270244FC234C9C110022D0A6 /* deposit_token.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F4234C9C100022D0A6 /* deposit_token.pb.swift */; };
+		270244FD234C9C110022D0A6 /* approve_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F5234C9C100022D0A6 /* approve_withdraw.proto */; };
+		270244FE234C9C110022D0A6 /* withdraw_token.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F6234C9C110022D0A6 /* withdraw_token.pb.swift */; };
+		270244FF234C9C110022D0A6 /* revoke_withdraw.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F7234C9C110022D0A6 /* revoke_withdraw.pb.swift */; };
+		27024500234C9C110022D0A6 /* deposit_token.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F8234C9C110022D0A6 /* deposit_token.proto */; };
+		27024501234C9C110022D0A6 /* withdraw_token.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F9234C9C110022D0A6 /* withdraw_token.proto */; };
+		27024502234C9C110022D0A6 /* approve_withdraw.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244FA234C9C110022D0A6 /* approve_withdraw.pb.swift */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
 		27044789231E0052007BA477 /* ed25519_fe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044729231E0052007BA477 /* ed25519_fe.swift */; };
 		2704478A231E0052007BA477 /* ed25519_open.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704472A231E0052007BA477 /* ed25519_open.swift */; };
@@ -131,6 +139,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		270244F3234C9C100022D0A6 /* revoke_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_withdraw.proto; sourceTree = "<group>"; };
+		270244F4234C9C100022D0A6 /* deposit_token.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deposit_token.pb.swift; sourceTree = "<group>"; };
+		270244F5234C9C100022D0A6 /* approve_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = approve_withdraw.proto; sourceTree = "<group>"; };
+		270244F6234C9C110022D0A6 /* withdraw_token.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = withdraw_token.pb.swift; sourceTree = "<group>"; };
+		270244F7234C9C110022D0A6 /* revoke_withdraw.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_withdraw.pb.swift; sourceTree = "<group>"; };
+		270244F8234C9C110022D0A6 /* deposit_token.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = deposit_token.proto; sourceTree = "<group>"; };
+		270244F9234C9C110022D0A6 /* withdraw_token.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = withdraw_token.proto; sourceTree = "<group>"; };
+		270244FA234C9C110022D0A6 /* approve_withdraw.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = approve_withdraw.pb.swift; sourceTree = "<group>"; };
 		270446F9231DECD6007BA477 /* web3swift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = web3swift.framework; path = Carthage/Build/iOS/web3swift.framework; sourceTree = "<group>"; };
 		270446FB231DECF6007BA477 /* secp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = secp256k1.framework; path = Carthage/Build/iOS/secp256k1.framework; sourceTree = "<group>"; };
 		270446FD231DED19007BA477 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
@@ -394,68 +410,76 @@
 		2704474C231E0052007BA477 /* protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				27044772231E0052007BA477 /* account_migrate.pb.swift */,
+				2704477D231E0052007BA477 /* account_migrate.proto */,
+				2704475E231E0052007BA477 /* acquire_asset.pb.swift */,
+				27044764231E0052007BA477 /* acquire_asset.proto */,
+				27044783231E0052007BA477 /* approve_tether.pb.swift */,
+				2704476B231E0052007BA477 /* approve_tether.proto */,
+				270244FA234C9C110022D0A6 /* approve_withdraw.pb.swift */,
+				270244F5234C9C100022D0A6 /* approve_withdraw.proto */,
+				27044784231E0052007BA477 /* assets.pb.swift */,
+				27044771231E0052007BA477 /* assets.proto */,
+				2704476C231E0052007BA477 /* consume_asset.pb.swift */,
+				2704475A231E0052007BA477 /* consume_asset.proto */,
+				27044766231E0052007BA477 /* create_asset.pb.swift */,
+				27044753231E0052007BA477 /* create_asset.proto */,
+				2704475C231E0052007BA477 /* declare.pb.swift */,
+				27044773231E0052007BA477 /* declare.proto */,
 				275D70AF23278DF100305BB0 /* delegate.pb.swift */,
 				275D70AD23278DF000305BB0 /* delegate.proto */,
-				275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */,
-				275D70AE23278DF100305BB0 /* revoke_delegate.proto */,
-				2704474D231E0052007BA477 /* stake.pb.swift */,
-				2704474E231E0052007BA477 /* setup_swap.pb.swift */,
-				2704474F231E0052007BA477 /* withdraw_tether.proto */,
-				27044750231E0052007BA477 /* deposit_tether.pb.swift */,
-				27044751231E0052007BA477 /* revoke_swap.pb.swift */,
-				27044752231E0052007BA477 /* exchange_tether.pb.swift */,
-				27044753231E0052007BA477 /* create_asset.proto */,
-				27044754231E0052007BA477 /* rpc.pb.swift */,
-				27044755231E0052007BA477 /* exchange_tether.proto */,
-				27044756231E0052007BA477 /* rpc.proto */,
-				27044757231E0052007BA477 /* schema.proto */,
-				27044758231E0052007BA477 /* stake.proto */,
-				27044759231E0052007BA477 /* vendor.pb.swift */,
-				2704475A231E0052007BA477 /* consume_asset.proto */,
-				2704475B231E0052007BA477 /* trace_type.proto */,
-				2704475C231E0052007BA477 /* declare.pb.swift */,
+				2704476A231E0052007BA477 /* deploy_protocol.pb.swift */,
 				2704475D231E0052007BA477 /* deploy_protocol.proto */,
-				2704475E231E0052007BA477 /* acquire_asset.pb.swift */,
+				27044750231E0052007BA477 /* deposit_tether.pb.swift */,
+				27044763231E0052007BA477 /* deposit_tether.proto */,
+				270244F4234C9C100022D0A6 /* deposit_token.pb.swift */,
+				270244F8234C9C110022D0A6 /* deposit_token.proto */,
+				27044775231E0052007BA477 /* enum.pb.swift */,
+				27044768231E0052007BA477 /* enum.proto */,
+				27044752231E0052007BA477 /* exchange_tether.pb.swift */,
+				27044755231E0052007BA477 /* exchange_tether.proto */,
 				2704475F231E0052007BA477 /* exchange.pb.swift */,
 				27044760231E0052007BA477 /* exchange.proto */,
-				27044761231E0052007BA477 /* revoke_swap.proto */,
-				27044762231E0052007BA477 /* transfer.proto */,
-				27044763231E0052007BA477 /* deposit_tether.proto */,
-				27044764231E0052007BA477 /* acquire_asset.proto */,
-				27044765231E0052007BA477 /* state.pb.swift */,
-				27044766231E0052007BA477 /* create_asset.pb.swift */,
-				27044767231E0052007BA477 /* update_asset.proto */,
-				27044768231E0052007BA477 /* enum.proto */,
-				27044769231E0052007BA477 /* revoke_tether.pb.swift */,
-				2704476A231E0052007BA477 /* deploy_protocol.pb.swift */,
-				2704476B231E0052007BA477 /* approve_tether.proto */,
-				2704476C231E0052007BA477 /* consume_asset.pb.swift */,
-				2704476D231E0052007BA477 /* withdraw_tether.pb.swift */,
-				2704476E231E0052007BA477 /* trace_type.pb.swift */,
-				2704476F231E0052007BA477 /* type.pb.swift */,
-				27044770231E0052007BA477 /* vendor.proto */,
-				27044771231E0052007BA477 /* assets.proto */,
-				27044772231E0052007BA477 /* account_migrate.pb.swift */,
-				27044773231E0052007BA477 /* declare.proto */,
-				27044774231E0052007BA477 /* service.proto */,
-				27044775231E0052007BA477 /* enum.pb.swift */,
-				27044776231E0052007BA477 /* update_asset.pb.swift */,
-				27044777231E0052007BA477 /* revoke_tether.proto */,
-				27044778231E0052007BA477 /* retrieve_swap.pb.swift */,
-				27044779231E0052007BA477 /* schema.pb.swift */,
-				2704477A231E0052007BA477 /* type.proto */,
-				2704477B231E0052007BA477 /* setup_swap.proto */,
-				2704477C231E0052007BA477 /* upgrade_node.pb.swift */,
-				2704477D231E0052007BA477 /* account_migrate.proto */,
-				2704477E231E0052007BA477 /* transfer.pb.swift */,
-				2704477F231E0052007BA477 /* upgrade_node.proto */,
 				27044780231E0052007BA477 /* poke.pb.swift */,
-				27044781231E0052007BA477 /* retrieve_swap.proto */,
-				27044782231E0052007BA477 /* service.pb.swift */,
-				27044783231E0052007BA477 /* approve_tether.pb.swift */,
-				27044784231E0052007BA477 /* assets.pb.swift */,
 				27044785231E0052007BA477 /* poke.proto */,
+				27044778231E0052007BA477 /* retrieve_swap.pb.swift */,
+				27044781231E0052007BA477 /* retrieve_swap.proto */,
+				275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */,
+				275D70AE23278DF100305BB0 /* revoke_delegate.proto */,
+				27044751231E0052007BA477 /* revoke_swap.pb.swift */,
+				27044761231E0052007BA477 /* revoke_swap.proto */,
+				27044769231E0052007BA477 /* revoke_tether.pb.swift */,
+				27044777231E0052007BA477 /* revoke_tether.proto */,
+				270244F7234C9C110022D0A6 /* revoke_withdraw.pb.swift */,
+				270244F3234C9C100022D0A6 /* revoke_withdraw.proto */,
+				27044754231E0052007BA477 /* rpc.pb.swift */,
+				27044756231E0052007BA477 /* rpc.proto */,
+				27044779231E0052007BA477 /* schema.pb.swift */,
+				27044757231E0052007BA477 /* schema.proto */,
+				27044782231E0052007BA477 /* service.pb.swift */,
+				27044774231E0052007BA477 /* service.proto */,
+				2704474E231E0052007BA477 /* setup_swap.pb.swift */,
+				2704477B231E0052007BA477 /* setup_swap.proto */,
+				2704474D231E0052007BA477 /* stake.pb.swift */,
+				27044758231E0052007BA477 /* stake.proto */,
+				27044765231E0052007BA477 /* state.pb.swift */,
 				27044786231E0052007BA477 /* state.proto */,
+				2704476E231E0052007BA477 /* trace_type.pb.swift */,
+				2704475B231E0052007BA477 /* trace_type.proto */,
+				2704477E231E0052007BA477 /* transfer.pb.swift */,
+				27044762231E0052007BA477 /* transfer.proto */,
+				2704476F231E0052007BA477 /* type.pb.swift */,
+				2704477A231E0052007BA477 /* type.proto */,
+				27044776231E0052007BA477 /* update_asset.pb.swift */,
+				27044767231E0052007BA477 /* update_asset.proto */,
+				2704477C231E0052007BA477 /* upgrade_node.pb.swift */,
+				2704477F231E0052007BA477 /* upgrade_node.proto */,
+				27044759231E0052007BA477 /* vendor.pb.swift */,
+				27044770231E0052007BA477 /* vendor.proto */,
+				2704476D231E0052007BA477 /* withdraw_tether.pb.swift */,
+				2704474F231E0052007BA477 /* withdraw_tether.proto */,
+				270244F6234C9C110022D0A6 /* withdraw_token.pb.swift */,
+				270244F9234C9C110022D0A6 /* withdraw_token.proto */,
 			);
 			path = protobuf;
 			sourceTree = "<group>";
@@ -682,8 +706,10 @@
 			files = (
 				270447B0231E0052007BA477 /* rpc.proto in Sources */,
 				2704479D231E0052007BA477 /* Base16String.swift in Sources */,
+				270244FB234C9C110022D0A6 /* revoke_withdraw.proto in Sources */,
 				270447A7231E0052007BA477 /* stake.pb.swift in Sources */,
 				270447B1231E0052007BA477 /* schema.proto in Sources */,
+				270244FC234C9C110022D0A6 /* deposit_token.pb.swift in Sources */,
 				270447C3231E0052007BA477 /* revoke_tether.pb.swift in Sources */,
 				270447CF231E0052007BA477 /* enum.pb.swift in Sources */,
 				270447C8231E0052007BA477 /* trace_type.pb.swift in Sources */,
@@ -705,6 +731,7 @@
 				270447B6231E0052007BA477 /* declare.pb.swift in Sources */,
 				270447A3231E0052007BA477 /* StringExtension.swift in Sources */,
 				270447C1231E0052007BA477 /* update_asset.proto in Sources */,
+				27024502234C9C110022D0A6 /* approve_withdraw.pb.swift in Sources */,
 				270447CC231E0052007BA477 /* account_migrate.pb.swift in Sources */,
 				270447CB231E0052007BA477 /* assets.proto in Sources */,
 				275D70B323278DF100305BB0 /* delegate.pb.swift in Sources */,
@@ -712,11 +739,14 @@
 				270447AE231E0052007BA477 /* rpc.pb.swift in Sources */,
 				270447D5231E0052007BA477 /* setup_swap.proto in Sources */,
 				270447A5231E0052007BA477 /* TxHelper.swift in Sources */,
+				270244FE234C9C110022D0A6 /* withdraw_token.pb.swift in Sources */,
+				27024500234C9C110022D0A6 /* deposit_token.proto in Sources */,
 				270447AF231E0052007BA477 /* exchange_tether.proto in Sources */,
 				270447DA231E0052007BA477 /* poke.pb.swift in Sources */,
 				270447A4231E0052007BA477 /* Base32String.swift in Sources */,
 				270447BE231E0052007BA477 /* acquire_asset.proto in Sources */,
 				270447B4231E0052007BA477 /* consume_asset.proto in Sources */,
+				270244FF234C9C110022D0A6 /* revoke_withdraw.pb.swift in Sources */,
 				275D70B223278DF100305BB0 /* revoke_delegate.proto in Sources */,
 				275D70B423278DF100305BB0 /* revoke_delegate.pb.swift in Sources */,
 				27044795231E0052007BA477 /* ABSDKHTTPTransport.swift in Sources */,
@@ -731,6 +761,7 @@
 				270447BC231E0052007BA477 /* transfer.proto in Sources */,
 				2704479F231E0052007BA477 /* Base58String.swift in Sources */,
 				27044796231E0052007BA477 /* ABSDKWebSocketTransport.swift in Sources */,
+				27024501234C9C110022D0A6 /* withdraw_token.proto in Sources */,
 				270447C9231E0052007BA477 /* type.pb.swift in Sources */,
 				270447B5231E0052007BA477 /* trace_type.proto in Sources */,
 				270447A0231E0052007BA477 /* Base16.swift in Sources */,
@@ -740,6 +771,7 @@
 				270447BF231E0052007BA477 /* state.pb.swift in Sources */,
 				270447AB231E0052007BA477 /* revoke_swap.pb.swift in Sources */,
 				27044797231E0052007BA477 /* ABSDKPagedArrayDataSource.swift in Sources */,
+				270244FD234C9C110022D0A6 /* approve_withdraw.proto in Sources */,
 				270447AD231E0052007BA477 /* create_asset.proto in Sources */,
 				2704479E231E0052007BA477 /* Multibase.swift in Sources */,
 				270447AC231E0052007BA477 /* exchange_tether.pb.swift in Sources */,
