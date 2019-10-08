@@ -354,21 +354,75 @@ public struct ForgeAbi_IndexedAssetState {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var address: String = String()
+  public var address: String {
+    get {return _storage._address}
+    set {_uniqueStorage()._address = newValue}
+  }
 
-  public var owner: String = String()
+  public var owner: String {
+    get {return _storage._owner}
+    set {_uniqueStorage()._owner = newValue}
+  }
 
-  public var genesisTime: String = String()
+  public var genesisTime: String {
+    get {return _storage._genesisTime}
+    set {_uniqueStorage()._genesisTime = newValue}
+  }
 
-  public var renaissanceTime: String = String()
+  public var renaissanceTime: String {
+    get {return _storage._renaissanceTime}
+    set {_uniqueStorage()._renaissanceTime = newValue}
+  }
 
-  public var moniker: String = String()
+  public var moniker: String {
+    get {return _storage._moniker}
+    set {_uniqueStorage()._moniker = newValue}
+  }
 
-  public var readonly: Bool = false
+  public var readonly: Bool {
+    get {return _storage._readonly}
+    set {_uniqueStorage()._readonly = newValue}
+  }
+
+  public var consumedTime: String {
+    get {return _storage._consumedTime}
+    set {_uniqueStorage()._consumedTime = newValue}
+  }
+
+  public var issuer: String {
+    get {return _storage._issuer}
+    set {_uniqueStorage()._issuer = newValue}
+  }
+
+  public var parent: String {
+    get {return _storage._parent}
+    set {_uniqueStorage()._parent = newValue}
+  }
+
+  public var transferrable: Bool {
+    get {return _storage._transferrable}
+    set {_uniqueStorage()._transferrable = newValue}
+  }
+
+  public var ttl: UInt64 {
+    get {return _storage._ttl}
+    set {_uniqueStorage()._ttl = newValue}
+  }
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return _storage._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {_uniqueStorage()._data = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct ForgeAbi_IndexedStakeState {
@@ -1184,51 +1238,141 @@ extension ForgeAbi_IndexedAssetState: SwiftProtobuf.Message, SwiftProtobuf._Mess
     4: .standard(proto: "renaissance_time"),
     5: .same(proto: "moniker"),
     6: .same(proto: "readonly"),
+    7: .standard(proto: "consumed_time"),
+    8: .same(proto: "issuer"),
+    9: .same(proto: "parent"),
+    10: .same(proto: "transferrable"),
+    11: .same(proto: "ttl"),
+    50: .same(proto: "data"),
   ]
 
+  fileprivate class _StorageClass {
+    var _address: String = String()
+    var _owner: String = String()
+    var _genesisTime: String = String()
+    var _renaissanceTime: String = String()
+    var _moniker: String = String()
+    var _readonly: Bool = false
+    var _consumedTime: String = String()
+    var _issuer: String = String()
+    var _parent: String = String()
+    var _transferrable: Bool = false
+    var _ttl: UInt64 = 0
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _owner = source._owner
+      _genesisTime = source._genesisTime
+      _renaissanceTime = source._renaissanceTime
+      _moniker = source._moniker
+      _readonly = source._readonly
+      _consumedTime = source._consumedTime
+      _issuer = source._issuer
+      _parent = source._parent
+      _transferrable = source._transferrable
+      _ttl = source._ttl
+      _data = source._data
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      switch fieldNumber {
-      case 1: try decoder.decodeSingularStringField(value: &self.address)
-      case 2: try decoder.decodeSingularStringField(value: &self.owner)
-      case 3: try decoder.decodeSingularStringField(value: &self.genesisTime)
-      case 4: try decoder.decodeSingularStringField(value: &self.renaissanceTime)
-      case 5: try decoder.decodeSingularStringField(value: &self.moniker)
-      case 6: try decoder.decodeSingularBoolField(value: &self.readonly)
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeSingularStringField(value: &_storage._address)
+        case 2: try decoder.decodeSingularStringField(value: &_storage._owner)
+        case 3: try decoder.decodeSingularStringField(value: &_storage._genesisTime)
+        case 4: try decoder.decodeSingularStringField(value: &_storage._renaissanceTime)
+        case 5: try decoder.decodeSingularStringField(value: &_storage._moniker)
+        case 6: try decoder.decodeSingularBoolField(value: &_storage._readonly)
+        case 7: try decoder.decodeSingularStringField(value: &_storage._consumedTime)
+        case 8: try decoder.decodeSingularStringField(value: &_storage._issuer)
+        case 9: try decoder.decodeSingularStringField(value: &_storage._parent)
+        case 10: try decoder.decodeSingularBoolField(value: &_storage._transferrable)
+        case 11: try decoder.decodeSingularUInt64Field(value: &_storage._ttl)
+        case 50: try decoder.decodeSingularMessageField(value: &_storage._data)
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    if !self.owner.isEmpty {
-      try visitor.visitSingularStringField(value: self.owner, fieldNumber: 2)
-    }
-    if !self.genesisTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 3)
-    }
-    if !self.renaissanceTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 4)
-    }
-    if !self.moniker.isEmpty {
-      try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 5)
-    }
-    if self.readonly != false {
-      try visitor.visitSingularBoolField(value: self.readonly, fieldNumber: 6)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._address.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
+      }
+      if !_storage._owner.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._owner, fieldNumber: 2)
+      }
+      if !_storage._genesisTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._genesisTime, fieldNumber: 3)
+      }
+      if !_storage._renaissanceTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._renaissanceTime, fieldNumber: 4)
+      }
+      if !_storage._moniker.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._moniker, fieldNumber: 5)
+      }
+      if _storage._readonly != false {
+        try visitor.visitSingularBoolField(value: _storage._readonly, fieldNumber: 6)
+      }
+      if !_storage._consumedTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._consumedTime, fieldNumber: 7)
+      }
+      if !_storage._issuer.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._issuer, fieldNumber: 8)
+      }
+      if !_storage._parent.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._parent, fieldNumber: 9)
+      }
+      if _storage._transferrable != false {
+        try visitor.visitSingularBoolField(value: _storage._transferrable, fieldNumber: 10)
+      }
+      if _storage._ttl != 0 {
+        try visitor.visitSingularUInt64Field(value: _storage._ttl, fieldNumber: 11)
+      }
+      if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: ForgeAbi_IndexedAssetState, rhs: ForgeAbi_IndexedAssetState) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs.owner != rhs.owner {return false}
-    if lhs.genesisTime != rhs.genesisTime {return false}
-    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
-    if lhs.moniker != rhs.moniker {return false}
-    if lhs.readonly != rhs.readonly {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._owner != rhs_storage._owner {return false}
+        if _storage._genesisTime != rhs_storage._genesisTime {return false}
+        if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
+        if _storage._moniker != rhs_storage._moniker {return false}
+        if _storage._readonly != rhs_storage._readonly {return false}
+        if _storage._consumedTime != rhs_storage._consumedTime {return false}
+        if _storage._issuer != rhs_storage._issuer {return false}
+        if _storage._parent != rhs_storage._parent {return false}
+        if _storage._transferrable != rhs_storage._transferrable {return false}
+        if _storage._ttl != rhs_storage._ttl {return false}
+        if _storage._data != rhs_storage._data {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

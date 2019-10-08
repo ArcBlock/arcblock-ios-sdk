@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+// swiftlint:disable function_parameter_count
+
 import Foundation
 import SwiftProtobuf
 import BigInt
@@ -154,6 +156,29 @@ public class TxHelper {
                                 chainId: chainId, from: from)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.transfer.rawValue,
                                    txParams: txParams, privateKey: privateKey, publicKey: publicKey)
+        return txString
+    }
+
+    public static func createWithdrawTokenTx(chainId: String, publicKey: Data, privateKey: Data, from: String,
+                                        to: String, chainType: String, foreignChainId: String, ttl: Date, value: BigUInt) -> String? {
+        var withdrawTokenTx = ForgeAbi_WithdrawTokenTx()
+        withdrawTokenTx.to = to
+        withdrawTokenTx.chainID = foreignChainId
+        withdrawTokenTx.ttl = Google_Protobuf_Timestamp(date: ttl)
+        withdrawTokenTx.chainType = chainType
+        var txValue = ForgeAbi_BigUint.init()
+        txValue.value = value.serialize()
+        withdrawTokenTx.value = txValue
+
+        guard let tx = try? withdrawTokenTx.serializedData() else {
+            return nil
+        }
+
+        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+                                chainId: chainId, from: from)
+        let txString = genTxString(tx: tx, typeUrl: TypeUrl.revokeSwap.rawValue, txParams: txParams,
+                                   privateKey: privateKey, publicKey: publicKey)
+
         return txString
     }
 

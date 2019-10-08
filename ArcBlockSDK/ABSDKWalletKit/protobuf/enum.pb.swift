@@ -83,6 +83,10 @@ public enum ForgeAbi_StatusCode: SwiftProtobuf.Enum {
   case protocolNotPaused // = 61
   case protocolNotActivated // = 62
   case invalidDeactivation // = 63
+  case senderWithdrawItemsFull // = 64
+  case withdrawItemMissing // = 65
+  case invalidWithdrawTx // = 66
+  case invalidChainType // = 67
   case forbidden // = 403
   case `internal` // = 500
   case timeout // = 504
@@ -151,6 +155,10 @@ public enum ForgeAbi_StatusCode: SwiftProtobuf.Enum {
     case 61: self = .protocolNotPaused
     case 62: self = .protocolNotActivated
     case 63: self = .invalidDeactivation
+    case 64: self = .senderWithdrawItemsFull
+    case 65: self = .withdrawItemMissing
+    case 66: self = .invalidWithdrawTx
+    case 67: self = .invalidChainType
     case 403: self = .forbidden
     case 500: self = .internal
     case 504: self = .timeout
@@ -217,6 +225,10 @@ public enum ForgeAbi_StatusCode: SwiftProtobuf.Enum {
     case .protocolNotPaused: return 61
     case .protocolNotActivated: return 62
     case .invalidDeactivation: return 63
+    case .senderWithdrawItemsFull: return 64
+    case .withdrawItemMissing: return 65
+    case .invalidWithdrawTx: return 66
+    case .invalidChainType: return 67
     case .forbidden: return 403
     case .internal: return 500
     case .timeout: return 504
@@ -288,6 +300,10 @@ extension ForgeAbi_StatusCode: CaseIterable {
     .protocolNotPaused,
     .protocolNotActivated,
     .invalidDeactivation,
+    .senderWithdrawItemsFull,
+    .withdrawItemMissing,
+    .invalidWithdrawTx,
+    .invalidChainType,
     .forbidden,
     .internal,
     .timeout,
@@ -890,6 +906,10 @@ extension ForgeAbi_StatusCode: SwiftProtobuf._ProtoNameProviding {
     61: .same(proto: "protocol_not_paused"),
     62: .same(proto: "protocol_not_activated"),
     63: .same(proto: "invalid_deactivation"),
+    64: .same(proto: "sender_withdraw_items_full"),
+    65: .same(proto: "withdraw_item_missing"),
+    66: .same(proto: "invalid_withdraw_tx"),
+    67: .same(proto: "invalid_chain_type"),
     403: .same(proto: "forbidden"),
     500: .same(proto: "internal"),
     504: .same(proto: "timeout"),
