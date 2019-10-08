@@ -103,7 +103,6 @@ public struct ForgeAbi_AccountState {
     set {_uniqueStorage()._migratedFrom = newValue}
   }
 
-  /// 16-49 reserve for future
   public var numAssets: UInt64 {
     get {return _storage._numAssets}
     set {_uniqueStorage()._numAssets = newValue}
@@ -146,6 +145,16 @@ public struct ForgeAbi_AccountState {
   public var hasDepositReceived: Bool {return _storage._depositReceived != nil}
   /// Clears the value of `depositReceived`. Subsequent reads from it will return its default value.
   public mutating func clearDepositReceived() {_uniqueStorage()._depositReceived = nil}
+
+  /// 20-49 reserve for future
+  public var withdrawItems: ForgeAbi_CircularQueue {
+    get {return _storage._withdrawItems ?? ForgeAbi_CircularQueue()}
+    set {_uniqueStorage()._withdrawItems = newValue}
+  }
+  /// Returns true if `withdrawItems` has been explicitly set.
+  public var hasWithdrawItems: Bool {return _storage._withdrawItems != nil}
+  /// Clears the value of `withdrawItems`. Subsequent reads from it will return its default value.
+  public mutating func clearWithdrawItems() {_uniqueStorage()._withdrawItems = nil}
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -305,12 +314,6 @@ public struct ForgeAbi_ForgeState {
     set {_uniqueStorage()._version = newValue}
   }
 
-  /// app state returned by forge app
-  public var forgeAppHash: Data {
-    get {return _storage._forgeAppHash}
-    set {_uniqueStorage()._forgeAppHash = newValue}
-  }
-
   public var token: ForgeAbi_ForgeToken {
     get {return _storage._token ?? ForgeAbi_ForgeToken()}
     set {_uniqueStorage()._token = newValue}
@@ -329,24 +332,8 @@ public struct ForgeAbi_ForgeState {
   /// Clears the value of `txConfig`. Subsequent reads from it will return its default value.
   public mutating func clearTxConfig() {_uniqueStorage()._txConfig = nil}
 
-  public var stakeConfig: ForgeAbi_StakeConfig {
-    get {return _storage._stakeConfig ?? ForgeAbi_StakeConfig()}
-    set {_uniqueStorage()._stakeConfig = newValue}
-  }
-  /// Returns true if `stakeConfig` has been explicitly set.
-  public var hasStakeConfig: Bool {return _storage._stakeConfig != nil}
-  /// Clears the value of `stakeConfig`. Subsequent reads from it will return its default value.
-  public mutating func clearStakeConfig() {_uniqueStorage()._stakeConfig = nil}
-
-  public var pokeConfig: ForgeAbi_PokeConfig {
-    get {return _storage._pokeConfig ?? ForgeAbi_PokeConfig()}
-    set {_uniqueStorage()._pokeConfig = newValue}
-  }
-  /// Returns true if `pokeConfig` has been explicitly set.
-  public var hasPokeConfig: Bool {return _storage._pokeConfig != nil}
-  /// Clears the value of `pokeConfig`. Subsequent reads from it will return its default value.
-  public mutating func clearPokeConfig() {_uniqueStorage()._pokeConfig = nil}
-
+  /// StakeConfig stake_config = 10; deprecated
+  /// PokeConfig poke_config = 11; deprecated
   public var protocols: [ForgeAbi_CoreProtocol] {
     get {return _storage._protocols}
     set {_uniqueStorage()._protocols = newValue}
@@ -365,6 +352,20 @@ public struct ForgeAbi_ForgeState {
   public var hasUpgradeInfo: Bool {return _storage._upgradeInfo != nil}
   /// Clears the value of `upgradeInfo`. Subsequent reads from it will return its default value.
   public mutating func clearUpgradeInfo() {_uniqueStorage()._upgradeInfo = nil}
+
+  public var accountConfig: Dictionary<String,ForgeAbi_AccountConfig> {
+    get {return _storage._accountConfig}
+    set {_uniqueStorage()._accountConfig = newValue}
+  }
+
+  public var tokenSwapConfig: ForgeAbi_TokenSwapConfig {
+    get {return _storage._tokenSwapConfig ?? ForgeAbi_TokenSwapConfig()}
+    set {_uniqueStorage()._tokenSwapConfig = newValue}
+  }
+  /// Returns true if `tokenSwapConfig` has been explicitly set.
+  public var hasTokenSwapConfig: Bool {return _storage._tokenSwapConfig != nil}
+  /// Clears the value of `tokenSwapConfig`. Subsequent reads from it will return its default value.
+  public mutating func clearTokenSwapConfig() {_uniqueStorage()._tokenSwapConfig = nil}
 
   /// forge app can define their own app state
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -888,6 +889,7 @@ extension ForgeAbi_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     17: .standard(proto: "pinned_files"),
     18: .same(proto: "poke"),
     19: .standard(proto: "deposit_received"),
+    20: .standard(proto: "withdraw_items"),
     50: .same(proto: "data"),
   ]
 
@@ -909,6 +911,7 @@ extension ForgeAbi_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     var _pinnedFiles: ForgeAbi_CircularQueue? = nil
     var _poke: ForgeAbi_PokeInfo? = nil
     var _depositReceived: ForgeAbi_BigUint? = nil
+    var _withdrawItems: ForgeAbi_CircularQueue? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -933,6 +936,7 @@ extension ForgeAbi_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       _pinnedFiles = source._pinnedFiles
       _poke = source._poke
       _depositReceived = source._depositReceived
+      _withdrawItems = source._withdrawItems
       _data = source._data
     }
   }
@@ -966,6 +970,7 @@ extension ForgeAbi_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         case 17: try decoder.decodeSingularMessageField(value: &_storage._pinnedFiles)
         case 18: try decoder.decodeSingularMessageField(value: &_storage._poke)
         case 19: try decoder.decodeSingularMessageField(value: &_storage._depositReceived)
+        case 20: try decoder.decodeSingularMessageField(value: &_storage._withdrawItems)
         case 50: try decoder.decodeSingularMessageField(value: &_storage._data)
         default: break
         }
@@ -1026,6 +1031,9 @@ extension ForgeAbi_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       if let v = _storage._depositReceived {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
       }
+      if let v = _storage._withdrawItems {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
+      }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
       }
@@ -1055,6 +1063,7 @@ extension ForgeAbi_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         if _storage._pinnedFiles != rhs_storage._pinnedFiles {return false}
         if _storage._poke != rhs_storage._poke {return false}
         if _storage._depositReceived != rhs_storage._depositReceived {return false}
+        if _storage._withdrawItems != rhs_storage._withdrawItems {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -1257,15 +1266,14 @@ extension ForgeAbi_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     3: .same(proto: "tasks"),
     4: .standard(proto: "stake_summary"),
     5: .same(proto: "version"),
-    7: .standard(proto: "forge_app_hash"),
     8: .same(proto: "token"),
     9: .standard(proto: "tx_config"),
-    10: .standard(proto: "stake_config"),
-    11: .standard(proto: "poke_config"),
     12: .same(proto: "protocols"),
     13: .same(proto: "gas"),
     14: .standard(proto: "upgrade_info"),
-    15: .same(proto: "data"),
+    16: .standard(proto: "account_config"),
+    17: .standard(proto: "token_swap_config"),
+    2047: .same(proto: "data"),
   ]
 
   fileprivate class _StorageClass {
@@ -1274,14 +1282,13 @@ extension ForgeAbi_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _tasks: Dictionary<UInt64,ForgeAbi_UpgradeTasks> = [:]
     var _stakeSummary: Dictionary<UInt32,ForgeAbi_StakeSummary> = [:]
     var _version: String = String()
-    var _forgeAppHash: Data = SwiftProtobuf.Internal.emptyData
     var _token: ForgeAbi_ForgeToken? = nil
     var _txConfig: ForgeAbi_TransactionConfig? = nil
-    var _stakeConfig: ForgeAbi_StakeConfig? = nil
-    var _pokeConfig: ForgeAbi_PokeConfig? = nil
     var _protocols: [ForgeAbi_CoreProtocol] = []
     var _gas: Dictionary<String,UInt32> = [:]
     var _upgradeInfo: ForgeAbi_UpgradeInfo? = nil
+    var _accountConfig: Dictionary<String,ForgeAbi_AccountConfig> = [:]
+    var _tokenSwapConfig: ForgeAbi_TokenSwapConfig? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -1294,14 +1301,13 @@ extension ForgeAbi_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _tasks = source._tasks
       _stakeSummary = source._stakeSummary
       _version = source._version
-      _forgeAppHash = source._forgeAppHash
       _token = source._token
       _txConfig = source._txConfig
-      _stakeConfig = source._stakeConfig
-      _pokeConfig = source._pokeConfig
       _protocols = source._protocols
       _gas = source._gas
       _upgradeInfo = source._upgradeInfo
+      _accountConfig = source._accountConfig
+      _tokenSwapConfig = source._tokenSwapConfig
       _data = source._data
     }
   }
@@ -1323,15 +1329,14 @@ extension ForgeAbi_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 3: try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt64,ForgeAbi_UpgradeTasks>.self, value: &_storage._tasks)
         case 4: try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt32,ForgeAbi_StakeSummary>.self, value: &_storage._stakeSummary)
         case 5: try decoder.decodeSingularStringField(value: &_storage._version)
-        case 7: try decoder.decodeSingularBytesField(value: &_storage._forgeAppHash)
         case 8: try decoder.decodeSingularMessageField(value: &_storage._token)
         case 9: try decoder.decodeSingularMessageField(value: &_storage._txConfig)
-        case 10: try decoder.decodeSingularMessageField(value: &_storage._stakeConfig)
-        case 11: try decoder.decodeSingularMessageField(value: &_storage._pokeConfig)
         case 12: try decoder.decodeRepeatedMessageField(value: &_storage._protocols)
         case 13: try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufUInt32>.self, value: &_storage._gas)
         case 14: try decoder.decodeSingularMessageField(value: &_storage._upgradeInfo)
-        case 15: try decoder.decodeSingularMessageField(value: &_storage._data)
+        case 16: try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,ForgeAbi_AccountConfig>.self, value: &_storage._accountConfig)
+        case 17: try decoder.decodeSingularMessageField(value: &_storage._tokenSwapConfig)
+        case 2047: try decoder.decodeSingularMessageField(value: &_storage._data)
         default: break
         }
       }
@@ -1355,20 +1360,11 @@ extension ForgeAbi_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._version.isEmpty {
         try visitor.visitSingularStringField(value: _storage._version, fieldNumber: 5)
       }
-      if !_storage._forgeAppHash.isEmpty {
-        try visitor.visitSingularBytesField(value: _storage._forgeAppHash, fieldNumber: 7)
-      }
       if let v = _storage._token {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
       }
       if let v = _storage._txConfig {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-      }
-      if let v = _storage._stakeConfig {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-      }
-      if let v = _storage._pokeConfig {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
       }
       if !_storage._protocols.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._protocols, fieldNumber: 12)
@@ -1379,8 +1375,14 @@ extension ForgeAbi_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if let v = _storage._upgradeInfo {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
       }
+      if !_storage._accountConfig.isEmpty {
+        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,ForgeAbi_AccountConfig>.self, value: _storage._accountConfig, fieldNumber: 16)
+      }
+      if let v = _storage._tokenSwapConfig {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+      }
       if let v = _storage._data {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2047)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1396,14 +1398,13 @@ extension ForgeAbi_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._tasks != rhs_storage._tasks {return false}
         if _storage._stakeSummary != rhs_storage._stakeSummary {return false}
         if _storage._version != rhs_storage._version {return false}
-        if _storage._forgeAppHash != rhs_storage._forgeAppHash {return false}
         if _storage._token != rhs_storage._token {return false}
         if _storage._txConfig != rhs_storage._txConfig {return false}
-        if _storage._stakeConfig != rhs_storage._stakeConfig {return false}
-        if _storage._pokeConfig != rhs_storage._pokeConfig {return false}
         if _storage._protocols != rhs_storage._protocols {return false}
         if _storage._gas != rhs_storage._gas {return false}
         if _storage._upgradeInfo != rhs_storage._upgradeInfo {return false}
+        if _storage._accountConfig != rhs_storage._accountConfig {return false}
+        if _storage._tokenSwapConfig != rhs_storage._tokenSwapConfig {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
