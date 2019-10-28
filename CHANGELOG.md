@@ -1,3 +1,6 @@
+## 0.9.5 (October 28, 2019)
+  - fix composing withdraw token tx
+
 ## 0.9.4 (October 08, 2019)
   - support token swap related protobuf
 
