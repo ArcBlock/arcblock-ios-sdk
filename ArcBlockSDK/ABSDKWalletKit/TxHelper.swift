@@ -176,7 +176,7 @@ public class TxHelper {
 
         let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
                                 chainId: chainId, from: from)
-        let txString = genTxString(tx: tx, typeUrl: TypeUrl.revokeSwap.rawValue, txParams: txParams,
+        let txString = genTxString(tx: tx, typeUrl: TypeUrl.withdrawToken.rawValue, txParams: txParams,
                                    privateKey: privateKey, publicKey: publicKey)
 
         return txString

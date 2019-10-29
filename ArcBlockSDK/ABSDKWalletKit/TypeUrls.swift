@@ -40,6 +40,8 @@ public enum TypeUrl: String, CaseIterable {
     case revokeSwap = "fg:t:revoke_swap"
     case delegate = "fg:t:delegate"
     case revokeDelegate = "fg:t:revoke_delegate"
+    case depositToken = "fg:t:deposit_token"
+    case withdrawToken = "fg:t:withdraw_token"
 
     // forge state
     case accountState = "fg:s:account"

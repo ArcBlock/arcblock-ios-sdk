@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -126,6 +126,8 @@
 		275D70B223278DF100305BB0 /* revoke_delegate.proto in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AE23278DF100305BB0 /* revoke_delegate.proto */; };
 		275D70B323278DF100305BB0 /* delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AF23278DF100305BB0 /* delegate.pb.swift */; };
 		275D70B423278DF100305BB0 /* revoke_delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */; };
+		8B05EFF220CD91E079DDE8D5 /* Pods_ArcBlockSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C09EC72B0BCAA2C1C7C136 /* Pods_ArcBlockSDKTests.framework */; };
+		E1EEE539A4149FA4F642C265 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164AC92D7874D74EBBB5FC8B /* Pods_ArcBlockSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +141,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		164AC92D7874D74EBBB5FC8B /* Pods_ArcBlockSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		270244F3234C9C100022D0A6 /* revoke_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_withdraw.proto; sourceTree = "<group>"; };
 		270244F4234C9C100022D0A6 /* deposit_token.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deposit_token.pb.swift; sourceTree = "<group>"; };
 		270244F5234C9C100022D0A6 /* approve_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = approve_withdraw.proto; sourceTree = "<group>"; };
@@ -263,6 +266,11 @@
 		275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_delegate.pb.swift; sourceTree = "<group>"; };
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		35D8B2D60E4598587F4F2F81 /* Pods-ArcBlockSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		4B7F54CF51CAC02A3171A5BF /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		76C09EC72B0BCAA2C1C7C136 /* Pods_ArcBlockSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BC9357B878DCC8BDEA90016 /* Pods-ArcBlockSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.release.xcconfig"; sourceTree = "<group>"; };
+		BEE00AF5E4F4B9D1E29BDA3E /* Pods-ArcBlockSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +290,7 @@
 				270447F6231E00AA007BA477 /* SwiftPhoenixClient.framework in Frameworks */,
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
 				270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */,
+				E1EEE539A4149FA4F642C265 /* Pods_ArcBlockSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,12 +300,24 @@
 			files = (
 				27044801231E01F4007BA477 /* Nimble.framework in Frameworks */,
 				27044802231E01F4007BA477 /* Quick.framework in Frameworks */,
+				8B05EFF220CD91E079DDE8D5 /* Pods_ArcBlockSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BECC27AAEEEDA0981FF207D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BEE00AF5E4F4B9D1E29BDA3E /* Pods-ArcBlockSDK.debug.xcconfig */,
+				9BC9357B878DCC8BDEA90016 /* Pods-ArcBlockSDK.release.xcconfig */,
+				4B7F54CF51CAC02A3171A5BF /* Pods-ArcBlockSDKTests.debug.xcconfig */,
+				35D8B2D60E4598587F4F2F81 /* Pods-ArcBlockSDKTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		27044710231DFF98007BA477 /* ArcBlockSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -498,6 +519,7 @@
 				2704471B231DFF98007BA477 /* ArcBlockSDKTests */,
 				277E6B5A20A0DB160054707E /* Products */,
 				279CD3D220AC8E11009E1348 /* Frameworks */,
+				0BECC27AAEEEDA0981FF207D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -527,6 +549,8 @@
 				274B185B20E4DD8900884659 /* SQLite.framework */,
 				279CD44020AC9F46009E1348 /* Nimble.framework */,
 				279CD44120AC9F46009E1348 /* Quick.framework */,
+				164AC92D7874D74EBBB5FC8B /* Pods_ArcBlockSDK.framework */,
+				76C09EC72B0BCAA2C1C7C136 /* Pods_ArcBlockSDKTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -548,11 +572,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 27044720231DFF98007BA477 /* Build configuration list for PBXNativeTarget "ArcBlockSDK" */;
 			buildPhases = (
+				AE2CB9C89368785710092DE1 /* [CP] Check Pods Manifest.lock */,
 				2704470A231DFF97007BA477 /* Headers */,
 				2704470B231DFF97007BA477 /* Sources */,
 				2704470C231DFF97007BA477 /* Frameworks */,
 				2704470D231DFF97007BA477 /* Resources */,
-				27044800231E00E0007BA477 /* Copy Framework */,
 			);
 			buildRules = (
 			);
@@ -567,10 +591,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 27044723231DFF98007BA477 /* Build configuration list for PBXNativeTarget "ArcBlockSDKTests" */;
 			buildPhases = (
+				E244112A2545CDCCE7831919 /* [CP] Check Pods Manifest.lock */,
 				27044713231DFF98007BA477 /* Sources */,
 				27044714231DFF98007BA477 /* Frameworks */,
 				27044715231DFF98007BA477 /* Resources */,
-				27044803231E0524007BA477 /* ShellScript */,
+				B4AE4F468EA841EA031C4FBA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -636,7 +661,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		27044800231E00E0007BA477 /* Copy Framework */ = {
+		AE2CB9C89368785710092DE1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -644,39 +669,38 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Apollo.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SQLite.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Starscream.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftPhoenixClient.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/secp256k1.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/web3swift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Copy Framework";
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Apollo.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SQLite.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Reachability.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Starscream.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftPhoenixClient.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CryptoSwift.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/secp256k1.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/web3swift.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BigInt.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SipHash.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PromiseKit.framework",
+				"$(DERIVED_FILE_DIR)/Pods-ArcBlockSDK-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		27044803231E0524007BA477 /* ShellScript */ = {
+		B4AE4F468EA841EA031C4FBA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E244112A2545CDCCE7831919 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -684,18 +708,19 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Nimble.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Quick.framework",
+				"$(DERIVED_FILE_DIR)/Pods-ArcBlockSDKTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -832,6 +857,7 @@
 /* Begin XCBuildConfiguration section */
 		27044721231DFF98007BA477 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEE00AF5E4F4B9D1E29BDA3E /* Pods-ArcBlockSDK.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -918,6 +944,7 @@
 		};
 		27044722231DFF98007BA477 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BC9357B878DCC8BDEA90016 /* Pods-ArcBlockSDK.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -998,6 +1025,7 @@
 		};
 		27044724231DFF98007BA477 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B7F54CF51CAC02A3171A5BF /* Pods-ArcBlockSDKTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1078,6 +1106,7 @@
 		};
 		27044725231DFF98007BA477 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35D8B2D60E4598587F4F2F81 /* Pods-ArcBlockSDKTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
