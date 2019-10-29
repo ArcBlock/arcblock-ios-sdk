@@ -24,16 +24,6 @@ pod 'ArcBlockSDK', :git => 'https://github.com/ArcBlock/arcblock-ios-sdk.git'
 pod 'Apollo', :git => 'https://github.com/ArcBlock/apollo-ios.git'
 ```
 
-### Carthage
-
-To integrate ArcBlockSDK into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), specify it in your `Cartfile`:
-
-```ogdl
-github "ArcBlock/arcblock-ios-sdk"
-```
-
-Run `carthage` to build the framework and drag the built frameworks into your Xcode project.
-
 ### XCode File Templates(Optional)
 
 ArcBlockSDK provides some XCode file templates for you to get started more quickly. To install them, run the following command:
@@ -75,7 +65,7 @@ This means that you need to give names to your queries. For example, this is an 
       balance
     }
   }
-} 
+}
 
 ```
 While this is a named operation
@@ -87,7 +77,7 @@ query RichestAccounts {
       balance
     }
   }
-} 
+}
 ```
 
 We need every operation to be named to generate Swift codes.

@@ -24,16 +24,6 @@ pod 'Apollo', :git => 'https://github.com/ArcBlock/apollo-ios.git'
 
 再运行`pod install`即可。
 
-### Carthage
-
-您也可以通过[Carthage](https://github.com/Carthage/Carthage)进行安装, 添加以下代码到`Cartfile`：
-
-```ogdl
-github "ArcBlock/arcblock-ios-sdk"
-```
-
-运行`carthage`以构建`.framework`文件，再将构建好的`.framework`文件拖拽到XCode项目中即可。
-
 ### XCode文件模板(可选)
 
 ArcBlockSDK还提供了一系列Xcode文件模板。您可以使用它们来快速创建一些可运行的代码。安装这些模板只需要运行以下命令即可：
@@ -75,7 +65,7 @@ OCAP service提供基于GraphQL接口，所以您需要编写GraphQL语句来和
       balance
     }
   }
-} 
+}
 
 ```
 而以下是一个命名的语句：
@@ -87,7 +77,7 @@ query RichestAccounts {
       balance
     }
   }
-} 
+}
 ```
 
 我们要求所有语句都是命名语句，否则无法生成Swift代码。

@@ -15,28 +15,27 @@ travis-init: install
 
 install:
 	@echo "Install software required for this repo..."
-	@brew install carthage | true
+	@gem install cocoapods
 	@gem install xcpretty -N
 	@brew install swiftlint | true
 	@gem install jazzy
 
 dep:
 	@echo "Install dependencies required for this repo..."
-	@carthage update --platform ios --cache-builds
-	@rm -rf Carthage/Checkouts/SwiftPhoenixClient/Example/Pods/
+	@pod install
 
 pre-build: install dep
 	@echo "Running scripts before the build..."
 
 post-build:
 	@echo "Running scripts after the build is done..."
-	@carthage archive --output build/ArcBlockSDK.zip
+	@make doc
 
 all: pre-build build post-build
 
 test:
 	@echo "Running test suites..."
-	@xcodebuild -project ArcBlockSDK.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' -configuration Debug -scheme ArcBlockSDK build test | xcpretty -c
+	@xcodebuild -workspace ArcBlockSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' -configuration Debug -scheme ArcBlockSDK build test | xcpretty -c
 
 lint:
 	@echo "Linting the software..."
@@ -53,13 +52,7 @@ travis:
 	@make precommit
 
 travis-deploy:
-	if ! [ -f "./build/ArcBlockSDK.zip" ]; then \
-		echo "Preparing for deployment..."; \
-		make release; \
-		rm -rf Carthage; \
-		tar -zcvf docs/Templates.tar.gz Templates; \
-		make doc; \
-	fi
+	@make release
 
 protobuf-codegen:
 	@echo "Generating protobuf swift codes..."
