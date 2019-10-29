@@ -2,7 +2,7 @@ RELEASE_VERSION=v$(VERSION)
 GIT_BRANCH=$(strip $(shell git symbolic-ref --short HEAD))
 GIT_VERSION="$(strip $(shell git rev-parse --short HEAD))"
 
-release: all
+release:
 	@git config --local user.name "jonathanlu813"
 	@git config --local user.email "jonathanlu813@gmail.com"
 	@git tag -a $(RELEASE_VERSION) -m "Release $(RELEASE_VERSION). Revision is: $(GIT_VERSION)" | true
