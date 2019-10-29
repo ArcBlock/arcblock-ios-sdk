@@ -5,9 +5,9 @@ clean: true
 sdk: iphonesimulator
 author: ArcBlock
 author_url: https://arcblock.io
-module: ABSDKCoreKit
+module: ArcBlockSDK
 github_url: https://github.com/ArcBlock/arcblock-ios-sdk
 github_file_prefix: https://github.com/ArcBlock/arcblock-ios-sdk/tree/master
 exclude:
-  - ABSDKCoreKit/ABSDKPagination.swift
-module_version: 0.9.4
+  - ArcBlockSDK/ABSDKCoreKit/Network/ABSDKPagination.swift
+module_version: 0.9.5
