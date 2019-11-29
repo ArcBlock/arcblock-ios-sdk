@@ -107,6 +107,14 @@ public class DidHelper {
         return hashToAddress(roleType: .swap, keyType: .ed25519, hashType: .sha2, hash: data)
     }
 
+    public static func getDelegateAddress(sender: String, receiver: String) -> String? {
+        if let senderData = sender.data(using: .utf8),
+            let receiverData = receiver.data(using: .utf8) {
+            return hashToAddress(roleType: .delegate, keyType: .ed25519, hashType: .sha3, hash: MCrypto.Hasher.Sha3.sha(senderData + receiverData))
+        }
+        return nil
+    }
+
     public static func getUserPk(userPrivateKey: Data) -> Data? {
         return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: userPrivateKey)
     }

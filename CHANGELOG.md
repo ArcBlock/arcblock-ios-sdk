@@ -1,3 +1,6 @@
+## 0.9.6 (November 29, 2019)
+  - support delegation
+
 ## 0.9.5 (October 28, 2019)
   - fix composing withdraw token tx
 

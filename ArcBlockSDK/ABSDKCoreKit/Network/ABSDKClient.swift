@@ -179,7 +179,7 @@ public class ABSDKClient {
 
         self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.store)
 
-        reachability = Reachability()
+        reachability = try Reachability()
         var observer = NotificationCenter.default.addObserver(forName: .reachabilityChanged, object: nil, queue: nil) { [weak self] (notification) in
             self?.checkForReachability(notification: notification)
         }
@@ -224,7 +224,7 @@ public class ABSDKClient {
             if self.configuration.allowsCellularAccess {
                 isReachable = true
             }
-        case .none:
+        default:
             print("")
         }
 
