@@ -60,5 +60,12 @@ class DidHelperSpec: QuickSpec {
                 expect(DidHelper.getSwapAddress(data: data)).to(equal("z2UHsX5Gzj24oT81Kis6fekS1xTRvdejNqM88"))
             })
         }
+
+        describe("generate delegate address") {
+            it("works", closure: {
+                let address = DidHelper.getDelegateAddress(sender: "z1ewYeWM7cLamiB6qy6mDHnzw1U5wEZCoj7", receiver: "z1T6maYajgDLjhVErT71WEbqaxaWHs9nqpZ")
+                expect(address).to(equal("z2bN1iucQC2obei6B2cJrtp7d9zbVCKoceKEo"))
+            })
+        }
     }
 }
