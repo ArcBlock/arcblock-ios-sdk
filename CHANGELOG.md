@@ -1,3 +1,6 @@
+## 0.9.7 (December 05, 2019)
+  - able to setup multiple delegation rules
+
 ## 0.9.6 (November 29, 2019)
   - support delegation
 
