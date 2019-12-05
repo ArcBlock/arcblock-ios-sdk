@@ -187,16 +187,21 @@ public class TxHelper {
     }
 
     public static func createDelegateTx(chainId: String, publicKey: Data, privateKey: Data, from: String,
-                                        to: String, rules: [String], opTypeUrl: String = TypeUrl.transfer.rawValue) -> String? {
-        guard let delegateAddress = DidHelper.getDelegateAddress(sender: from, receiver: to) else {
+                                        to: String, ops: [String: [String]]) -> String? {
+        guard let delegateAddress = DidHelper.getDelegateAddress(sender: from, receiver: to),
+            ops.count > 0 else {
             return nil
         }
         var delegateTx = ForgeAbi_DelegateTx()
         delegateTx.address = delegateAddress
-        var op = ForgeAbi_DelegateOp()
-        op.typeURL = opTypeUrl
-        op.rules = rules
-        delegateTx.ops = [op]
+        var delegateOps = [ForgeAbi_DelegateOp]()
+        for (typeUrl, rules) in ops {
+            var op = ForgeAbi_DelegateOp()
+            op.typeURL = typeUrl
+            op.rules = rules
+            delegateOps.append(op)
+        }
+        delegateTx.ops = delegateOps
         delegateTx.to = to
 
         guard let tx = try? delegateTx.serializedData() else {
