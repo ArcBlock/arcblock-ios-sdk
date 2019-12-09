@@ -68,7 +68,7 @@ public class TxHelper {
     }
 
     public static func createSetupSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                         demandToken: Double, blockHeight: UInt32, hashKey: Data, receiver: String) -> String? {
+                                         demandToken: Double, demandAssets: [String] = [], blockHeight: UInt32, hashKey: Data, receiver: String) -> String? {
         var setupSwapTx = ForgeAbi_SetupSwapTx()
 
         var demandTokenValue = ForgeAbi_BigUint()
@@ -79,6 +79,7 @@ public class TxHelper {
         setupSwapTx.locktime = blockHeight
         setupSwapTx.hashlock = MCrypto.Hasher.Sha3.sha(hashKey)
         setupSwapTx.receiver = receiver
+        setupSwapTx.assets = demandAssets
 
         guard let tx = try? setupSwapTx.serializedData() else {
             return nil
