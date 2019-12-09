@@ -1,3 +1,6 @@
+## 0.9.8 (December 09, 2019)
+  - fix setup swap tx composition
+
 ## 0.9.7 (December 05, 2019)
   - able to setup multiple delegation rules
 
