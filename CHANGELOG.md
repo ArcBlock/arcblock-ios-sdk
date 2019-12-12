@@ -1,3 +1,7 @@
+## 0.9.9 (December 12, 2019)
+  - Merge branch 'master' into develop
+  - support restricted declare
+
 ## 0.9.8 (December 09, 2019)
   - fix setup swap tx composition
 

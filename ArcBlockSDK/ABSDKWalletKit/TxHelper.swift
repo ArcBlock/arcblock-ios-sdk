@@ -50,13 +50,16 @@ public struct TxParams {
 }
 
 public class TxHelper {
-    public static func createDeclareTx(chainId: String, publicKey: Data, privateKey: Data, address: String) -> String? {
+    public static func createDeclareTx(chainId: String, issuer: String? = nil, moniker: String? = nil, publicKey: Data, privateKey: Data, address: String) -> String? {
         var declareTx = ForgeAbi_DeclareTx.init()
         var walletType = ForgeAbi_WalletType.init()
         walletType.pk = ForgeAbi_KeyType.ed25519
         walletType.hash = ForgeAbi_HashType.sha3
         walletType.address = ForgeAbi_EncodingType.base58
-        declareTx.moniker = "account"
+        declareTx.moniker = moniker ?? "account"
+        if let issuer = issuer {
+            declareTx.issuer = issuer
+        }
 
         guard let tx = try? declareTx.serializedData() else {
             return nil
