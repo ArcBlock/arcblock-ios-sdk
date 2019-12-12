@@ -39,6 +39,41 @@ public enum RoleType: Int8 {
     case swap = 12
     case delegate = 13
     case any = 63
+
+    public static func roleTypeWithName(_ name: String) -> RoleType {
+        switch name {
+        case "account":
+            return .account
+        case "node":
+            return .node
+        case "device":
+            return .device
+        case "application":
+            return .application
+        case "smartContract":
+            return .smartContract
+        case "bot":
+            return .bot
+        case "asset":
+            return .asset
+        case "stake":
+            return .stake
+        case "validator":
+            return .validator
+        case "group":
+            return .group
+        case "tx":
+            return .tx
+        case "tether":
+            return .tether
+        case "swap":
+            return .swap
+        case "delegate":
+            return .delegate
+        default:
+            return .any
+        }
+    }
 }
 
 public enum KeyType: Int8 {
@@ -51,6 +86,26 @@ public enum KeyType: Int8 {
             return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)
         case .secp256k1:
             return nil
+        }
+    }
+
+    public func getKeypair() -> (Data?, Data?) {
+        switch self {
+        case .ed25519:
+            return MCrypto.Signer.ED25519.keypair()
+        case .secp256k1:
+            return (nil, nil)
+        }
+    }
+
+    public static func keyTypeWithName(_ name: String) -> KeyType {
+        switch "name" {
+        case "secp256k1":
+            return .secp256k1
+        case "ed25519":
+            return .ed25519
+        default:
+            return .ed25519
         }
     }
 }
@@ -80,6 +135,27 @@ public enum HashType: Int8 {
             return MCrypto.Hasher.Sha3.sha512(data)
         case .sha2:
             return MCrypto.Hasher.Sha2.sha256(data, 1)
+        }
+    }
+
+    public static func hashTypeWithName(_ name: String) -> HashType {
+        switch name {
+        case "keccak":
+            return .keccak
+        case "sha3":
+            return .sha3
+        case "keccak384":
+            return .keccak384
+        case "sha3384":
+            return .sha3384
+        case "keccak512":
+            return .keccak512
+        case "sha3512":
+            return .sha3512
+        case "sha2":
+            return .sha2
+        default:
+            return .sha3
         }
     }
 }
@@ -119,7 +195,7 @@ public class DidHelper {
         return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: userPrivateKey)
     }
 
-    private static func pkToAddress(roleType: RoleType, keyType: KeyType, hashType: HashType, publicKey: Data) -> String? {
+    public static func pkToAddress(roleType: RoleType, keyType: KeyType, hashType: HashType, publicKey: Data) -> String? {
         if let hash = hashType.hash(data: publicKey) {
             return hashToAddress(roleType: roleType, keyType: keyType, hashType: hashType, hash: hash)
         }
