@@ -42,6 +42,7 @@ public enum TypeUrl: String, CaseIterable {
     case revokeDelegate = "fg:t:revoke_delegate"
     case depositToken = "fg:t:deposit_token"
     case withdrawToken = "fg:t:withdraw_token"
+    case revokeWithdraw = "fg:t:revoke_withdraw"
 
     // forge state
     case accountState = "fg:s:account"
@@ -106,6 +107,10 @@ public enum TypeUrl: String, CaseIterable {
             return try? ForgeAbi_DelegateTx(serializedData: value)
         case .revokeDelegate:
             return try? ForgeAbi_RevokeDelegationTx(serializedData: value)
+        case .withdrawToken:
+            return try? ForgeAbi_WithdrawTokenTx(serializedData: value)
+        case .revokeWithdraw:
+            return try? ForgeAbi_RevokeWithdrawTx(serializedData: value)
         default:
             return nil
         }
