@@ -1,3 +1,6 @@
+## 0.9.10 (December 27, 2019)
+  - support withdraw and revoke withdraw tx
+
 ## 0.9.9 (December 12, 2019)
   - Merge branch 'master' into develop
   - support restricted declare
