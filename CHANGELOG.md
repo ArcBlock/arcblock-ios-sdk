@@ -1,3 +1,6 @@
+## 0.9.11 (January 07, 2020)
+  - use CryptoKit for ED25519 in iOS13 and above
+
 ## 0.9.10 (December 27, 2019)
   - support withdraw and revoke withdraw tx
 

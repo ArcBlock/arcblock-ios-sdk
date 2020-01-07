@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import CryptoSwift
+import CryptoKit
 
 public struct MCrypto {
 
@@ -42,26 +42,57 @@ public struct MCrypto {
     public struct Signer {
         public struct ED25519 {
             public static func keypair() -> (Data?, Data?) {
-                let (publicKey, privateKey) = Ed25519.crypto_sign_keypair()
-                return (Data.init(bytes: publicKey), Data.init(bytes: privateKey+publicKey))
+                if #available(iOS 13.0, *) {
+                    let privateKey = Curve25519.Signing.PrivateKey()
+                    return (privateKey.rawRepresentation, privateKey.publicKey.rawRepresentation)
+                } else {
+                    // Fallback on earlier versions
+                    let (publicKey, privateKey) = Ed25519.crypto_sign_keypair()
+                    return (Data.init(publicKey), Data.init(privateKey+publicKey))
+                }
             }
 
             public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
-                return Data.init(bytes: Ed25519.crypto_pk(Array(privateKey.bytes.prefix(32))))
+                if #available(iOS 13.0, *) {
+                    if let privateKey = try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey.prefix(32)) {
+                        return privateKey.publicKey.rawRepresentation
+                    }
+                    return nil
+                } else {
+                    // Fallback on earlier versions
+                    return Data.init(Ed25519.crypto_pk(Array(privateKey.bytes.prefix(32))))
+                }
             }
 
             public static func sign(message: Data, privateKey: Data) -> Data? {
-                var signatureAndMessage = [UInt8]()
-                guard let publicKey = privateKeyToPublicKey(privateKey: privateKey) else {
+                if #available(iOS 13.0, *) {
+                    if let privateKey = try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKey.prefix(32)),
+                        let signature = try? privateKey.signature(for: message) {
+                        return signature
+                    }
                     return nil
+                } else {
+                    // Fallback on earlier versions
+                    var signatureAndMessage = [UInt8]()
+                    guard let publicKey = privateKeyToPublicKey(privateKey: privateKey) else {
+                        return nil
+                    }
+                    Ed25519.crypto_sign(&signatureAndMessage, message.bytes, privateKey.bytes + publicKey.bytes)
+                    return Data.init(Array(signatureAndMessage.prefix(64)))
                 }
-                Ed25519.crypto_sign(&signatureAndMessage, message.bytes, privateKey.bytes + publicKey.bytes)
-                return Data.init(bytes: Array(signatureAndMessage.prefix(64)))
             }
 
             public static func verify(message: Data, signature: Data, publicKey: Data) -> Bool {
-                let signatureAndMessage = signature.bytes + message.bytes
-                return Ed25519.crypto_sign_open(signatureAndMessage, publicKey.bytes)
+                if #available(iOS 13.0, *) {
+                    guard let publicKey = try? Curve25519.Signing.PublicKey(rawRepresentation: publicKey) else {
+                        return false
+                    }
+                    return publicKey.isValidSignature(signature, for: message)
+                } else {
+                    // Fallback on earlier versions
+                    let signatureAndMessage = signature.bytes + message.bytes
+                    return Ed25519.crypto_sign_open(signatureAndMessage, publicKey.bytes)
+                }
             }
         }
     }
