@@ -1,3 +1,6 @@
+## 0.9.12 (January 09, 2020)
+  - fix crash on parsing non multibase encoded string
+
 ## 0.9.11 (January 07, 2020)
   - use CryptoKit for ED25519 in iOS13 and above
 
