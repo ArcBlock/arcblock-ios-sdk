@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ArcBlockSDK'
-  s.version          = '0.9.12'
+  s.version          = '0.9.13'
   s.summary          = 'Used to integrate iOS apps with ArcBlock Platform.'
 
 # This description is used to generate tags and improve search results.
@@ -43,6 +43,8 @@ TODO: Add long description of the pod here.
     sc.dependency 'SwiftPhoenixClient'
     sc.dependency 'CryptoSwift'
     sc.dependency 'web3.swift.pod', '~> 2.2.0'
+
+    sc.weak_framework='CryptoKit'
   end
 
   s.subspec 'WalletKit' do |sc|

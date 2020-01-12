@@ -1,3 +1,6 @@
+## 0.9.13 (January 12, 2020)
+
+
 ## 0.9.12 (January 09, 2020)
   - fix crash on parsing non multibase encoded string
 

@@ -21,7 +21,9 @@
 // THE SOFTWARE.
 
 import Foundation
+#if canImport(CryptoKit)
 import CryptoKit
+#endif
 
 public struct MCrypto {
 
