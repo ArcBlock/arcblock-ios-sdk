@@ -46,7 +46,7 @@ public struct MCrypto {
             public static func keypair() -> (Data?, Data?) {
                 if #available(iOS 13.0, *) {
                     let privateKey = Curve25519.Signing.PrivateKey()
-                    return (privateKey.rawRepresentation, privateKey.publicKey.rawRepresentation)
+                    return (privateKey.publicKey.rawRepresentation, privateKey.rawRepresentation)
                 } else {
                     // Fallback on earlier versions
                     let (publicKey, privateKey) = Ed25519.crypto_sign_keypair()
