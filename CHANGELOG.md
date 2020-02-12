@@ -1,3 +1,7 @@
+## 0.9.14 (February 12, 2020)
+  - fix mcrypto create key pair bug
+  - Merge pull request #59 from ArcBlock/develop
+
 ## 0.9.13 (January 12, 2020)
 
 
