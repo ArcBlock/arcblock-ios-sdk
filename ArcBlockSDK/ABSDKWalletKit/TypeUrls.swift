@@ -70,6 +70,8 @@ public enum TypeUrl: String, CaseIterable {
     case ticketInfo = "ec:s:ticket_info"
     case workshopAsset = "ws:x:workshop_asset"
     case generalTicket = "ec:s:general_ticket"
+    case jsonAsset = "json"
+    case vcAsset = "vc"
 
     public func getItx(value: Data) -> Any? {
         switch self {
