@@ -1,3 +1,6 @@
+## 0.9.15 (March 18, 2020)
+  - extend type url to support json and vc
+
 ## 0.9.14 (February 12, 2020)
   - fix mcrypto create key pair bug
   - Merge pull request #59 from ArcBlock/develop
