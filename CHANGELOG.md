@@ -1,3 +1,6 @@
+## 0.9.16 (April 03, 2020)
+  - support transfer assets
+
 ## 0.9.15 (March 18, 2020)
   - extend type url to support json and vc
 
