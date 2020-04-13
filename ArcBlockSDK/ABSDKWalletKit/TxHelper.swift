@@ -148,7 +148,7 @@ public class TxHelper {
         var txValue = ForgeAbi_BigUint.init()
         if let decimal = decimal,
             let decimals = Double("1e\(decimal)") {
-            let valueWithDecimals = BigUInt(value * decimals)
+            let valueWithDecimals = BigUInt(value) * BigUInt(decimals)
             txValue.value = valueWithDecimals.serialize()
         } else {
             let valueBigUInt = BigUInt(value)
