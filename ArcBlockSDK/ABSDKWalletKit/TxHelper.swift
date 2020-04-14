@@ -133,7 +133,7 @@ public class TxHelper {
     }
 
     public static func createTransferTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                        to: String, message: String?, value: Double, decimal: Int? = nil, assets: [String]? = nil) -> String? {
+                                        to: String, message: String?, value: BigUInt, assets: [String]? = nil) -> String? {
 
         var transferTx = ForgeAbi_TransferTx.init()
         var txMessage = Google_Protobuf_Any.init()
@@ -146,14 +146,7 @@ public class TxHelper {
         transferTx.data = txMessage
         transferTx.to = to
         var txValue = ForgeAbi_BigUint.init()
-        if let decimal = decimal,
-            let decimals = Double("1e\(decimal)") {
-            let valueWithDecimals = BigUInt(value) * BigUInt(decimals)
-            txValue.value = valueWithDecimals.serialize()
-        } else {
-            let valueBigUInt = BigUInt(value)
-            txValue.value = valueBigUInt.serialize()
-        }
+        txValue.value = value.serialize()
         transferTx.value = txValue
         
         if let assets = assets {
