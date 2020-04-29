@@ -143,7 +143,7 @@ public class ABSDKClient {
 
     let reachability: Reachability!
     var accessState: ClientNetworkAccessState = .offline
-    var appInForeground: Bool!
+    var appInForeground: Bool = false
     var observers: [Any] = []
 
     /// Creates a client with the specified `ABSDKClientConfiguration`.
@@ -200,7 +200,6 @@ public class ABSDKClient {
             try reachability?.startNotifier()
         } catch {
         }
-        appInForeground = UIApplication.shared.applicationState == .active
     }
 
     deinit {
