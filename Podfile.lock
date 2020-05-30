@@ -45,7 +45,7 @@ DEPENDENCIES:
   - web3.swift.pod (~> 2.2.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - BigInt
     - CryptoSwift
     - Nimble
@@ -91,4 +91,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a0a03074babcf0b267c9910cac330974427b8ba3
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.7.5
