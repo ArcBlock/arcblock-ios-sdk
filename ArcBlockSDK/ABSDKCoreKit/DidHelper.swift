@@ -80,7 +80,7 @@ public enum KeyType: Int8 {
     case ed25519 = 0
     case secp256k1 = 1
 
-    func privateKeyToPublicKey(privateKey: Data) -> Data? {
+    public func privateKeyToPublicKey(privateKey: Data) -> Data? {
         switch self {
         case .ed25519:
             return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)
