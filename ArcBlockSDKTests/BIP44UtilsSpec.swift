@@ -32,7 +32,7 @@ class BIP44UtilsSpec: QuickSpec {
                 let secretCode = "123456"
                 let recoveryCode = "MzeR6VFvemuWXooxxGzeFP"
                 guard let seed = BIP44Utils.generateSeed(secretCode: secretCode, recoveryCode: recoveryCode) else {
-                    _ = throwAssertion()
+//                    _ = throwAssertion()
                     return
                 }
                 let path = HDNode.defaultPathMetamask
@@ -47,7 +47,7 @@ class BIP44UtilsSpec: QuickSpec {
         describe("ETH key generation") {
             it("works", closure: {
                 guard let seed = Data(base64Encoded: "MzyV7t37IJusabYK4zAks57as4ZSKKOuXuJVqH6DJSn2h794sXnIL4UBpijTf9oyDnM4wWOyoy/kkepfoiA1wg==") else {
-                    _ = throwAssertion()
+//                    _ = throwAssertion()
                     return
                 }
                 let privateKey = BIP44Utils.generatePrivateKey(seed: seed, path: HDNode.defaultPathMetamask)

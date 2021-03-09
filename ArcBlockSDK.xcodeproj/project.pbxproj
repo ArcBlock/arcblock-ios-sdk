@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
 		270244FB234C9C110022D0A6 /* revoke_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F3234C9C100022D0A6 /* revoke_withdraw.proto */; };
 		270244FC234C9C110022D0A6 /* deposit_token.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F4234C9C100022D0A6 /* deposit_token.pb.swift */; };
 		270244FD234C9C110022D0A6 /* approve_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F5234C9C100022D0A6 /* approve_withdraw.proto */; };
@@ -125,8 +126,7 @@
 		275D70B223278DF100305BB0 /* revoke_delegate.proto in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AE23278DF100305BB0 /* revoke_delegate.proto */; };
 		275D70B323278DF100305BB0 /* delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AF23278DF100305BB0 /* delegate.pb.swift */; };
 		275D70B423278DF100305BB0 /* revoke_delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */; };
-		8B05EFF220CD91E079DDE8D5 /* Pods_ArcBlockSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C09EC72B0BCAA2C1C7C136 /* Pods_ArcBlockSDKTests.framework */; };
-		E1EEE539A4149FA4F642C265 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164AC92D7874D74EBBB5FC8B /* Pods_ArcBlockSDK.framework */; };
+		7F6C849E17C35B9149440791 /* Pods_ArcBlockSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,7 +140,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		164AC92D7874D74EBBB5FC8B /* Pods_ArcBlockSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		270244F3234C9C100022D0A6 /* revoke_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_withdraw.proto; sourceTree = "<group>"; };
 		270244F4234C9C100022D0A6 /* deposit_token.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deposit_token.pb.swift; sourceTree = "<group>"; };
 		270244F5234C9C100022D0A6 /* approve_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = approve_withdraw.proto; sourceTree = "<group>"; };
@@ -265,11 +265,11 @@
 		275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_delegate.pb.swift; sourceTree = "<group>"; };
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
-		35D8B2D60E4598587F4F2F81 /* Pods-ArcBlockSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.release.xcconfig"; sourceTree = "<group>"; };
-		4B7F54CF51CAC02A3171A5BF /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
-		76C09EC72B0BCAA2C1C7C136 /* Pods_ArcBlockSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9BC9357B878DCC8BDEA90016 /* Pods-ArcBlockSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.release.xcconfig"; sourceTree = "<group>"; };
-		BEE00AF5E4F4B9D1E29BDA3E /* Pods-ArcBlockSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		2887CC851616970ABA85CE61 /* Pods-ArcBlockSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		301F076836FA04A49FE48ED0 /* Pods-ArcBlockSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD3BBE505C0D8A3D5E1BD935 /* Pods-ArcBlockSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,7 +288,7 @@
 				270447F6231E00AA007BA477 /* SwiftPhoenixClient.framework in Frameworks */,
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
 				270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */,
-				E1EEE539A4149FA4F642C265 /* Pods_ArcBlockSDK.framework in Frameworks */,
+				016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +298,7 @@
 			files = (
 				27044801231E01F4007BA477 /* Nimble.framework in Frameworks */,
 				27044802231E01F4007BA477 /* Quick.framework in Frameworks */,
-				8B05EFF220CD91E079DDE8D5 /* Pods_ArcBlockSDKTests.framework in Frameworks */,
+				7F6C849E17C35B9149440791 /* Pods_ArcBlockSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,10 +308,10 @@
 		0BECC27AAEEEDA0981FF207D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BEE00AF5E4F4B9D1E29BDA3E /* Pods-ArcBlockSDK.debug.xcconfig */,
-				9BC9357B878DCC8BDEA90016 /* Pods-ArcBlockSDK.release.xcconfig */,
-				4B7F54CF51CAC02A3171A5BF /* Pods-ArcBlockSDKTests.debug.xcconfig */,
-				35D8B2D60E4598587F4F2F81 /* Pods-ArcBlockSDKTests.release.xcconfig */,
+				2887CC851616970ABA85CE61 /* Pods-ArcBlockSDK.debug.xcconfig */,
+				DD3BBE505C0D8A3D5E1BD935 /* Pods-ArcBlockSDK.release.xcconfig */,
+				0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */,
+				301F076836FA04A49FE48ED0 /* Pods-ArcBlockSDKTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -547,8 +547,8 @@
 				274B185B20E4DD8900884659 /* SQLite.framework */,
 				279CD44020AC9F46009E1348 /* Nimble.framework */,
 				279CD44120AC9F46009E1348 /* Quick.framework */,
-				164AC92D7874D74EBBB5FC8B /* Pods_ArcBlockSDK.framework */,
-				76C09EC72B0BCAA2C1C7C136 /* Pods_ArcBlockSDKTests.framework */,
+				B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */,
+				814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -570,7 +570,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 27044720231DFF98007BA477 /* Build configuration list for PBXNativeTarget "ArcBlockSDK" */;
 			buildPhases = (
-				AE2CB9C89368785710092DE1 /* [CP] Check Pods Manifest.lock */,
+				611A93160E8922765C027458 /* [CP] Check Pods Manifest.lock */,
 				2704470A231DFF97007BA477 /* Headers */,
 				2704470B231DFF97007BA477 /* Sources */,
 				2704470C231DFF97007BA477 /* Frameworks */,
@@ -589,11 +589,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 27044723231DFF98007BA477 /* Build configuration list for PBXNativeTarget "ArcBlockSDKTests" */;
 			buildPhases = (
-				E244112A2545CDCCE7831919 /* [CP] Check Pods Manifest.lock */,
+				B0C37FB118DB843E2490062C /* [CP] Check Pods Manifest.lock */,
 				27044713231DFF98007BA477 /* Sources */,
 				27044714231DFF98007BA477 /* Frameworks */,
 				27044715231DFF98007BA477 /* Resources */,
-				B4AE4F468EA841EA031C4FBA /* [CP] Embed Pods Frameworks */,
+				85983CFCACA6C2026261F246 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -659,7 +659,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AE2CB9C89368785710092DE1 /* [CP] Check Pods Manifest.lock */ = {
+		611A93160E8922765C027458 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -681,7 +681,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B4AE4F468EA841EA031C4FBA /* [CP] Embed Pods Frameworks */ = {
+		85983CFCACA6C2026261F246 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -698,7 +698,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E244112A2545CDCCE7831919 /* [CP] Check Pods Manifest.lock */ = {
+		B0C37FB118DB843E2490062C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -855,7 +855,7 @@
 /* Begin XCBuildConfiguration section */
 		27044721231DFF98007BA477 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEE00AF5E4F4B9D1E29BDA3E /* Pods-ArcBlockSDK.debug.xcconfig */;
+			baseConfigurationReference = 2887CC851616970ABA85CE61 /* Pods-ArcBlockSDK.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -898,6 +898,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -939,7 +940,7 @@
 		};
 		27044722231DFF98007BA477 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9BC9357B878DCC8BDEA90016 /* Pods-ArcBlockSDK.release.xcconfig */;
+			baseConfigurationReference = DD3BBE505C0D8A3D5E1BD935 /* Pods-ArcBlockSDK.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -982,6 +983,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1017,7 +1019,7 @@
 		};
 		27044724231DFF98007BA477 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B7F54CF51CAC02A3171A5BF /* Pods-ArcBlockSDKTests.debug.xcconfig */;
+			baseConfigurationReference = 0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1056,6 +1058,7 @@
 				DEVELOPMENT_TEAM = K4NSWQ8457;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Carthage/Build/iOS/**",
@@ -1098,7 +1101,7 @@
 		};
 		27044725231DFF98007BA477 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35D8B2D60E4598587F4F2F81 /* Pods-ArcBlockSDKTests.release.xcconfig */;
+			baseConfigurationReference = 301F076836FA04A49FE48ED0 /* Pods-ArcBlockSDKTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1137,6 +1140,7 @@
 				DEVELOPMENT_TEAM = K4NSWQ8457;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Carthage/Build/iOS/**",
@@ -1175,6 +1179,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				EXCLUDED_ARCHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
@@ -1183,6 +1188,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				EXCLUDED_ARCHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;

@@ -24,6 +24,7 @@ import Foundation
 #if canImport(CryptoKit)
 import CryptoKit
 #endif
+import web3swift
 
 public struct MCrypto {
 
@@ -96,6 +97,15 @@ public struct MCrypto {
                     return Ed25519.crypto_sign_open(signatureAndMessage, publicKey.bytes)
                 }
             }
+        }
+        
+        public struct ETHEREUM {
+            public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
+                return Web3.Utils.privateToPublic(privateKey)
+            }
+            
+//            public static func keypair() -> (Data?, Data?) {
+//            }
         }
     }
 
@@ -287,3 +297,4 @@ public struct MCrypto {
         }
     }
 }
+
