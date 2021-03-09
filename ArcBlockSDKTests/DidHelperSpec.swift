@@ -23,6 +23,7 @@
 import Quick
 import Nimble
 import ArcBlockSDK
+import web3swift
 
 class DidHelperSpec: QuickSpec {
     override func spec() {
@@ -66,6 +67,55 @@ class DidHelperSpec: QuickSpec {
                 let address = DidHelper.getDelegateAddress(sender: "z1ewYeWM7cLamiB6qy6mDHnzw1U5wEZCoj7", receiver: "z1T6maYajgDLjhVErT71WEbqaxaWHs9nqpZ")
                 expect(address).to(equal("z2bN1iucQC2obei6B2cJrtp7d9zbVCKoceKEo"))
             })
+        }
+        
+        describe("ethereum") {
+            let etherumCase = [
+                [
+                    "secretKey" : "0x4646464646464646464646464646464646464646464646464646464646464646",
+                    "publicKey" : "0x4BC2A31265153F07E70E0BAB08724E6B85E217F8CD628CEB62974247BB493382CE28CAB79AD7119EE1AD3EBCDB98A16805211530ECC6CFEFA1B88E6DFF99232A",
+                    "address" : "0x9d8A62f656a8d1615C1294fd71e9CFb3E4855A4F"
+                ],
+                [
+                    "secretKey" : "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                    "publicKey" : "0x4646AE5047316B4230D0086C8ACEC687F00B1CD9D1DC634F6CB358AC0A9A8FFFFE77B4DD0A4BFB95851F3B7355C781DD60F8418FC8A65D14907AFF47C903A559",
+                    "address" : "0xFCAd0B19bB29D4674531d6f115237E16AfCE377c"
+                ]
+            ]
+            
+            it("sk to address works", closure: {
+                etherumCase.forEach { (dict) in
+                    let sk = dict["secretKey"]!
+                    let address = dict["address"]!
+                    guard let pk = MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: Data.init(hex: sk)) else { return }
+                    expect(DidHelper.pkToAddress(roleType: .account, keyType: .ethereum, hashType: .sha3, publicKey: pk)).to(equal(address))
+                }
+            })
+            
+            it("pk to address works", closure: {
+                etherumCase.forEach { (dict) in
+                    let pk = dict["publicKey"]!
+                    let address = dict["address"]!
+                    expect(DidHelper.pkToAddress(roleType: .account, keyType: .ethereum, hashType: .sha3, publicKey: Data.init(hex: pk))).to(equal(address))
+                }
+            })
+            
+            it("sk to did works", closure: {
+                etherumCase.forEach { (dict) in
+                    let sk = dict["secretKey"]!
+                    let address = dict["address"]!
+                    expect(DidHelper.getUserDid(roleType: .account, keyType: .ethereum, hashType: .sha3, privateKey: Data.init(hex: sk))).to(equal(address))
+                }
+            })
+            
+            it("pk to did works", closure: {
+                etherumCase.forEach { (dict) in
+                    let pk = dict["publicKey"]!
+                    let address = dict["address"]!
+                    expect(DidHelper.getUserDid(roleType: .account, keyType: .ethereum, hashType: .sha3, publicKey: pk)).to(equal(address))
+                }
+            })
+            
         }
     }
 }

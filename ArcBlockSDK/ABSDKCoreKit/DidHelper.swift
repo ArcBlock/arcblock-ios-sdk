@@ -79,6 +79,7 @@ public enum RoleType: Int8 {
 public enum KeyType: Int8 {
     case ed25519 = 0
     case secp256k1 = 1
+    case ethereum = 2
 
     public func privateKeyToPublicKey(privateKey: Data) -> Data? {
         switch self {
@@ -86,6 +87,8 @@ public enum KeyType: Int8 {
             return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)
         case .secp256k1:
             return nil
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)
         }
     }
 
@@ -95,15 +98,19 @@ public enum KeyType: Int8 {
             return MCrypto.Signer.ED25519.keypair()
         case .secp256k1:
             return (nil, nil)
+        case .ethereum:
+            return (nil, nil)
         }
     }
 
     public static func keyTypeWithName(_ name: String) -> KeyType {
-        switch "name" {
+        switch name.lowercased() {
         case "secp256k1":
             return .secp256k1
         case "ed25519":
             return .ed25519
+        case "ethereum" :
+            return .ethereum
         default:
             return .ed25519
         }
@@ -167,16 +174,28 @@ public class DidHelper {
 
     public static func getUserDid(roleType: RoleType, keyType: KeyType, hashType: HashType, privateKey: Data) -> String? {
         guard let publicKey = keyType.privateKeyToPublicKey(privateKey: privateKey),
-            let address = pkToAddress(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: publicKey) else { return nil }
-        return "did:abt:" + address
+              let address = pkToAddress(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: publicKey) else { return nil }
+        if keyType == .ethereum {
+            return EthereumAddress.toChecksumAddress(address)
+        } else {
+            return "did:abt:" + address
+        }
     }
 
     public static func getUserDid(roleType: RoleType, keyType: KeyType, hashType: HashType, publicKey: String) -> String? {
-        guard let data = Data.init(multibaseEncoded: publicKey),
-            let address = pkToAddress(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: data) else {
+        if keyType == .ethereum {
+            guard let data = Web3.Utils.hexToData(publicKey),
+                  let address = pkToAddress(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: data) else {
                 return nil
+            }
+            return address
+        } else {
+            guard let data = Data.init(multibaseEncoded: publicKey),
+                  let address = pkToAddress(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: data) else {
+                return nil
+            }
+            return "did:abt:" + address
         }
-        return "did:abt:" + address
     }
 
     public static func getSwapAddress(data: Data) -> String? {
@@ -196,7 +215,10 @@ public class DidHelper {
     }
 
     public static func pkToAddress(roleType: RoleType, keyType: KeyType, hashType: HashType, publicKey: Data) -> String? {
-        if let hash = hashType.hash(data: publicKey) {
+        if keyType == .ethereum {
+            let address = Web3.Utils.publicToAddress(publicKey)
+            return address?.address
+        } else if let hash = hashType.hash(data: publicKey) {
             return hashToAddress(roleType: roleType, keyType: keyType, hashType: hashType, hash: hash)
         }
         return nil
