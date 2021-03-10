@@ -120,8 +120,12 @@ public struct MCrypto {
                 return pkString
             }
             
-//            public static func keypair() -> (Data?, Data?) {
-//            }
+            public static func keypair(seed: Data?) -> (Data?, Data?) {
+                guard let seed = seed else {
+                    return (nil, nil)
+                }
+                return (nil, nil)
+            }
             
             public static func verify(message: Data, signature: Data, publicKey: Data) -> Bool {
                 //                if privateKey.first != 0x04 && privateKey.bytes.count == 64 {
@@ -133,14 +137,26 @@ public struct MCrypto {
             }
         }
         
-        public struct SECP256K1 {
+        // M_ 避免与第三方库重名
+        public struct M_SECP256K1 {
             // 有04
             public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
                 return Web3.Utils.privateToPublic(privateKey)
             }
             
-//            public static func keypair() -> (Data?, Data?) {
-//            }
+            public static func keypair(seed: Data?) -> (Data?, Data?) {
+                guard let seed = seed else {
+                    return (nil, nil)
+                }
+                
+                guard let privateKey = SECP256K1.generatePrivateKey() else {
+                    return (nil, nil)
+                }
+                let publicKey = SECP256K1.privateToPublic(privateKey: privateKey)
+                return (publicKey, privateKey)
+                
+            }
+            
         }
     }
 

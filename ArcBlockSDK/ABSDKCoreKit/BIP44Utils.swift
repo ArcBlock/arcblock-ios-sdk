@@ -32,12 +32,14 @@ public class BIP44Utils {
         }
     }
 
+    // Master Seed
     public static func generateSeed(secretCode: String, recoveryCode: String) -> Data? {
         guard let entropy = getEntropy(secretCode: secretCode, recoveryCode: recoveryCode) else { return nil }
         let seed = BIP39.seedFromEntropy(entropy)
         return seed
     }
 
+    // Actual Child Seed
     public static func generatePrivateKey(seed: Data, path: String) -> Data? {
         guard let hdNode = HDNode.init(seed: seed) else { return nil }
         return hdNode.derive(path: path)?.privateKey
@@ -65,6 +67,7 @@ public class BIP44Utils {
         return "m/44'/260'/\(account)'/\(change)'/\(index)"
     }
 
+    // Dapp path
     public static func keyDerivePathForAppDid(appDid: String, index: Int) -> String? {
         if appDid == "eth" {
             return HDNode.defaultPathMetamask
