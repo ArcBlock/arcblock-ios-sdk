@@ -81,25 +81,27 @@ public enum KeyType: Int8 {
     case secp256k1 = 1
     case ethereum = 2
 
+    // childSeed to PublicKey
     public func privateKeyToPublicKey(privateKey: Data) -> Data? {
         switch self {
         case .ed25519:
             return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)
         case .secp256k1:
-            return nil
+            return MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)
         case .ethereum:
             return MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)
         }
     }
 
-    public func getKeypair() -> (Data?, Data?) {
+    // seed来源
+    public func getKeypair(seed: Data?) -> (Data?, Data?) {
         switch self {
         case .ed25519:
             return MCrypto.Signer.ED25519.keypair()
         case .secp256k1:
-            return (nil, nil)
+            return MCrypto.Signer.M_SECP256K1.keypair(seed: seed)
         case .ethereum:
-            return (nil, nil)
+            return MCrypto.Signer.ETHEREUM.keypair(seed: seed)
         }
     }
 
