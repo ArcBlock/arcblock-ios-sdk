@@ -100,6 +100,41 @@ public struct MCrypto {
         }
         
         public struct ETHEREUM {
+            // 没有04 少0x
+            public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
+                guard let pkStr = ETHEREUM.privateKeyToPublicKeyString(privateKey: privateKey) else {
+                    return nil
+                }
+                
+                return Data.init(hex: pkStr)
+            }
+            
+            public static func privateKeyToPublicKeyString(privateKey: Data) -> String? {
+                guard let pkStr = Web3.Utils.privateToPublic(privateKey)?.toHexString() else {
+                    return nil
+                }
+                var pkString = pkStr
+                pkString.removeSubrange(pkString.startIndex...pkString.index(pkString.startIndex, offsetBy: 1))
+                pkString = pkString.uppercased()
+                pkString.insert(contentsOf: "0x", at: pkString.startIndex)
+                return pkString
+            }
+            
+//            public static func keypair() -> (Data?, Data?) {
+//            }
+            
+            public static func verify(message: Data, signature: Data, publicKey: Data) -> Bool {
+                //                if privateKey.first != 0x04 && privateKey.bytes.count == 64 {
+                //                    var newData: [UInt8] = privateKey.bytes
+                //                    newData.insert(0x04, at: 0)
+                //                }
+                // Verify 需要以上条件
+                return true
+            }
+        }
+        
+        public struct SECP256K1 {
+            // 有04
             public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
                 return Web3.Utils.privateToPublic(privateKey)
             }
