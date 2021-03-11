@@ -82,4 +82,17 @@ public class BIP44Utils {
             return keyDerivePathFor(account: String(sk1), change: String(sk2), index: index)
         }
     }
+    
+    public static func generateMnemonics() -> [String]? {
+        do {
+            return try BIP39.generateMnemonics(bitsOfEntropy: 128)?.components(separatedBy: " ")
+        } catch  {
+            return nil
+        }
+    }
+    
+    public static func getSeedByMnemonics(mnemonics: [String]) -> Data? {        
+        return BIP39.seedFromMmemonics(mnemonics.joined(separator: " "))
+    }
+    
 }
