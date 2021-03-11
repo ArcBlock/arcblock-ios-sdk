@@ -57,5 +57,14 @@ class BIP44UtilsSpec: QuickSpec {
                 expect(address).to(equal("0x30a61514525283de572e521afee0500a6b0dee8c"))
             })
         }
+        
+        describe("Mnemonics generation") {
+            it("works", closure: {
+                guard let mnemonics = BIP44Utils.generateMnemonics() else { return }
+                let seed = BIP44Utils.getSeedByMnemonics(mnemonics: mnemonics)
+                guard let entropy = BIP39.mnemonicsToEntropy(mnemonics.joined(separator: " ")) else { return }
+                expect(seed).to(equal(BIP39.seedFromEntropy(entropy)))                
+            })
+        }
     }
 }

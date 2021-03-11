@@ -30,7 +30,7 @@ class DidHelperSpec: QuickSpec {
         describe("sk to did") {
             it("works", closure: {
                 let privateKey = Data.init(hex: "D67C071B6F51D2B61180B9B1AA9BE0DD0704619F0E30453AB4A592B036EDE644E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7")
-                let did = DidHelper.getUserDid(roleType: .application, keyType: .ed25519, hashType: .sha3, privateKey: privateKey)
+                let did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeApplication, privateKey: privateKey)
                 expect(did).to(equal("did:abt:zNKtCNqYWLYWYW3gWRA1vnRykfCBZYHZvzKr"))
             })
         }
@@ -40,7 +40,7 @@ class DidHelperSpec: QuickSpec {
                 let seed = Data.init(hex: "07abfceff5cdfb0cd164d2da98099c15b7223fc5a1b8c02c2cf1f74670c72aac27e1d28ed47cf4f2c4330a6e6e1dc0724721e80fa56177fdba926937a253fe7e")
                 let path = BIP44Utils.keyDerivePathForAppDid(appDid: "did:abt:z", index: 0)
                 let privateKey = BIP44Utils.generatePrivateKey(seed: seed, path: path!)
-                let did = DidHelper.getUserDid(roleType: .account, keyType: .ed25519, hashType: .sha3, privateKey: privateKey!)
+                let did = DidHelper.getUserDid(didType: DidType.Types.didTypeForge, privateKey: privateKey!)
                 expect(did).to(equal("did:abt:z1Zhi9h6do1EUNkM63CEXHonyHx47WQKtxB"))
             })
         }
@@ -49,8 +49,8 @@ class DidHelperSpec: QuickSpec {
             it("works", closure: {
                 let publicKey = "z7CaThvPHdaMd3HsnEbiC9986vZgiiVLGV5UhUzpW6fYx"
                 let did = "did:abt:z115ZCfaB7LYj9i2uxr4hknJJMLe7GkZASY4"
-                if let (roleType, keyType, hashType) = DidHelper.calculateTypesFromDid(did: did) {
-                    expect(DidHelper.getUserDid(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: publicKey)).to(equal(did))
+                if let didType = DidHelper.calculateTypesFromDid(did: did) {
+                    expect(DidHelper.getUserDid(didType: didType, publicKey: publicKey)).to(equal(did))
                 }
             })
         }
@@ -88,7 +88,7 @@ class DidHelperSpec: QuickSpec {
                     let sk = dict["secretKey"]!
                     let address = dict["address"]!
                     guard let pk = MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: Data.init(hex: sk)) else { return }
-                    expect(DidHelper.pkToAddress(roleType: .account, keyType: .ethereum, hashType: .sha3, publicKey: pk)).to(equal(address))
+                    expect(DidHelper.pkToAddress(didType: DidType.Types.didTypeForgeEthereum, publicKey: pk)).to(equal(address))
                 }
             })
             
@@ -96,7 +96,7 @@ class DidHelperSpec: QuickSpec {
                 etherumCase.forEach { (dict) in
                     let pk = dict["publicKey"]!
                     let address = dict["address"]!
-                    expect(DidHelper.pkToAddress(roleType: .account, keyType: .ethereum, hashType: .sha3, publicKey: Data.init(hex: pk))).to(equal(address))
+                    expect(DidHelper.pkToAddress(didType: DidType.Types.didTypeForgeEthereum, publicKey: Data.init(hex: pk))).to(equal(address))
                 }
             })
             
@@ -104,7 +104,7 @@ class DidHelperSpec: QuickSpec {
                 etherumCase.forEach { (dict) in
                     let sk = dict["secretKey"]!
                     let address = dict["address"]!
-                    expect(DidHelper.getUserDid(roleType: .account, keyType: .ethereum, hashType: .sha3, privateKey: Data.init(hex: sk))).to(equal(address))
+                    expect(DidHelper.getUserDid(didType: DidType.Types.didTypeForgeEthereum, privateKey: Data.init(hex: sk))).to(equal(address))
                 }
             })
             
@@ -112,7 +112,7 @@ class DidHelperSpec: QuickSpec {
                 etherumCase.forEach { (dict) in
                     let pk = dict["publicKey"]!
                     let address = dict["address"]!
-                    expect(DidHelper.getUserDid(roleType: .account, keyType: .ethereum, hashType: .sha3, publicKey: pk)).to(equal(address))
+                    expect(DidHelper.getUserDid(didType: DidType.Types.didTypeForgeEthereum, publicKey: pk)).to(equal(address))
                 }
             })
             
