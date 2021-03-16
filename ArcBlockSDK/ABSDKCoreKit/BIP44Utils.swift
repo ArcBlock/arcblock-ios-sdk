@@ -67,8 +67,8 @@ public class BIP44Utils {
         return "m/44'/260'/\(account)'/\(change)'/\(index)"
     }
 
-    // Dapp path
-    public static func keyDerivePathForAppDid(appDid: String, index: Int) -> String? {
+    // Dapp path, index 用于多维度生成账户与appDid配合使用
+    public static func keyDerivePathForAppDid(appDid: String, index: Int) -> String? {        
         if appDid == "eth" {
             return HDNode.defaultPathMetamask
         } else {

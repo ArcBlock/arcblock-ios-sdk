@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
+		1A379E4B25FF43000064A3E7 /* JWTKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1A379E4A25FF43000064A3E7 /* JWTKit */; };
+		1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */; };
 		270244FB234C9C110022D0A6 /* revoke_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F3234C9C100022D0A6 /* revoke_withdraw.proto */; };
 		270244FC234C9C110022D0A6 /* deposit_token.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F4234C9C100022D0A6 /* deposit_token.pb.swift */; };
 		270244FD234C9C110022D0A6 /* approve_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F5234C9C100022D0A6 /* approve_withdraw.proto */; };
@@ -141,6 +143,7 @@
 
 /* Begin PBXFileReference section */
 		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignVerifySpec.swift; sourceTree = "<group>"; };
 		270244F3234C9C100022D0A6 /* revoke_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_withdraw.proto; sourceTree = "<group>"; };
 		270244F4234C9C100022D0A6 /* deposit_token.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deposit_token.pb.swift; sourceTree = "<group>"; };
 		270244F5234C9C100022D0A6 /* approve_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = approve_withdraw.proto; sourceTree = "<group>"; };
@@ -277,6 +280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A379E4B25FF43000064A3E7 /* JWTKit in Frameworks */,
 				270447FC231E00AA007BA477 /* BigInt.framework in Frameworks */,
 				270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */,
 				270447F0231E00AA007BA477 /* Apollo.framework in Frameworks */,
@@ -335,6 +339,7 @@
 				270447E8231E0061007BA477 /* DidHelperSpec.swift */,
 				270447E4231E0060007BA477 /* MCryptoSpec.swift */,
 				270447E2231E0060007BA477 /* TxHelperSpec.swift */,
+				1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */,
 				2704471E231DFF98007BA477 /* Info.plist */,
 				270447E1231E0060007BA477 /* ArcBlockSDKTests-Bridging-Header.h */,
 			);
@@ -581,6 +586,9 @@
 			dependencies = (
 			);
 			name = ArcBlockSDK;
+			packageProductDependencies = (
+				1A379E4A25FF43000064A3E7 /* JWTKit */,
+			);
 			productName = ArcBlockSDK;
 			productReference = 2704470F231DFF97007BA477 /* ArcBlockSDK.framework */;
 			productType = "com.apple.product-type.framework";
@@ -631,6 +639,9 @@
 				en,
 			);
 			mainGroup = 277E6B4D20A0DAB50054707E;
+			packageReferences = (
+				1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */,
+			);
 			productRefGroup = 277E6B5A20A0DB160054707E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -835,6 +846,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */,
 				270447E9231E0061007BA477 /* TxHelperSpec.swift in Sources */,
 				270447EB231E0061007BA477 /* MCryptoSpec.swift in Sources */,
 				270447EC231E0061007BA477 /* BIP44UtilsSpec.swift in Sources */,
@@ -916,7 +928,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = ArcBlockSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -995,7 +1007,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = ArcBlockSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1078,7 +1090,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = ArcBlockSDKTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1154,7 +1166,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = ArcBlockSDKTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1224,6 +1236,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vapor/jwt-kit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1A379E4A25FF43000064A3E7 /* JWTKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */;
+			productName = JWTKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 277E6B4E20A0DAB50054707E /* Project object */;
 }

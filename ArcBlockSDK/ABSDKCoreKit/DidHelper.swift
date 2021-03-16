@@ -94,14 +94,14 @@ public enum KeyType: Int8 {
     }
 
     // seed来源
-    public func getKeypair(seed: Data?) -> (Data?, Data?) {
+    public func getKeypair() -> (Data?, Data?) {
         switch self {
         case .ed25519:
             return MCrypto.Signer.ED25519.keypair()
         case .secp256k1:
-            return MCrypto.Signer.M_SECP256K1.keypair(seed: seed)
+            return MCrypto.Signer.M_SECP256K1.keypair()
         case .ethereum:
-            return MCrypto.Signer.ETHEREUM.keypair(seed: seed)
+            return MCrypto.Signer.ETHEREUM.keypair()
         }
     }
 
@@ -169,24 +169,44 @@ public enum HashType: Int8 {
     }
 }
 
-public struct DidType {
+public enum EncodingType: Int8 {
+    case base16 = 0
+    case base58 = 1
     
-    var roleType: RoleType = .account
-    var keyType: KeyType = .ed25519
-    var hashType: HashType = .sha3
-    var encodingType: BaseEncoding = .base58BTC
+    public func encodedtring(_ value: Data) -> String {
+        switch self {
+        case .base16:
+            return value.multibaseEncodedString(inBase: .base16)
+        case .base58:
+            return value.multibaseEncodedString(inBase: .base58BTC)
+        default:
+            return value.multibaseEncodedString(inBase: .base58BTC)
+        }
+    }
+}
+
+public struct DidType: Equatable {
+    
+    
+    public var roleType: RoleType = .account
+    public var keyType: KeyType = .ed25519
+    public var hashType: HashType = .sha3
+    public var encodingType: EncodingType = .base58
     
     public struct Types {
-        public static let didTypeForge = DidType(roleType: .account, keyType: .ed25519, hashType: .sha3, encodingType: .base58BTC)
-        public static let didTypeForgeDelegate = DidType(roleType: .delegate, keyType: .ed25519, hashType: .sha3, encodingType: .base58BTC)
-        public static let didTypeForgeTether = DidType(roleType: .tether, keyType: .ed25519, hashType: .sha2, encodingType: .base58BTC)
-        public static let didTypeForgeValidator = DidType(roleType: .validator, keyType: .ed25519, hashType: .sha2, encodingType: .base58BTC)
-        public static let didTypeForgeNode = DidType(roleType: .node, keyType: .ed25519, hashType: .sha2, encodingType: .base58BTC)
-        public static let didTypeForgeSwap = DidType(roleType: .swap, keyType: .ed25519, hashType: .sha2, encodingType: .base58BTC)
-        public static let didTypeForgeStake = DidType(roleType: .stake, keyType: .ed25519, hashType: .sha3, encodingType: .base58BTC)
-        public static let didTypeForgeTx = DidType(roleType: .tx, keyType: .ed25519, hashType: .sha3, encodingType: .base58BTC)
-        public static let didTypeForgeApplication = DidType(roleType: .application, keyType: .ed25519, hashType: .sha3, encodingType: .base58BTC)
+        public static let didTypeForge = DidType(roleType: .account, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeDelegate = DidType(roleType: .delegate, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeTether = DidType(roleType: .tether, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeValidator = DidType(roleType: .validator, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeNode = DidType(roleType: .node, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeSwap = DidType(roleType: .swap, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeStake = DidType(roleType: .stake, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeTx = DidType(roleType: .tx, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeApplication = DidType(roleType: .application, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeEthereum = DidType(roleType: .account, keyType: .ethereum, hashType: .keccak, encodingType: .base16)
+        // 测试
+        public static let didTypeForgeSecp256k1 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeBase16 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base16)
     }
 }
 
@@ -256,8 +276,11 @@ public class DidHelper {
         if let extendedHash = didType.hashType.hash(data: prefixedHash) {
             let suffix = extendedHash.prefix(4)
             let fullHash = prefixedHash + suffix
-            let base58DidString = fullHash.multibaseEncodedString(inBase: .base58BTC)
-            return base58DidString
+            var encodeDidString = didType.encodingType.encodedtring(fullHash)
+            if didType.encodingType == .base16 {                
+                encodeDidString = "0x" + encodeDidString
+            }
+            return encodeDidString
         }
         return nil
     }
@@ -270,13 +293,13 @@ public class DidHelper {
         return didTypeBytes.bigEndian.data
     }
     
-    public static func getDidEncodingType(did: String) -> BaseEncoding {
+    public static func getDidEncodingType(did: String) -> EncodingType {
         var address = did
         if address.hasPrefix("abt:did:") {
             address.removeFirst(8)
         }
         if (address.hasPrefix("z")) {
-            return .base58BTC
+            return .base58
         } else {
             return .base16
         }
@@ -291,15 +314,20 @@ public class DidHelper {
             return DidType.Types.didTypeForgeEthereum
         }
         
-        var base58Did = did
+        var encodedDid = did
         if let didWithoutPrefix = did.split(separator: ":").last {
-            base58Did = String(didWithoutPrefix)
+            encodedDid = String(didWithoutPrefix)
         }
-        guard let base58DidData = Data.init(multibaseEncoded: base58Did) else {
+        
+        if encodedDid.hasPrefix("0x") {
+            encodedDid.removeFirst(2)
+        }
+        
+        guard let encodedDidData = Data.init(multibaseEncoded: encodedDid) else {
             return nil
         }
 
-        let didTypeBytes = Array(base58DidData.bytes.prefix(2))
+        let didTypeBytes = Array(encodedDidData.bytes.prefix(2))
         let u16 = UInt16(didTypeBytes[0]) << 8 + UInt16(didTypeBytes[1])
         guard let hashType = HashType.init(rawValue: Int8(u16 & 0b00011111)),
             let keyType = KeyType.init(rawValue: Int8((u16 >> 5) & 0b00011111)),
@@ -310,6 +338,15 @@ public class DidHelper {
         let encodingType = DidHelper.getDidEncodingType(did: did)
         
         return DidType(roleType: roleType, keyType: keyType, hashType: hashType, encodingType: encodingType)
+    }
+    
+    public static func removeDidPrefix(_ did: String) -> String {
+        if did.hasPrefix("did:abt:") {
+            var newDid = did
+            newDid.removeFirst(8)
+            return newDid
+        }
+        return did
     }
 }
 

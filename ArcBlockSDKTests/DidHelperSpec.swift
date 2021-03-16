@@ -73,7 +73,7 @@ class DidHelperSpec: QuickSpec {
             let etherumCase = [
                 [
                     "secretKey" : "4646464646464646464646464646464646464646464646464646464646464646",
-                    "publicKey" : "4BC2A31265153F07E70E0BAB08724E6B85E217F8CD628CEB62974247BB493382CE28CAB79AD7119EE1AD3EBCDB98A16805211530ECC6CFEFA1B88E6DFF99232A",
+                    "publicKey" : "4BC2A31265153F07E70E0BAB08724E6B85E217F8CD628CEB62974247BB493382CE28CAB79AD7119EE1AD3EBCDB98A16805211530ECC6CFEFA1B88E6DFF99232A",                    
                     "address" : "0x9d8A62f656a8d1615C1294fd71e9CFb3E4855A4F"
                 ],
                 [
@@ -116,6 +116,47 @@ class DidHelperSpec: QuickSpec {
                 }
             })
             
+        }
+        
+        describe("did type from address") {
+            it("get did type from eth address works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "0xFCAd0B19bB29D4674531d6f115237E16AfCE377c") else { return }
+                expect(didType).to(equal(DidType.Types.didTypeForgeEthereum))
+            })
+            
+            it("get did type from empty string works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "") else { return }
+                expect(didType).to(equal(DidType.Types.didTypeForge))
+            })
+            
+            it("get did type from error string works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "123") else { return }
+                expect(didType).to(equal(DidType.Types.didTypeForge))
+            })
+
+            it("get did type from a did address - ed25519 works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "z1n9fgDEKMWdnEJ46Uftg732hVvVx3gs9yu") else { return }
+                expect(didType).to(equal(DidType.Types.didTypeForge))
+            })
+
+            it("get did type from a did address - SECP256K1 works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "z1Ee1H8g248HqroacmEnZzMYgbhjz1Z2WSvv") else { return }
+                expect(didType.roleType).to(equal(.account))
+                expect(didType.keyType).to(equal(.secp256k1))
+                expect(didType.hashType).to(equal(.sha3))
+                expect(didType.encodingType).to(equal(.base58))
+            })
+
+            it("get did type from a did address - swap works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "z2UHsX5Gzj24oT81Kis6fekS1xTRvdejNqM88") else { return }
+                expect(didType).to(equal(DidType.Types.didTypeForgeSwap))
+            })
+
+            it("get did type from a did address - DELEGATE works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "z2bN1iucQC2obei6B2cJrtp7d9zbVCKoceKEo") else { return }
+                expect(didType).to(equal(DidType.Types.didTypeForgeDelegate))
+            })
+
         }
     }
 }
