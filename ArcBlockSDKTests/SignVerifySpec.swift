@@ -98,5 +98,26 @@ class SignVerifySpec: QuickSpec {
                 
             })
         }
+        
+        describe("get key pair") {
+            it("ed25519 work") {
+                let (pk, sk) = KeyType.ed25519.getKeypair(by: Data.init(hex: "D67C071B6F51D2B61180B9B1AA9BE0DD0704619F0E30453AB4A592B036EDE644E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7"))
+                expect(pk?.bytes.count).to(equal(32))
+                expect(sk?.bytes.count).to(equal(32))
+            }
+            
+            it("secp256k1 work") {
+                let (pk, sk) = KeyType.secp256k1.getKeypair(by: Data.init(hex: "18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725"))
+                expect(pk?.bytes.count).to(equal(32))
+                expect(sk?.bytes.count).to(equal(32))
+            }
+
+            it("ethereum work") {
+                let (pk, sk) = KeyType.ethereum.getKeypair(by: Data.init(hex: "18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725"))
+                expect(pk?.bytes.count).to(equal(64))
+                expect(sk?.bytes.count).to(equal(32))
+            }
+
+        }
     }
 }

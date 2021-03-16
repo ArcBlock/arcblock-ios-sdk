@@ -93,7 +93,6 @@ public enum KeyType: Int8 {
         }
     }
 
-    // seed来源
     public func getKeypair() -> (Data?, Data?) {
         switch self {
         case .ed25519:
@@ -104,6 +103,18 @@ public enum KeyType: Int8 {
             return MCrypto.Signer.ETHEREUM.keypair()
         }
     }
+
+    public func getKeypair(by privateKey: Data) -> (Data?, Data?) {
+        switch self {
+        case .ed25519:
+            return (MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)?.prefix(32) , privateKey.prefix(32))
+        case .secp256k1:
+            return (MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)?.prefix(32) , privateKey.prefix(32))
+        case .ethereum:
+            return (MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)?.prefix(64) , privateKey.prefix(32))
+        }
+    }
+
 
     public static func keyTypeWithName(_ name: String) -> KeyType {
         switch name.lowercased() {
@@ -179,8 +190,6 @@ public enum EncodingType: Int8 {
             return value.multibaseEncodedString(inBase: .base16)
         case .base58:
             return value.multibaseEncodedString(inBase: .base58BTC)
-        default:
-            return value.multibaseEncodedString(inBase: .base58BTC)
         }
     }
 }
@@ -218,13 +227,9 @@ public class DidHelper {
 
     // sk2addres
     public static func getUserDid(didType: DidType, privateKey: Data) -> String? {
-        guard let publicKey = didType.keyType.privateKeyToPublicKey(privateKey: privateKey),
-              let address = pkToAddress(didType: didType, publicKey: publicKey) else { return nil }
-        if didType.keyType == .ethereum {
-            return EthereumAddress.toChecksumAddress(address)
-        } else {
-            return "did:abt:" + address
-        }
+        guard let publicKey = didType.keyType.privateKeyToPublicKey(privateKey: privateKey) else { return nil }
+        let pkString = didType.keyType == .ethereum ? publicKey.toHexString() : publicKey.multibaseEncodedString(inBase: .base58BTC)  
+        return DidHelper.getUserDid(didType: didType, publicKey: pkString)
     }
 
     public static func getUserDid(didType: DidType, publicKey: String) -> String? {
@@ -233,7 +238,7 @@ public class DidHelper {
                   let address = pkToAddress(didType: didType, publicKey: data) else {
                 return nil
             }
-            return address
+            return EthereumAddress.toChecksumAddress(address)
         } else {
             guard let data = Data.init(multibaseEncoded: publicKey),
                   let address = pkToAddress(didType: didType, publicKey: data) else {
@@ -294,10 +299,7 @@ public class DidHelper {
     }
     
     public static func getDidEncodingType(did: String) -> EncodingType {
-        var address = did
-        if address.hasPrefix("abt:did:") {
-            address.removeFirst(8)
-        }
+        let address = DidHelper.removeDidPrefix(did)
         if (address.hasPrefix("z")) {
             return .base58
         } else {
