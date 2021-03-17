@@ -170,26 +170,41 @@ public struct MCrypto {
         public struct ETHEREUM {
             // 没有04 少0x
             public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
-                guard let pkStr = ETHEREUM.privateKeyToPublicKeyString(privateKey: privateKey) else {
+                guard let pkData = Web3.Utils.privateToPublic(privateKey) else {
                     return nil
                 }
                 
-                return Data.init(hex: pkStr)
-            }
-            
-            public static func privateKeyToPublicKeyString(privateKey: Data) -> String? {
-                guard let pkStr = Web3.Utils.privateToPublic(privateKey)?.toHexString() else {
+                var publicKey = pkData
+                if publicKey.bytes.count == 65 {
+                    publicKey.removeFirst()
+                }
+                
+                if publicKey.bytes.count != 64 {
                     return nil
                 }
-                var pkString = pkStr
-                pkString.removeSubrange(pkString.startIndex...pkString.index(pkString.startIndex, offsetBy: 1))
-                pkString = pkString.uppercased()
-                pkString.insert(contentsOf: "0x", at: pkString.startIndex)
-                return pkString
+                
+                return publicKey
             }
             
             public static func keypair() -> (Data?, Data?) {
-                return MCrypto.Signer.M_SECP256K1.keypair()
+                let (publicKey, privateKey) = MCrypto.Signer.M_SECP256K1.keypair()
+                guard let pk = publicKey else {
+                    return (nil, nil)
+                }
+                var stipped = pk.bytes
+                
+                if (stipped.count == 65) {
+                    if (stipped[0] != 4) {
+                        return (nil, nil)
+                    }
+                    stipped = Array(stipped[1...64])
+                }
+                
+                if stipped.count != 64 {
+                    return (nil, nil)
+                }
+                
+                return (Data(stipped), privateKey)
             }
             
             public static func verify(message: Data, signature: Data, publicKey: Data) -> Bool {

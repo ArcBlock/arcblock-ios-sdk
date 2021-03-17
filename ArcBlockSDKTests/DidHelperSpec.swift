@@ -49,8 +49,11 @@ class DidHelperSpec: QuickSpec {
             it("works", closure: {
                 let publicKey = "z7CaThvPHdaMd3HsnEbiC9986vZgiiVLGV5UhUzpW6fYx"
                 let did = "did:abt:z115ZCfaB7LYj9i2uxr4hknJJMLe7GkZASY4"
+                guard let pk = Data(multibaseEncoded: publicKey) else {
+                    fatalError()
+                }
                 if let didType = DidHelper.calculateTypesFromDid(did: did) {
-                    expect(DidHelper.getUserDid(didType: didType, publicKey: publicKey)).to(equal(did))
+                    expect(DidHelper.getUserDid(didType: didType, publicKey: pk)).to(equal(did))
                 }
             })
         }
@@ -112,7 +115,7 @@ class DidHelperSpec: QuickSpec {
                 etherumCase.forEach { (dict) in
                     let pk = dict["publicKey"]!
                     let address = dict["address"]!
-                    expect(DidHelper.getUserDid(didType: DidType.Types.didTypeForgeEthereum, publicKey: pk)).to(equal(address))
+                    expect(DidHelper.getUserDid(didType: DidType.Types.didTypeForgeEthereum, publicKey: Data.init(hex: pk))).to(equal(address))
                 }
             })
             

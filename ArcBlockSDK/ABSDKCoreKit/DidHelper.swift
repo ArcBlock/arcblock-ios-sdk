@@ -107,11 +107,11 @@ public enum KeyType: Int8 {
     public func getKeypair(by privateKey: Data) -> (Data?, Data?) {
         switch self {
         case .ed25519:
-            return (MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)?.prefix(32) , privateKey.prefix(32))
+            return (MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
         case .secp256k1:
-            return (MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)?.prefix(32) , privateKey.prefix(32))
+            return (MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
         case .ethereum:
-            return (MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)?.prefix(64) , privateKey.prefix(32))
+            return (MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
         }
     }
 
@@ -228,20 +228,17 @@ public class DidHelper {
     // sk2addres
     public static func getUserDid(didType: DidType, privateKey: Data) -> String? {
         guard let publicKey = didType.keyType.privateKeyToPublicKey(privateKey: privateKey) else { return nil }
-        let pkString = didType.keyType == .ethereum ? publicKey.toHexString() : publicKey.multibaseEncodedString(inBase: .base58BTC)  
-        return DidHelper.getUserDid(didType: didType, publicKey: pkString)
+        return DidHelper.getUserDid(didType: didType, publicKey: publicKey)
     }
 
-    public static func getUserDid(didType: DidType, publicKey: String) -> String? {
+    public static func getUserDid(didType: DidType, publicKey: Data) -> String? {
         if didType.keyType == .ethereum {
-            guard let data = Web3.Utils.hexToData(publicKey),
-                  let address = pkToAddress(didType: didType, publicKey: data) else {
+            guard let address = pkToAddress(didType: didType, publicKey: publicKey) else {
                 return nil
             }
             return EthereumAddress.toChecksumAddress(address)
         } else {
-            guard let data = Data.init(multibaseEncoded: publicKey),
-                  let address = pkToAddress(didType: didType, publicKey: data) else {
+            guard let address = pkToAddress(didType: didType, publicKey: publicKey) else {
                 return nil
             }
             return "did:abt:" + address

@@ -73,10 +73,10 @@ class SignVerifySpec: QuickSpec {
             guard let secp256k1_pk = MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: sk) else { fatalError() }
             guard let eth_pk = MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: sk) else { fatalError() }
                         
-            guard let ed25519_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForge, publicKey: ed25519_pk.multibaseEncodedString(inBase: .base58BTC)) else { fatalError() }
-            guard let secp256k1_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeSecp256k1, publicKey: secp256k1_pk.multibaseEncodedString(inBase: .base58BTC)) else { fatalError() }
-            guard let eth_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeEthereum, publicKey: eth_pk.toHexString()) else { fatalError() }
-            guard let ed25519_base16_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeBase16, publicKey: ed25519_pk.multibaseEncodedString(inBase: .base58BTC)) else { fatalError() }
+            guard let ed25519_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForge, publicKey: ed25519_pk) else { fatalError() }
+            guard let secp256k1_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeSecp256k1, publicKey: secp256k1_pk) else { fatalError() }
+            guard let eth_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeEthereum, publicKey: eth_pk) else { fatalError() }
+            guard let ed25519_base16_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeBase16, publicKey: ed25519_pk) else { fatalError() }
             
             guard let ed25519_sig = MCrypto.Signer.ED25519.sign(message: msg, privateKey: sk) else { fatalError() }
             guard let secp256k1_sig = MCrypto.Signer.M_SECP256K1.sign(message: msg, privateKey: sk) else { fatalError() }
@@ -101,21 +101,32 @@ class SignVerifySpec: QuickSpec {
         
         describe("get key pair") {
             it("ed25519 work") {
-                let (pk, sk) = KeyType.ed25519.getKeypair(by: Data.init(hex: "D67C071B6F51D2B61180B9B1AA9BE0DD0704619F0E30453AB4A592B036EDE644E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7"))
-                expect(pk?.bytes.count).to(equal(32))
-                expect(sk?.bytes.count).to(equal(32))
+                for _ in 0...100 {
+                    let (randomPk, randomSk) = KeyType.ed25519.getKeypair()
+
+    //                let (pk, sk) = KeyType.ed25519.getKeypair(by: Data.init(hex: "D67C071B6F51D2B61180B9B1AA9BE0DD0704619F0E30453AB4A592B036EDE644E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7"))
+                    expect(randomPk?.bytes.count).to(equal(32))
+                    expect(randomSk?.bytes.count).to(equal(32))
+                }
             }
-            
+
             it("secp256k1 work") {
-                let (pk, sk) = KeyType.secp256k1.getKeypair(by: Data.init(hex: "18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725"))
-                expect(pk?.bytes.count).to(equal(32))
-                expect(sk?.bytes.count).to(equal(32))
+                for _ in 0...100 {
+                    let (randomPk, randomSk) = KeyType.secp256k1.getKeypair()
+
+    //                let (pk, sk) = KeyType.secp256k1.getKeypair(by: Data.init(hex: "18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725"))
+                    expect(randomPk?.bytes.count).to(equal(65))
+                    expect(randomSk?.bytes.count).to(equal(32))
+                }
             }
 
             it("ethereum work") {
-                let (pk, sk) = KeyType.ethereum.getKeypair(by: Data.init(hex: "18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725"))
-                expect(pk?.bytes.count).to(equal(64))
-                expect(sk?.bytes.count).to(equal(32))
+                for _ in 0...100 {
+                    let (randomPk, randomSk) = KeyType.ethereum.getKeypair()
+    //                let (pk, sk) = KeyType.ethereum.getKeypair(by: Data.init(hex: "18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725"))
+                    expect(randomPk?.bytes.count).to(equal(64))
+                    expect(randomSk?.bytes.count).to(equal(32))
+                }
             }
 
         }
