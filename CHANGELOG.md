@@ -1,3 +1,10 @@
+## 0.10.0 (March 16, 2021)
+
+- support eth sign & verify
+- support secp256k1 sign & verify
+- support mnemonics 
+
+
 ## 0.9.20 (May 29, 2020)
 
 

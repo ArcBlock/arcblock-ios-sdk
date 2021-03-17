@@ -2,7 +2,9 @@ target 'ArcBlockSDK' do
     use_frameworks!
 
     pod 'Apollo', :git => 'https://github.com/ArcBlock/apollo-ios.git'
-    pod 'SQLite.swift/SQLCipher', :git => 'https://github.com/stephencelis/SQLite.swift.git'
+#    pod 'SQLite.swift/SQLCipher', :git => 'https://github.com/stephencelis/SQLite.swift.git'
+    pod 'SQLCipher', '= 4.2.0'
+    pod 'SQLite.swift/SQLCipher', '~> 0.12.2'
     pod 'ReachabilitySwift'
     pod 'SwiftPhoenixClient'
     pod 'CryptoSwift'
@@ -17,7 +19,9 @@ target 'ArcBlockSDKTests' do
     pod 'Nimble'
     pod 'Quick'
     pod 'Apollo', :git => 'https://github.com/ArcBlock/apollo-ios.git'
-    pod 'SQLite.swift/SQLCipher', :git => 'https://github.com/stephencelis/SQLite.swift.git'
+#    pod 'SQLite.swift/SQLCipher', :git => 'https://github.com/stephencelis/SQLite.swift.git'
+    pod 'SQLCipher', '= 4.2.0'
+    pod 'SQLite.swift/SQLCipher', '~> 0.12.2'
     pod 'ReachabilitySwift'
     pod 'SwiftPhoenixClient'
     pod 'CryptoSwift'

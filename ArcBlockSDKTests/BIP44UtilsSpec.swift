@@ -32,7 +32,7 @@ class BIP44UtilsSpec: QuickSpec {
                 let secretCode = "123456"
                 let recoveryCode = "MzeR6VFvemuWXooxxGzeFP"
                 guard let seed = BIP44Utils.generateSeed(secretCode: secretCode, recoveryCode: recoveryCode) else {
-                    _ = throwAssertion()
+//                    _ = throwAssertion()
                     return
                 }
                 let path = HDNode.defaultPathMetamask
@@ -47,7 +47,7 @@ class BIP44UtilsSpec: QuickSpec {
         describe("ETH key generation") {
             it("works", closure: {
                 guard let seed = Data(base64Encoded: "MzyV7t37IJusabYK4zAks57as4ZSKKOuXuJVqH6DJSn2h794sXnIL4UBpijTf9oyDnM4wWOyoy/kkepfoiA1wg==") else {
-                    _ = throwAssertion()
+//                    _ = throwAssertion()
                     return
                 }
                 let privateKey = BIP44Utils.generatePrivateKey(seed: seed, path: HDNode.defaultPathMetamask)
@@ -55,6 +55,15 @@ class BIP44UtilsSpec: QuickSpec {
                 let address = Web3.Utils.publicToAddressString(publicKey!)
                 expect(privateKey?.toHexString()).to(equal("df29f1911c6264d76feb7d482e83b55a95a3f1df4fe0f4d208b8be2c44142f68"))
                 expect(address).to(equal("0x30a61514525283de572e521afee0500a6b0dee8c"))
+            })
+        }
+        
+        describe("Mnemonics generation") {
+            it("works", closure: {
+                guard let mnemonics = BIP44Utils.generateMnemonics() else { return }
+                let seed = BIP44Utils.getSeedByMnemonics(mnemonics: mnemonics)
+                guard let entropy = BIP39.mnemonicsToEntropy(mnemonics.joined(separator: " ")) else { return }
+                expect(seed).to(equal(BIP39.seedFromEntropy(entropy)))                
             })
         }
     }
