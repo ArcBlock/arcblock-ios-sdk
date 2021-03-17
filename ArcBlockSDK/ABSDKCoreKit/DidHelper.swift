@@ -202,6 +202,13 @@ public struct DidType: Equatable {
     public var hashType: HashType = .sha3
     public var encodingType: EncodingType = .base58
     
+    public init(roleType: RoleType, keyType: KeyType, hashType: HashType, encodingType: EncodingType) {
+        self.roleType = roleType
+        self.keyType = keyType
+        self.hashType = hashType
+        self.encodingType = encodingType
+    }
+    
     public struct Types {
         public static let didTypeForge = DidType(roleType: .account, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeDelegate = DidType(roleType: .delegate, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
@@ -213,9 +220,6 @@ public struct DidType: Equatable {
         public static let didTypeForgeTx = DidType(roleType: .tx, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeApplication = DidType(roleType: .application, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeEthereum = DidType(roleType: .account, keyType: .ethereum, hashType: .keccak, encodingType: .base16)
-        // 测试
-        public static let didTypeForgeSecp256k1 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base58)
-        public static let didTypeForgeBase16 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base16)
     }
 }
 
