@@ -25,6 +25,7 @@ import Quick
 import Nimble
 import CryptoSwift
 import ArcBlockSDK
+import web3swift
 
 class MCryptoSpec: QuickSpec {
     override func spec() {
@@ -89,5 +90,29 @@ class MCryptoSpec: QuickSpec {
                 expect(MCrypto.Signer.ED25519.verify(message: message, signature: signature, publicKey: pk)).to(beTrue())
             })
         }
+        
+        describe("ethereum") {
+            let etherumCase = [
+                [
+                    "secretKey" : "4646464646464646464646464646464646464646464646464646464646464646",
+                    "publicKey" : "4BC2A31265153F07E70E0BAB08724E6B85E217F8CD628CEB62974247BB493382CE28CAB79AD7119EE1AD3EBCDB98A16805211530ECC6CFEFA1B88E6DFF99232A",
+                    "address" : "0x9d8A62f656a8d1615C1294fd71e9CFb3E4855A4F"
+                ],
+                [
+                    "secretKey" : "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                    "publicKey" : "4646AE5047316B4230D0086C8ACEC687F00B1CD9D1DC634F6CB358AC0A9A8FFFFE77B4DD0A4BFB95851F3B7355C781DD60F8418FC8A65D14907AFF47C903A559",
+                    "address" : "0xFCAd0B19bB29D4674531d6f115237E16AfCE377c"
+                ]
+            ]
+            
+            it("sk to pk works", closure: {
+                etherumCase.forEach { (dict) in
+                    let sk = dict["secretKey"]!
+                    let pk = dict["publicKey"]!
+                    expect(MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: Data.init(hex: sk))?.toHexString().uppercased()).to(equal(pk))
+                }
+            })
+        }
     }
 }
+    

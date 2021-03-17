@@ -79,13 +79,17 @@ public enum RoleType: Int8 {
 public enum KeyType: Int8 {
     case ed25519 = 0
     case secp256k1 = 1
+    case ethereum = 2
 
+    // childSeed to PublicKey
     public func privateKeyToPublicKey(privateKey: Data) -> Data? {
         switch self {
         case .ed25519:
             return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)
         case .secp256k1:
-            return nil
+            return MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)
         }
     }
 
@@ -94,16 +98,32 @@ public enum KeyType: Int8 {
         case .ed25519:
             return MCrypto.Signer.ED25519.keypair()
         case .secp256k1:
-            return (nil, nil)
+            return MCrypto.Signer.M_SECP256K1.keypair()
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.keypair()
         }
     }
 
+    public func getKeypair(by privateKey: Data) -> (Data?, Data?) {
+        switch self {
+        case .ed25519:
+            return (MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
+        case .secp256k1:
+            return (MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
+        case .ethereum:
+            return (MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
+        }
+    }
+
+
     public static func keyTypeWithName(_ name: String) -> KeyType {
-        switch "name" {
+        switch name.lowercased() {
         case "secp256k1":
             return .secp256k1
         case "ed25519":
             return .ed25519
+        case "ethereum" :
+            return .ethereum
         default:
             return .ed25519
         }
@@ -160,33 +180,79 @@ public enum HashType: Int8 {
     }
 }
 
-public class DidHelper {
-    public static func getUserDid(userPrivateKey: Data) -> String? {
-        return getUserDid(roleType: .account, keyType: .ed25519, hashType: .sha3, privateKey: userPrivateKey)
-    }
-
-    public static func getUserDid(roleType: RoleType, keyType: KeyType, hashType: HashType, privateKey: Data) -> String? {
-        guard let publicKey = keyType.privateKeyToPublicKey(privateKey: privateKey),
-            let address = pkToAddress(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: publicKey) else { return nil }
-        return "did:abt:" + address
-    }
-
-    public static func getUserDid(roleType: RoleType, keyType: KeyType, hashType: HashType, publicKey: String) -> String? {
-        guard let data = Data.init(multibaseEncoded: publicKey),
-            let address = pkToAddress(roleType: roleType, keyType: keyType, hashType: hashType, publicKey: data) else {
-                return nil
+public enum EncodingType: Int8 {
+    case base16 = 0
+    case base58 = 1
+    
+    public func encodedtring(_ value: Data) -> String {
+        switch self {
+        case .base16:
+            return value.multibaseEncodedString(inBase: .base16)
+        case .base58:
+            return value.multibaseEncodedString(inBase: .base58BTC)
         }
-        return "did:abt:" + address
+    }
+}
+
+public struct DidType: Equatable {
+    
+    
+    public var roleType: RoleType = .account
+    public var keyType: KeyType = .ed25519
+    public var hashType: HashType = .sha3
+    public var encodingType: EncodingType = .base58
+    
+    public struct Types {
+        public static let didTypeForge = DidType(roleType: .account, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeDelegate = DidType(roleType: .delegate, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeTether = DidType(roleType: .tether, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeValidator = DidType(roleType: .validator, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeNode = DidType(roleType: .node, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeSwap = DidType(roleType: .swap, keyType: .ed25519, hashType: .sha2, encodingType: .base58)
+        public static let didTypeForgeStake = DidType(roleType: .stake, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeTx = DidType(roleType: .tx, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeApplication = DidType(roleType: .application, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeEthereum = DidType(roleType: .account, keyType: .ethereum, hashType: .keccak, encodingType: .base16)
+        // 测试
+        public static let didTypeForgeSecp256k1 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base58)
+        public static let didTypeForgeBase16 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base16)
+    }
+}
+
+public class DidHelper {
+    
+    public static func getUserDid(userPrivateKey: Data) -> String? {        
+        return getUserDid(didType: DidType.Types.didTypeForge, privateKey: userPrivateKey)
+    }
+
+    // sk2addres
+    public static func getUserDid(didType: DidType, privateKey: Data) -> String? {
+        guard let publicKey = didType.keyType.privateKeyToPublicKey(privateKey: privateKey) else { return nil }
+        return DidHelper.getUserDid(didType: didType, publicKey: publicKey)
+    }
+
+    public static func getUserDid(didType: DidType, publicKey: Data) -> String? {
+        if didType.keyType == .ethereum {
+            guard let address = pkToAddress(didType: didType, publicKey: publicKey) else {
+                return nil
+            }
+            return EthereumAddress.toChecksumAddress(address)
+        } else {
+            guard let address = pkToAddress(didType: didType, publicKey: publicKey) else {
+                return nil
+            }
+            return "did:abt:" + address
+        }
     }
 
     public static func getSwapAddress(data: Data) -> String? {
-        return hashToAddress(roleType: .swap, keyType: .ed25519, hashType: .sha2, hash: data)
+        return hashToAddress(didType: DidType.Types.didTypeForgeSwap, hash: data)
     }
 
     public static func getDelegateAddress(sender: String, receiver: String) -> String? {
         if let senderData = sender.data(using: .utf8),
             let receiverData = receiver.data(using: .utf8) {
-            return hashToAddress(roleType: .delegate, keyType: .ed25519, hashType: .sha3, hash: MCrypto.Hasher.Sha3.sha(senderData + receiverData))
+            return hashToAddress(didType: DidType.Types.didTypeForgeDelegate, hash: MCrypto.Hasher.Sha3.sha(senderData + receiverData))
         }
         return nil
     }
@@ -195,51 +261,91 @@ public class DidHelper {
         return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: userPrivateKey)
     }
 
-    public static func pkToAddress(roleType: RoleType, keyType: KeyType, hashType: HashType, publicKey: Data) -> String? {
-        if let hash = hashType.hash(data: publicKey) {
-            return hashToAddress(roleType: roleType, keyType: keyType, hashType: hashType, hash: hash)
+    public static func pkToAddress(didType: DidType, publicKey: Data) -> String? {
+        if didType.keyType == .ethereum {
+            let address = Web3.Utils.publicToAddress(publicKey)
+            return address?.address
+        } else if let hash = didType.hashType.hash(data: publicKey) {
+            return hashToAddress(didType: didType, hash: hash)
         }
         return nil
     }
 
-    private static func hashToAddress(roleType: RoleType, keyType: KeyType, hashType: HashType, hash: Data) -> String? {
+    private static func hashToAddress(didType: DidType, hash: Data) -> String? {
         let truncatedHash = hash.prefix(20)
-        let didTypeBytes = calculateTypeBytes(roleType: roleType, keyType: keyType, hashType: hashType)
+        let didTypeBytes = calculateTypeBytes(didType: didType)
         let prefixedHash = didTypeBytes + truncatedHash
-        if let extendedHash = hashType.hash(data: prefixedHash) {
+        if let extendedHash = didType.hashType.hash(data: prefixedHash) {
             let suffix = extendedHash.prefix(4)
             let fullHash = prefixedHash + suffix
-            let base58DidString = fullHash.multibaseEncodedString(inBase: .base58BTC)
-            return base58DidString
+            var encodeDidString = didType.encodingType.encodedtring(fullHash)
+            if didType.encodingType == .base16 {                
+                encodeDidString = "0x" + encodeDidString
+            }
+            return encodeDidString
         }
         return nil
     }
 
-    public static func calculateTypeBytes(roleType: RoleType, keyType: KeyType, hashType: HashType) -> Data {
+    public static func calculateTypeBytes(didType: DidType) -> Data {
         var didTypeBytes: UInt16 = 0
-        didTypeBytes = didTypeBytes | (UInt16(roleType.rawValue) << 10)
-        didTypeBytes = didTypeBytes | (UInt16(keyType.rawValue) << 5)
-        didTypeBytes = didTypeBytes | (UInt16(hashType.rawValue))
+        didTypeBytes = didTypeBytes | (UInt16(didType.roleType.rawValue) << 10)
+        didTypeBytes = didTypeBytes | (UInt16(didType.keyType.rawValue) << 5)
+        didTypeBytes = didTypeBytes | (UInt16(didType.hashType.rawValue))
         return didTypeBytes.bigEndian.data
     }
-
-    public static func calculateTypesFromDid(did: String) -> (roleType: RoleType, keyType: KeyType, hashType: HashType)? {
-        var base58Did = did
-        if let didWithoutPrefix = did.split(separator: ":").last {
-            base58Did = String(didWithoutPrefix)
+    
+    public static func getDidEncodingType(did: String) -> EncodingType {
+        let address = DidHelper.removeDidPrefix(did)
+        if (address.hasPrefix("z")) {
+            return .base58
+        } else {
+            return .base16
         }
-        guard let base58DidData = Data.init(multibaseEncoded: base58Did) else {
+    }
+
+    public static func calculateTypesFromDid(did: String) -> DidType? {
+        if did.isEmpty {
+            return DidType.Types.didTypeForge
+        }
+        if let address = EthereumAddress(did),
+           address.isValid {
+            return DidType.Types.didTypeForgeEthereum
+        }
+        
+        var encodedDid = did
+        if let didWithoutPrefix = did.split(separator: ":").last {
+            encodedDid = String(didWithoutPrefix)
+        }
+        
+        if encodedDid.hasPrefix("0x") {
+            encodedDid.removeFirst(2)
+        }
+        
+        guard let encodedDidData = Data.init(multibaseEncoded: encodedDid) else {
             return nil
         }
 
-        let didTypeBytes = Array(base58DidData.bytes.prefix(2))
+        let didTypeBytes = Array(encodedDidData.bytes.prefix(2))
         let u16 = UInt16(didTypeBytes[0]) << 8 + UInt16(didTypeBytes[1])
         guard let hashType = HashType.init(rawValue: Int8(u16 & 0b00011111)),
             let keyType = KeyType.init(rawValue: Int8((u16 >> 5) & 0b00011111)),
             let roleType = RoleType.init(rawValue: Int8((u16 >> 10) & 0b00111111)) else {
                 return nil
         }
-        return (roleType, keyType, hashType)
+        
+        let encodingType = DidHelper.getDidEncodingType(did: did)
+        
+        return DidType(roleType: roleType, keyType: keyType, hashType: hashType, encodingType: encodingType)
+    }
+    
+    public static func removeDidPrefix(_ did: String) -> String {
+        if did.hasPrefix("did:abt:") {
+            var newDid = did
+            newDid.removeFirst(8)
+            return newDid
+        }
+        return did
     }
 }
 
