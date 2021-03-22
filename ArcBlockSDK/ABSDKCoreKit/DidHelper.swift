@@ -221,6 +221,17 @@ public struct DidType: Equatable {
         public static let didTypeForgeApplication = DidType(roleType: .application, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeEthereum = DidType(roleType: .account, keyType: .ethereum, hashType: .keccak, encodingType: .base16)
     }
+    
+    public func sign(message: Data, privateKey: Data) -> Data? {
+        switch self.keyType {
+        case .ed25519:
+            return MCrypto.Signer.ED25519.sign(message: message, privateKey: privateKey)
+        case .secp256k1:
+            return MCrypto.Signer.M_SECP256K1.sign(message: message, privateKey: privateKey)
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.sign(message: message, privateKey: privateKey)
+        }
+    }
 }
 
 public class DidHelper {
