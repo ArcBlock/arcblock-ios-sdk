@@ -128,6 +128,17 @@ public enum KeyType: Int8 {
             return .ed25519
         }
     }
+    
+    public func name() -> String {
+        switch self {
+        case .ed25519:
+            return "ed25519"
+        case .secp256k1:
+            return "secp256k1"
+        case .ethereum:
+            return "ethereum"
+        }
+    }
 }
 
 public enum HashType: Int8 {
