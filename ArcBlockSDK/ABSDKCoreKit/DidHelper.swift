@@ -333,8 +333,7 @@ public class DidHelper {
     }
     
     public static func getDidEncodingType(did: String) -> EncodingType {
-        let address = DidHelper.removeDidPrefix(did)
-        if (address.hasPrefix("z")) {
+        if (did.hasPrefix("z")) {
             return .base58
         } else {
             return .base16
@@ -345,15 +344,15 @@ public class DidHelper {
         if did.isEmpty {
             return DidType.Types.didTypeForge
         }
-        if let address = EthereumAddress(did),
+
+        let didWithoutPrefix = DidHelper.removeDidPrefix(did)
+        
+        if let address = EthereumAddress(didWithoutPrefix),
            address.isValid {
             return DidType.Types.didTypeForgeEthereum
         }
         
-        var encodedDid = did
-        if let didWithoutPrefix = did.split(separator: ":").last {
-            encodedDid = String(didWithoutPrefix)
-        }
+        var encodedDid = didWithoutPrefix
         
         if encodedDid.hasPrefix("0x") {
             encodedDid.removeFirst(2)
@@ -371,7 +370,7 @@ public class DidHelper {
                 return nil
         }
         
-        let encodingType = DidHelper.getDidEncodingType(did: did)
+        let encodingType = DidHelper.getDidEncodingType(did: didWithoutPrefix)
         
         return DidType(roleType: roleType, keyType: keyType, hashType: hashType, encodingType: encodingType)
     }
