@@ -254,6 +254,17 @@ public struct DidType: Equatable {
             return MCrypto.Signer.ETHEREUM.verify(message: message, signature: signature, publicKey: publicKey)
         }
     }
+    
+    public func getUserPk(privateKey: Data) -> Data? {
+        switch self.keyType {
+        case .ed25519:
+            return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)
+        case .secp256k1:
+            return MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)
+        }
+    }
 }
 
 public class DidHelper {
