@@ -305,8 +305,8 @@ public class DidHelper {
         return nil
     }
 
-    public static func getUserPk(userPrivateKey: Data) -> Data? {
-        return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: userPrivateKey)
+    public static func getUserPk(userPrivateKey: Data, didType: DidType) -> Data? {
+        return didType.getUserPk(privateKey: userPrivateKey)        
     }
 
     public static func pkToAddress(didType: DidType, publicKey: Data) -> String? {
