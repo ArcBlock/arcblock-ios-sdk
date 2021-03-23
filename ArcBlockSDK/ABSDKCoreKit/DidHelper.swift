@@ -386,7 +386,10 @@ public class DidHelper {
         return DidType(roleType: roleType, keyType: keyType, hashType: hashType, encodingType: encodingType)
     }
     
-    public static func removeDidPrefix(_ did: String) -> String {
+    public static func removeDidPrefix(_ did: String?) -> String {
+        guard let did = did else {
+            return ""
+        }
         if did.hasPrefix("did:abt:") {
             var newDid = did
             newDid.removeFirst(8)
