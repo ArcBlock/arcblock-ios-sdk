@@ -128,6 +128,17 @@ public enum KeyType: Int8 {
             return .ed25519
         }
     }
+    
+    public func name() -> String {
+        switch self {
+        case .ed25519:
+            return "ed25519"
+        case .secp256k1:
+            return "secp256k1"
+        case .ethereum:
+            return "ethereum"
+        }
+    }
 }
 
 public enum HashType: Int8 {
@@ -202,6 +213,13 @@ public struct DidType: Equatable {
     public var hashType: HashType = .sha3
     public var encodingType: EncodingType = .base58
     
+    public init(roleType: RoleType, keyType: KeyType, hashType: HashType, encodingType: EncodingType) {
+        self.roleType = roleType
+        self.keyType = keyType
+        self.hashType = hashType
+        self.encodingType = encodingType
+    }
+    
     public struct Types {
         public static let didTypeForge = DidType(roleType: .account, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeDelegate = DidType(roleType: .delegate, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
@@ -213,9 +231,39 @@ public struct DidType: Equatable {
         public static let didTypeForgeTx = DidType(roleType: .tx, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeApplication = DidType(roleType: .application, keyType: .ed25519, hashType: .sha3, encodingType: .base58)
         public static let didTypeForgeEthereum = DidType(roleType: .account, keyType: .ethereum, hashType: .keccak, encodingType: .base16)
-        // 测试
-        public static let didTypeForgeSecp256k1 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base58)
-        public static let didTypeForgeBase16 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base16)
+    }
+    
+    public func sign(message: Data, privateKey: Data) -> Data? {
+        switch self.keyType {
+        case .ed25519:
+            return MCrypto.Signer.ED25519.sign(message: message, privateKey: privateKey)
+        case .secp256k1:
+            return MCrypto.Signer.M_SECP256K1.sign(message: message, privateKey: privateKey)
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.sign(message: message, privateKey: privateKey)
+        }
+    }
+    
+    public func verify(message: Data, signature: Data, publicKey: Data) -> Bool {
+        switch self.keyType {
+        case .ed25519:
+            return MCrypto.Signer.ED25519.verify(message: message, signature: signature, publicKey: publicKey)
+        case .secp256k1:
+            return MCrypto.Signer.M_SECP256K1.verify(message: message, signature: signature, publicKey: publicKey)
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.verify(message: message, signature: signature, publicKey: publicKey)
+        }
+    }
+    
+    public func getUserPk(privateKey: Data) -> Data? {
+        switch self.keyType {
+        case .ed25519:
+            return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: privateKey)
+        case .secp256k1:
+            return MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)
+        case .ethereum:
+            return MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)
+        }
     }
 }
 
@@ -257,8 +305,8 @@ public class DidHelper {
         return nil
     }
 
-    public static func getUserPk(userPrivateKey: Data) -> Data? {
-        return MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: userPrivateKey)
+    public static func getUserPk(userPrivateKey: Data, didType: DidType) -> Data? {
+        return didType.getUserPk(privateKey: userPrivateKey)        
     }
 
     public static func pkToAddress(didType: DidType, publicKey: Data) -> String? {
@@ -296,8 +344,7 @@ public class DidHelper {
     }
     
     public static func getDidEncodingType(did: String) -> EncodingType {
-        let address = DidHelper.removeDidPrefix(did)
-        if (address.hasPrefix("z")) {
+        if (did.hasPrefix("z")) {
             return .base58
         } else {
             return .base16
@@ -308,15 +355,15 @@ public class DidHelper {
         if did.isEmpty {
             return DidType.Types.didTypeForge
         }
-        if let address = EthereumAddress(did),
+
+        let didWithoutPrefix = DidHelper.removeDidPrefix(did)
+        
+        if let address = EthereumAddress(didWithoutPrefix),
            address.isValid {
             return DidType.Types.didTypeForgeEthereum
         }
         
-        var encodedDid = did
-        if let didWithoutPrefix = did.split(separator: ":").last {
-            encodedDid = String(didWithoutPrefix)
-        }
+        var encodedDid = didWithoutPrefix
         
         if encodedDid.hasPrefix("0x") {
             encodedDid.removeFirst(2)
@@ -334,7 +381,7 @@ public class DidHelper {
                 return nil
         }
         
-        let encodingType = DidHelper.getDidEncodingType(did: did)
+        let encodingType = DidHelper.getDidEncodingType(did: didWithoutPrefix)
         
         return DidType(roleType: roleType, keyType: keyType, hashType: hashType, encodingType: encodingType)
     }

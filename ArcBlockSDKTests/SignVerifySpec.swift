@@ -72,11 +72,13 @@ class SignVerifySpec: QuickSpec {
             guard let ed25519_pk = MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: sk) else { fatalError() }
             guard let secp256k1_pk = MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: sk) else { fatalError() }
             guard let eth_pk = MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: sk) else { fatalError() }
-                        
+            
+            let didTypeForgeBase16 = DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base16)
+            
             guard let ed25519_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForge, publicKey: ed25519_pk) else { fatalError() }
-            guard let secp256k1_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeSecp256k1, publicKey: secp256k1_pk) else { fatalError() }
+            guard let secp256k1_did = DidHelper.getUserDid(didType: DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base58), publicKey: secp256k1_pk) else { fatalError() }
             guard let eth_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeEthereum, publicKey: eth_pk) else { fatalError() }
-            guard let ed25519_base16_did = DidHelper.getUserDid(didType: DidType.Types.didTypeForgeBase16, publicKey: ed25519_pk) else { fatalError() }
+            guard let ed25519_base16_did = DidHelper.getUserDid(didType: didTypeForgeBase16, publicKey: ed25519_pk) else { fatalError() }
             
             guard let ed25519_sig = MCrypto.Signer.ED25519.sign(message: msg, privateKey: sk) else { fatalError() }
             guard let secp256k1_sig = MCrypto.Signer.M_SECP256K1.sign(message: msg, privateKey: sk) else { fatalError() }
@@ -86,11 +88,11 @@ class SignVerifySpec: QuickSpec {
             
             it("works", closure: {
                 expect(DidHelper.pkToAddress(didType: DidType.Types.didTypeForge, publicKey: ed25519_pk)).to(equal(DidHelper.removeDidPrefix(ed25519_did)))
-                expect(DidHelper.pkToAddress(didType: DidType.Types.didTypeForgeSecp256k1, publicKey: secp256k1_pk)).to(equal(DidHelper.removeDidPrefix(secp256k1_did)))
+                expect(DidHelper.pkToAddress(didType: DidType(roleType: .account, keyType: .secp256k1, hashType: .sha3, encodingType: .base58), publicKey: secp256k1_pk)).to(equal(DidHelper.removeDidPrefix(secp256k1_did)))
                 expect(DidHelper.pkToAddress(didType: DidType.Types.didTypeForgeEthereum, publicKey: eth_pk)).to(equal(DidHelper.removeDidPrefix(eth_did)))
                 
-                expect(DidHelper.calculateTypesFromDid(did: ed25519_base16_did)).to(equal(DidType.Types.didTypeForgeBase16))
-                expect(DidHelper.calculateTypesFromDid(did: ed25519_base16_did)).to(equal(DidType.Types.didTypeForgeBase16))
+                expect(DidHelper.calculateTypesFromDid(did: ed25519_base16_did)).to(equal(didTypeForgeBase16))
+                expect(DidHelper.calculateTypesFromDid(did: ed25519_base16_did)).to(equal(didTypeForgeBase16))
                                 
                 expect(MCrypto.Signer.ED25519.verify(message: msg, signature: ed25519_sig, publicKey: ed25519_pk)).to(beTrue())
                 expect(MCrypto.Signer.M_SECP256K1.verify(message: msg, signature: secp256k1_sig, publicKey: secp256k1_pk)).to(beTrue())
