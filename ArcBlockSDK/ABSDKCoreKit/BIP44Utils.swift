@@ -72,10 +72,22 @@ public class BIP44Utils {
         if appDid == "eth" {
             return HDNode.defaultPathMetamask
         } else {
-            guard let appDidHash = appDid.components(separatedBy: ":").last,
-                let appDidBytes = Data.init(multibaseEncoded: appDidHash) else {
+            guard let appDidHash = appDid.components(separatedBy: ":").last else {
                     return nil
             }
+            let did = DidHelper.removeDidPrefix(appDid)
+            let encodeType = DidHelper.getDidEncodingType(did: did)
+            var didData: Data?
+            if encodeType == .base16 {
+                didData = Data(hex: did)
+            } else {
+                didData = Data(multibaseEncoded: did)
+            }
+            
+            guard let appDidBytes = didData else {
+                return nil
+            }
+            
             let appDidSha3Prefix = MCrypto.Hasher.Sha3.sha256(appDidBytes).prefix(8)
             let sk1 = (UInt32(bigEndian: appDidSha3Prefix.prefix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
             let sk2 = (UInt32(bigEndian: appDidSha3Prefix.suffix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1

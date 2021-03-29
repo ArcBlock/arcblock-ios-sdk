@@ -1,3 +1,12 @@
+## 0.10.2 (March 29, 2021)
+
+
+
+## 0.10.1 (March 17, 2021)
+
+- add DidType public init
+
+
 ## 0.10.0 (March 16, 2021)
 
 - support eth sign & verify

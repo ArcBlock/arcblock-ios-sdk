@@ -27,14 +27,14 @@ import SwiftProtobuf
 import BigInt
 
 public struct TxParams {
-    var hashType: ForgeAbi_HashType
-    var keyType: ForgeAbi_KeyType
+    var hashType: HashType
+    var keyType: KeyType
     var chainId: String
     var from: String
     var nonce: UInt64
     var delegatee: String?
 
-    public init(hashType: ForgeAbi_HashType, keyType: ForgeAbi_KeyType,
+    public init(hashType: HashType, keyType: KeyType,
                 chainId: String, from: String, nonce: UInt64? = nil, delegatee: String? = nil) {
         self.hashType = hashType
         self.keyType = keyType
@@ -50,12 +50,8 @@ public struct TxParams {
 }
 
 public class TxHelper {
-    public static func createDeclareTx(chainId: String, issuer: String? = nil, moniker: String? = nil, publicKey: Data, privateKey: Data, address: String) -> String? {
+    public static func createDeclareTx(chainId: String, issuer: String? = nil, moniker: String? = nil, publicKey: Data, privateKey: Data, address: String, didType: DidType) -> String? {
         var declareTx = ForgeAbi_DeclareTx.init()
-        var walletType = ForgeAbi_WalletType.init()
-        walletType.pk = ForgeAbi_KeyType.ed25519
-        walletType.hash = ForgeAbi_HashType.sha3
-        walletType.address = ForgeAbi_EncodingType.base58
         declareTx.moniker = moniker ?? "account"
         if let issuer = issuer {
             declareTx.issuer = issuer
@@ -64,14 +60,14 @@ public class TxHelper {
         guard let tx = try? declareTx.serializedData() else {
             return nil
         }
-        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: address)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.declare.rawValue, txParams: txParams, privateKey: privateKey, publicKey: publicKey)
         return txString
     }
 
     public static func createSetupSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                         demandToken: Double, demandAssets: [String] = [], blockHeight: UInt32, hashKey: Data, receiver: String) -> String? {
+                                         demandToken: Double, demandAssets: [String] = [], blockHeight: UInt32, hashKey: Data, receiver: String, didType: DidType) -> String? {
         var setupSwapTx = ForgeAbi_SetupSwapTx()
 
         var demandTokenValue = ForgeAbi_BigUint()
@@ -88,7 +84,7 @@ public class TxHelper {
             return nil
         }
 
-        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: from, delegatee: delegatee)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.setupSwap.rawValue, txParams: txParams,
                                    privateKey: privateKey, publicKey: publicKey)
@@ -96,7 +92,7 @@ public class TxHelper {
         return txString
     }
 
-    public static func createRetrieveSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, swapAddress: String, hashKey: Data) -> String? {
+    public static func createRetrieveSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, swapAddress: String, hashKey: Data, didType: DidType)  -> String? {
         var retrieveSwapTx = ForgeAbi_RetrieveSwapTx()
 
         retrieveSwapTx.address = swapAddress
@@ -106,7 +102,7 @@ public class TxHelper {
             return nil
         }
 
-        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: from)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.retrieveSwap.rawValue, txParams: txParams,
                                    privateKey: privateKey, publicKey: publicKey)
@@ -115,7 +111,7 @@ public class TxHelper {
     }
 
     public static func createRevokeSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                          swapAddress: String) -> String? {
+                                          swapAddress: String, didType: DidType)  -> String? {
         var revokeSwapTx = ForgeAbi_RevokeSwapTx()
 
         revokeSwapTx.address = swapAddress
@@ -124,7 +120,7 @@ public class TxHelper {
             return nil
         }
 
-        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: from, delegatee: delegatee)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.revokeSwap.rawValue, txParams: txParams,
                                    privateKey: privateKey, publicKey: publicKey)
@@ -133,7 +129,7 @@ public class TxHelper {
     }
 
     public static func createTransferTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                        to: String, message: String?, value: BigUInt, assets: [String]? = nil) -> String? {
+                                        to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType)  -> String? {
 
         var transferTx = ForgeAbi_TransferTx.init()
         var txMessage = Google_Protobuf_Any.init()
@@ -157,7 +153,7 @@ public class TxHelper {
             return nil
         }
 
-        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: from, delegatee: delegatee)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.transfer.rawValue,
                                    txParams: txParams, privateKey: privateKey, publicKey: publicKey)
@@ -165,7 +161,7 @@ public class TxHelper {
     }
 
     public static func createWithdrawTokenTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                        to: String, chainType: String, foreignChainId: String, ttl: Date, value: BigUInt) -> String? {
+                                        to: String, chainType: String, foreignChainId: String, ttl: Date, value: BigUInt, didType: DidType)  -> String? {
         var withdrawTokenTx = ForgeAbi_WithdrawTokenTx()
         withdrawTokenTx.to = to
         withdrawTokenTx.chainID = foreignChainId
@@ -179,7 +175,7 @@ public class TxHelper {
             return nil
         }
 
-        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: from, delegatee: delegatee)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.withdrawToken.rawValue, txParams: txParams,
                                    privateKey: privateKey, publicKey: publicKey)
@@ -188,7 +184,7 @@ public class TxHelper {
     }
 
     public static func createDelegateTx(chainId: String, publicKey: Data, privateKey: Data, from: String,
-                                        to: String, ops: [String: [String]]) -> String? {
+                                        to: String, ops: [String: [String]], didType: DidType)  -> String? {
         guard let delegateAddress = DidHelper.getDelegateAddress(sender: from, receiver: to),
             ops.count > 0 else {
             return nil
@@ -209,7 +205,7 @@ public class TxHelper {
             return nil
         }
 
-        let txParams = TxParams(hashType: ForgeAbi_HashType.sha3, keyType: ForgeAbi_KeyType.ed25519,
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: from)
         let txString = genTxString(tx: tx, typeUrl: TypeUrl.delegate.rawValue, txParams: txParams,
                                    privateKey: privateKey, publicKey: publicKey)
@@ -294,8 +290,10 @@ public class TxHelper {
         switch txParams.keyType {
         case .ed25519:
             signature = MCrypto.Signer.ED25519.sign(message: message, privateKey: privateKey)
-        default:
-            signature = nil
+        case .secp256k1:
+            signature = MCrypto.Signer.M_SECP256K1.sign(message: message, privateKey: privateKey)
+        case .ethereum:
+            signature = MCrypto.Signer.ETHEREUM.sign(message: message, privateKey: privateKey)
         }
 
         return signature

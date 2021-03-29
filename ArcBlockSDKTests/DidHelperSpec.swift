@@ -122,6 +122,11 @@ class DidHelperSpec: QuickSpec {
         }
         
         describe("did type from address") {
+            it("get did type from eth address hasPrefix works", closure: {
+                guard let didType = DidHelper.calculateTypesFromDid(did: "did:abt:0x71d75889cbe882cFa747B4BBE9a349163991AE45") else { return }
+                expect(didType).to(equal(DidType.Types.didTypeForgeEthereum))
+            })
+            
             it("get did type from eth address works", closure: {
                 guard let didType = DidHelper.calculateTypesFromDid(did: "0xFCAd0B19bB29D4674531d6f115237E16AfCE377c") else { return }
                 expect(didType).to(equal(DidType.Types.didTypeForgeEthereum))
