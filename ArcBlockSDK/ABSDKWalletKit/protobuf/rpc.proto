@@ -1,49 +1,19 @@
 syntax = "proto3";
-package forge_abi;
+package ocap;
 
-import "google/protobuf/any.proto";
 import "vendor.proto";
 import "enum.proto";
 import "type.proto";
 import "state.proto";
-import "trace_type.proto";
+import "trace-type.proto";
 
 // Request / Response message definition
 
-// create_tx(itx, wallet, token)
-message RequestCreateTx {
-  google.protobuf.Any itx = 1;
-  string from = 2;
-  uint64 nonce = 3;
-  WalletInfo wallet = 4;
-  string token = 5;
-}
-
-message ResponseCreateTx {
-  StatusCode code = 1;
-  Transaction tx = 2;
-}
-
-// multisig(tx, wallet, token)
-message RequestMultisig {
-  Transaction tx = 1;
-  // extra data for multisig
-  google.protobuf.Any data = 2;
-  WalletInfo wallet = 3;
-  string token = 4;
-  string delegatee = 5;
-}
-
-message ResponseMultisig {
-  StatusCode code = 1;
-  Transaction tx = 2;
-}
-
 // send_tx(tx, wallet, token, commit \\ false)
 message RequestSendTx {
-  Transaction tx = 1;
-  WalletInfo wallet = 2;
-  string token = 3;
+  string tx = 1;
+  WalletInfo wallet = 2 [ deprecated = true ];
+  string token = 3 [ deprecated = true ];
   bool commit = 4;
 }
 
@@ -69,7 +39,7 @@ message ResponseGetBlock {
 }
 
 message RequestGetBlocks {
-  PageInput paging = 1;
+  Page paging = 1;
   RangeFilter height_filter = 2;
   bool empty_excluded = 3;
 }
@@ -78,67 +48,6 @@ message ResponseGetBlocks {
   StatusCode code = 1;
   PageInfo page = 2;
   repeated BlockInfoSimple blocks = 3;
-}
-
-// create_wallet(moniker, passphrase): create an account locally
-message RequestCreateWallet {
-  string passphrase = 1;
-  WalletType type = 2;
-  string moniker = 3;
-}
-
-message ResponseCreateWallet {
-  StatusCode code = 1;
-  string token = 2;
-  WalletInfo wallet = 3;
-}
-
-// load_wallet(address, passphrase): load account to memory with given
-// passphrase
-message RequestLoadWallet {
-  string address = 1;
-  string passphrase = 2;
-}
-
-message ResponseLoadWallet {
-  StatusCode code = 1;
-  string token = 2;
-  WalletInfo wallet = 3;
-}
-
-// recover_wallet(data, passphrase): recover to a keystore with given
-// passphrase. data could be seed words or bytes of secret key.
-message RequestRecoverWallet {
-  bytes data = 1;
-  WalletType type = 2;
-  string passphrase = 3;
-  string moniker = 4;
-}
-
-message ResponseRecoverWallet {
-  StatusCode code = 1;
-  string token = 2;
-  WalletInfo wallet = 3;
-}
-
-// list_wallet(): list accounts stored in this node
-message RequestListWallet {}
-
-message ResponseListWallet {
-  StatusCode code = 1;
-  string address = 2;
-}
-
-// remove_wallet(hash): remove account by hash for this node
-message RequestRemoveWallet { string address = 1; }
-
-message ResponseRemoveWallet { StatusCode code = 1; }
-
-message RequestDeclareNode { bool validator = 1; }
-
-message ResponseDeclareNode {
-  StatusCode code = 1;
-  WalletInfo wallet = 3;
 }
 
 // get_account_state(address, key): retrieve the current state from a list of
@@ -166,28 +75,6 @@ message ResponseGetAssetState {
   AssetState state = 2;
 }
 
-message RequestGetProtocolState {
-  string address = 1;
-  repeated string keys = 2;
-  uint64 height = 3;
-}
-
-message ResponseGetProtocolState {
-  StatusCode code = 1;
-  ProtocolState state = 2;
-}
-
-message RequestGetStakeState {
-  string address = 1;
-  repeated string keys = 2;
-  uint64 height = 3;
-}
-
-message ResponseGetStakeState {
-  StatusCode code = 1;
-  StakeState state = 2;
-}
-
 // get_forge_state(key): retrieve Forge state by key. If key is omitted, return
 // entire Forge state
 message RequestGetForgeState {
@@ -198,17 +85,6 @@ message RequestGetForgeState {
 message ResponseGetForgeState {
   StatusCode code = 1;
   ForgeState state = 2;
-}
-
-message RequestGetTetherState {
-  string address = 1;
-  repeated string keys = 2;
-  uint64 height = 3;
-}
-
-message ResponseGetTetherState {
-  StatusCode code = 1;
-  TetherState state = 2;
 }
 
 message RequestGetSwapState {
@@ -232,27 +108,6 @@ message ResponseGetDelegateState {
   StatusCode code = 1;
   DelegateState state = 2;
 }
-
-// store_file(chunk): store a piece of data into ipfs, return its hash address
-message RequestStoreFile { bytes chunk = 1; }
-
-message ResponseStoreFile {
-  StatusCode code = 1;
-  string hash = 2;
-}
-
-// load_file(hash): load a hash address from ipfs and return the file content
-message RequestLoadFile { string hash = 1; }
-
-message ResponseLoadFile {
-  StatusCode code = 1;
-  bytes chunk = 2;
-}
-
-// pin_file(hash): pin a hash address into ipfs, return ok if success
-message RequestPinFile { string hash = 1; }
-
-message ResponsePinFile { StatusCode code = 1; }
 
 // get_chain_info(): retrieve the current chain information
 message RequestGetChainInfo {}
@@ -281,7 +136,7 @@ message ResponseSearch {
   repeated TransactionInfo txs = 2;
 }
 
-message RequestGetUnconfirmedTxs { PageInput paging = 1; }
+message RequestGetUnconfirmedTxs { Page paging = 1; }
 
 message ResponseGetUnconfirmedTxs {
   StatusCode code = 1;
@@ -321,27 +176,45 @@ message ResponseSubscribe {
     Transaction confirm = 5;
     Transaction create_asset = 6;
     Transaction exchange = 7;
-    Transaction revoke = 8;
+    // Transaction revoke = 8 [ deprecated = true ];
 
-    abci_vendor.RequestBeginBlock begin_block = 16;
-    abci_vendor.RequestEndBlock end_block = 17;
+    vendor.RequestBeginBlock begin_block = 16;
+    vendor.RequestEndBlock end_block = 17;
 
     Transaction declare = 19;
     Transaction update_asset = 20;
     Transaction consensus_upgrade = 21;
-    Transaction declare_file = 22;
+    // Transaction declare_file = 22 [ deprecated = true ];
     Transaction sys_upgrade = 23;
     Transaction stake = 24;
     Transaction delegate = 25;
-    Transaction activate_protocol=26;
-    Transaction deactivate_protocol=27;
+    // Transaction activate_protocol = 26 [ deprecated = true ];
+    // Transaction deactivate_protocol = 27 [ deprecated = true ];
+    Transaction revoke_delegate = 28;
+    Transaction deposit_token = 29;
+    Transaction withdraw_token = 30;
+    Transaction approve_withdraw = 31;
+    Transaction revoke_withdraw = 32;
+    Transaction setup_swap = 33;
+    Transaction revoke_swap = 34;
+    Transaction retrieve_swap = 35;
+    Transaction poke = 36;
+    // Transaction deploy_protocol = 37 [ deprecated = true ];
+    Transaction consume_asset = 38;
+    Transaction acquire_asset = 39;
+    Transaction upgrade_node = 40;
+    Transaction update_validator = 41;
+    Transaction update_consensus_params = 42;
 
     AccountState account_state = 129;
     AssetState asset_state = 130;
     ForgeState forge_state = 131;
-    StakeState stake_state = 132;
-    ProtocolState protocol_state = 133;
+    // StakeState stake_state = 132 [ deprecated = true ];
+    // ProtocolState protocol_state = 133 [ deprecated = true ];
     DelegateState delegate_state = 134;
+    SwapState swap_state = 135;
+
+    Transaction create_token = 136;
   }
 }
 
@@ -376,11 +249,14 @@ message ResponseGetForgeStats {
 }
 
 message RequestListTransactions {
-  PageInput paging = 1;
+  Page paging = 1;
   TimeFilter time_filter = 2;
   AddressFilter address_filter = 3;
   TypeFilter type_filter = 4;
   ValidityFilter validity_filter = 5;
+  FactoryFilter factory_filter = 6;
+  TokenFilter token_filter = 7;
+  AssetFilter asset_filter = 8;
 }
 
 message ResponseListTransactions {
@@ -390,8 +266,9 @@ message ResponseListTransactions {
 }
 
 message RequestListAssets {
-  PageInput paging = 1;
+  Page paging = 1;
   string owner_address = 2;
+  string factory_address = 3;
 }
 
 message ResponseListAssets {
@@ -401,7 +278,7 @@ message ResponseListAssets {
 }
 
 message RequestListStakes {
-  PageInput paging = 1;
+  Page paging = 1;
   AddressFilter address_filter = 2;
 }
 
@@ -418,7 +295,10 @@ message ResponseListAccount {
   IndexedAccountState account = 2;
 }
 
-message RequestListTopAccounts { PageInput paging = 1; }
+message RequestListTopAccounts {
+  Page paging = 1;
+  string tokenAddress = 2;
+}
 
 message ResponseListTopAccounts {
   StatusCode code = 1;
@@ -427,7 +307,7 @@ message ResponseListTopAccounts {
 }
 
 message RequestListAssetTransactions {
-  PageInput paging = 1;
+  Page paging = 1;
   string address = 2;
 }
 
@@ -438,7 +318,7 @@ message ResponseListAssetTransactions {
 }
 
 message RequestListBlocks {
-  PageInput paging = 1;
+  Page paging = 1;
   string proposer = 2;
   TimeFilter time_filter = 3;
   RangeFilter height_filter = 4;
@@ -452,22 +332,8 @@ message ResponseListBlocks {
   repeated IndexedBlock blocks = 3;
 }
 
-message RequestListTethers {
-  PageInput paging = 1;
-  string depositor = 2;
-  string withdrawer = 3;
-  string custodian = 4;
-  bool available = 5;
-}
-
-message ResponseListTethers {
-  StatusCode code = 1;
-  PageInfo page = 2;
-  repeated TetherState tethers = 3;
-}
-
 message RequestListSwap {
-  PageInput paging = 1;
+  Page paging = 1;
   string sender = 2;
   string receiver = 3;
   bool available = 4;
@@ -479,9 +345,61 @@ message ResponseListSwap {
   repeated SwapState swap = 3;
 }
 
+message RequestGetSwapStatistics { string address = 1; }
+
+message ResponseGetSwapStatistics {
+  StatusCode code = 1;
+  SwapStatistics statistics = 2;
+}
+
 message RequestGetHealthStatus {}
 
 message ResponseGetHealthStatus {
   StatusCode code = 1;
   HealthStatus health_status = 2;
+}
+
+// token related
+message RequestGetTokenState {
+  string address = 1;
+}
+message ResponseGetTokenState {
+  StatusCode code = 1;
+  TokenState state = 2;
+}
+message RequestListTokens {
+  Page paging = 1;
+  string issuer_address = 2;
+}
+message ResponseListTokens {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedTokenState tokens = 3;
+}
+
+// asset factory related apis
+message RequestGetFactoryState {
+  string address = 1;
+}
+message ResponseGetFactoryState {
+  StatusCode code = 1;
+  AssetFactoryState state = 2;
+}
+message RequestListFactories {
+  Page paging = 1;
+  string owner_address = 2;
+}
+message ResponseListFactories {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedFactoryState factories = 3;
+}
+
+// account/factory tokens
+message RequestGetAccountTokens {
+  string address = 2; // can be account of factory address
+}
+message ResponseGetAccountTokens {
+  StatusCode code = 1;
+  repeated AccountToken tokens = 3;
 }

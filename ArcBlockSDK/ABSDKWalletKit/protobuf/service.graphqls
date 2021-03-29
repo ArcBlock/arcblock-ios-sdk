@@ -1,0 +1,96 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+  subscription: RootSubscriptionType
+}
+
+scalar Json
+
+type Any {
+  typeUrl: String
+  value: String
+}
+
+type Transaction {
+  from: String!
+  delegator: String
+  nonce: String!
+  chainId: String!
+  pk: String
+  signature: String
+  signatures: [Multisig]
+  itxJson: Json!
+}
+type StateContext {
+  genesisTx: TransactionInfo
+  renaissanceTx: TransactionInfo
+  genesisTime: String
+  renaissanceTime: String
+}
+
+type RootMutationType {
+  sendTx(commit: Boolean, token: String, tx: String, wallet: String): ResponseSendTx
+  unsubscribe(topic: String): ResponseUnsubscribe
+}
+
+type RootQueryType {
+  getAccountState(address: String, height: String, keys: [String]): ResponseGetAccountState
+  getAssetState(address: String, height: String, keys: [String]): ResponseGetAssetState
+  getFactoryState(address: String): ResponseGetFactoryState
+  getDelegateState(address: String, height: String, keys: [String]): ResponseGetDelegateState
+  getTokenState(address: String): ResponseGetTokenState
+  getSwapState(address: String, height: String, keys: [String]): ResponseGetSwapState
+  getForgeState(height: String, keys: [String]): ResponseGetForgeState
+
+  getTx(hash: String): ResponseGetTx
+  getBlock(height: String): ResponseGetBlock
+  getBlocks(emptyExcluded: Boolean, heightFilter: RangeFilterInput, paging: PageInput): ResponseGetBlocks
+  getUnconfirmedTxs(paging: PageInput): ResponseGetUnconfirmedTxs
+
+  getChainInfo: ResponseGetChainInfo
+  getConfig(parsed: Boolean): ResponseGetConfig
+  getHealthStatus: ResponseGetHealthStatus
+  getNetInfo: ResponseGetNetInfo
+  getNodeInfo: ResponseGetNodeInfo
+  getValidatorsInfo: ResponseGetValidatorsInfo
+
+  getForgeStats: ResponseGetForgeStats
+  getForgeStatsByDay(endDate: String, startDate: String): ResponseGetForgeStats
+  getForgeStatsByHour(date: String): ResponseGetForgeStats
+  getSwapStatistics(address: String): ResponseGetSwapStatistics
+
+  listAssetTransactions(address: String, paging: PageInput): ResponseListAssetTransactions
+  listAssets(ownerAddress: String, paging: PageInput, factoryAddress: String): ResponseListAssets
+  listBlocks(
+    heightFilter: RangeFilterInput
+    numInvalidTxsFilter: RangeFilterInput
+    numTxsFilter: RangeFilterInput
+    paging: PageInput
+    proposer: String
+    timeFilter: TimeFilterInput
+  ): ResponseListBlocks
+  listStakes(addressFilter: AddressFilterInput, paging: PageInput): ResponseListStakes
+  listSwap(available: Boolean, paging: String, receiver: String, sender: String): ResponseListSwap
+  listTopAccounts(paging: PageInput, tokenAddress: String): ResponseListTopAccounts
+  listTransactions(
+    addressFilter: AddressFilterInput
+    paging: PageInput
+    timeFilter: TimeFilterInput
+    typeFilter: TypeFilterInput
+    validityFilter: ValidityFilterInput
+    factoryFilter: FactoryFilterInput
+    tokenFilter: TokenFilterInput
+    assetFilter: AssetFilterInput
+  ): ResponseListTransactions
+
+  # since 1.7.0
+  listTokens(issuerAddress: String, paging: PageInput): ResponseListTokens
+  listFactories(ownerAddress: String, paging: PageInput): ResponseListFactories
+
+  # since v1.8.3
+  getAccountTokens(address: String): ResponseGetAccountTokens
+}
+
+type RootSubscriptionType {
+  subscribe(filter: String, topic: String): ResponseSubscribe
+}
