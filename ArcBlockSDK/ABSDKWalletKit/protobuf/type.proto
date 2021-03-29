@@ -1,5 +1,5 @@
 syntax = "proto3";
-package forge_abi;
+package ocap;
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/any.proto";
@@ -12,6 +12,11 @@ message BigUint { bytes value = 1; }
 message BigSint {
   bytes value = 1;
   bool minus = 2;
+}
+
+message TokenSymbol {
+  string address = 1;
+  string symbol = 2;
 }
 
 message WalletType {
@@ -36,11 +41,11 @@ message ChainInfo {
   bool synced = 5;              // indicate if this node is fully synced.
   bytes app_hash = 6;           // current application hash.
   bytes block_hash = 7;         // current block hash.
-  uint64 block_height = 8;      // latest block height, in integer.
+  string block_height = 8;      // latest block height, in integer.
   google.protobuf.Timestamp block_time = 9; // latest block time.
   string address = 10;                      // the address of the node.
-  uint64 voting_power = 11; // the voting power of the node, in integer.
-  uint64 total_txs = 12;    // total number of txs up to the latest block
+  string voting_power = 11; // the voting power of the node, in integer.
+  string total_txs = 12;    // total number of txs up to the latest block
   string version = 13;      // current forge version
   //  string data_version = 14;  current data version deprecated
   map<string, string> forge_apps_version = 15;
@@ -55,11 +60,11 @@ message NodeInfo {
   bool synced = 5;              // indicate if this node is fully synced.
   bytes app_hash = 6;           // current application hash.
   bytes block_hash = 7;         // current block hash.
-  uint64 block_height = 8;      // latest block height, in integer.
+  string block_height = 8;      // latest block height, in integer.
   google.protobuf.Timestamp block_time = 9; // latest block time.
   string address = 10;                      // the address of the node.
-  uint64 voting_power = 11; // the voting power of the node, in integer.
-  uint64 total_txs = 12;    // total number of txs up to the latest block
+  string voting_power = 11; // the voting power of the node, in integer.
+  string total_txs = 12;    // total number of txs up to the latest block
   string version = 13;      // current forge version
   // string data_version = 14;  current data version deprecated
   map<string, string> forge_apps_version = 15;
@@ -72,12 +77,12 @@ message NodeInfo {
 message Validator {
   string address = 1;
   // setting power to 0 will remove existing address from validator
-  uint64 power = 2;
+  string power = 2;
 }
 
 message ConsensusParams {
-  uint64 max_bytes = 1;
-  sint64 max_gas = 2;
+  string max_bytes = 1;
+  string max_gas = 2;
   // we keep max_validators + max_candidates items in validator list, and only
   // use max_validators items for the validators.
   uint32 max_validators = 3;
@@ -102,11 +107,11 @@ message AbciContext {
   // in their state as a reference.
   string tx_hash = 1;
   // the height of the current block.
-  uint64 block_height = 2;
+  string block_height = 2;
   // the deterministic time of the current block.
   google.protobuf.Timestamp block_time = 3;
   // the total txs of the chain.
-  uint64 total_txs = 4;
+  string total_txs = 4;
   // tx statistics
   TxStatistics tx_statistics = 5;
   uint32 tx_index = 6;
@@ -152,17 +157,19 @@ message Transaction {
 
 message TransactionInfo {
   Transaction tx = 1;
-  uint64 height = 2;
+  string height = 2;
   uint32 index = 3;
   string hash = 4;
-  repeated abci_vendor.KVPair tags = 5;
+  repeated vendor.KVPair tags = 5;
   StatusCode code = 6;
   google.protobuf.Timestamp time = 7;
+  repeated TokenSymbol token_symbols = 22;
 }
 
 message DeclareConfig {
   bool restricted = 1;
   uint32 hierarchy = 2;
+  BigUint cost = 3;
 }
 
 message DelegateConfig {
@@ -176,7 +183,7 @@ message TransactionConfig {
   uint32 max_asset_size = 1;
   uint32 max_list_size = 2;
   uint32 max_multisig = 3;
-  uint64 minimum_stake = 4;
+  string minimum_stake = 4;
   DeclareConfig declare = 5;
   DelegateConfig delegate = 6;
   PokeConfig poke = 7;
@@ -184,13 +191,13 @@ message TransactionConfig {
 }
 
 message BlockInfo {
-  uint64 height = 1;
+  string height = 1;
   uint32 num_txs = 2;
   google.protobuf.Timestamp time = 3;
   bytes app_hash = 4;
   bytes proposer = 5;
   repeated TransactionInfo txs = 6;
-  uint64 total_txs = 7;
+  string total_txs = 7;
   repeated TransactionInfo invalid_txs = 8;
   repeated string txs_hashes = 9;
   repeated string invalid_txs_hashes = 10;
@@ -201,17 +208,17 @@ message BlockInfo {
   bytes last_results_hash = 15;
   bytes next_validators_hash = 16;
   bytes validators_hash = 17;
-  abci_vendor.Version version = 18;
-  abci_vendor.BlockID last_block_id = 19;
+  vendor.Version version = 18;
+  vendor.BlockID last_block_id = 19;
 }
 
 message BlockInfoSimple {
-  uint64 height = 1;
+  string height = 1;
   uint32 num_txs = 2;
   google.protobuf.Timestamp time = 3;
   bytes app_hash = 4;
   bytes proposer = 5;
-  uint64 total_txs = 6;
+  string total_txs = 6;
   repeated string txs_hashes = 7;
   repeated string invalid_txs_hashes = 8;
   bytes consensus_hash = 9;
@@ -221,8 +228,8 @@ message BlockInfoSimple {
   bytes last_results_hash = 13;
   bytes next_validators_hash = 14;
   bytes validators_hash = 15;
-  abci_vendor.Version version = 16;
-  abci_vendor.BlockID last_block_id = 17;
+  vendor.Version version = 16;
+  vendor.BlockID last_block_id = 17;
 }
 
 message TxStatus {
@@ -307,14 +314,14 @@ message PeerInfo {
 }
 
 message ValidatorsInfo {
-  uint64 block_height = 1;
+  string block_height = 1;
   repeated ValidatorInfo validators = 2;
 }
 
 message ValidatorInfo {
   string address = 1;
-  abci_vendor.PubKey pub_key = 2;
-  uint64 voting_power = 3;
+  vendor.PubKey pub_key = 2;
+  string voting_power = 3;
   string proposer_priority = 4;
   string name = 5;
   GeoInfo geo_info = 6; // validator geo info
@@ -323,28 +330,28 @@ message ValidatorInfo {
 message GenesisInfo {
   string genesis_time = 1;
   string chain_id = 2;
-  abci_vendor.ConsensusParams consensus_params = 3;
+  vendor.ConsensusParams consensus_params = 3;
   repeated ValidatorInfo validators = 4;
   string app_hash = 5;
 }
 
 message ForgeStats {
-  repeated uint64 num_blocks = 1;
-  repeated uint64 num_txs = 2;
+  repeated string num_blocks = 1;
+  repeated string num_txs = 2;
   repeated BigUint num_stakes = 3;
   repeated uint32 num_validators = 4;
-  repeated uint64 num_account_migrate_txs = 5;
-  repeated uint64 num_create_asset_txs = 6;
+  repeated string num_account_migrate_txs = 5;
+  repeated string num_create_asset_txs = 6;
   repeated uint32 num_consensus_upgrade_txs = 7;
-  repeated uint64 num_declare_txs = 8;
-  repeated uint64 num_declare_file_txs = 9;
-  repeated uint64 num_exchange_txs = 10;
-  repeated uint64 num_stake_txs = 11;
+  repeated string num_declare_txs = 8;
+  repeated string num_declare_file_txs = 9;
+  repeated string num_exchange_txs = 10;
+  repeated string num_stake_txs = 11;
   repeated uint32 num_sys_upgrade_txs = 12;
-  repeated uint64 num_transfer_txs = 13;
-  repeated uint64 num_update_asset_txs = 14;
-  repeated uint64 num_consume_asset_txs = 15;
-  repeated uint64 num_poke_txs = 16;
+  repeated string num_transfer_txs = 13;
+  repeated string num_update_asset_txs = 14;
+  repeated string num_consume_asset_txs = 15;
+  repeated string num_poke_txs = 16;
   repeated uint32 tps = 17;
   uint32 max_tps = 18;       // maximum tps in given time range
   uint32 avg_tps = 19;       // average tps in given time range
@@ -352,18 +359,18 @@ message ForgeStats {
 }
 
 message TxStatistics {
-  uint64 num_account_migrate_txs = 1;
-  uint64 num_create_asset_txs = 2;
+  string num_account_migrate_txs = 1;
+  string num_create_asset_txs = 2;
   uint32 num_consensus_upgrade_txs = 3;
-  uint64 num_declare_txs = 4;
-  uint64 num_declare_file_txs = 5;
-  uint64 num_exchange_txs = 6;
-  uint64 num_stake_txs = 7;
+  string num_declare_txs = 4;
+  string num_declare_file_txs = 5;
+  string num_exchange_txs = 6;
+  string num_stake_txs = 7;
   uint32 num_sys_upgrade_txs = 8;
-  uint64 num_transfer_txs = 9;
-  uint64 num_update_asset_txs = 10;
-  uint64 num_consume_asset_txs = 11;
-  uint64 num_poke_txs = 12;
+  string num_transfer_txs = 9;
+  string num_update_asset_txs = 10;
+  string num_consume_asset_txs = 11;
+  string num_poke_txs = 12;
 }
 
 message ForgeToken {
@@ -373,8 +380,8 @@ message ForgeToken {
   string description = 4;    // token description
   bytes icon = 5;            // token icon file in bytes
   uint32 decimal = 6;        // token decimal
-  uint64 initial_supply = 7; // token initial supply amount
-  uint64 total_supply = 8;   // token total supply amount
+  string initial_supply = 7; // token initial supply amount
+  string total_supply = 8;   // token total supply amount
   uint32 inflation_rate = 9; // token inflation rate in integer
 }
 
@@ -386,18 +393,18 @@ message PokeInfo {
 
 message PokeConfig {
   // string address = 1; deprecated
-  uint64 daily_limit = 2;
+  string daily_limit = 2;
   // uint64 balance = 3; deprecated
-  uint64 amount = 4;
+  string amount = 4;
   bool enabled = 5;
 }
 
 message UpgradeInfo {
-  uint64 height = 1;
+  string height = 1;
   string version = 2;
 }
 
-message WithdrawItem{
+message WithdrawItem {
   string hash = 1;
   BigUint value = 2;
 }
@@ -410,16 +417,19 @@ message AccountConfig {
 
 message TokenSwapConfig {
   string commission_holder_address = 1;
-  uint32 withdraw_interval = 2;
-  BigUint commission = 3;
+  // uint32 withdraw_interval = 2 [ deprecated = true ];
+  // BigUint commission = 3 [ deprecated = true ];
   uint32 commission_rate = 4;
-  uint32 revoke_commission = 5;
+  uint32 revoke_commission_rate = 5;
+  BigUint min_commission = 6;
+  BigUint max_commission = 7;
 }
 
 message Evidence {
-  string hash = 1;        // tx hash from a foreign chain
-  string chain_type = 2;  // type of the chain, currently only "eth"
-  string chain_id = 3;    // chain id of the chain. Could be testnet or mainnet.
-  bytes original_tx = 4;  // the binary for the original tx
-  string receiver_address = 5; // the address of the receiver (can only be controlled account)
+  string hash = 1;       // tx hash from a foreign chain
+  string chain_type = 2; // type of the chain, currently only "eth"
+  string chain_id = 3;   // chain id of the chain. Could be testnet or mainnet.
+  bytes original_tx = 4; // the binary for the original tx
+  string receiver_address =
+      5; // the address of the receiver (can only be controlled account)
 }
