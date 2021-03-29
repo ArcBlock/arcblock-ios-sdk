@@ -73,74 +73,78 @@ public enum TypeUrl: String, CaseIterable {
     case jsonAsset = "json"
     case vcAsset = "vc"
 
-//    public func getItx(value: Data) -> Any? {
-//        switch self {
-//        case .accountMigrate:
-//            return try? ForgeAbi_AccountMigrateTx(serializedData: value)
-//        case .acquireAsset:
-//            return try? ForgeAbi_AcquireAssetTx(serializedData: value)
-//        case .createAsset:
-//            return try? ForgeAbi_CreateAssetTx(serializedData: value)
-//        case .consumeAsset:
-//            return try? ForgeAbi_ConsumeAssetTx(serializedData: value)
-//        case .declare:
-//            return try? ForgeAbi_DeclareTx(serializedData: value)
-//        case .exchange:
-//            return try? ForgeAbi_ExchangeTx(serializedData: value)
-//        case .poke:
-//            return try? ForgeAbi_PokeTx(serializedData: value)
-//        case .stake:
-//            return try? ForgeAbi_StakeTx(serializedData: value)
-//        case .transfer:
-//            return try? ForgeAbi_TransferTx(serializedData: value)
-//        case .updateAsset:
-//            return try? ForgeAbi_UpdateAssetTx(serializedData: value)
-//        case .depositTether:
-//            return try? ForgeAbi_DepositTetherTx(serializedData: value)
-//        case .exchangeTether:
-//            return try? ForgeAbi_ExchangeTetherTx(serializedData: value)
-//        case .setupSwap:
-//            return try? ForgeAbi_SetupSwapTx(serializedData: value)
-//        case .retrieveSwap:
-//            return try? ForgeAbi_RetrieveSwapTx(serializedData: value)
-//        case .revokeSwap:
-//            return try? ForgeAbi_RevokeSwapTx(serializedData: value)
-//        case .delegate:
-//            return try? ForgeAbi_DelegateTx(serializedData: value)
-//        case .revokeDelegate:
-//            return try? ForgeAbi_RevokeDelegationTx(serializedData: value)
-//        case .withdrawToken:
-//            return try? ForgeAbi_WithdrawTokenTx(serializedData: value)
-//        case .revokeWithdraw:
-//            return try? ForgeAbi_RevokeWithdrawTx(serializedData: value)
-//        default:
-//            return nil
-//        }
-//    }
-//
-//    public func getState(value: Data) -> Any? {
-//        switch self {
-//        case .accountState:
-//            return try? ForgeAbi_AccountState(serializedData: value)
-//        case .assetState:
-//            return try? ForgeAbi_AssetState(serializedData: value)
-//        case .forgeState:
-//            return try? ForgeAbi_ForgeState(serializedData: value)
-//        case .stakeState:
-//            return try? ForgeAbi_StakeState(serializedData: value)
-//        case .statisticsState:
-//            return try? ForgeAbi_StatisticsState(serializedData: value)
-//        default:
-//            return nil
-//        }
-//    }
-//
+    public func getItx(value: Data) -> Any? {
+        switch self {
+        case .accountMigrate:
+            return try? Ocap_AccountMigrateTx(serializedData: value)
+        case .acquireAsset:
+            return try? Ocap_AcquireAssetTx(serializedData: value)
+        case .createAsset:
+            return try? Ocap_CreateAssetTx(serializedData: value)
+        case .consumeAsset:
+            return try? Ocap_ConsumeAssetTx(serializedData: value)
+        case .declare:
+            return try? Ocap_DeclareTx(serializedData: value)
+        case .exchange:
+            return try? Ocap_ExchangeTx(serializedData: value)
+        case .poke:
+            return try? Ocap_PokeTx(serializedData: value)
+        case .stake:
+            return try? Ocap_StakeContext(serializedData: value)
+//            return try? Ocap_StakeTx(serializedData: value)
+        case .transfer:
+            return try? Ocap_TransferTx(serializedData: value)
+        case .updateAsset:
+            return try? Ocap_UpdateAssetTx(serializedData: value)
+        case .depositTether:
+            return try? Ocap_DepositTokenTx(serializedData: value)
+//            return try? Ocap_DepositTetherTx(serializedData: value)
+        case .exchangeTether:
+            return try? Ocap_ExchangeTx(serializedData: value)
+//            return try? Ocap_ExchangeTetherTx(serializedData: value)
+        case .setupSwap:
+            return try? Ocap_SetupSwapTx(serializedData: value)
+        case .retrieveSwap:
+            return try? Ocap_RetrieveSwapTx(serializedData: value)
+        case .revokeSwap:
+            return try? Ocap_RevokeSwapTx(serializedData: value)
+        case .delegate:
+            return try? Ocap_DelegateTx(serializedData: value)
+        case .revokeDelegate:
+            return try? Ocap_RevokeDelegateTx(serializedData: value)
+        case .withdrawToken:
+            return try? Ocap_WithdrawTokenTx(serializedData: value)
+        case .revokeWithdraw:
+            return try? Ocap_RevokeWithdrawTx(serializedData: value)
+        default:
+            return nil
+        }
+    }
+
+    public func getState(value: Data) -> Any? {
+        switch self {
+        case .accountState:
+            return try? Ocap_AccountState(serializedData: value)
+        case .assetState:
+            return try? Ocap_AssetState(serializedData: value)
+        case .forgeState:
+            return try? Ocap_ForgeState(serializedData: value)
+        case .stakeState:
+            return try? Ocap_StakeState(serializedData: value)
+        case .statisticsState:
+            return try? Ocap_StatisticsState(serializedData: value)
+        default:
+            return nil
+        }
+    }
+
 //    public func getAsset(value: Data) -> Any? {
 //        switch self {
 //        case .certificate:
 //            if let string = String.init(data: value, encoding: .utf8),
 //                let data = Data.init(base64URLPadEncoded: string) {
 //                return try? AssetProtocol_Certificate(serializedData: data)
+//                Ocap_AssetFactory
 //            }
 //            return try? AssetProtocol_Certificate(serializedData: value)
 //        case .eventInfo:
@@ -166,9 +170,9 @@ public enum TypeUrl: String, CaseIterable {
 //        case .assetFactoryState:
 //            if let string = String.init(data: value, encoding: .utf8),
 //                let data = Data(base64URLPadEncoded: string) {
-//                return try? ForgeAbi_AssetFactoryState(serializedData: data)
+//                return try? Ocap_AssetFactoryState(serializedData: data)
 //            }
-//            return try? ForgeAbi_AssetFactoryState(serializedData: value)
+//            return try? Ocap_AssetFactoryState(serializedData: value)
 //        default:
 //            return nil
 //        }
