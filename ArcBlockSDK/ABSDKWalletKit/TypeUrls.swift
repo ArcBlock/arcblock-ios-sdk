@@ -89,19 +89,10 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_ExchangeTx(serializedData: value)
         case .poke:
             return try? Ocap_PokeTx(serializedData: value)
-        case .stake:
-            return try? Ocap_StakeContext(serializedData: value)
-//            return try? Ocap_StakeTx(serializedData: value)
         case .transfer:
             return try? Ocap_TransferTx(serializedData: value)
         case .updateAsset:
             return try? Ocap_UpdateAssetTx(serializedData: value)
-        case .depositTether:
-            return try? Ocap_DepositTokenTx(serializedData: value)
-//            return try? Ocap_DepositTetherTx(serializedData: value)
-        case .exchangeTether:
-            return try? Ocap_ExchangeTx(serializedData: value)
-//            return try? Ocap_ExchangeTetherTx(serializedData: value)
         case .setupSwap:
             return try? Ocap_SetupSwapTx(serializedData: value)
         case .retrieveSwap:
@@ -137,44 +128,4 @@ public enum TypeUrl: String, CaseIterable {
             return nil
         }
     }
-
-//    public func getAsset(value: Data) -> Any? {
-//        switch self {
-//        case .certificate:
-//            if let string = String.init(data: value, encoding: .utf8),
-//                let data = Data.init(base64URLPadEncoded: string) {
-//                return try? AssetProtocol_Certificate(serializedData: data)
-//                Ocap_AssetFactory
-//            }
-//            return try? AssetProtocol_Certificate(serializedData: value)
-//        case .eventInfo:
-//            if let string = String.init(data: value, encoding: .utf8),
-//                let data = Data.init(base64URLPadEncoded: string) {
-//                return try? AssetProtocol_EventInfo(serializedData: data)
-//            }
-//            return try? AssetProtocol_EventInfo(serializedData: value)
-//        case .ticketInfo:
-//            return try? AssetProtocol_TicketInfo(serializedData: value)
-//        case .workshopAsset:
-//            if let string = String.init(data: value, encoding: .utf8),
-//                let data = Data.init(base64URLPadEncoded: string) {
-//                return try? AbtDidWorkshop_WorkshopAsset(serializedData: data)
-//            }
-//            return try? AbtDidWorkshop_WorkshopAsset(serializedData: value)
-//        case .generalTicket:
-//            if let string = String.init(data: value, encoding: .utf8),
-//                let data = Data(base64URLPadEncoded: string) {
-//                return try? AssetProtocol_GeneralTicket(serializedData: data)
-//            }
-//            return try? AssetProtocol_GeneralTicket(serializedData: value)
-//        case .assetFactoryState:
-//            if let string = String.init(data: value, encoding: .utf8),
-//                let data = Data(base64URLPadEncoded: string) {
-//                return try? Ocap_AssetFactoryState(serializedData: data)
-//            }
-//            return try? Ocap_AssetFactoryState(serializedData: value)
-//        default:
-//            return nil
-//        }
-//    }
 }
