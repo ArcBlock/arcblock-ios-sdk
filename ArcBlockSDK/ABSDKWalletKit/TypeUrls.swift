@@ -25,13 +25,16 @@ import Foundation
 public enum TypeUrl: String, CaseIterable {
     case accountMigrate = "fg:t:account_migrate"
     case acquireAsset = "fg:t:acquire_asset"
+    case acquireAsset_v2 = "fg:t:acquire_asset_v2"
     case createAsset = "fg:t:create_asset"
     case consumeAsset = "fg:t:consume_asset"
     case declare = "fg:t:declare"
     case exchange = "fg:t:exchange"
+    case exchange_v2 = "fg:t:exchange_v2"
     case poke = "fg:t:poke"
     case stake = "fg:t:stake"
     case transfer = "fg:t:transfer"
+    case transfer_v2 = "fg:t:transfer_v2"
     case updateAsset = "fg:t:update_asset"
     case depositTether = "fg:t:deposit_tether"
     case exchangeTether = "fg:t:exchange_tether"
@@ -77,7 +80,7 @@ public enum TypeUrl: String, CaseIterable {
         switch self {
         case .accountMigrate:
             return try? Ocap_AccountMigrateTx(serializedData: value)
-        case .acquireAsset:
+        case .acquireAsset, .acquireAsset_v2:
             return try? Ocap_AcquireAssetTx(serializedData: value)
         case .createAsset:
             return try? Ocap_CreateAssetTx(serializedData: value)
@@ -85,11 +88,11 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_ConsumeAssetTx(serializedData: value)
         case .declare:
             return try? Ocap_DeclareTx(serializedData: value)
-        case .exchange:
+        case .exchange, .exchange_v2:
             return try? Ocap_ExchangeTx(serializedData: value)
         case .poke:
             return try? Ocap_PokeTx(serializedData: value)
-        case .transfer:
+        case .transfer, .transfer_v2:
             return try? Ocap_TransferTx(serializedData: value)
         case .updateAsset:
             return try? Ocap_UpdateAssetTx(serializedData: value)
