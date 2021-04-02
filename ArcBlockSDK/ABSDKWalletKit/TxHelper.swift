@@ -25,6 +25,7 @@
 import Foundation
 import SwiftProtobuf
 import BigInt
+import web3swift
 
 public struct TxParams {
     var hashType: HashType
@@ -307,8 +308,8 @@ public class TxHelper {
     }
     
     // MARK: - Ocap V2
-    public static func createTransferTxV2(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                        to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType)  -> String? {
+    public static func createTransferSecondaryTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
+                                                 to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType, tokenAddress: String)  -> String? {
 
         var transferTx = Ocap_TransferV2Tx()
         var txMessage = Google_Protobuf_Any.init()
@@ -320,9 +321,13 @@ public class TxHelper {
 
         transferTx.data = txMessage
         transferTx.to = to
-        var txValue = Ocap_BigUint()
-        txValue.value = value.serialize()
-        transferTx.value = txValue
+        
+        var tokens = [Ocap_TokenPayload]()
+        var token = Ocap_TokenPayload()
+        token.address = tokenAddress
+        token.value = Web3.Utils.formatToEthereumUnits(value) ?? "0"
+        tokens.append(token)
+        transferTx.tokens = tokens
         
         if let assets = assets {
             transferTx.assets = assets
@@ -334,7 +339,7 @@ public class TxHelper {
 
         let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
                                 chainId: chainId, from: from, delegatee: delegatee)
-        let txString = genTxString(tx: tx, typeUrl: TypeUrl.transfer.rawValue,
+        let txString = genTxString(tx: tx, typeUrl: TypeUrl.transfer_v2.rawValue,
                                    txParams: txParams, privateKey: privateKey, publicKey: publicKey)
         return txString
     }
