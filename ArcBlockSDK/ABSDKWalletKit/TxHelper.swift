@@ -305,4 +305,37 @@ public class TxHelper {
             let transaction = try? Ocap_Transaction(serializedData: transactionData) else { return nil }
         return transaction
     }
+    
+    // MARK: - Ocap V2
+    public static func createTransferTxV2(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
+                                        to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType)  -> String? {
+
+        var transferTx = Ocap_TransferV2Tx()
+        var txMessage = Google_Protobuf_Any.init()
+
+        if let message = message,
+            let temp = message.data(using: .utf8) {
+            txMessage.value = temp
+        }
+
+        transferTx.data = txMessage
+        transferTx.to = to
+        var txValue = Ocap_BigUint()
+        txValue.value = value.serialize()
+        transferTx.value = txValue
+        
+        if let assets = assets {
+            transferTx.assets = assets
+        }
+
+        guard let tx = try? transferTx.serializedData() else {
+            return nil
+        }
+
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
+                                chainId: chainId, from: from, delegatee: delegatee)
+        let txString = genTxString(tx: tx, typeUrl: TypeUrl.transfer.rawValue,
+                                   txParams: txParams, privateKey: privateKey, publicKey: publicKey)
+        return txString
+    }
 }
