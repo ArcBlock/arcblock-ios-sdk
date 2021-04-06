@@ -309,7 +309,7 @@ public class TxHelper {
     
     // MARK: - Ocap V2
     public static func createTransferSecondaryTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                                 to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType, tokenAddress: String)  -> String? {
+                                                 to: String, message: String?, value: String, assets: [String]? = nil, didType: DidType, tokenAddress: String)  -> String? {
 
         var transferTx = Ocap_TransferV2Tx()
         var txMessage = Google_Protobuf_Any.init()
@@ -325,7 +325,7 @@ public class TxHelper {
         var tokens = [Ocap_TokenPayload]()
         var token = Ocap_TokenPayload()
         token.address = tokenAddress
-        token.value = Web3.Utils.formatToEthereumUnits(value) ?? "0"
+        token.value = value
         tokens.append(token)
         transferTx.tokens = tokens
         
