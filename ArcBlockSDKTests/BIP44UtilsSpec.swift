@@ -66,5 +66,21 @@ class BIP44UtilsSpec: QuickSpec {
                 expect(seed).to(equal(BIP39.seedFromEntropy(entropy)))                
             })
         }
+        
+        describe("Mnemonics validate") {
+            it("works", closure: {
+                guard let mnemonics = BIP44Utils.generateMnemonics() else { return }
+                let result = BIP44Utils.validate(mnemonics: mnemonics)
+                expect(result).to(beTrue())
+            })
+            
+            it("works", closure: {
+                guard var mnemonics = BIP44Utils.generateMnemonics() else { return }
+                mnemonics.removeLast()
+                mnemonics.append("aaa")
+                let result = BIP44Utils.validate(mnemonics: mnemonics)
+                expect(result).to(beFalse())
+            })
+        }
     }
 }
