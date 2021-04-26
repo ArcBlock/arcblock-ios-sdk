@@ -24,7 +24,6 @@
 import Quick
 import Nimble
 import ArcBlockSDK
-import EllipticCurveKeyPair
 
 class SignVerifySpec: QuickSpec {
     override func spec() {

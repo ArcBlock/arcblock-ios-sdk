@@ -25,6 +25,7 @@
 import Foundation
 import SwiftProtobuf
 import BigInt
+import web3swift
 
 public struct TxParams {
     var hashType: HashType
@@ -51,7 +52,8 @@ public struct TxParams {
 
 public class TxHelper {
     public static func createDeclareTx(chainId: String, issuer: String? = nil, moniker: String? = nil, publicKey: Data, privateKey: Data, address: String, didType: DidType) -> String? {
-        var declareTx = ForgeAbi_DeclareTx.init()
+        var declareTx = Ocap_DeclareTx()
+        
         declareTx.moniker = moniker ?? "account"
         if let issuer = issuer {
             declareTx.issuer = issuer
@@ -68,9 +70,9 @@ public class TxHelper {
 
     public static func createSetupSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
                                          demandToken: Double, demandAssets: [String] = [], blockHeight: UInt32, hashKey: Data, receiver: String, didType: DidType) -> String? {
-        var setupSwapTx = ForgeAbi_SetupSwapTx()
+        var setupSwapTx = Ocap_SetupSwapTx()
 
-        var demandTokenValue = ForgeAbi_BigUint()
+        var demandTokenValue = Ocap_BigUint()
         let demandTokenBigUInt = BigUInt(demandToken)
         demandTokenValue.value = demandTokenBigUInt.serialize()
         setupSwapTx.value = demandTokenValue
@@ -93,7 +95,7 @@ public class TxHelper {
     }
 
     public static func createRetrieveSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, swapAddress: String, hashKey: Data, didType: DidType)  -> String? {
-        var retrieveSwapTx = ForgeAbi_RetrieveSwapTx()
+        var retrieveSwapTx = Ocap_RetrieveSwapTx()
 
         retrieveSwapTx.address = swapAddress
         retrieveSwapTx.hashkey = hashKey
@@ -112,7 +114,7 @@ public class TxHelper {
 
     public static func createRevokeSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
                                           swapAddress: String, didType: DidType)  -> String? {
-        var revokeSwapTx = ForgeAbi_RevokeSwapTx()
+        var revokeSwapTx = Ocap_RevokeSwapTx()
 
         revokeSwapTx.address = swapAddress
 
@@ -131,7 +133,7 @@ public class TxHelper {
     public static func createTransferTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
                                         to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType)  -> String? {
 
-        var transferTx = ForgeAbi_TransferTx.init()
+        var transferTx = Ocap_TransferTx()
         var txMessage = Google_Protobuf_Any.init()
 
         if let message = message,
@@ -141,7 +143,7 @@ public class TxHelper {
 
         transferTx.data = txMessage
         transferTx.to = to
-        var txValue = ForgeAbi_BigUint.init()
+        var txValue = Ocap_BigUint()
         txValue.value = value.serialize()
         transferTx.value = txValue
         
@@ -162,12 +164,12 @@ public class TxHelper {
 
     public static func createWithdrawTokenTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
                                         to: String, chainType: String, foreignChainId: String, ttl: Date, value: BigUInt, didType: DidType)  -> String? {
-        var withdrawTokenTx = ForgeAbi_WithdrawTokenTx()
+        var withdrawTokenTx = Ocap_WithdrawTokenTx()
         withdrawTokenTx.to = to
         withdrawTokenTx.chainID = foreignChainId
         withdrawTokenTx.ttl = Google_Protobuf_Timestamp(date: ttl)
         withdrawTokenTx.chainType = chainType
-        var txValue = ForgeAbi_BigUint.init()
+        var txValue = Ocap_BigUint()
         txValue.value = value.serialize()
         withdrawTokenTx.value = txValue
 
@@ -189,11 +191,11 @@ public class TxHelper {
             ops.count > 0 else {
             return nil
         }
-        var delegateTx = ForgeAbi_DelegateTx()
+        var delegateTx = Ocap_DelegateTx()
         delegateTx.address = delegateAddress
-        var delegateOps = [ForgeAbi_DelegateOp]()
+        var delegateOps = [Ocap_DelegateOp]()
         for (typeUrl, rules) in ops {
-            var op = ForgeAbi_DelegateOp()
+            var op = Ocap_DelegateOp()
             op.typeURL = typeUrl
             op.rules = rules
             delegateOps.append(op)
@@ -244,12 +246,12 @@ public class TxHelper {
         return sig.base64URLPadEncodedString()
     }
 
-    private static func composePartialTxData(tx: Data, typeUrl: String, txParams: TxParams, publicKey: Data) -> ForgeAbi_Transaction {
+    private static func composePartialTxData(tx: Data, typeUrl: String, txParams: TxParams, publicKey: Data) -> Ocap_Transaction {
         var anyMessage = Google_Protobuf_Any.init()
         anyMessage.value = tx
         anyMessage.typeURL = typeUrl
 
-        var transaction = ForgeAbi_Transaction.init()
+        var transaction = Ocap_Transaction.init()
         transaction.chainID = txParams.chainId
         transaction.from = txParams.from
         transaction.itx = anyMessage
@@ -299,9 +301,46 @@ public class TxHelper {
         return signature
     }
 
-    public static func decodeTxString(txString: String) -> ForgeAbi_Transaction? {
+    public static func decodeTxString(txString: String) -> Ocap_Transaction? {
         guard let transactionData = Data.init(multibaseEncoded: txString),
-            let transaction = try? ForgeAbi_Transaction(serializedData: transactionData) else { return nil }
+            let transaction = try? Ocap_Transaction(serializedData: transactionData) else { return nil }
         return transaction
+    }
+    
+    // MARK: - Ocap V2
+    public static func createTransferSecondaryTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
+                                                 to: String, message: String?, value: String, assets: [String]? = nil, didType: DidType, tokenAddress: String)  -> String? {
+
+        var transferTx = Ocap_TransferV2Tx()
+        var txMessage = Google_Protobuf_Any.init()
+
+        if let message = message,
+            let temp = message.data(using: .utf8) {
+            txMessage.value = temp
+        }
+
+        transferTx.data = txMessage
+        transferTx.to = to
+        
+        var tokens = [Ocap_TokenPayload]()
+        var token = Ocap_TokenPayload()
+        token.address = tokenAddress
+        token.value = value
+        tokens.append(token)
+        transferTx.tokens = tokens
+        
+        if let assets = assets {
+            transferTx.assets = assets
+        }
+
+        guard let tx = try? transferTx.serializedData() else {
+            return nil
+        }
+
+        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
+                                chainId: chainId, from: from, delegatee: delegatee)
+        let txString = genTxString(tx: tx, typeUrl: TypeUrl.transfer_v2.rawValue,
+                                   txParams: txParams, privateKey: privateKey, publicKey: publicKey)
+        return txString
     }
 }

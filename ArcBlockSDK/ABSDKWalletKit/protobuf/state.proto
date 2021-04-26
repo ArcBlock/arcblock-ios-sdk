@@ -1,18 +1,17 @@
 syntax = "proto3";
-package forge_abi;
+package ocap;
 
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
-import "enum.proto";
 import "type.proto";
-import "deploy_protocol.proto";
+import "asset.proto";
 
 // State definition
 
 message AccountState {
   BigUint balance = 1;
-  uint64 nonce = 2;
-  uint64 num_txs = 3;
+  string nonce = 2;
+  string num_txs = 3;
   string address = 4;
   bytes pk = 5;
   WalletType type = 6 [ deprecated = true ];
@@ -23,15 +22,14 @@ message AccountState {
 
   // the address that is being migrated. Once this is set this account state is
   // read only. No further tx can alter this account state. And tx with "from"
-  // equal to the old address will be rejected by Forge
+  // equal to the old address will be rejected by ocap
   repeated string migrated_to = 13;
   repeated string migrated_from = 14;
 
-  uint64 num_assets = 15;
-
+  string num_assets = 15;
 
   StakeContext stake = 16;
-  CircularQueue pinned_files = 17;
+  CircularQueue pinned_files = 17 [ deprecated = true ];
   PokeInfo poke = 18;
   // The current deposit this account has received. It cannot exceed the deposit
   // cap.
@@ -39,6 +37,8 @@ message AccountState {
 
   CircularQueue withdraw_items = 20;
   // 20-49 reserve for future
+
+  map<string, string> tokens = 21;
 
   google.protobuf.Any data = 50;
 }
@@ -82,7 +82,7 @@ message ForgeState {
   string version = 5;
   // string data_version = 6; current data version deprecated
 
-  // app state returned by forge app
+  // app state returned by app
   // bytes forge_app_hash = 7; deprecated
 
   ForgeToken token = 8;
@@ -98,7 +98,7 @@ message ForgeState {
   map<string, AccountConfig> account_config = 16;
   TokenSwapConfig token_swap_config = 17;
 
-  google.protobuf.Any data = 2047; // forge app can define their own app state
+  google.protobuf.Any data = 2047; // app can define their own app state
 }
 
 // keep a list of state root for different dbs (column families).
@@ -124,7 +124,7 @@ message StakeState {
 
   // state context, replace exiting fields
   StateContext context = 14;
-  // forge app can extend this
+  // app can extend this
   google.protobuf.Any data = 15;
 }
 
@@ -138,41 +138,6 @@ message StatisticsState {
 }
 
 message BlacklistState { repeated string address = 1; }
-
-message ProtocolState {
-  string address = 1;
-  DeployProtocolTx itx = 2;
-  // root hash of the MPT of this tx protocol
-  bytes root_hash = 3;
-  ProtocolStatus status = 4;
-
-  repeated string migrated_to = 12;
-  repeated string migrated_from = 13;
-
-  StateContext context = 14;
-  google.protobuf.Any data = 15; // forge app can define their own app state
-}
-
-// This is just for displaying purpose.
-message TetherState {
-  string hash = 1;
-  bool available = 2;
-  string custodian = 3;
-  string depositor = 4;
-  string withdrawer = 5;
-  BigUint value = 6;
-  BigUint commission = 7;
-  BigUint charge = 8;
-  string target = 9;
-  google.protobuf.Timestamp locktime = 10;
-  string address = 11;
-}
-
-// This is the one stored in state DB.
-message TetherInfo {
-  bool available = 1;
-  string hash = 2;
-}
 
 // TODO: [peiling] We have already defined this state in core protocols repo.
 // The only reason we define this state here again is because the protobuf
@@ -188,6 +153,17 @@ message SwapState {
   uint32 locktime = 8;
   bytes hashlock = 9;
   StateContext context = 10;
+}
+
+// TODO: [peiling] We have already defined this state in core protocols repo.
+// The only reason we define this state here again is because the protobuf
+// definition ResponseGetSwapStatistics needs to reference to this.
+message SwapStatistics {
+  string address = 1;
+  BigUint locked_value_out = 2;
+  BigUint locked_value_in = 3;
+  uint32 locked_assets_out = 4;
+  uint32 locked_assets_in = 5;
 }
 
 // a rule can check against the statistics values, e.g. state.num_txs < 10000,
@@ -211,6 +187,59 @@ message DelegateState {
 
   // state context, replace exiting fields
   StateContext context = 14;
-  // forge app can extend this
+
+  // app can extend this
   google.protobuf.Any data = 15;
+}
+
+message TokenState {
+  string address = 1;
+  string issuer = 2;
+  string name = 3;
+  string description = 4;
+  string symbol = 5;
+  string unit = 6;
+  string icon = 7;
+  string total_supply = 8;
+  string faucet_supply = 9;
+  string erc20_contract_address = 10;
+
+  StateContext context = 15;
+
+  google.protobuf.Any data = 20;
+}
+
+// Very similar to AssetFactory, appended some state vars
+message AssetFactoryState {
+  // immutable
+  string address = 1;
+  string owner = 2;
+
+  // mutable
+  string name = 3;
+  string description = 4;
+
+  // immutable
+  string settlement = 5;
+  uint32 limit = 6;
+
+  // mutable
+  repeated string trusted_issuers = 7;
+
+  // immutable
+  AssetFactoryInput input = 8;
+  CreateAssetTx output = 9;
+  repeated AssetFactoryHook hooks = 10;
+
+  // mutable
+  google.protobuf.Any data = 11;
+
+  // mutable
+  StateContext context = 12;
+  BigUint balance = 13;
+  map<string, BigUint> tokens = 14;
+  uint32 num_minted = 15;
+
+  // mutable
+  google.protobuf.Timestamp last_settlement = 16;
 }
