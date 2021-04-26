@@ -1,9 +1,10 @@
 syntax = "proto3";
-package forge_abi;
+package ocap;
 
 import "google/protobuf/any.proto";
 import "type.proto";
 import "enum.proto";
+import "asset.proto";
 
 // indexed type definition
 
@@ -12,7 +13,7 @@ message PageOrder {
   string type = 2;
 }
 
-message PageInput {
+message Page {
   string cursor = 1;
   uint32 size = 2;
   repeated PageOrder order = 3;
@@ -22,15 +23,27 @@ message TypeFilter {
   repeated string types = 1;
 }
 
+message AssetFilter {
+  repeated string assets = 1;
+}
+
+message FactoryFilter {
+  repeated string factories = 1;
+}
+
+message TokenFilter {
+  repeated string tokens = 1;
+}
+
 message TimeFilter {
   string start_date_time = 1;
   string end_date_time = 2;
 }
 
 enum Direction {
-  mutual = 0;
-  one_way = 1;
-  union = 2;
+  MUTUAL = 0;
+  ONE_WAY = 1;
+  UNION = 2;
 }
 
 message AddressFilter {
@@ -54,14 +67,20 @@ message IndexedTransaction {
   Transaction tx = 6;
   bool valid = 20;
   StatusCode code = 21;
+  repeated TokenSymbol token_symbols = 22;
+}
+
+message TokenInfo {
+  string address = 1;
+  BigUint balance = 2;
 }
 
 message IndexedAccountState {
   string address = 1;
   BigUint balance = 2;
-  uint64 num_assets = 3;
-  uint64 num_txs = 4;
-  uint64 nonce = 5;
+  string num_assets = 3;
+  string num_txs = 4;
+  string nonce = 5;
   string genesis_time = 6;
   string renaissance_time = 7;
   string moniker = 8;
@@ -70,7 +89,8 @@ message IndexedAccountState {
   BigUint total_received_stakes = 11;
   BigUint total_stakes = 12;
   BigUint total_unstakes = 13;
-  repeated uint64 recent_num_txs = 14;
+  repeated string recent_num_txs = 14;
+  repeated TokenInfo tokens = 15;
 }
 
 message IndexedAssetState {
@@ -84,7 +104,7 @@ message IndexedAssetState {
   string issuer = 8;
   string parent = 9;
   bool transferrable = 10;
-  uint64 ttl = 11;
+  string ttl = 11;
 
   google.protobuf.Any data = 50;
 }
@@ -101,11 +121,49 @@ message IndexedStakeState {
 }
 
 message IndexedBlock {
-  uint64 height = 1;
+  string height = 1;
   string time = 2;
   string proposer = 3;
-  uint64 num_txs = 4;
-  uint64 num_invalid_txs = 5;
+  string num_txs = 4;
+  string num_invalid_txs = 5;
+}
+
+message IndexedTokenState {
+  string name = 1;
+  string description = 2;
+  string symbol = 3;
+  string unit = 4;
+  string issuer = 5;
+  string icon = 6;
+  string total_supply = 7;
+  string faucet_supply = 8;
+  string address = 9;
+  string genesis_time = 10;
+  string renaissance_time = 11;
+  string erc20_contract_address = 12;
+
+  // forge won't touch this field. Only forge app shall handle it.
+  google.protobuf.Any data = 20;
+}
+
+message IndexedFactoryState {
+  string address = 1;
+  string owner = 2;
+  string name = 3;
+  string description = 4;
+  string settlement = 5;
+  string limit = 6;
+  repeated string trusted_issuers = 7;
+  AssetFactoryInput input = 8;
+  CreateAssetTx output = 9;
+  repeated AssetFactoryHook hooks = 10;
+  google.protobuf.Any data = 11;
+  string balance = 13;
+  repeated TokenInfo tokens = 14;
+  string num_minted = 15;
+  string last_settlement = 16;
+  string genesis_time = 17;
+  string renaissance_time = 18;
 }
 
 message HealthStatus {
@@ -115,18 +173,18 @@ message HealthStatus {
   ForgeStatus forge = 4;
 }
 
-message ConsensusStatus{
+message ConsensusStatus {
   bool health = 1;
   bool synced = 2;
-  uint64 block_height = 3;
+  string block_height = 3;
 }
 
-message NetworkStatus{
+message NetworkStatus {
   bool health = 1;
   uint32 num_peers = 2;
 }
 
-message StorageStatus{
+message StorageStatus {
   bool health = 1;
   string indexer_server = 2;
   string state_db = 3;
@@ -151,9 +209,9 @@ message AbciServerStatus{
 }
 
 enum Validity {
-  both = 0;
-  valid = 1;
-  invalid = 2;
+  BOTH = 0;
+  VALID = 1;
+  INVALID = 2;
 }
 
 message ValidityFilter {
@@ -161,6 +219,12 @@ message ValidityFilter {
 }
 
 message RangeFilter {
-  uint64 from = 1;
-  uint64 to = 2;
+  string from = 1;
+  string to = 2;
+}
+
+message AccountToken {
+  string address = 1;
+  string symbol = 2;
+  string balance = 3;
 }

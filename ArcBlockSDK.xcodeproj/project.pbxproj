@@ -10,14 +10,25 @@
 		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
 		1A379E4B25FF43000064A3E7 /* JWTKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1A379E4A25FF43000064A3E7 /* JWTKit */; };
 		1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */; };
-		270244FB234C9C110022D0A6 /* revoke_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F3234C9C100022D0A6 /* revoke_withdraw.proto */; };
-		270244FC234C9C110022D0A6 /* deposit_token.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F4234C9C100022D0A6 /* deposit_token.pb.swift */; };
-		270244FD234C9C110022D0A6 /* approve_withdraw.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F5234C9C100022D0A6 /* approve_withdraw.proto */; };
-		270244FE234C9C110022D0A6 /* withdraw_token.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F6234C9C110022D0A6 /* withdraw_token.pb.swift */; };
-		270244FF234C9C110022D0A6 /* revoke_withdraw.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244F7234C9C110022D0A6 /* revoke_withdraw.pb.swift */; };
-		27024500234C9C110022D0A6 /* deposit_token.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F8234C9C110022D0A6 /* deposit_token.proto */; };
-		27024501234C9C110022D0A6 /* withdraw_token.proto in Sources */ = {isa = PBXBuildFile; fileRef = 270244F9234C9C110022D0A6 /* withdraw_token.proto */; };
-		27024502234C9C110022D0A6 /* approve_withdraw.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270244FA234C9C110022D0A6 /* approve_withdraw.pb.swift */; };
+		1AD6F3A82611F97C00EFAE48 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3952611F97B00EFAE48 /* type.proto */; };
+		1AD6F3A92611F97C00EFAE48 /* service.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6F3962611F97B00EFAE48 /* service.graphqls */; };
+		1AD6F3AA2611F97C00EFAE48 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3972611F97B00EFAE48 /* rpc.pb.swift */; };
+		1AD6F3AB2611F97C00EFAE48 /* trace-type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3982611F97B00EFAE48 /* trace-type.pb.swift */; };
+		1AD6F3AC2611F97C00EFAE48 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3992611F97B00EFAE48 /* vendor.pb.swift */; };
+		1AD6F3AD2611F97C00EFAE48 /* tx.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39A2611F97B00EFAE48 /* tx.pb.swift */; };
+		1AD6F3AE2611F97C00EFAE48 /* trace-type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39B2611F97B00EFAE48 /* trace-type.proto */; };
+		1AD6F3AF2611F97C00EFAE48 /* type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39C2611F97B00EFAE48 /* type.pb.swift */; };
+		1AD6F3B02611F97C00EFAE48 /* service.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39D2611F97B00EFAE48 /* service.proto */; };
+		1AD6F3B12611F97C00EFAE48 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39E2611F97B00EFAE48 /* enum.proto */; };
+		1AD6F3B22611F97C00EFAE48 /* rpc.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39F2611F97B00EFAE48 /* rpc.proto */; };
+		1AD6F3B32611F97C00EFAE48 /* enum.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A02611F97B00EFAE48 /* enum.pb.swift */; };
+		1AD6F3B42611F97C00EFAE48 /* state.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A12611F97B00EFAE48 /* state.proto */; };
+		1AD6F3B52611F97C00EFAE48 /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A22611F97B00EFAE48 /* state.pb.swift */; };
+		1AD6F3B62611F97C00EFAE48 /* service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A32611F97B00EFAE48 /* service.pb.swift */; };
+		1AD6F3B72611F97C00EFAE48 /* asset.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A42611F97B00EFAE48 /* asset.pb.swift */; };
+		1AD6F3B82611F97C00EFAE48 /* tx.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A52611F97B00EFAE48 /* tx.proto */; };
+		1AD6F3B92611F97C00EFAE48 /* vendor.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A62611F97B00EFAE48 /* vendor.proto */; };
+		1AD6F3BA2611F97C00EFAE48 /* asset.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A72611F97B00EFAE48 /* asset.proto */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
 		27044789231E0052007BA477 /* ed25519_fe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044729231E0052007BA477 /* ed25519_fe.swift */; };
 		2704478A231E0052007BA477 /* ed25519_open.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704472A231E0052007BA477 /* ed25519_open.swift */; };
@@ -49,64 +60,6 @@
 		270447A4231E0052007BA477 /* Base32String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044747231E0052007BA477 /* Base32String.swift */; };
 		270447A5231E0052007BA477 /* TxHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704474A231E0052007BA477 /* TxHelper.swift */; };
 		270447A6231E0052007BA477 /* TypeUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704474B231E0052007BA477 /* TypeUrls.swift */; };
-		270447A7231E0052007BA477 /* stake.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704474D231E0052007BA477 /* stake.pb.swift */; };
-		270447A8231E0052007BA477 /* setup_swap.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704474E231E0052007BA477 /* setup_swap.pb.swift */; };
-		270447A9231E0052007BA477 /* withdraw_tether.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704474F231E0052007BA477 /* withdraw_tether.proto */; };
-		270447AA231E0052007BA477 /* deposit_tether.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044750231E0052007BA477 /* deposit_tether.pb.swift */; };
-		270447AB231E0052007BA477 /* revoke_swap.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044751231E0052007BA477 /* revoke_swap.pb.swift */; };
-		270447AC231E0052007BA477 /* exchange_tether.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044752231E0052007BA477 /* exchange_tether.pb.swift */; };
-		270447AD231E0052007BA477 /* create_asset.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044753231E0052007BA477 /* create_asset.proto */; };
-		270447AE231E0052007BA477 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044754231E0052007BA477 /* rpc.pb.swift */; };
-		270447AF231E0052007BA477 /* exchange_tether.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044755231E0052007BA477 /* exchange_tether.proto */; };
-		270447B0231E0052007BA477 /* rpc.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044756231E0052007BA477 /* rpc.proto */; };
-		270447B1231E0052007BA477 /* schema.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044757231E0052007BA477 /* schema.proto */; };
-		270447B2231E0052007BA477 /* stake.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044758231E0052007BA477 /* stake.proto */; };
-		270447B3231E0052007BA477 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044759231E0052007BA477 /* vendor.pb.swift */; };
-		270447B4231E0052007BA477 /* consume_asset.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704475A231E0052007BA477 /* consume_asset.proto */; };
-		270447B5231E0052007BA477 /* trace_type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704475B231E0052007BA477 /* trace_type.proto */; };
-		270447B6231E0052007BA477 /* declare.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704475C231E0052007BA477 /* declare.pb.swift */; };
-		270447B7231E0052007BA477 /* deploy_protocol.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704475D231E0052007BA477 /* deploy_protocol.proto */; };
-		270447B8231E0052007BA477 /* acquire_asset.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704475E231E0052007BA477 /* acquire_asset.pb.swift */; };
-		270447B9231E0052007BA477 /* exchange.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704475F231E0052007BA477 /* exchange.pb.swift */; };
-		270447BA231E0052007BA477 /* exchange.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044760231E0052007BA477 /* exchange.proto */; };
-		270447BB231E0052007BA477 /* revoke_swap.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044761231E0052007BA477 /* revoke_swap.proto */; };
-		270447BC231E0052007BA477 /* transfer.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044762231E0052007BA477 /* transfer.proto */; };
-		270447BD231E0052007BA477 /* deposit_tether.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044763231E0052007BA477 /* deposit_tether.proto */; };
-		270447BE231E0052007BA477 /* acquire_asset.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044764231E0052007BA477 /* acquire_asset.proto */; };
-		270447BF231E0052007BA477 /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044765231E0052007BA477 /* state.pb.swift */; };
-		270447C0231E0052007BA477 /* create_asset.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044766231E0052007BA477 /* create_asset.pb.swift */; };
-		270447C1231E0052007BA477 /* update_asset.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044767231E0052007BA477 /* update_asset.proto */; };
-		270447C2231E0052007BA477 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044768231E0052007BA477 /* enum.proto */; };
-		270447C3231E0052007BA477 /* revoke_tether.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044769231E0052007BA477 /* revoke_tether.pb.swift */; };
-		270447C4231E0052007BA477 /* deploy_protocol.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704476A231E0052007BA477 /* deploy_protocol.pb.swift */; };
-		270447C5231E0052007BA477 /* approve_tether.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704476B231E0052007BA477 /* approve_tether.proto */; };
-		270447C6231E0052007BA477 /* consume_asset.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704476C231E0052007BA477 /* consume_asset.pb.swift */; };
-		270447C7231E0052007BA477 /* withdraw_tether.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704476D231E0052007BA477 /* withdraw_tether.pb.swift */; };
-		270447C8231E0052007BA477 /* trace_type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704476E231E0052007BA477 /* trace_type.pb.swift */; };
-		270447C9231E0052007BA477 /* type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704476F231E0052007BA477 /* type.pb.swift */; };
-		270447CA231E0052007BA477 /* vendor.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044770231E0052007BA477 /* vendor.proto */; };
-		270447CB231E0052007BA477 /* assets.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044771231E0052007BA477 /* assets.proto */; };
-		270447CC231E0052007BA477 /* account_migrate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044772231E0052007BA477 /* account_migrate.pb.swift */; };
-		270447CD231E0052007BA477 /* declare.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044773231E0052007BA477 /* declare.proto */; };
-		270447CE231E0052007BA477 /* service.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044774231E0052007BA477 /* service.proto */; };
-		270447CF231E0052007BA477 /* enum.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044775231E0052007BA477 /* enum.pb.swift */; };
-		270447D0231E0052007BA477 /* update_asset.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044776231E0052007BA477 /* update_asset.pb.swift */; };
-		270447D1231E0052007BA477 /* revoke_tether.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044777231E0052007BA477 /* revoke_tether.proto */; };
-		270447D2231E0052007BA477 /* retrieve_swap.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044778231E0052007BA477 /* retrieve_swap.pb.swift */; };
-		270447D3231E0052007BA477 /* schema.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044779231E0052007BA477 /* schema.pb.swift */; };
-		270447D4231E0052007BA477 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704477A231E0052007BA477 /* type.proto */; };
-		270447D5231E0052007BA477 /* setup_swap.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704477B231E0052007BA477 /* setup_swap.proto */; };
-		270447D6231E0052007BA477 /* upgrade_node.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704477C231E0052007BA477 /* upgrade_node.pb.swift */; };
-		270447D7231E0052007BA477 /* account_migrate.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704477D231E0052007BA477 /* account_migrate.proto */; };
-		270447D8231E0052007BA477 /* transfer.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704477E231E0052007BA477 /* transfer.pb.swift */; };
-		270447D9231E0052007BA477 /* upgrade_node.proto in Sources */ = {isa = PBXBuildFile; fileRef = 2704477F231E0052007BA477 /* upgrade_node.proto */; };
-		270447DA231E0052007BA477 /* poke.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044780231E0052007BA477 /* poke.pb.swift */; };
-		270447DB231E0052007BA477 /* retrieve_swap.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044781231E0052007BA477 /* retrieve_swap.proto */; };
-		270447DC231E0052007BA477 /* service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044782231E0052007BA477 /* service.pb.swift */; };
-		270447DD231E0052007BA477 /* approve_tether.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044783231E0052007BA477 /* approve_tether.pb.swift */; };
-		270447DE231E0052007BA477 /* assets.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044784231E0052007BA477 /* assets.pb.swift */; };
-		270447DF231E0052007BA477 /* poke.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044785231E0052007BA477 /* poke.proto */; };
-		270447E0231E0052007BA477 /* state.proto in Sources */ = {isa = PBXBuildFile; fileRef = 27044786231E0052007BA477 /* state.proto */; };
 		270447E9231E0061007BA477 /* TxHelperSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270447E2231E0060007BA477 /* TxHelperSpec.swift */; };
 		270447EB231E0061007BA477 /* MCryptoSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270447E4231E0060007BA477 /* MCryptoSpec.swift */; };
 		270447EC231E0061007BA477 /* BIP44UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270447E5231E0060007BA477 /* BIP44UtilsSpec.swift */; };
@@ -124,10 +77,6 @@
 		270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447FB231E00AA007BA477 /* PromiseKit.framework */; };
 		27044801231E01F4007BA477 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		27044802231E01F4007BA477 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
-		275D70B123278DF100305BB0 /* delegate.proto in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AD23278DF000305BB0 /* delegate.proto */; };
-		275D70B223278DF100305BB0 /* revoke_delegate.proto in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AE23278DF100305BB0 /* revoke_delegate.proto */; };
-		275D70B323278DF100305BB0 /* delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70AF23278DF100305BB0 /* delegate.pb.swift */; };
-		275D70B423278DF100305BB0 /* revoke_delegate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */; };
 		7F6C849E17C35B9149440791 /* Pods_ArcBlockSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,14 +93,25 @@
 /* Begin PBXFileReference section */
 		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignVerifySpec.swift; sourceTree = "<group>"; };
-		270244F3234C9C100022D0A6 /* revoke_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_withdraw.proto; sourceTree = "<group>"; };
-		270244F4234C9C100022D0A6 /* deposit_token.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deposit_token.pb.swift; sourceTree = "<group>"; };
-		270244F5234C9C100022D0A6 /* approve_withdraw.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = approve_withdraw.proto; sourceTree = "<group>"; };
-		270244F6234C9C110022D0A6 /* withdraw_token.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = withdraw_token.pb.swift; sourceTree = "<group>"; };
-		270244F7234C9C110022D0A6 /* revoke_withdraw.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_withdraw.pb.swift; sourceTree = "<group>"; };
-		270244F8234C9C110022D0A6 /* deposit_token.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = deposit_token.proto; sourceTree = "<group>"; };
-		270244F9234C9C110022D0A6 /* withdraw_token.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = withdraw_token.proto; sourceTree = "<group>"; };
-		270244FA234C9C110022D0A6 /* approve_withdraw.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = approve_withdraw.pb.swift; sourceTree = "<group>"; };
+		1AD6F3952611F97B00EFAE48 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
+		1AD6F3962611F97B00EFAE48 /* service.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = service.graphqls; sourceTree = "<group>"; };
+		1AD6F3972611F97B00EFAE48 /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
+		1AD6F3982611F97B00EFAE48 /* trace-type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "trace-type.pb.swift"; sourceTree = "<group>"; };
+		1AD6F3992611F97B00EFAE48 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1AD6F39A2611F97B00EFAE48 /* tx.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tx.pb.swift; sourceTree = "<group>"; };
+		1AD6F39B2611F97B00EFAE48 /* trace-type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = "trace-type.proto"; sourceTree = "<group>"; };
+		1AD6F39C2611F97B00EFAE48 /* type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = type.pb.swift; sourceTree = "<group>"; };
+		1AD6F39D2611F97B00EFAE48 /* service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = service.proto; sourceTree = "<group>"; };
+		1AD6F39E2611F97B00EFAE48 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
+		1AD6F39F2611F97B00EFAE48 /* rpc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = rpc.proto; sourceTree = "<group>"; };
+		1AD6F3A02611F97B00EFAE48 /* enum.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enum.pb.swift; sourceTree = "<group>"; };
+		1AD6F3A12611F97B00EFAE48 /* state.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = state.proto; sourceTree = "<group>"; };
+		1AD6F3A22611F97B00EFAE48 /* state.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = state.pb.swift; sourceTree = "<group>"; };
+		1AD6F3A32611F97B00EFAE48 /* service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = service.pb.swift; sourceTree = "<group>"; };
+		1AD6F3A42611F97B00EFAE48 /* asset.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = asset.pb.swift; sourceTree = "<group>"; };
+		1AD6F3A52611F97B00EFAE48 /* tx.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = tx.proto; sourceTree = "<group>"; };
+		1AD6F3A62611F97B00EFAE48 /* vendor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = vendor.proto; sourceTree = "<group>"; };
+		1AD6F3A72611F97B00EFAE48 /* asset.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = asset.proto; sourceTree = "<group>"; };
 		270446F9231DECD6007BA477 /* web3swift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = web3swift.framework; path = Carthage/Build/iOS/web3swift.framework; sourceTree = "<group>"; };
 		270446FB231DECF6007BA477 /* secp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = secp256k1.framework; path = Carthage/Build/iOS/secp256k1.framework; sourceTree = "<group>"; };
 		270446FD231DED19007BA477 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
@@ -190,64 +150,6 @@
 		27044747231E0052007BA477 /* Base32String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base32String.swift; sourceTree = "<group>"; };
 		2704474A231E0052007BA477 /* TxHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxHelper.swift; sourceTree = "<group>"; };
 		2704474B231E0052007BA477 /* TypeUrls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeUrls.swift; sourceTree = "<group>"; };
-		2704474D231E0052007BA477 /* stake.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = stake.pb.swift; sourceTree = "<group>"; };
-		2704474E231E0052007BA477 /* setup_swap.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setup_swap.pb.swift; sourceTree = "<group>"; };
-		2704474F231E0052007BA477 /* withdraw_tether.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = withdraw_tether.proto; sourceTree = "<group>"; };
-		27044750231E0052007BA477 /* deposit_tether.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deposit_tether.pb.swift; sourceTree = "<group>"; };
-		27044751231E0052007BA477 /* revoke_swap.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_swap.pb.swift; sourceTree = "<group>"; };
-		27044752231E0052007BA477 /* exchange_tether.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchange_tether.pb.swift; sourceTree = "<group>"; };
-		27044753231E0052007BA477 /* create_asset.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = create_asset.proto; sourceTree = "<group>"; };
-		27044754231E0052007BA477 /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
-		27044755231E0052007BA477 /* exchange_tether.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = exchange_tether.proto; sourceTree = "<group>"; };
-		27044756231E0052007BA477 /* rpc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = rpc.proto; sourceTree = "<group>"; };
-		27044757231E0052007BA477 /* schema.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = schema.proto; sourceTree = "<group>"; };
-		27044758231E0052007BA477 /* stake.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = stake.proto; sourceTree = "<group>"; };
-		27044759231E0052007BA477 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
-		2704475A231E0052007BA477 /* consume_asset.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = consume_asset.proto; sourceTree = "<group>"; };
-		2704475B231E0052007BA477 /* trace_type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = trace_type.proto; sourceTree = "<group>"; };
-		2704475C231E0052007BA477 /* declare.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = declare.pb.swift; sourceTree = "<group>"; };
-		2704475D231E0052007BA477 /* deploy_protocol.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = deploy_protocol.proto; sourceTree = "<group>"; };
-		2704475E231E0052007BA477 /* acquire_asset.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = acquire_asset.pb.swift; sourceTree = "<group>"; };
-		2704475F231E0052007BA477 /* exchange.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exchange.pb.swift; sourceTree = "<group>"; };
-		27044760231E0052007BA477 /* exchange.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = exchange.proto; sourceTree = "<group>"; };
-		27044761231E0052007BA477 /* revoke_swap.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_swap.proto; sourceTree = "<group>"; };
-		27044762231E0052007BA477 /* transfer.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = transfer.proto; sourceTree = "<group>"; };
-		27044763231E0052007BA477 /* deposit_tether.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = deposit_tether.proto; sourceTree = "<group>"; };
-		27044764231E0052007BA477 /* acquire_asset.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = acquire_asset.proto; sourceTree = "<group>"; };
-		27044765231E0052007BA477 /* state.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = state.pb.swift; sourceTree = "<group>"; };
-		27044766231E0052007BA477 /* create_asset.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = create_asset.pb.swift; sourceTree = "<group>"; };
-		27044767231E0052007BA477 /* update_asset.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = update_asset.proto; sourceTree = "<group>"; };
-		27044768231E0052007BA477 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
-		27044769231E0052007BA477 /* revoke_tether.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_tether.pb.swift; sourceTree = "<group>"; };
-		2704476A231E0052007BA477 /* deploy_protocol.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deploy_protocol.pb.swift; sourceTree = "<group>"; };
-		2704476B231E0052007BA477 /* approve_tether.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = approve_tether.proto; sourceTree = "<group>"; };
-		2704476C231E0052007BA477 /* consume_asset.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = consume_asset.pb.swift; sourceTree = "<group>"; };
-		2704476D231E0052007BA477 /* withdraw_tether.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = withdraw_tether.pb.swift; sourceTree = "<group>"; };
-		2704476E231E0052007BA477 /* trace_type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = trace_type.pb.swift; sourceTree = "<group>"; };
-		2704476F231E0052007BA477 /* type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = type.pb.swift; sourceTree = "<group>"; };
-		27044770231E0052007BA477 /* vendor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = vendor.proto; sourceTree = "<group>"; };
-		27044771231E0052007BA477 /* assets.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = assets.proto; sourceTree = "<group>"; };
-		27044772231E0052007BA477 /* account_migrate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = account_migrate.pb.swift; sourceTree = "<group>"; };
-		27044773231E0052007BA477 /* declare.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = declare.proto; sourceTree = "<group>"; };
-		27044774231E0052007BA477 /* service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = service.proto; sourceTree = "<group>"; };
-		27044775231E0052007BA477 /* enum.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enum.pb.swift; sourceTree = "<group>"; };
-		27044776231E0052007BA477 /* update_asset.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = update_asset.pb.swift; sourceTree = "<group>"; };
-		27044777231E0052007BA477 /* revoke_tether.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_tether.proto; sourceTree = "<group>"; };
-		27044778231E0052007BA477 /* retrieve_swap.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = retrieve_swap.pb.swift; sourceTree = "<group>"; };
-		27044779231E0052007BA477 /* schema.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = schema.pb.swift; sourceTree = "<group>"; };
-		2704477A231E0052007BA477 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
-		2704477B231E0052007BA477 /* setup_swap.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = setup_swap.proto; sourceTree = "<group>"; };
-		2704477C231E0052007BA477 /* upgrade_node.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = upgrade_node.pb.swift; sourceTree = "<group>"; };
-		2704477D231E0052007BA477 /* account_migrate.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = account_migrate.proto; sourceTree = "<group>"; };
-		2704477E231E0052007BA477 /* transfer.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = transfer.pb.swift; sourceTree = "<group>"; };
-		2704477F231E0052007BA477 /* upgrade_node.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = upgrade_node.proto; sourceTree = "<group>"; };
-		27044780231E0052007BA477 /* poke.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = poke.pb.swift; sourceTree = "<group>"; };
-		27044781231E0052007BA477 /* retrieve_swap.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = retrieve_swap.proto; sourceTree = "<group>"; };
-		27044782231E0052007BA477 /* service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = service.pb.swift; sourceTree = "<group>"; };
-		27044783231E0052007BA477 /* approve_tether.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = approve_tether.pb.swift; sourceTree = "<group>"; };
-		27044784231E0052007BA477 /* assets.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = assets.pb.swift; sourceTree = "<group>"; };
-		27044785231E0052007BA477 /* poke.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = poke.proto; sourceTree = "<group>"; };
-		27044786231E0052007BA477 /* state.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = state.proto; sourceTree = "<group>"; };
 		270447E1231E0060007BA477 /* ArcBlockSDKTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArcBlockSDKTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		270447E2231E0060007BA477 /* TxHelperSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxHelperSpec.swift; sourceTree = "<group>"; };
 		270447E4231E0060007BA477 /* MCryptoSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCryptoSpec.swift; sourceTree = "<group>"; };
@@ -262,10 +164,6 @@
 		274B185B20E4DD8900884659 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		274B185C20E4DD8900884659 /* Apollo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apollo.framework; path = Carthage/Build/iOS/Apollo.framework; sourceTree = "<group>"; };
 		274B185F20E603F700884659 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
-		275D70AD23278DF000305BB0 /* delegate.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = delegate.proto; sourceTree = "<group>"; };
-		275D70AE23278DF100305BB0 /* revoke_delegate.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = revoke_delegate.proto; sourceTree = "<group>"; };
-		275D70AF23278DF100305BB0 /* delegate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = delegate.pb.swift; sourceTree = "<group>"; };
-		275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = revoke_delegate.pb.swift; sourceTree = "<group>"; };
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		2887CC851616970ABA85CE61 /* Pods-ArcBlockSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -434,76 +332,25 @@
 		2704474C231E0052007BA477 /* protobuf */ = {
 			isa = PBXGroup;
 			children = (
-				27044772231E0052007BA477 /* account_migrate.pb.swift */,
-				2704477D231E0052007BA477 /* account_migrate.proto */,
-				2704475E231E0052007BA477 /* acquire_asset.pb.swift */,
-				27044764231E0052007BA477 /* acquire_asset.proto */,
-				27044783231E0052007BA477 /* approve_tether.pb.swift */,
-				2704476B231E0052007BA477 /* approve_tether.proto */,
-				270244FA234C9C110022D0A6 /* approve_withdraw.pb.swift */,
-				270244F5234C9C100022D0A6 /* approve_withdraw.proto */,
-				27044784231E0052007BA477 /* assets.pb.swift */,
-				27044771231E0052007BA477 /* assets.proto */,
-				2704476C231E0052007BA477 /* consume_asset.pb.swift */,
-				2704475A231E0052007BA477 /* consume_asset.proto */,
-				27044766231E0052007BA477 /* create_asset.pb.swift */,
-				27044753231E0052007BA477 /* create_asset.proto */,
-				2704475C231E0052007BA477 /* declare.pb.swift */,
-				27044773231E0052007BA477 /* declare.proto */,
-				275D70AF23278DF100305BB0 /* delegate.pb.swift */,
-				275D70AD23278DF000305BB0 /* delegate.proto */,
-				2704476A231E0052007BA477 /* deploy_protocol.pb.swift */,
-				2704475D231E0052007BA477 /* deploy_protocol.proto */,
-				27044750231E0052007BA477 /* deposit_tether.pb.swift */,
-				27044763231E0052007BA477 /* deposit_tether.proto */,
-				270244F4234C9C100022D0A6 /* deposit_token.pb.swift */,
-				270244F8234C9C110022D0A6 /* deposit_token.proto */,
-				27044775231E0052007BA477 /* enum.pb.swift */,
-				27044768231E0052007BA477 /* enum.proto */,
-				27044752231E0052007BA477 /* exchange_tether.pb.swift */,
-				27044755231E0052007BA477 /* exchange_tether.proto */,
-				2704475F231E0052007BA477 /* exchange.pb.swift */,
-				27044760231E0052007BA477 /* exchange.proto */,
-				27044780231E0052007BA477 /* poke.pb.swift */,
-				27044785231E0052007BA477 /* poke.proto */,
-				27044778231E0052007BA477 /* retrieve_swap.pb.swift */,
-				27044781231E0052007BA477 /* retrieve_swap.proto */,
-				275D70B023278DF100305BB0 /* revoke_delegate.pb.swift */,
-				275D70AE23278DF100305BB0 /* revoke_delegate.proto */,
-				27044751231E0052007BA477 /* revoke_swap.pb.swift */,
-				27044761231E0052007BA477 /* revoke_swap.proto */,
-				27044769231E0052007BA477 /* revoke_tether.pb.swift */,
-				27044777231E0052007BA477 /* revoke_tether.proto */,
-				270244F7234C9C110022D0A6 /* revoke_withdraw.pb.swift */,
-				270244F3234C9C100022D0A6 /* revoke_withdraw.proto */,
-				27044754231E0052007BA477 /* rpc.pb.swift */,
-				27044756231E0052007BA477 /* rpc.proto */,
-				27044779231E0052007BA477 /* schema.pb.swift */,
-				27044757231E0052007BA477 /* schema.proto */,
-				27044782231E0052007BA477 /* service.pb.swift */,
-				27044774231E0052007BA477 /* service.proto */,
-				2704474E231E0052007BA477 /* setup_swap.pb.swift */,
-				2704477B231E0052007BA477 /* setup_swap.proto */,
-				2704474D231E0052007BA477 /* stake.pb.swift */,
-				27044758231E0052007BA477 /* stake.proto */,
-				27044765231E0052007BA477 /* state.pb.swift */,
-				27044786231E0052007BA477 /* state.proto */,
-				2704476E231E0052007BA477 /* trace_type.pb.swift */,
-				2704475B231E0052007BA477 /* trace_type.proto */,
-				2704477E231E0052007BA477 /* transfer.pb.swift */,
-				27044762231E0052007BA477 /* transfer.proto */,
-				2704476F231E0052007BA477 /* type.pb.swift */,
-				2704477A231E0052007BA477 /* type.proto */,
-				27044776231E0052007BA477 /* update_asset.pb.swift */,
-				27044767231E0052007BA477 /* update_asset.proto */,
-				2704477C231E0052007BA477 /* upgrade_node.pb.swift */,
-				2704477F231E0052007BA477 /* upgrade_node.proto */,
-				27044759231E0052007BA477 /* vendor.pb.swift */,
-				27044770231E0052007BA477 /* vendor.proto */,
-				2704476D231E0052007BA477 /* withdraw_tether.pb.swift */,
-				2704474F231E0052007BA477 /* withdraw_tether.proto */,
-				270244F6234C9C110022D0A6 /* withdraw_token.pb.swift */,
-				270244F9234C9C110022D0A6 /* withdraw_token.proto */,
+				1AD6F3A42611F97B00EFAE48 /* asset.pb.swift */,
+				1AD6F3A72611F97B00EFAE48 /* asset.proto */,
+				1AD6F3A02611F97B00EFAE48 /* enum.pb.swift */,
+				1AD6F39E2611F97B00EFAE48 /* enum.proto */,
+				1AD6F3972611F97B00EFAE48 /* rpc.pb.swift */,
+				1AD6F39F2611F97B00EFAE48 /* rpc.proto */,
+				1AD6F3962611F97B00EFAE48 /* service.graphqls */,
+				1AD6F3A32611F97B00EFAE48 /* service.pb.swift */,
+				1AD6F39D2611F97B00EFAE48 /* service.proto */,
+				1AD6F3A22611F97B00EFAE48 /* state.pb.swift */,
+				1AD6F3A12611F97B00EFAE48 /* state.proto */,
+				1AD6F3982611F97B00EFAE48 /* trace-type.pb.swift */,
+				1AD6F39B2611F97B00EFAE48 /* trace-type.proto */,
+				1AD6F39A2611F97B00EFAE48 /* tx.pb.swift */,
+				1AD6F3A52611F97B00EFAE48 /* tx.proto */,
+				1AD6F39C2611F97B00EFAE48 /* type.pb.swift */,
+				1AD6F3952611F97B00EFAE48 /* type.proto */,
+				1AD6F3992611F97B00EFAE48 /* vendor.pb.swift */,
+				1AD6F3A62611F97B00EFAE48 /* vendor.proto */,
 			);
 			path = protobuf;
 			sourceTree = "<group>";
@@ -657,6 +504,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AD6F3A92611F97C00EFAE48 /* service.graphqls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,106 +586,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				270447B0231E0052007BA477 /* rpc.proto in Sources */,
+				1AD6F3B22611F97C00EFAE48 /* rpc.proto in Sources */,
+				1AD6F3AB2611F97C00EFAE48 /* trace-type.pb.swift in Sources */,
 				2704479D231E0052007BA477 /* Base16String.swift in Sources */,
-				270244FB234C9C110022D0A6 /* revoke_withdraw.proto in Sources */,
-				270447A7231E0052007BA477 /* stake.pb.swift in Sources */,
-				270447B1231E0052007BA477 /* schema.proto in Sources */,
-				270244FC234C9C110022D0A6 /* deposit_token.pb.swift in Sources */,
-				270447C3231E0052007BA477 /* revoke_tether.pb.swift in Sources */,
-				270447CF231E0052007BA477 /* enum.pb.swift in Sources */,
-				270447C8231E0052007BA477 /* trace_type.pb.swift in Sources */,
-				270447D3231E0052007BA477 /* schema.pb.swift in Sources */,
-				270447C2231E0052007BA477 /* enum.proto in Sources */,
+				1AD6F3AE2611F97C00EFAE48 /* trace-type.proto in Sources */,
 				27044792231E0052007BA477 /* ABSDKDataSource.swift in Sources */,
-				270447B7231E0052007BA477 /* deploy_protocol.proto in Sources */,
-				270447C7231E0052007BA477 /* withdraw_tether.pb.swift in Sources */,
-				270447D7231E0052007BA477 /* account_migrate.proto in Sources */,
 				2704478D231E0052007BA477 /* ed25519_utility.swift in Sources */,
-				270447A8231E0052007BA477 /* setup_swap.pb.swift in Sources */,
+				1AD6F3B52611F97C00EFAE48 /* state.pb.swift in Sources */,
 				27044799231E0052007BA477 /* ABSDKCustomScalarTypes.swift in Sources */,
 				27044790231E0052007BA477 /* DidHelper.swift in Sources */,
+				1AD6F3AA2611F97C00EFAE48 /* rpc.pb.swift in Sources */,
 				2704478B231E0052007BA477 /* ed25519_sign.swift in Sources */,
 				2704478A231E0052007BA477 /* ed25519_open.swift in Sources */,
-				270447D6231E0052007BA477 /* upgrade_node.pb.swift in Sources */,
+				1AD6F3B92611F97C00EFAE48 /* vendor.proto in Sources */,
 				2704479C231E0052007BA477 /* Base64String.swift in Sources */,
-				270447B3231E0052007BA477 /* vendor.pb.swift in Sources */,
-				270447B6231E0052007BA477 /* declare.pb.swift in Sources */,
 				270447A3231E0052007BA477 /* StringExtension.swift in Sources */,
-				270447C1231E0052007BA477 /* update_asset.proto in Sources */,
-				27024502234C9C110022D0A6 /* approve_withdraw.pb.swift in Sources */,
-				270447CC231E0052007BA477 /* account_migrate.pb.swift in Sources */,
-				270447CB231E0052007BA477 /* assets.proto in Sources */,
-				275D70B323278DF100305BB0 /* delegate.pb.swift in Sources */,
-				270447CE231E0052007BA477 /* service.proto in Sources */,
-				270447AE231E0052007BA477 /* rpc.pb.swift in Sources */,
-				270447D5231E0052007BA477 /* setup_swap.proto in Sources */,
 				270447A5231E0052007BA477 /* TxHelper.swift in Sources */,
-				270244FE234C9C110022D0A6 /* withdraw_token.pb.swift in Sources */,
-				27024500234C9C110022D0A6 /* deposit_token.proto in Sources */,
-				270447AF231E0052007BA477 /* exchange_tether.proto in Sources */,
-				270447DA231E0052007BA477 /* poke.pb.swift in Sources */,
 				270447A4231E0052007BA477 /* Base32String.swift in Sources */,
-				270447BE231E0052007BA477 /* acquire_asset.proto in Sources */,
-				270447B4231E0052007BA477 /* consume_asset.proto in Sources */,
-				270244FF234C9C110022D0A6 /* revoke_withdraw.pb.swift in Sources */,
-				275D70B223278DF100305BB0 /* revoke_delegate.proto in Sources */,
-				275D70B423278DF100305BB0 /* revoke_delegate.pb.swift in Sources */,
 				27044795231E0052007BA477 /* ABSDKHTTPTransport.swift in Sources */,
-				270447B2231E0052007BA477 /* stake.proto in Sources */,
-				270447BD231E0052007BA477 /* deposit_tether.proto in Sources */,
+				1AD6F3B72611F97C00EFAE48 /* asset.pb.swift in Sources */,
+				1AD6F3B62611F97C00EFAE48 /* service.pb.swift in Sources */,
+				1AD6F3B42611F97C00EFAE48 /* state.proto in Sources */,
+				1AD6F3B82611F97C00EFAE48 /* tx.proto in Sources */,
+				1AD6F3AD2611F97C00EFAE48 /* tx.pb.swift in Sources */,
+				1AD6F3B32611F97C00EFAE48 /* enum.pb.swift in Sources */,
+				1AD6F3B02611F97C00EFAE48 /* service.proto in Sources */,
 				27044789231E0052007BA477 /* ed25519_fe.swift in Sources */,
-				270447D0231E0052007BA477 /* update_asset.pb.swift in Sources */,
 				27044791231E0052007BA477 /* ABSDKPagination.swift in Sources */,
-				270447CA231E0052007BA477 /* vendor.proto in Sources */,
+				1AD6F3A82611F97C00EFAE48 /* type.proto in Sources */,
 				2704478E231E0052007BA477 /* ed25519_sc.swift in Sources */,
-				270447D9231E0052007BA477 /* upgrade_node.proto in Sources */,
-				270447BC231E0052007BA477 /* transfer.proto in Sources */,
 				2704479F231E0052007BA477 /* Base58String.swift in Sources */,
 				27044796231E0052007BA477 /* ABSDKWebSocketTransport.swift in Sources */,
-				27024501234C9C110022D0A6 /* withdraw_token.proto in Sources */,
-				270447C9231E0052007BA477 /* type.pb.swift in Sources */,
-				270447B5231E0052007BA477 /* trace_type.proto in Sources */,
 				270447A0231E0052007BA477 /* Base16.swift in Sources */,
-				270447DF231E0052007BA477 /* poke.proto in Sources */,
 				2704479A231E0052007BA477 /* ABSDKTableViewController.swift in Sources */,
-				270447DC231E0052007BA477 /* service.pb.swift in Sources */,
-				270447BF231E0052007BA477 /* state.pb.swift in Sources */,
-				270447AB231E0052007BA477 /* revoke_swap.pb.swift in Sources */,
+				1AD6F3B12611F97C00EFAE48 /* enum.proto in Sources */,
 				27044797231E0052007BA477 /* ABSDKPagedArrayDataSource.swift in Sources */,
-				270244FD234C9C110022D0A6 /* approve_withdraw.proto in Sources */,
-				270447AD231E0052007BA477 /* create_asset.proto in Sources */,
+				1AD6F3AC2611F97C00EFAE48 /* vendor.pb.swift in Sources */,
 				2704479E231E0052007BA477 /* Multibase.swift in Sources */,
-				270447AC231E0052007BA477 /* exchange_tether.pb.swift in Sources */,
 				27044794231E0052007BA477 /* ABSDKView.swift in Sources */,
-				275D70B123278DF100305BB0 /* delegate.proto in Sources */,
-				270447BB231E0052007BA477 /* revoke_swap.proto in Sources */,
+				1AD6F3BA2611F97C00EFAE48 /* asset.proto in Sources */,
 				27044793231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				2704478C231E0052007BA477 /* ed25519_ge.swift in Sources */,
-				270447CD231E0052007BA477 /* declare.proto in Sources */,
-				270447DE231E0052007BA477 /* assets.pb.swift in Sources */,
 				270447A1231E0052007BA477 /* Base32.swift in Sources */,
-				270447C0231E0052007BA477 /* create_asset.pb.swift in Sources */,
 				2704479B231E0052007BA477 /* Encoding.swift in Sources */,
-				270447B9231E0052007BA477 /* exchange.pb.swift in Sources */,
-				270447C6231E0052007BA477 /* consume_asset.pb.swift in Sources */,
-				270447D1231E0052007BA477 /* revoke_tether.proto in Sources */,
-				270447D8231E0052007BA477 /* transfer.pb.swift in Sources */,
-				270447B8231E0052007BA477 /* acquire_asset.pb.swift in Sources */,
-				270447C5231E0052007BA477 /* approve_tether.proto in Sources */,
-				270447C4231E0052007BA477 /* deploy_protocol.pb.swift in Sources */,
-				270447E0231E0052007BA477 /* state.proto in Sources */,
-				270447DB231E0052007BA477 /* retrieve_swap.proto in Sources */,
 				2704478F231E0052007BA477 /* MCrypto.swift in Sources */,
-				270447DD231E0052007BA477 /* approve_tether.pb.swift in Sources */,
-				270447D2231E0052007BA477 /* retrieve_swap.pb.swift in Sources */,
 				270447A2231E0052007BA477 /* shim.swift in Sources */,
-				270447BA231E0052007BA477 /* exchange.proto in Sources */,
-				270447A9231E0052007BA477 /* withdraw_tether.proto in Sources */,
-				270447AA231E0052007BA477 /* deposit_tether.pb.swift in Sources */,
+				1AD6F3AF2611F97C00EFAE48 /* type.pb.swift in Sources */,
 				27044788231E0052007BA477 /* BIP44Utils.swift in Sources */,
 				27044798231E0052007BA477 /* ABSDKClient.swift in Sources */,
-				270447D4231E0052007BA477 /* type.proto in Sources */,
 				270447A6231E0052007BA477 /* TypeUrls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
