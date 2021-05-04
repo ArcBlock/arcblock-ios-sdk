@@ -38,6 +38,10 @@ public enum RoleType: Int8 {
     case tether = 11
     case swap = 12
     case delegate = 13
+    case vc = 14
+    case blocklet = 15
+    case registry = 16
+    case token = 17
     case any = 63
 
     public static func roleTypeWithName(_ name: String) -> RoleType {
@@ -70,6 +74,14 @@ public enum RoleType: Int8 {
             return .swap
         case "delegate":
             return .delegate
+        case "vc":
+            return .vc
+        case "blocklet":
+            return .blocklet
+        case "registry":
+            return .registry
+        case "token":
+            return .token
         default:
             return .any
         }
@@ -269,7 +281,7 @@ public struct DidType: Equatable {
 
 public class DidHelper {
     
-    public static func getUserDid(userPrivateKey: Data) -> String? {        
+    public static func getUserDid(userPrivateKey: Data) -> String? {
         return getUserDid(didType: DidType.Types.didTypeForge, privateKey: userPrivateKey)
     }
 
@@ -306,7 +318,7 @@ public class DidHelper {
     }
 
     public static func getUserPk(userPrivateKey: Data, didType: DidType) -> Data? {
-        return didType.getUserPk(privateKey: userPrivateKey)        
+        return didType.getUserPk(privateKey: userPrivateKey)
     }
 
     public static func pkToAddress(didType: DidType, publicKey: Data) -> String? {
@@ -327,7 +339,7 @@ public class DidHelper {
             let suffix = extendedHash.prefix(4)
             let fullHash = prefixedHash + suffix
             var encodeDidString = didType.encodingType.encodedtring(fullHash)
-            if didType.encodingType == .base16 {                
+            if didType.encodingType == .base16 {
                 encodeDidString = "0x" + encodeDidString
             }
             return encodeDidString
