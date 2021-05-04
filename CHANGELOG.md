@@ -1,3 +1,6 @@
+## 0.11.1 (May 04, 2021)
+  - update role type
+
 ## 0.11.0 (April 26, 2021)
 
 - Support Ocap
