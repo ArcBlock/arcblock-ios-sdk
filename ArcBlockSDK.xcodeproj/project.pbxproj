@@ -10,6 +10,7 @@
 		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
 		1A379E4B25FF43000064A3E7 /* JWTKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1A379E4A25FF43000064A3E7 /* JWTKit */; };
 		1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */; };
+		1A5257D72652669C00CD3FA3 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1A5257D62652669C00CD3FA3 /* CryptoSwift */; };
 		1AD6F3A82611F97C00EFAE48 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3952611F97B00EFAE48 /* type.proto */; };
 		1AD6F3A92611F97C00EFAE48 /* service.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6F3962611F97B00EFAE48 /* service.graphqls */; };
 		1AD6F3AA2611F97C00EFAE48 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3972611F97B00EFAE48 /* rpc.pb.swift */; };
@@ -191,6 +192,7 @@
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
 				270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */,
 				016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */,
+				1A5257D72652669C00CD3FA3 /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +437,7 @@
 			name = ArcBlockSDK;
 			packageProductDependencies = (
 				1A379E4A25FF43000064A3E7 /* JWTKit */,
+				1A5257D62652669C00CD3FA3 /* CryptoSwift */,
 			);
 			productName = ArcBlockSDK;
 			productReference = 2704470F231DFF97007BA477 /* ArcBlockSDK.framework */;
@@ -488,6 +491,7 @@
 			mainGroup = 277E6B4D20A0DAB50054707E;
 			packageReferences = (
 				1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */,
+				1A5257D52652669C00CD3FA3 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 			);
 			productRefGroup = 277E6B5A20A0DB160054707E /* Products */;
 			projectDirPath = "";
@@ -1042,6 +1046,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		1A5257D52652669C00CD3FA3 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1049,6 +1061,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */;
 			productName = JWTKit;
+		};
+		1A5257D62652669C00CD3FA3 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A5257D52652669C00CD3FA3 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
