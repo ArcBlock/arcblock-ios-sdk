@@ -109,7 +109,7 @@ public class ABSDKWebSocketTransport: NetworkTransport, WebSocketDelegate {
     var socket: WebSocket?
     var channel: Channel?
     var error: WebSocketError?
-    var delegate: WebSocketDelegate?
+    public var delegate: WebSocketDelegate?
 
     let serializationFormat = ABSDKJSONSerializationFormat.self
     let topic = "doc"
