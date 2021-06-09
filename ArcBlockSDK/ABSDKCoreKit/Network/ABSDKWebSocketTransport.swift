@@ -108,10 +108,21 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     public init(url: URL, params: [String: String]? = nil) {
         self.params = params
         var request = URLRequest(url: url)
+        var socketUrl = url.absoluteString
+        var paramStrArr: [String] = []
+
         if let params = self.params {
             request.allHTTPHeaderFields = params
+            for key in params.keys {
+                let value = params[key] ?? ""
+                paramStrArr.append("\(key)=\(value)")
+            }
         }
-        self.socket = Socket(url.absoluteString, params: params)
+        if paramStrArr.count > 0 {
+            socketUrl.append("?")
+            socketUrl.append(paramStrArr.joined(separator: "&"))
+        }
+        self.socket = Socket(socketUrl)
 
         self.socket?.onOpen { [weak self] in
             self?.websocketDidConnect()
