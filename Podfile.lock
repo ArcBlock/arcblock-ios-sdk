@@ -23,8 +23,6 @@ PODS:
   - SQLite.swift/SQLCipher (0.12.2):
     - SQLCipher (>= 3.4.0)
   - Starscream (3.1.1)
-  - SwiftPhoenixClient (2.0.0):
-    - SwiftPhoenixClient/Core (= 2.0.0)
   - SwiftPhoenixClient/Core (2.0.0)
   - SwiftPhoenixClient/Starscream (2.0.0):
     - Starscream (~> 3.1)
@@ -44,7 +42,6 @@ DEPENDENCIES:
   - Quick
   - ReachabilitySwift
   - SQLite.swift/SQLCipher (from `https://github.com/ArcBlock/SQLite.swift.git`)
-  - SwiftPhoenixClient (~> 2.0)
   - SwiftPhoenixClient/Starscream (~> 2.0)
   - SwiftProtobuf (~> 1.0)
   - web3.swift.pod (~> 2.2.0)
@@ -94,6 +91,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
   web3.swift.pod: 66048c11416c2e7a9a4b35fe42254d0f0d9db4b1
 
-PODFILE CHECKSUM: 96f5bdb004acc496429583603a406bdd0e7b5221
+PODFILE CHECKSUM: 112e225c2017afc32a23e0febefa49be6ac7895f
 
 COCOAPODS: 1.10.1
