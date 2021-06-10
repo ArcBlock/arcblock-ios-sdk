@@ -145,8 +145,9 @@ public class ABSDKWebSocketTransport: NetworkTransport, WebSocketDelegate {
             socketUrl.append("?")
             socketUrl.append(paramStrArr.joined(separator: "&"))
         }
-        guard let u = URL(string: socketUrl) else { return }
-        self.socket = WebSocket(url: u)
+//        guard let u = URL(string: socketUrl) else { return }
+        self.socket = WebSocket(request: request)
+//        self.socket = WebSocket(url: u)
         socket?.delegate = self
 //        self.socket = Socket(endPoint: socketUrl, transport: nil)
 //        self.socket = Socket(socketUrl)
