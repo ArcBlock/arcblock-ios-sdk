@@ -82,5 +82,13 @@ class BIP44UtilsSpec: QuickSpec {
                 expect(result).to(beFalse())
             })
         }
+        
+        describe("keyDerivePathForAppDid") {
+            it("works", closure: {
+                let path = BIP44Utils.keyDerivePathForAppDid(appDid: "", index: 0)
+                expect(path).to(equal(nil))
+            })
+            
+        }
     }
 }
