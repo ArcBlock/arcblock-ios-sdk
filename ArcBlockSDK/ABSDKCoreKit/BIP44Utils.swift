@@ -69,30 +69,23 @@ public class BIP44Utils {
 
     // Dapp path, index 用于多维度生成账户与appDid配合使用
     public static func keyDerivePathForAppDid(appDid: String, index: Int) -> String? {        
-        if appDid == "eth" {
-            return HDNode.defaultPathMetamask
+        let did = DidHelper.removeDidPrefix(appDid)
+        let encodeType = DidHelper.getDidEncodingType(did: did)
+        var didData: Data?
+        if encodeType == .base16 {
+            didData = Data(hex: did)
         } else {
-            guard let appDidHash = appDid.components(separatedBy: ":").last else {
-                    return nil
-            }
-            let did = DidHelper.removeDidPrefix(appDid)
-            let encodeType = DidHelper.getDidEncodingType(did: did)
-            var didData: Data?
-            if encodeType == .base16 {
-                didData = Data(hex: did)
-            } else {
-                didData = Data(multibaseEncoded: did)
-            }
-            
-            guard let appDidBytes = didData else {
-                return nil
-            }
-            
-            let appDidSha3Prefix = MCrypto.Hasher.Sha3.sha256(appDidBytes).prefix(8)
-            let sk1 = (UInt32(bigEndian: appDidSha3Prefix.prefix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
-            let sk2 = (UInt32(bigEndian: appDidSha3Prefix.suffix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
-            return keyDerivePathFor(account: String(sk1), change: String(sk2), index: index)
+            didData = Data(multibaseEncoded: did)
         }
+        
+        guard let appDidBytes = didData else {
+            return nil
+        }
+        
+        let appDidSha3Prefix = MCrypto.Hasher.Sha3.sha256(appDidBytes).prefix(8)
+        let sk1 = (UInt32(bigEndian: appDidSha3Prefix.prefix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
+        let sk2 = (UInt32(bigEndian: appDidSha3Prefix.suffix(4).withUnsafeBytes { $0.pointee }) << 1) >> 1
+        return keyDerivePathFor(account: String(sk1), change: String(sk2), index: index)
     }
 }
 
