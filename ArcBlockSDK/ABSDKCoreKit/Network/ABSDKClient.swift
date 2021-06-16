@@ -24,34 +24,6 @@ import Reachability
 import Apollo
 import UIKit
 
-let ocapBaseUrl = "https://ocap.arcblock.io/"
-let websocketBaseUrl = "wss://ocap.arcblock.io/"
-
-/// Enum for ArcBlock supported endpoints
-public enum ABSDKEndpoint {
-    /// the Bitcoin endpoint
-    case btc
-    /// the Ethereum endpoint
-    case eth
-
-    var url: URL {
-        switch self {
-        case .btc:
-            return URL(string: ocapBaseUrl + "api/btc")!
-        case .eth:
-            return URL(string: ocapBaseUrl + "api/eth")!
-        }
-    }
-
-    var webSocketUrl: URL {
-        switch self {
-        case .btc:
-            return URL(string: websocketBaseUrl + "api/btc/socket/websocket")!
-        case .eth:
-            return URL(string: websocketBaseUrl + "api/eth/socket/websocket")!
-        }
-    }
-}
 
 /// Enum to describe client's network access state
 public enum ClientNetworkAccessState {
@@ -61,6 +33,8 @@ public enum ClientNetworkAccessState {
     case offline
 }
 
+
+
 /// An optional closure which gets executed before making the network call, should be used to make local cache update
 public typealias OptimisticResponseBlock = (ApolloStore.ReadWriteTransaction?) -> Void
 public typealias OperationResultHandler<Operation: GraphQLOperation> = (_ result: GraphQLResult<Operation.Data>?, _ error: Error?) -> Void
@@ -68,7 +42,6 @@ public typealias OperationResultHandler<Operation: GraphQLOperation> = (_ result
 /// Configuration for initializing a ABSDKClient
 public class ABSDKClientConfiguration {
     fileprivate var url: URL
-    fileprivate var webSocketUrl: URL?
     fileprivate var urlSessionConfiguration: URLSessionConfiguration
     fileprivate var accessKey: String?
     fileprivate var accessSecret: String?
@@ -78,17 +51,6 @@ public class ABSDKClientConfiguration {
     fileprivate var allowsCellularAccess: Bool = true
     fileprivate var autoSubmitOfflineMutations: Bool = true
 
-    /// Creates a configuration object for the `ABSDKClient`.
-    ///
-    /// - Parameters:
-    ///   - endpoint: The ArcBlock endpoint.
-    ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
-    public convenience init(endpoint: ABSDKEndpoint,
-                            databaseURL: URL? = nil,
-                            accessKey: String? = nil,
-                            accessSecret: String? = nil) throws {
-        self.init(url: endpoint.url, webSocketUrl: endpoint.webSocketUrl, databaseURL: databaseURL, accessKey: accessKey, accessSecret: accessSecret)
-    }
 
     /// Creates a configuration object for the `ABSDKClient`.
     ///
@@ -98,13 +60,11 @@ public class ABSDKClientConfiguration {
     ///   - urlSessionConfiguration: A `URLSessionConfiguration` configuration object for custom HTTP configuration.
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public init(url: URL,
-                webSocketUrl: URL? = nil,
                 urlSessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default,
                 databaseURL: URL? = nil,
                 accessKey: String? = nil,
                 accessSecret: String? = nil) {
         self.url = url
-        self.webSocketUrl = webSocketUrl
         self.urlSessionConfiguration = urlSessionConfiguration
         self.databaseURL = databaseURL
         self.accessKey = accessKey
@@ -163,19 +123,11 @@ public class ABSDKClient {
         }
         self.store = store
 
-        if let webSocketUrl: URL = self.configuration.webSocketUrl {
-            let httpTransport: ABSDKHTTPNetworkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url,
-                                                                                     configuration: self.configuration.urlSessionConfiguration,
-                                                                                     accessKey: self.configuration.accessKey,
-                                                                                     accessSecret: self.configuration.accessSecret)
-            let websocketTransport: ABSDKWebSocketTransport = ABSDKWebSocketTransport(url: webSocketUrl)
-            self.networkTransport = ABSDKSplitNetworkTransport(httpNetworkTransport: httpTransport, webSocketNetworkTransport: websocketTransport)
-        } else {
-            self.networkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url,
-                                                              configuration: self.configuration.urlSessionConfiguration,
-                                                              accessKey: self.configuration.accessKey,
-                                                              accessSecret: self.configuration.accessSecret)
-        }
+        self.networkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url,
+                                                          configuration: self.configuration.urlSessionConfiguration,
+                                                          accessKey: self.configuration.accessKey,
+                                                          accessSecret: self.configuration.accessSecret)
+
 
         self.apolloClient = ApolloClient(networkTransport: self.networkTransport!, store: self.store)
 
@@ -187,7 +139,6 @@ public class ABSDKClient {
 
         observer = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [weak self] _ in
             self?.appInForeground = true
-            self?.handleStateChange()
         }
         observers.append(observer)
 
@@ -232,17 +183,8 @@ public class ABSDKClient {
 
     func onNetworkAvailabilityStatusChanged(isEndpointReachable: Bool) {
         accessState = isEndpointReachable ? .online : .offline
-        self.handleStateChange()
     }
 
-    func handleStateChange() {
-        guard let networkTransport: ABSDKSplitNetworkTransport = self.networkTransport as? ABSDKSplitNetworkTransport else {
-            return
-        }
-        if appInForeground && accessState == .online {
-            networkTransport.reconnect()
-        }
-    }
 
     /// Fetches a query from the server or from the local cache, depending on the current contents of the cache and the specified cache policy.
     ///
