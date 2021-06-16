@@ -22,6 +22,7 @@
 
 import Apollo
 import SwiftPhoenixClient
+import Starscream
 
 /// A network transport that wraps a http transport and a websocket transport to cover query, mutation and subscription
 public class ABSDKSplitNetworkTransport: NetworkTransport {
@@ -82,11 +83,33 @@ final class ABSDKSubscription {
 }
 
 /// A network transport that uses web sockets requests to send GraphQL subscription operations to a server, and that uses the SwiftPhoenixClient implementation of Phoenix client.
-public class ABSDKWebSocketTransport: NetworkTransport {
+public class ABSDKWebSocketTransport: NetworkTransport, WebSocketDelegate {
 
-    var socket: Socket?
+    public func websocketDidConnect(socket: WebSocketClient) {
+        self.websocketDidConnect()
+        self.delegate?.websocketDidConnect(socket: socket)
+    }
+
+    public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        self.websocketDidDisconnect()
+        self.delegate?.websocketDidDisconnect(socket: socket, error: error)
+    }
+
+    public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+        print("socket receive message: \(text)")
+        self.delegate?.websocketDidReceiveMessage(socket: socket, text: text)
+    }
+
+    public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+        print("socket receive data: \(data)")
+        self.delegate?.websocketDidReceiveData(socket: socket, data: data)
+    }
+
+
+    var socket: WebSocket?
     var channel: Channel?
     var error: WebSocketError?
+    public var delegate: WebSocketDelegate?
 
     let serializationFormat = ABSDKJSONSerializationFormat.self
     let topic = "doc"
@@ -108,36 +131,52 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     public init(url: URL, params: [String: String]? = nil) {
         self.params = params
         var request = URLRequest(url: url)
+        var socketUrl = url.absoluteString
+        var paramStrArr: [String] = []
+
         if let params = self.params {
             request.allHTTPHeaderFields = params
-        }
-        self.socket = Socket(url.absoluteString, params: params)
-
-        self.socket?.onOpen { [weak self] in
-            self?.websocketDidConnect()
-        }
-
-        self.socket?.onClose { [weak self] in
-            self?.websocketDidDisconnect()
-        }
-
-        self.socket?.onError(callback: { [weak self] (err) in
-            self?.websocketDidFailed(err: err)
-        })
-
-        self.socket?.onMessage(callback: { [weak self] (message) in
-            print(message.payload)
-            if message.event == "subscription:data" {
-                if  let subscriptionId: String = message.payload["subscriptionId"] as? String,
-                    let subscriptionSeqNo: String = self?.subscriptionIds[subscriptionId],
-                    let subscription: ABSDKSubscription = self?.subscriptions[subscriptionSeqNo],
-                    let result: JSONObject = message.payload["result"] as? JSONObject {
-                    for(_, handler) in subscription.handlers {
-                        handler(result, nil)
-                    }
-                }
+            for key in params.keys {
+                let value = params[key] ?? ""
+                paramStrArr.append("\(key)=\(value)")
             }
-        })
+        }
+        if paramStrArr.count > 0 {
+            socketUrl.append("?")
+            socketUrl.append(paramStrArr.joined(separator: "&"))
+        }
+//        guard let u = URL(string: socketUrl) else { return }
+        self.socket = WebSocket(request: request)
+//        self.socket = WebSocket(url: u)
+        socket?.delegate = self
+//        self.socket = Socket(endPoint: socketUrl, transport: nil)
+//        self.socket = Socket(socketUrl)
+
+//        self.socket?.onOpen { [weak self] in
+//            self?.websocketDidConnect()
+//        }
+//
+//        self.socket?.onClose { [weak self] in
+//            self?.websocketDidDisconnect()
+//        }
+//
+//        self.socket?.onError(callback: { [weak self] (err) in
+//            self?.websocketDidFailed(err: err)
+//        })
+//
+//        self.socket?.onMessage(callback: { [weak self] (message) in
+//            print(message.payload)
+//            if message.event == "subscription:data" {
+//                if  let subscriptionId: String = message.payload["subscriptionId"] as? String,
+//                    let subscriptionSeqNo: String = self?.subscriptionIds[subscriptionId],
+//                    let subscription: ABSDKSubscription = self?.subscriptions[subscriptionSeqNo],
+//                    let result: JSONObject = message.payload["result"] as? JSONObject {
+//                    for(_, handler) in subscription.handlers {
+//                        handler(result, nil)
+//                    }
+//                }
+//            }
+//        })
 
         connect()
     }
@@ -182,15 +221,31 @@ public class ABSDKWebSocketTransport: NetworkTransport {
     }
 
     private func joinChannel() {
-        self.channel = self.socket?.channel("__absinthe__:control")
-        self.channel?.join().receive("ok", callback: { [weak self] (_) in
-            self?.joined = true
-            self?.resendSubscriptions()
-        }).receive("error", callback: { [weak self] (message) in
-            print("join channel failed")
-            self?.joined = false
-            self?.notifyWithError(error: WebSocketError(payload: message.payload, error: nil, type: .joinChannelError))
-        })
+
+        //TODO
+        let strChannel = "{ \"channel\": \"__absinthe__:control\" }"
+        let message = ["command" : "subscribe","identifier": strChannel]
+
+        do {
+            let data = try JSONSerialization.data(withJSONObject: message)
+            if let dataString = String(data: data, encoding: .utf8){
+                self.socket?.write(string: dataString)
+            }
+
+        } catch {
+
+            print("JSON serialization failed: ", error)
+        }
+
+//        self.channel = self.socket?.channel("__absinthe__:control")
+//        self.channel?.join().receive("ok", callback: { [weak self] (_) in
+//            self?.joined = true
+//            self?.resendSubscriptions()
+//        }).receive("error", callback: { [weak self] (message) in
+//            print("join channel failed")
+//            self?.joined = false
+//            self?.notifyWithError(error: WebSocketError(payload: message.payload, error: nil, type: .joinChannelError))
+//        })
     }
 
     private func resendSubscriptions() {
