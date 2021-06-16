@@ -1,3 +1,6 @@
+## 0.11.2 (六月 08, 2021)
+  - SwiftPhoenixClient pod更新到2.0 修改了sqlite pod依赖跟wallet保持一致
+
 ## 0.11.1 (May 04, 2021)
   - update role type
 
