@@ -406,6 +406,33 @@ public class DidHelper {
         }
         return did
     }
+    
+    public static func addDidPrefix(_ did: String) -> String {
+        if did.hasPrefix("did:abt:") {
+            return did
+        }
+        return "did:abt:" + did
+    }
+    
+    public static func isValidDid(_ did: String) -> Bool {
+        let didWithoutPrefix = DidHelper.removeDidPrefix(did)
+        
+        guard let hashType = DidHelper.calculateTypesFromDid(did: did)?.hashType,
+              let didBytes = Data.init(multibaseEncoded: didWithoutPrefix)?.bytes,
+              didBytes.count > 25 else {
+            return false
+        }
+        
+        let hashContent = didBytes[0...21]
+        let check = didBytes[22...25]
+        let hashData = Data(hashContent)
+        if let bytes = hashType.hash(data: hashData)?.bytes[0...3] {
+           return check.elementsEqual(bytes)
+        } else {
+            return false
+        }
+    }
+
 }
 
 extension Numeric {
