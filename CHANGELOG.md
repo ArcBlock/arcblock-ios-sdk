@@ -1,3 +1,6 @@
+## 0.11.4 (June 22, 2021)
+  - add did valid func and did add prefix func
+
 ## 0.11.3 (June 16, 2021)
 
 
