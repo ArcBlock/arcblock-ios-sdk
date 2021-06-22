@@ -166,5 +166,15 @@ class DidHelperSpec: QuickSpec {
             })
 
         }
+        
+        describe("Valid Did") {
+            it("works", closure: {
+                expect(DidHelper.isValidDid("did:abt:z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(beTrue())
+                expect(DidHelper.isValidDid("z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(beTrue())
+                expect(DidHelper.isValidDid("z2muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(beFalse())
+                expect(DidHelper.isValidDid("z1muQ3xqHQK2uiACHyChikobsiY5kLqtSha")).to(beFalse())
+            })
+        }
     }
+    
 }
