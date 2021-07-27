@@ -908,6 +908,134 @@ public struct Ocap_ItxStub {
   public init() {}
 }
 
+/// misc
+public struct Ocap_PokeTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// type url: fg:x:poke
+  public var date: String = String()
+
+  public var address: String = String()
+
+  /// ocap won't touch this field. Only ocap app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+/// atomic swap
+public struct Ocap_RetrieveSwapTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The address of the swap state.
+  public var address: String = String()
+
+  /// The origin value of the random number.
+  public var hashkey: Data = Data()
+
+  /// ocap won't touch this field. Only ocap app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_RevokeSwapTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The address of the swap state.
+  public var address: String = String()
+
+  /// ocap won't touch this field. Only ocap app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_SetupSwapTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The amount of token to swap.
+  public var value: Ocap_BigUint {
+    get {return _value ?? Ocap_BigUint()}
+    set {_value = newValue}
+  }
+  /// Returns true if `value` has been explicitly set.
+  public var hasValue: Bool {return self._value != nil}
+  /// Clears the value of `value`. Subsequent reads from it will return its default value.
+  public mutating func clearValue() {self._value = nil}
+
+  /// The addresses of assets to swap.
+  public var assets: [String] = []
+
+  /// The address of the receiver who is the only one allowed to get the token
+  /// and assets locktime.
+  public var receiver: String = String()
+
+  /// The sha3 value of the random number.
+  public var hashlock: Data = Data()
+
+  /// The height of the block before which the swap is locked.
+  public var locktime: UInt32 = 0
+
+  /// ocap won't touch this field. Only ocap app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _value: Ocap_BigUint? = nil
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "ocap"
@@ -2102,6 +2230,194 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
   public static func ==(lhs: Ocap_ItxStub, rhs: Ocap_ItxStub) -> Bool {
     if lhs.value != rhs.value {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_PokeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PokeTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "date"),
+    2: .same(proto: "address"),
+    15: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.date) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.date.isEmpty {
+      try visitor.visitSingularStringField(value: self.date, fieldNumber: 1)
+    }
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 2)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_PokeTx, rhs: Ocap_PokeTx) -> Bool {
+    if lhs.date != rhs.date {return false}
+    if lhs.address != rhs.address {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RetrieveSwapTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RetrieveSwapTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "hashkey"),
+    15: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularBytesField(value: &self.hashkey) }()
+      case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.hashkey.isEmpty {
+      try visitor.visitSingularBytesField(value: self.hashkey, fieldNumber: 2)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RetrieveSwapTx, rhs: Ocap_RetrieveSwapTx) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.hashkey != rhs.hashkey {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RevokeSwapTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RevokeSwapTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    15: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RevokeSwapTx, rhs: Ocap_RevokeSwapTx) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_SetupSwapTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SetupSwapTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "value"),
+    2: .same(proto: "assets"),
+    3: .same(proto: "receiver"),
+    4: .same(proto: "hashlock"),
+    5: .same(proto: "locktime"),
+    15: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._value) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.assets) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
+      case 4: try { try decoder.decodeSingularBytesField(value: &self.hashlock) }()
+      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.locktime) }()
+      case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._value {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }
+    if !self.assets.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 2)
+    }
+    if !self.receiver.isEmpty {
+      try visitor.visitSingularStringField(value: self.receiver, fieldNumber: 3)
+    }
+    if !self.hashlock.isEmpty {
+      try visitor.visitSingularBytesField(value: self.hashlock, fieldNumber: 4)
+    }
+    if self.locktime != 0 {
+      try visitor.visitSingularUInt32Field(value: self.locktime, fieldNumber: 5)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_SetupSwapTx, rhs: Ocap_SetupSwapTx) -> Bool {
+    if lhs._value != rhs._value {return false}
+    if lhs.assets != rhs.assets {return false}
+    if lhs.receiver != rhs.receiver {return false}
+    if lhs.hashlock != rhs.hashlock {return false}
+    if lhs.locktime != rhs.locktime {return false}
+    if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

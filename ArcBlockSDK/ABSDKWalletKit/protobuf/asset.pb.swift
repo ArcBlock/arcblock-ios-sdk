@@ -305,6 +305,100 @@ public struct Ocap_MintAssetTx {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
+public struct Ocap_AssetSpec {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// the address of the generated asset. The sender shall apply the spec to the
+  /// template to generate a structure of the asset, and then generate the
+  /// CreateAssetTx, and then calculate the address. SDK could help to alleviate
+  /// the process.
+  public var address: String = String()
+
+  /// json string that contains args for the asset factory template
+  public var data: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// TODO: deprecated this
+public struct Ocap_AcquireAssetTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// the address of the asset factory
+  public var to: String = String()
+
+  /// asset spec
+  public var specs: [Ocap_AssetSpec] = []
+
+  /// forge won't touch this field. Only forge app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+/// TODO: deprecated this
+public struct Ocap_ConsumeAssetTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// `issuer` could be the same as `from`, or different, depending on use case.
+  /// when this tx is being mutisigned by the asset holder, the wallet could
+  /// check if the issuer is the issuer of the asset, otherwise wallet shall
+  /// refuse signing it. when it goes into the chain, at verify state stage, we
+  /// shall check `from` of this tx:
+  ///  a. the same as the issuer
+  ///  b. `from.issuer == issuer`
+  /// For example, a museum issued a ticket and Alice bought it. At the
+  /// door (doorman) of the meseum, Alice need to consume the asset, which she
+  /// scan a QR code with a prepolulated ConsumeAssetTx. Most of the time, this
+  /// prepopulated tx shall be signed by the account of the door (doorman) so
+  /// that we can trace where and how Alice consumed this asset, however we don't
+  /// want anyone to be able to create this tx to allure Alice to consume the
+  /// asset, thus the door (doorman) shall be an account that issued by the
+  /// museum. The chain will make sure only accounts that has this issuer would
+  /// be able to successfully sign this tx.
+  public var issuer: String = String()
+
+  /// an asset might belong to another asset, for example a ticket belongs to a
+  /// specific concert or movie asset. If this is provided, besides issuer we
+  /// will verify if the parent address of the asset equals to this address.
+  public var address: String = String()
+
+  /// ocap won't update data into state if app is interested in this tx.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
 public struct Ocap_CreateAssetTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -997,6 +1091,132 @@ extension Ocap_MintAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs.assets != rhs.assets {return false}
     if lhs.variables != rhs.variables {return false}
     if lhs.owner != rhs.owner {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_AssetSpec: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AssetSpec"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.data.isEmpty {
+      try visitor.visitSingularStringField(value: self.data, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_AssetSpec, rhs: Ocap_AssetSpec) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.data != rhs.data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_AcquireAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AcquireAssetTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "to"),
+    2: .same(proto: "specs"),
+    15: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.to) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.specs) }()
+      case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.to.isEmpty {
+      try visitor.visitSingularStringField(value: self.to, fieldNumber: 1)
+    }
+    if !self.specs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.specs, fieldNumber: 2)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_AcquireAssetTx, rhs: Ocap_AcquireAssetTx) -> Bool {
+    if lhs.to != rhs.to {return false}
+    if lhs.specs != rhs.specs {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ConsumeAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ConsumeAssetTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "issuer"),
+    2: .same(proto: "address"),
+    15: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.issuer) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.issuer.isEmpty {
+      try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 1)
+    }
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 2)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ConsumeAssetTx, rhs: Ocap_ConsumeAssetTx) -> Bool {
+    if lhs.issuer != rhs.issuer {return false}
+    if lhs.address != rhs.address {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

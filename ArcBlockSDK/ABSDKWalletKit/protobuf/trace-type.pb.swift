@@ -207,8 +207,6 @@ public struct Ocap_TimeFilter {
 
   public var endDateTime: String = String()
 
-  public var field: String = String()
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1173,7 +1171,6 @@ extension Ocap_TimeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "start_date_time"),
     2: .standard(proto: "end_date_time"),
-    3: .same(proto: "field"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1184,7 +1181,6 @@ extension Ocap_TimeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.startDateTime) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.endDateTime) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.field) }()
       default: break
       }
     }
@@ -1197,16 +1193,12 @@ extension Ocap_TimeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if !self.endDateTime.isEmpty {
       try visitor.visitSingularStringField(value: self.endDateTime, fieldNumber: 2)
     }
-    if !self.field.isEmpty {
-      try visitor.visitSingularStringField(value: self.field, fieldNumber: 3)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Ocap_TimeFilter, rhs: Ocap_TimeFilter) -> Bool {
     if lhs.startDateTime != rhs.startDateTime {return false}
     if lhs.endDateTime != rhs.endDateTime {return false}
-    if lhs.field != rhs.field {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

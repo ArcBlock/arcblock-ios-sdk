@@ -42,7 +42,6 @@ message AccountFilter {
 message TimeFilter {
   string start_date_time = 1;
   string end_date_time = 2;
-  string field = 3;
 }
 
 enum Direction {

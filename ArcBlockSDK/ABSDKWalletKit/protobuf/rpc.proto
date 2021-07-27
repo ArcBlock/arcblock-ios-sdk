@@ -252,7 +252,6 @@ message RequestListAssets {
   Page paging = 1;
   string owner_address = 2;
   string factory_address = 3;
-  TimeFilter time_filter = 4;
 }
 
 message ResponseListAssets {
