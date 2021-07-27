@@ -68,67 +68,69 @@ public class TxHelper {
         return txString
     }
 
-    public static func createSetupSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                         demandToken: Double, demandAssets: [String] = [], blockHeight: UInt32, hashKey: Data, receiver: String, didType: DidType) -> String? {
-        var setupSwapTx = Ocap_SetupSwapTx()
+    /*
+     public static func createSetupSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
+                                          demandToken: Double, demandAssets: [String] = [], blockHeight: UInt32, hashKey: Data, receiver: String, didType: DidType) -> String? {
+         var setupSwapTx = Ocap_SetupSwapTx()
 
-        var demandTokenValue = Ocap_BigUint()
-        let demandTokenBigUInt = BigUInt(demandToken)
-        demandTokenValue.value = demandTokenBigUInt.serialize()
-        setupSwapTx.value = demandTokenValue
+         var demandTokenValue = Ocap_BigUint()
+         let demandTokenBigUInt = BigUInt(demandToken)
+         demandTokenValue.value = demandTokenBigUInt.serialize()
+         setupSwapTx.value = demandTokenValue
 
-        setupSwapTx.locktime = blockHeight
-        setupSwapTx.hashlock = MCrypto.Hasher.Sha3.sha(hashKey)
-        setupSwapTx.receiver = receiver
-        setupSwapTx.assets = demandAssets
+         setupSwapTx.locktime = blockHeight
+         setupSwapTx.hashlock = MCrypto.Hasher.Sha3.sha(hashKey)
+         setupSwapTx.receiver = receiver
+         setupSwapTx.assets = demandAssets
 
-        guard let tx = try? setupSwapTx.serializedData() else {
-            return nil
-        }
+         guard let tx = try? setupSwapTx.serializedData() else {
+             return nil
+         }
 
-        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
-                                chainId: chainId, from: from, delegatee: delegatee)
-        let txString = genTxString(tx: tx, typeUrl: TypeUrl.setupSwap.rawValue, txParams: txParams,
-                                   privateKey: privateKey, publicKey: publicKey)
+         let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
+                                 chainId: chainId, from: from, delegatee: delegatee)
+         let txString = genTxString(tx: tx, typeUrl: TypeUrl.setupSwap.rawValue, txParams: txParams,
+                                    privateKey: privateKey, publicKey: publicKey)
 
-        return txString
-    }
+         return txString
+     }
 
-    public static func createRetrieveSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, swapAddress: String, hashKey: Data, didType: DidType)  -> String? {
-        var retrieveSwapTx = Ocap_RetrieveSwapTx()
+     public static func createRetrieveSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, swapAddress: String, hashKey: Data, didType: DidType)  -> String? {
+         var retrieveSwapTx = Ocap_RetrieveSwapTx()
 
-        retrieveSwapTx.address = swapAddress
-        retrieveSwapTx.hashkey = hashKey
+         retrieveSwapTx.address = swapAddress
+         retrieveSwapTx.hashkey = hashKey
 
-        guard let tx = try? retrieveSwapTx.serializedData() else {
-            return nil
-        }
+         guard let tx = try? retrieveSwapTx.serializedData() else {
+             return nil
+         }
 
-        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
-                                chainId: chainId, from: from)
-        let txString = genTxString(tx: tx, typeUrl: TypeUrl.retrieveSwap.rawValue, txParams: txParams,
-                                   privateKey: privateKey, publicKey: publicKey)
+         let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
+                                 chainId: chainId, from: from)
+         let txString = genTxString(tx: tx, typeUrl: TypeUrl.retrieveSwap.rawValue, txParams: txParams,
+                                    privateKey: privateKey, publicKey: publicKey)
 
-        return txString
-    }
+         return txString
+     }
 
-    public static func createRevokeSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                          swapAddress: String, didType: DidType)  -> String? {
-        var revokeSwapTx = Ocap_RevokeSwapTx()
+     public static func createRevokeSwapTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
+                                           swapAddress: String, didType: DidType)  -> String? {
+         var revokeSwapTx = Ocap_RevokeSwapTx()
 
-        revokeSwapTx.address = swapAddress
+         revokeSwapTx.address = swapAddress
 
-        guard let tx = try? revokeSwapTx.serializedData() else {
-            return nil
-        }
+         guard let tx = try? revokeSwapTx.serializedData() else {
+             return nil
+         }
 
-        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
-                                chainId: chainId, from: from, delegatee: delegatee)
-        let txString = genTxString(tx: tx, typeUrl: TypeUrl.revokeSwap.rawValue, txParams: txParams,
-                                   privateKey: privateKey, publicKey: publicKey)
+         let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
+                                 chainId: chainId, from: from, delegatee: delegatee)
+         let txString = genTxString(tx: tx, typeUrl: TypeUrl.revokeSwap.rawValue, txParams: txParams,
+                                    privateKey: privateKey, publicKey: publicKey)
 
-        return txString
-    }
+         return txString
+     }
+     */
 
     public static func createTransferTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
                                         to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType)  -> String? {
@@ -322,8 +324,8 @@ public class TxHelper {
         transferTx.data = txMessage
         transferTx.to = to
         
-        var tokens = [Ocap_TokenPayload]()
-        var token = Ocap_TokenPayload()
+        var tokens = [Ocap_TokenInput]()
+        var token = Ocap_TokenInput()
         token.address = tokenAddress
         token.value = value
         tokens.append(token)
