@@ -17,6 +17,8 @@ message BigSint {
 message TokenSymbol {
   string address = 1;
   string symbol = 2;
+  int32 decimal = 3;
+  string unit = 4;
 }
 
 message WalletType {
@@ -102,22 +104,6 @@ message UpgradeTask {
 
 message UpgradeTasks { repeated UpgradeTask item = 1; }
 
-message AbciContext {
-  // the hash of the transaction that being handled. Application can record this
-  // in their state as a reference.
-  string tx_hash = 1;
-  // the height of the current block.
-  string block_height = 2;
-  // the deterministic time of the current block.
-  google.protobuf.Timestamp block_time = 3;
-  // the total txs of the chain.
-  string total_txs = 4;
-  // tx statistics
-  TxStatistics tx_statistics = 5;
-  uint32 tx_index = 6;
-  // the deterministic time of the last block.
-  google.protobuf.Timestamp last_block_time = 7;
-}
 message Multisig {
   // signer address
   string signer = 1;
@@ -134,6 +120,8 @@ message Multisig {
 
 message Transaction {
   string from = 1;
+
+  // Used for anti-replay
   uint64 nonce = 2;
 
   // use DID for the chain. "did:" prefix is omitted
@@ -146,13 +134,20 @@ message Transaction {
   string delegator = 6;
 
   // signature of the transaction
+  // tx.from 应该最后签名，并且把签名放在 tx.signature 上面，不论 tx.itx.inputs 是否为空
   bytes signature = 13;
-  // we will support multiple signatures in case of certain tx need multiple
-  // parties' signature.
 
+  // v1.11.0 版本的一些变化
+  // The order of tx.signatures does not matter since we encode messages using protobuf
+  // Any owner in tx.itx.inputs should sign the tx and put their signature in tx.signatures
+  // Any owner in tx.itx.inputs should sign the tx without tx.signature and tx.signatures[n].signature
+  // If tx.from exist in tx.itx.inputs as an asset owner, his signature must also exist
   repeated Multisig signatures = 14;
 
+  // itx may contain the inputs property to indicate that this is an multiple input tx
   google.protobuf.Any itx = 15;
+
+  repeated TransactionReceipt receipts = 16;
 }
 
 message TransactionInfo {
@@ -163,8 +158,39 @@ message TransactionInfo {
   repeated vendor.KVPair tags = 5;
   StatusCode code = 6;
   google.protobuf.Timestamp time = 7;
+  repeated TransactionReceipt receipts = 8;
+
+  // added on v1.10.5 to indicate accounts with net asset gain/lose
+  string sender = 9;
+  string receiver = 10;
+
   repeated TokenSymbol token_symbols = 22;
 }
+
+message TransactionReceipt {
+  string address = 1;
+  repeated ReceiptChange changes = 2;
+}
+
+message ReceiptChange {
+  string target = 1;
+  string action = 2;
+  string value = 3;
+}
+
+// How do we define tx.itx.inputs
+message TokenInput {
+  string address = 1;
+  string value = 2;
+}
+message TransactionInput {
+  string owner = 1;
+  repeated TokenInput tokens = 2;
+  repeated string assets = 3;
+}
+
+// How do we define tx.itx.outputs
+// They are exactly the same as tx.itx.inputs
 
 message DeclareConfig {
   bool restricted = 1;
@@ -186,7 +212,6 @@ message TransactionConfig {
   string minimum_stake = 4;
   DeclareConfig declare = 5;
   DelegateConfig delegate = 6;
-  PokeConfig poke = 7;
   StakeConfig stake = 8;
 }
 
@@ -351,11 +376,10 @@ message ForgeStats {
   repeated string num_transfer_txs = 13;
   repeated string num_update_asset_txs = 14;
   repeated string num_consume_asset_txs = 15;
-  repeated string num_poke_txs = 16;
-  repeated uint32 tps = 17;
-  uint32 max_tps = 18;       // maximum tps in given time range
-  uint32 avg_tps = 19;       // average tps in given time range
-  float avg_block_time = 20; // average blocks in given time range
+  repeated uint32 tps = 16;
+  uint32 max_tps = 17;       // maximum tps in given time range
+  uint32 avg_tps = 18;       // average tps in given time range
+  float avg_block_time = 19; // average blocks in given time range
 }
 
 message TxStatistics {
@@ -370,7 +394,6 @@ message TxStatistics {
   string num_transfer_txs = 9;
   string num_update_asset_txs = 10;
   string num_consume_asset_txs = 11;
-  string num_poke_txs = 12;
 }
 
 message ForgeToken {
@@ -383,20 +406,6 @@ message ForgeToken {
   string initial_supply = 7; // token initial supply amount
   string total_supply = 8;   // token total supply amount
   uint32 inflation_rate = 9; // token inflation rate in integer
-}
-
-message PokeInfo {
-  BigUint daily_limit = 1; // poke daily supply amount
-  BigUint leftover = 2;    // remaining poke daily supply amount
-  BigUint amount = 3;      // poke once supply amount
-}
-
-message PokeConfig {
-  // string address = 1; deprecated
-  string daily_limit = 2;
-  // uint64 balance = 3; deprecated
-  string amount = 4;
-  bool enabled = 5;
 }
 
 message UpgradeInfo {
@@ -430,6 +439,5 @@ message Evidence {
   string chain_type = 2; // type of the chain, currently only "eth"
   string chain_id = 3;   // chain id of the chain. Could be testnet or mainnet.
   bytes original_tx = 4; // the binary for the original tx
-  string receiver_address =
-      5; // the address of the receiver (can only be controlled account)
+  string receiver_address = 5; // the address of the receiver (can only be controlled account)
 }

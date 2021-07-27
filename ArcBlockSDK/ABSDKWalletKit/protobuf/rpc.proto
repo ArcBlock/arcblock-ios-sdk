@@ -125,17 +125,6 @@ message ResponseGetNodeInfo {
   NodeInfo info = 2;
 }
 
-// search(term): retrieve related transactions by a search term (prefix match)
-message RequestSearch {
-  string key = 1;
-  string value = 2;
-}
-
-message ResponseSearch {
-  StatusCode code = 1;
-  repeated TransactionInfo txs = 2;
-}
-
 message RequestGetUnconfirmedTxs { Page paging = 1; }
 
 message ResponseGetUnconfirmedTxs {
@@ -198,7 +187,7 @@ message ResponseSubscribe {
     Transaction setup_swap = 33;
     Transaction revoke_swap = 34;
     Transaction retrieve_swap = 35;
-    Transaction poke = 36;
+    // Transaction poke = 36 [ deprecated = true ];
     // Transaction deploy_protocol = 37 [ deprecated = true ];
     Transaction consume_asset = 38;
     Transaction acquire_asset = 39;
@@ -229,13 +218,6 @@ message ResponseGetConfig {
   string config = 2;
 }
 
-message ByDay {
-  string start_date = 1;
-  string end_date = 2;
-}
-
-message ByHour { string date = 1; }
-
 message RequestGetForgeStats {
   oneof value {
     ByDay day_info = 1;
@@ -257,6 +239,7 @@ message RequestListTransactions {
   FactoryFilter factory_filter = 6;
   TokenFilter token_filter = 7;
   AssetFilter asset_filter = 8;
+  AccountFilter account_filter = 9;
 }
 
 message ResponseListTransactions {
@@ -269,6 +252,7 @@ message RequestListAssets {
   Page paging = 1;
   string owner_address = 2;
   string factory_address = 3;
+  TimeFilter time_filter = 4;
 }
 
 message ResponseListAssets {
@@ -388,6 +372,7 @@ message ResponseGetFactoryState {
 message RequestListFactories {
   Page paging = 1;
   string owner_address = 2;
+  repeated string address_list = 3;
 }
 message ResponseListFactories {
   StatusCode code = 1;
@@ -397,7 +382,8 @@ message ResponseListFactories {
 
 // account/factory tokens
 message RequestGetAccountTokens {
-  string address = 2; // can be account of factory address
+  string address = 1; // can be account of factory address
+  string token = 2;
 }
 message ResponseGetAccountTokens {
   StatusCode code = 1;

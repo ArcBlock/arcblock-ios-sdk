@@ -2,11 +2,7 @@ syntax = "proto3";
 package ocap;
 
 import "google/protobuf/any.proto";
-
-message FactoryInputToken {
-  string address = 1;
-  string value = 2;
-}
+import "type.proto";
 
 message FactoryInputVariable {
   string name = 1;
@@ -22,10 +18,10 @@ message AssetFactoryInput {
 
   // how much secondary tokens required to mint asset from this factory
   // usually used to set a price for the NFT
-  repeated FactoryInputToken tokens = 2;
+  repeated TokenInput tokens = 2;
 
   // which asset(s) required to mint new nft
-  // can be either a list of specific assets or a factory
+  // can be either a list of specific assets or factories
   // if specific assets are provided, we should ensure they are not consumed when creating the factory
   // and then mark the input assets as consumed when minting success, in such case, this factory usage is limited
   // if a factory is provided, we should ensure each input assets is not consumed and all minted from that factory on minting
@@ -35,6 +31,23 @@ message AssetFactoryInput {
 
   // variables that will be inserted into the output
   // limitation: all variables should be strings
+  repeated FactoryInputVariable variables = 4;
+}
+
+message ResponseFactoryInputToken {
+  string address = 1;
+  string value = 2;
+  int32 decimal = 3;
+  string unit = 4;
+  string symbol = 5;
+  string key = 10; // TODO: 这里是为了测试时兼容，应该删除
+}
+
+// 和 AssetFactoryInput 数据结构类似，可以参考其注释
+message ResponseAssetFactoryInput {
+  string value = 1;
+  repeated ResponseFactoryInputToken tokens = 2;
+  repeated string assets = 3;
   repeated FactoryInputVariable variables = 4;
 }
 
@@ -55,7 +68,6 @@ message AssetFactoryHook {
   string hook = 3;
 }
 
-// FIXME: this transaction should be a multisign transaction to improve security
 // Granted issuers can help users to mint new assets with predefined costs
 message AcquireAssetV2Tx {
   // the address of the asset factory
@@ -65,7 +77,7 @@ message AcquireAssetV2Tx {
   // must be calculated on client side to make things deterministic
   string address = 2;
 
-  // assets to burn to mint new asset
+  // assets to consume to mint new asset
   // should be a list of specific asset (not factory)
   // each asset will be checked for consumption before minting
   // and marked as consumed when minting success
@@ -76,7 +88,34 @@ message AcquireAssetV2Tx {
   repeated FactoryInputVariable variables = 4;
 
   // issuer info to mint the asset
+  // TODO: enforce issuer in acquire/mint asset protocol
   AssetIssuer issuer = 5;
+
+  // ocap won't touch this field. Only app shall handle it.
+  google.protobuf.Any data = 15;
+}
+
+message AcquireAssetV3Tx {
+  // the address of the asset factory
+  string factory = 1;
+
+  // address of the minted asset
+  // must be calculated on client side to make things deterministic
+  string address = 2;
+
+  // Who pays for this acquire
+  repeated TransactionInput inputs = 3;
+
+  // Who gets the minted asset
+  string owner = 4;
+
+  // template variables, should all be strings
+  // this list should contain all required variables to populate the factory output template
+  repeated FactoryInputVariable variables = 5;
+
+  // issuer info to mint the asset
+  // TODO: enforce issuer in acquire/mint asset protocol
+  AssetIssuer issuer = 6;
 
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 15;
@@ -91,7 +130,7 @@ message MintAssetTx {
   // must be calculated on client side to make things deterministic
   string address = 2;
 
-  // assets to burn to mint new asset
+  // assets to consume to mint new asset
   // should be a list of specific asset (not factory)
   // each asset will be checked for consumption before minting
   // and marked as consumed when minting success
@@ -104,55 +143,6 @@ message MintAssetTx {
   string owner = 5;
 
   // ocap won't touch this field. Only app shall handle it.
-  google.protobuf.Any data = 15;
-}
-
-message AssetSpec {
-  // the address of the generated asset. The sender shall apply the spec to the
-  // template to generate a structure of the asset, and then generate the
-  // CreateAssetTx, and then calculate the address. SDK could help to alleviate
-  // the process.
-  string address = 1;
-  // json string that contains args for the asset factory template
-  string data = 2;
-}
-
-// TODO: deprecated this
-message AcquireAssetTx {
-  // the address of the asset factory
-  string to = 1;
-  // asset spec
-  repeated AssetSpec specs = 2;
-
-  // forge won't touch this field. Only forge app shall handle it.
-  google.protobuf.Any data = 15;
-}
-
-// TODO: deprecated this
-message ConsumeAssetTx {
-  // `issuer` could be the same as `from`, or different, depending on use case.
-  // when this tx is being mutisigned by the asset holder, the wallet could
-  // check if the issuer is the issuer of the asset, otherwise wallet shall
-  // refuse signing it. when it goes into the chain, at verify state stage, we
-  // shall check `from` of this tx:
-  //  a. the same as the issuer
-  //  b. `from.issuer == issuer`
-  // For example, a museum issued a ticket and Alice bought it. At the
-  // door (doorman) of the meseum, Alice need to consume the asset, which she
-  // scan a QR code with a prepolulated ConsumeAssetTx. Most of the time, this
-  // prepopulated tx shall be signed by the account of the door (doorman) so
-  // that we can trace where and how Alice consumed this asset, however we don't
-  // want anyone to be able to create this tx to allure Alice to consume the
-  // asset, thus the door (doorman) shall be an account that issued by the
-  // museum. The chain will make sure only accounts that has this issuer would
-  // be able to successfully sign this tx.
-  string issuer = 1;
-  // an asset might belong to another asset, for example a ticket belongs to a
-  // specific concert or movie asset. If this is provided, besides issuer we
-  // will verify if the parent address of the asset equals to this address.
-  string address = 2;
-
-  // ocap won't update data into state if app is interested in this tx.
   google.protobuf.Any data = 15;
 }
 
@@ -177,11 +167,10 @@ message UpdateAssetTx {
   google.protobuf.Any data = 15;
 }
 
-message AssetFactory {
-  // name of the asset factory
+// An asset factory is readonly by default
+// Thus any change to the factory result a new factory
+message CreateFactoryTx {
   string name = 1;
-
-  // description of the asset factory
   string description = 2;
 
   // If the input requires some tokens, how are they settled?
@@ -197,7 +186,7 @@ message AssetFactory {
   // If set to ["*"], then anyone can mint from this factory
   repeated string trusted_issuers = 5;
 
-  // input params to mint new asset, check out `AssetFactoryOutput` for sub fields
+  // input params to mint new asset, can be any combination of tokens + assets
   AssetFactoryInput input = 6;
 
   // the template that asset factory will use to generate the asset
@@ -206,8 +195,14 @@ message AssetFactory {
   // the output object can contain template variable placeholders to populate
   CreateAssetTx output = 7;
 
-  // how the nft factory will look like
+  // hooks called when new assets minted
   repeated AssetFactoryHook hooks = 8;
+
+  // address for the factory
+  string address = 9;
+
+  // how the nft factory will look like
+  AssetDisplay display = 10;
 
   // extra content that can populate into the output object when minting
   google.protobuf.Any data = 15;

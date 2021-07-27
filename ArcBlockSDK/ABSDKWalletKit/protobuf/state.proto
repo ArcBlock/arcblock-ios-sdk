@@ -10,8 +10,13 @@ import "asset.proto";
 
 message AccountState {
   BigUint balance = 1;
+
+  // Used for anti-replay, updated whever this account sends a new transaction
   string nonce = 2;
+
+  // Deprecated: will not be updated in future
   string num_txs = 3;
+
   string address = 4;
   bytes pk = 5;
   WalletType type = 6 [ deprecated = true ];
@@ -26,19 +31,19 @@ message AccountState {
   repeated string migrated_to = 13;
   repeated string migrated_from = 14;
 
+  // DEPRECATED: will not be updated in future
   string num_assets = 15;
 
   StakeContext stake = 16;
   CircularQueue pinned_files = 17 [ deprecated = true ];
-  PokeInfo poke = 18;
-  // The current deposit this account has received. It cannot exceed the deposit
-  // cap.
+  // PokeInfo poke = 18; // deprecated
+  // The current deposit this account has received. It cannot exceed the deposit cap.
   BigUint deposit_received = 19;
 
   CircularQueue withdraw_items = 20;
   // 20-49 reserve for future
 
-  map<string, string> tokens = 21;
+  repeated ResponseFactoryInputToken tokens = 21;
 
   google.protobuf.Any data = 50;
 }
@@ -87,8 +92,10 @@ message ForgeState {
 
   ForgeToken token = 8;
   TransactionConfig tx_config = 9;
+
   // StakeConfig stake_config = 10; deprecated
   // PokeConfig poke_config = 11; deprecated
+
   repeated CoreProtocol protocols = 12;
   map<string, uint32> gas = 13;
   UpgradeInfo upgrade_info = 14;
@@ -199,9 +206,9 @@ message TokenState {
   string description = 4;
   string symbol = 5;
   string unit = 6;
-  string icon = 7;
-  string total_supply = 8;
-  string faucet_supply = 9;
+  uint32 decimal = 7;
+  string icon = 8;
+  string total_supply = 9;
   string erc20_contract_address = 10;
 
   StateContext context = 15;
@@ -211,35 +218,30 @@ message TokenState {
 
 // Very similar to AssetFactory, appended some state vars
 message AssetFactoryState {
-  // immutable
   string address = 1;
   string owner = 2;
 
-  // mutable
   string name = 3;
   string description = 4;
 
-  // immutable
   string settlement = 5;
   uint32 limit = 6;
 
-  // mutable
   repeated string trusted_issuers = 7;
 
-  // immutable
-  AssetFactoryInput input = 8;
+  ResponseAssetFactoryInput input = 8;
   CreateAssetTx output = 9;
   repeated AssetFactoryHook hooks = 10;
 
-  // mutable
   google.protobuf.Any data = 11;
 
   // mutable
   StateContext context = 12;
   BigUint balance = 13;
-  map<string, BigUint> tokens = 14;
+  repeated ResponseFactoryInputToken tokens = 14;
   uint32 num_minted = 15;
+  AssetDisplay display = 16;
 
   // mutable
-  google.protobuf.Timestamp last_settlement = 16;
+  google.protobuf.Timestamp last_settlement = 17;
 }

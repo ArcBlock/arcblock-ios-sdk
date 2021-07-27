@@ -14,7 +14,6 @@ service Query {
   // utility
   rpc getChainInfo(RequestGetChainInfo) returns (ResponseGetChainInfo);
   rpc getNodeInfo(RequestGetNodeInfo) returns (ResponseGetNodeInfo);
-  rpc search(RequestSearch) returns (ResponseSearch);
   rpc getNetInfo(RequestGetNetInfo) returns (ResponseGetNetInfo);
   rpc getValidatorsInfo(RequestGetValidatorsInfo) returns (ResponseGetValidatorsInfo);
   rpc getConfig(RequestGetConfig) returns (ResponseGetConfig);
