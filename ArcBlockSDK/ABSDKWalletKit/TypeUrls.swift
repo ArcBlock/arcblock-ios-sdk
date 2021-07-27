@@ -80,16 +80,28 @@ public enum TypeUrl: String, CaseIterable {
         switch self {
         case .accountMigrate:
             return try? Ocap_AccountMigrateTx(serializedData: value)
+        case .acquireAsset:
+            return try? Ocap_AcquireAssetTx(serializedData: value)
         case .createAsset:
             return try? Ocap_CreateAssetTx(serializedData: value)
+        case .consumeAsset:
+            return try? Ocap_ConsumeAssetTx(serializedData: value)
         case .declare:
             return try? Ocap_DeclareTx(serializedData: value)
         case .exchange:
             return try? Ocap_ExchangeTx(serializedData: value)
+        case .poke:
+            return try? Ocap_PokeTx(serializedData: value)
         case .transfer:
             return try? Ocap_TransferTx(serializedData: value)
         case .updateAsset:
             return try? Ocap_UpdateAssetTx(serializedData: value)
+        case .setupSwap:
+            return try? Ocap_SetupSwapTx(serializedData: value)
+        case .retrieveSwap:
+            return try? Ocap_RetrieveSwapTx(serializedData: value)
+        case .revokeSwap:
+            return try? Ocap_RevokeSwapTx(serializedData: value)
         case .delegate:
             return try? Ocap_DelegateTx(serializedData: value)
         case .revokeDelegate:

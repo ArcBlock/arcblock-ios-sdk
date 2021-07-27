@@ -62,12 +62,7 @@ type RootQueryType {
   getSwapStatistics(address: String): ResponseGetSwapStatistics
 
   listAssetTransactions(address: String, paging: PageInput): ResponseListAssetTransactions
-  listAssets(
-    ownerAddress: String
-    paging: PageInput
-    factoryAddress: String
-    timeFilter: TimeFilterInput
-  ): ResponseListAssets
+  listAssets(ownerAddress: String, paging: PageInput, factoryAddress: String): ResponseListAssets
   listBlocks(
     heightFilter: RangeFilterInput
     numInvalidTxsFilter: RangeFilterInput

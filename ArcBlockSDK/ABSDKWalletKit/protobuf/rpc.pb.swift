@@ -1340,21 +1340,11 @@ public struct Ocap_RequestListAssets {
 
   public var factoryAddress: String = String()
 
-  public var timeFilter: Ocap_TimeFilter {
-    get {return _timeFilter ?? Ocap_TimeFilter()}
-    set {_timeFilter = newValue}
-  }
-  /// Returns true if `timeFilter` has been explicitly set.
-  public var hasTimeFilter: Bool {return self._timeFilter != nil}
-  /// Clears the value of `timeFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearTimeFilter() {self._timeFilter = nil}
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _paging: Ocap_Page? = nil
-  fileprivate var _timeFilter: Ocap_TimeFilter? = nil
 }
 
 public struct Ocap_ResponseListAssets {
@@ -3938,7 +3928,6 @@ extension Ocap_RequestListAssets: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     1: .same(proto: "paging"),
     2: .standard(proto: "owner_address"),
     3: .standard(proto: "factory_address"),
-    4: .standard(proto: "time_filter"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3950,7 +3939,6 @@ extension Ocap_RequestListAssets: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.ownerAddress) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.factoryAddress) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._timeFilter) }()
       default: break
       }
     }
@@ -3966,9 +3954,6 @@ extension Ocap_RequestListAssets: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.factoryAddress.isEmpty {
       try visitor.visitSingularStringField(value: self.factoryAddress, fieldNumber: 3)
     }
-    if let v = self._timeFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3976,7 +3961,6 @@ extension Ocap_RequestListAssets: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs._paging != rhs._paging {return false}
     if lhs.ownerAddress != rhs.ownerAddress {return false}
     if lhs.factoryAddress != rhs.factoryAddress {return false}
-    if lhs._timeFilter != rhs._timeFilter {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
