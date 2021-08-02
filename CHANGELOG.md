@@ -1,3 +1,8 @@
+## 0.11.5 (August 02, 2021)
+  - add transfer v3 and acquire v3
+  - readd consume and acquire
+  - update proto
+
 ## 0.11.4 (June 22, 2021)
   - add did valid func and did add prefix func
 

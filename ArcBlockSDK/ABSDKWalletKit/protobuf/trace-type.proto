@@ -35,6 +35,10 @@ message TokenFilter {
   repeated string tokens = 1;
 }
 
+message AccountFilter {
+  repeated string accounts = 1;
+}
+
 message TimeFilter {
   string start_date_time = 1;
   string end_date_time = 2;
@@ -46,6 +50,7 @@ enum Direction {
   UNION = 2;
 }
 
+// TODO: deprecated this
 message AddressFilter {
   string sender = 1;
   string receiver = 2;
@@ -68,11 +73,13 @@ message IndexedTransaction {
   bool valid = 20;
   StatusCode code = 21;
   repeated TokenSymbol token_symbols = 22;
+  repeated TransactionReceipt receipts = 16;
 }
 
 message TokenInfo {
   string address = 1;
   BigUint balance = 2;
+  uint32 decimal = 3;
 }
 
 message IndexedAccountState {
@@ -133,10 +140,10 @@ message IndexedTokenState {
   string description = 2;
   string symbol = 3;
   string unit = 4;
-  string issuer = 5;
-  string icon = 6;
-  string total_supply = 7;
-  string faucet_supply = 8;
+  int32 decimal = 5;
+  string issuer = 6;
+  string icon = 7;
+  string total_supply = 8;
   string address = 9;
   string genesis_time = 10;
   string renaissance_time = 11;
@@ -154,16 +161,17 @@ message IndexedFactoryState {
   string settlement = 5;
   string limit = 6;
   repeated string trusted_issuers = 7;
-  AssetFactoryInput input = 8;
+  ResponseAssetFactoryInput input = 8;
   CreateAssetTx output = 9;
   repeated AssetFactoryHook hooks = 10;
   google.protobuf.Any data = 11;
   string balance = 13;
   repeated TokenInfo tokens = 14;
-  string num_minted = 15;
+  uint32 num_minted = 15;
   string last_settlement = 16;
   string genesis_time = 17;
   string renaissance_time = 18;
+  AssetDisplay display = 19;
 }
 
 message HealthStatus {
@@ -227,4 +235,12 @@ message AccountToken {
   string address = 1;
   string symbol = 2;
   string balance = 3;
+  uint32 decimal = 4;
 }
+
+message ByDay {
+  string start_date = 1;
+  string end_date = 2;
+}
+
+message ByHour { string date = 1; }

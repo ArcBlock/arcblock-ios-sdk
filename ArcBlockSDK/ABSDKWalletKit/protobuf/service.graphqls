@@ -20,6 +20,8 @@ type Transaction {
   signature: String
   signatures: [Multisig]
   itxJson: Json!
+  sender: String
+  receiver: String
 }
 type StateContext {
   genesisTx: TransactionInfo
@@ -81,14 +83,15 @@ type RootQueryType {
     factoryFilter: FactoryFilterInput
     tokenFilter: TokenFilterInput
     assetFilter: AssetFilterInput
+    accountFilter: AccountFilterInput
   ): ResponseListTransactions
 
   # since 1.7.0
   listTokens(issuerAddress: String, paging: PageInput): ResponseListTokens
-  listFactories(ownerAddress: String, paging: PageInput): ResponseListFactories
+  listFactories(ownerAddress: String, addressList: [String], paging: PageInput): ResponseListFactories
 
   # since v1.8.3
-  getAccountTokens(address: String): ResponseGetAccountTokens
+  getAccountTokens(address: String, token: String): ResponseGetAccountTokens
 }
 
 type RootSubscriptionType {
