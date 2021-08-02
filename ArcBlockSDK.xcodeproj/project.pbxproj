@@ -8,27 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
+		1A2C5AC226AFEE290022EDE5 /* asset.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AAF26AFEE280022EDE5 /* asset.pb.swift */; };
+		1A2C5AC326AFEE290022EDE5 /* service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB026AFEE280022EDE5 /* service.pb.swift */; };
+		1A2C5AC426AFEE290022EDE5 /* state.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB126AFEE280022EDE5 /* state.proto */; };
+		1A2C5AC526AFEE290022EDE5 /* trace-type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB226AFEE290022EDE5 /* trace-type.pb.swift */; };
+		1A2C5AC626AFEE290022EDE5 /* service.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB326AFEE290022EDE5 /* service.graphqls */; };
+		1A2C5AC726AFEE290022EDE5 /* type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB426AFEE290022EDE5 /* type.pb.swift */; };
+		1A2C5AC826AFEE290022EDE5 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB526AFEE290022EDE5 /* type.proto */; };
+		1A2C5AC926AFEE290022EDE5 /* service.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB626AFEE290022EDE5 /* service.proto */; };
+		1A2C5ACA26AFEE290022EDE5 /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB726AFEE290022EDE5 /* state.pb.swift */; };
+		1A2C5ACB26AFEE290022EDE5 /* asset.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB826AFEE290022EDE5 /* asset.proto */; };
+		1A2C5ACC26AFEE290022EDE5 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AB926AFEE290022EDE5 /* rpc.pb.swift */; };
+		1A2C5ACD26AFEE290022EDE5 /* tx.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5ABA26AFEE290022EDE5 /* tx.proto */; };
+		1A2C5ACE26AFEE290022EDE5 /* trace-type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5ABB26AFEE290022EDE5 /* trace-type.proto */; };
+		1A2C5ACF26AFEE290022EDE5 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5ABC26AFEE290022EDE5 /* enum.proto */; };
+		1A2C5AD026AFEE290022EDE5 /* tx.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5ABD26AFEE290022EDE5 /* tx.pb.swift */; };
+		1A2C5AD126AFEE290022EDE5 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5ABE26AFEE290022EDE5 /* vendor.pb.swift */; };
+		1A2C5AD226AFEE290022EDE5 /* vendor.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5ABF26AFEE290022EDE5 /* vendor.proto */; };
+		1A2C5AD326AFEE290022EDE5 /* enum.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AC026AFEE290022EDE5 /* enum.pb.swift */; };
+		1A2C5AD426AFEE290022EDE5 /* rpc.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C5AC126AFEE290022EDE5 /* rpc.proto */; };
 		1A379E4B25FF43000064A3E7 /* JWTKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1A379E4A25FF43000064A3E7 /* JWTKit */; };
 		1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */; };
-		1AD6F3A82611F97C00EFAE48 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3952611F97B00EFAE48 /* type.proto */; };
-		1AD6F3A92611F97C00EFAE48 /* service.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6F3962611F97B00EFAE48 /* service.graphqls */; };
-		1AD6F3AA2611F97C00EFAE48 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3972611F97B00EFAE48 /* rpc.pb.swift */; };
-		1AD6F3AB2611F97C00EFAE48 /* trace-type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3982611F97B00EFAE48 /* trace-type.pb.swift */; };
-		1AD6F3AC2611F97C00EFAE48 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3992611F97B00EFAE48 /* vendor.pb.swift */; };
-		1AD6F3AD2611F97C00EFAE48 /* tx.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39A2611F97B00EFAE48 /* tx.pb.swift */; };
-		1AD6F3AE2611F97C00EFAE48 /* trace-type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39B2611F97B00EFAE48 /* trace-type.proto */; };
-		1AD6F3AF2611F97C00EFAE48 /* type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39C2611F97B00EFAE48 /* type.pb.swift */; };
-		1AD6F3B02611F97C00EFAE48 /* service.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39D2611F97B00EFAE48 /* service.proto */; };
-		1AD6F3B12611F97C00EFAE48 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39E2611F97B00EFAE48 /* enum.proto */; };
-		1AD6F3B22611F97C00EFAE48 /* rpc.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F39F2611F97B00EFAE48 /* rpc.proto */; };
-		1AD6F3B32611F97C00EFAE48 /* enum.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A02611F97B00EFAE48 /* enum.pb.swift */; };
-		1AD6F3B42611F97C00EFAE48 /* state.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A12611F97B00EFAE48 /* state.proto */; };
-		1AD6F3B52611F97C00EFAE48 /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A22611F97B00EFAE48 /* state.pb.swift */; };
-		1AD6F3B62611F97C00EFAE48 /* service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A32611F97B00EFAE48 /* service.pb.swift */; };
-		1AD6F3B72611F97C00EFAE48 /* asset.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A42611F97B00EFAE48 /* asset.pb.swift */; };
-		1AD6F3B82611F97C00EFAE48 /* tx.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A52611F97B00EFAE48 /* tx.proto */; };
-		1AD6F3B92611F97C00EFAE48 /* vendor.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A62611F97B00EFAE48 /* vendor.proto */; };
-		1AD6F3BA2611F97C00EFAE48 /* asset.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6F3A72611F97B00EFAE48 /* asset.proto */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
 		27044789231E0052007BA477 /* ed25519_fe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044729231E0052007BA477 /* ed25519_fe.swift */; };
 		2704478A231E0052007BA477 /* ed25519_open.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704472A231E0052007BA477 /* ed25519_open.swift */; };
@@ -91,26 +91,26 @@
 
 /* Begin PBXFileReference section */
 		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1A2C5AAF26AFEE280022EDE5 /* asset.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = asset.pb.swift; sourceTree = "<group>"; };
+		1A2C5AB026AFEE280022EDE5 /* service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = service.pb.swift; sourceTree = "<group>"; };
+		1A2C5AB126AFEE280022EDE5 /* state.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = state.proto; sourceTree = "<group>"; };
+		1A2C5AB226AFEE290022EDE5 /* trace-type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "trace-type.pb.swift"; sourceTree = "<group>"; };
+		1A2C5AB326AFEE290022EDE5 /* service.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = service.graphqls; sourceTree = "<group>"; };
+		1A2C5AB426AFEE290022EDE5 /* type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = type.pb.swift; sourceTree = "<group>"; };
+		1A2C5AB526AFEE290022EDE5 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
+		1A2C5AB626AFEE290022EDE5 /* service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = service.proto; sourceTree = "<group>"; };
+		1A2C5AB726AFEE290022EDE5 /* state.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = state.pb.swift; sourceTree = "<group>"; };
+		1A2C5AB826AFEE290022EDE5 /* asset.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = asset.proto; sourceTree = "<group>"; };
+		1A2C5AB926AFEE290022EDE5 /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
+		1A2C5ABA26AFEE290022EDE5 /* tx.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = tx.proto; sourceTree = "<group>"; };
+		1A2C5ABB26AFEE290022EDE5 /* trace-type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = "trace-type.proto"; sourceTree = "<group>"; };
+		1A2C5ABC26AFEE290022EDE5 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
+		1A2C5ABD26AFEE290022EDE5 /* tx.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tx.pb.swift; sourceTree = "<group>"; };
+		1A2C5ABE26AFEE290022EDE5 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1A2C5ABF26AFEE290022EDE5 /* vendor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = vendor.proto; sourceTree = "<group>"; };
+		1A2C5AC026AFEE290022EDE5 /* enum.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enum.pb.swift; sourceTree = "<group>"; };
+		1A2C5AC126AFEE290022EDE5 /* rpc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = rpc.proto; sourceTree = "<group>"; };
 		1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignVerifySpec.swift; sourceTree = "<group>"; };
-		1AD6F3952611F97B00EFAE48 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
-		1AD6F3962611F97B00EFAE48 /* service.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = service.graphqls; sourceTree = "<group>"; };
-		1AD6F3972611F97B00EFAE48 /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
-		1AD6F3982611F97B00EFAE48 /* trace-type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "trace-type.pb.swift"; sourceTree = "<group>"; };
-		1AD6F3992611F97B00EFAE48 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
-		1AD6F39A2611F97B00EFAE48 /* tx.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tx.pb.swift; sourceTree = "<group>"; };
-		1AD6F39B2611F97B00EFAE48 /* trace-type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = "trace-type.proto"; sourceTree = "<group>"; };
-		1AD6F39C2611F97B00EFAE48 /* type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = type.pb.swift; sourceTree = "<group>"; };
-		1AD6F39D2611F97B00EFAE48 /* service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = service.proto; sourceTree = "<group>"; };
-		1AD6F39E2611F97B00EFAE48 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
-		1AD6F39F2611F97B00EFAE48 /* rpc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = rpc.proto; sourceTree = "<group>"; };
-		1AD6F3A02611F97B00EFAE48 /* enum.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enum.pb.swift; sourceTree = "<group>"; };
-		1AD6F3A12611F97B00EFAE48 /* state.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = state.proto; sourceTree = "<group>"; };
-		1AD6F3A22611F97B00EFAE48 /* state.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = state.pb.swift; sourceTree = "<group>"; };
-		1AD6F3A32611F97B00EFAE48 /* service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = service.pb.swift; sourceTree = "<group>"; };
-		1AD6F3A42611F97B00EFAE48 /* asset.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = asset.pb.swift; sourceTree = "<group>"; };
-		1AD6F3A52611F97B00EFAE48 /* tx.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = tx.proto; sourceTree = "<group>"; };
-		1AD6F3A62611F97B00EFAE48 /* vendor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = vendor.proto; sourceTree = "<group>"; };
-		1AD6F3A72611F97B00EFAE48 /* asset.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = asset.proto; sourceTree = "<group>"; };
 		270446F9231DECD6007BA477 /* web3swift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = web3swift.framework; path = Carthage/Build/iOS/web3swift.framework; sourceTree = "<group>"; };
 		270446FB231DECF6007BA477 /* secp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = secp256k1.framework; path = Carthage/Build/iOS/secp256k1.framework; sourceTree = "<group>"; };
 		270446FD231DED19007BA477 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
@@ -329,25 +329,25 @@
 		2704474C231E0052007BA477 /* protobuf */ = {
 			isa = PBXGroup;
 			children = (
-				1AD6F3A42611F97B00EFAE48 /* asset.pb.swift */,
-				1AD6F3A72611F97B00EFAE48 /* asset.proto */,
-				1AD6F3A02611F97B00EFAE48 /* enum.pb.swift */,
-				1AD6F39E2611F97B00EFAE48 /* enum.proto */,
-				1AD6F3972611F97B00EFAE48 /* rpc.pb.swift */,
-				1AD6F39F2611F97B00EFAE48 /* rpc.proto */,
-				1AD6F3962611F97B00EFAE48 /* service.graphqls */,
-				1AD6F3A32611F97B00EFAE48 /* service.pb.swift */,
-				1AD6F39D2611F97B00EFAE48 /* service.proto */,
-				1AD6F3A22611F97B00EFAE48 /* state.pb.swift */,
-				1AD6F3A12611F97B00EFAE48 /* state.proto */,
-				1AD6F3982611F97B00EFAE48 /* trace-type.pb.swift */,
-				1AD6F39B2611F97B00EFAE48 /* trace-type.proto */,
-				1AD6F39A2611F97B00EFAE48 /* tx.pb.swift */,
-				1AD6F3A52611F97B00EFAE48 /* tx.proto */,
-				1AD6F39C2611F97B00EFAE48 /* type.pb.swift */,
-				1AD6F3952611F97B00EFAE48 /* type.proto */,
-				1AD6F3992611F97B00EFAE48 /* vendor.pb.swift */,
-				1AD6F3A62611F97B00EFAE48 /* vendor.proto */,
+				1A2C5AAF26AFEE280022EDE5 /* asset.pb.swift */,
+				1A2C5AB826AFEE290022EDE5 /* asset.proto */,
+				1A2C5AC026AFEE290022EDE5 /* enum.pb.swift */,
+				1A2C5ABC26AFEE290022EDE5 /* enum.proto */,
+				1A2C5AB926AFEE290022EDE5 /* rpc.pb.swift */,
+				1A2C5AC126AFEE290022EDE5 /* rpc.proto */,
+				1A2C5AB326AFEE290022EDE5 /* service.graphqls */,
+				1A2C5AB026AFEE280022EDE5 /* service.pb.swift */,
+				1A2C5AB626AFEE290022EDE5 /* service.proto */,
+				1A2C5AB726AFEE290022EDE5 /* state.pb.swift */,
+				1A2C5AB126AFEE280022EDE5 /* state.proto */,
+				1A2C5AB226AFEE290022EDE5 /* trace-type.pb.swift */,
+				1A2C5ABB26AFEE290022EDE5 /* trace-type.proto */,
+				1A2C5ABD26AFEE290022EDE5 /* tx.pb.swift */,
+				1A2C5ABA26AFEE290022EDE5 /* tx.proto */,
+				1A2C5AB426AFEE290022EDE5 /* type.pb.swift */,
+				1A2C5AB526AFEE290022EDE5 /* type.proto */,
+				1A2C5ABE26AFEE290022EDE5 /* vendor.pb.swift */,
+				1A2C5ABF26AFEE290022EDE5 /* vendor.proto */,
 			);
 			path = protobuf;
 			sourceTree = "<group>";
@@ -501,7 +501,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AD6F3A92611F97C00EFAE48 /* service.graphqls in Resources */,
+				1A2C5AC626AFEE290022EDE5 /* service.graphqls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,53 +583,53 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AD6F3B22611F97C00EFAE48 /* rpc.proto in Sources */,
-				1AD6F3AB2611F97C00EFAE48 /* trace-type.pb.swift in Sources */,
+				1A2C5AD426AFEE290022EDE5 /* rpc.proto in Sources */,
+				1A2C5AC526AFEE290022EDE5 /* trace-type.pb.swift in Sources */,
 				2704479D231E0052007BA477 /* Base16String.swift in Sources */,
-				1AD6F3AE2611F97C00EFAE48 /* trace-type.proto in Sources */,
 				27044792231E0052007BA477 /* ABSDKDataSource.swift in Sources */,
+				1A2C5AD326AFEE290022EDE5 /* enum.pb.swift in Sources */,
 				2704478D231E0052007BA477 /* ed25519_utility.swift in Sources */,
-				1AD6F3B52611F97C00EFAE48 /* state.pb.swift in Sources */,
+				1A2C5ACC26AFEE290022EDE5 /* rpc.pb.swift in Sources */,
+				1A2C5ACD26AFEE290022EDE5 /* tx.proto in Sources */,
+				1A2C5AC726AFEE290022EDE5 /* type.pb.swift in Sources */,
 				27044799231E0052007BA477 /* ABSDKCustomScalarTypes.swift in Sources */,
 				27044790231E0052007BA477 /* DidHelper.swift in Sources */,
-				1AD6F3AA2611F97C00EFAE48 /* rpc.pb.swift in Sources */,
 				2704478B231E0052007BA477 /* ed25519_sign.swift in Sources */,
+				1A2C5ACE26AFEE290022EDE5 /* trace-type.proto in Sources */,
 				2704478A231E0052007BA477 /* ed25519_open.swift in Sources */,
-				1AD6F3B92611F97C00EFAE48 /* vendor.proto in Sources */,
+				1A2C5AD226AFEE290022EDE5 /* vendor.proto in Sources */,
 				2704479C231E0052007BA477 /* Base64String.swift in Sources */,
 				270447A3231E0052007BA477 /* StringExtension.swift in Sources */,
 				270447A5231E0052007BA477 /* TxHelper.swift in Sources */,
 				7A7988802679DE25001202D5 /* ABSDKClient.swift in Sources */,
+				1A2C5AC926AFEE290022EDE5 /* service.proto in Sources */,
 				270447A4231E0052007BA477 /* Base32String.swift in Sources */,
 				27044795231E0052007BA477 /* ABSDKHTTPTransport.swift in Sources */,
-				1AD6F3B72611F97C00EFAE48 /* asset.pb.swift in Sources */,
-				1AD6F3B62611F97C00EFAE48 /* service.pb.swift in Sources */,
-				1AD6F3B42611F97C00EFAE48 /* state.proto in Sources */,
-				1AD6F3B82611F97C00EFAE48 /* tx.proto in Sources */,
-				1AD6F3AD2611F97C00EFAE48 /* tx.pb.swift in Sources */,
-				1AD6F3B32611F97C00EFAE48 /* enum.pb.swift in Sources */,
-				1AD6F3B02611F97C00EFAE48 /* service.proto in Sources */,
 				27044789231E0052007BA477 /* ed25519_fe.swift in Sources */,
 				27044791231E0052007BA477 /* ABSDKPagination.swift in Sources */,
-				1AD6F3A82611F97C00EFAE48 /* type.proto in Sources */,
 				2704478E231E0052007BA477 /* ed25519_sc.swift in Sources */,
+				1A2C5AC826AFEE290022EDE5 /* type.proto in Sources */,
 				2704479F231E0052007BA477 /* Base58String.swift in Sources */,
 				270447A0231E0052007BA477 /* Base16.swift in Sources */,
 				2704479A231E0052007BA477 /* ABSDKTableViewController.swift in Sources */,
-				1AD6F3B12611F97C00EFAE48 /* enum.proto in Sources */,
 				27044797231E0052007BA477 /* ABSDKPagedArrayDataSource.swift in Sources */,
-				1AD6F3AC2611F97C00EFAE48 /* vendor.pb.swift in Sources */,
 				2704479E231E0052007BA477 /* Multibase.swift in Sources */,
 				27044794231E0052007BA477 /* ABSDKView.swift in Sources */,
-				1AD6F3BA2611F97C00EFAE48 /* asset.proto in Sources */,
+				1A2C5ACA26AFEE290022EDE5 /* state.pb.swift in Sources */,
 				27044793231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				2704478C231E0052007BA477 /* ed25519_ge.swift in Sources */,
 				270447A1231E0052007BA477 /* Base32.swift in Sources */,
+				1A2C5AD126AFEE290022EDE5 /* vendor.pb.swift in Sources */,
 				2704479B231E0052007BA477 /* Encoding.swift in Sources */,
 				2704478F231E0052007BA477 /* MCrypto.swift in Sources */,
 				270447A2231E0052007BA477 /* shim.swift in Sources */,
-				1AD6F3AF2611F97C00EFAE48 /* type.pb.swift in Sources */,
+				1A2C5AC326AFEE290022EDE5 /* service.pb.swift in Sources */,
+				1A2C5AC426AFEE290022EDE5 /* state.proto in Sources */,
+				1A2C5AC226AFEE290022EDE5 /* asset.pb.swift in Sources */,
+				1A2C5ACB26AFEE290022EDE5 /* asset.proto in Sources */,
+				1A2C5ACF26AFEE290022EDE5 /* enum.proto in Sources */,
 				27044788231E0052007BA477 /* BIP44Utils.swift in Sources */,
+				1A2C5AD026AFEE290022EDE5 /* tx.pb.swift in Sources */,
 				270447A6231E0052007BA477 /* TypeUrls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
