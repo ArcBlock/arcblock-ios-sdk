@@ -164,28 +164,28 @@ public class TxHelper {
         return txString
     }
 
-    public static func createWithdrawTokenTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                        to: String, chainType: String, foreignChainId: String, ttl: Date, value: BigUInt, didType: DidType)  -> String? {
-        var withdrawTokenTx = Ocap_WithdrawTokenTx()
-        withdrawTokenTx.to = to
-        withdrawTokenTx.chainID = foreignChainId
-        withdrawTokenTx.ttl = Google_Protobuf_Timestamp(date: ttl)
-        withdrawTokenTx.chainType = chainType
-        var txValue = Ocap_BigUint()
-        txValue.value = value.serialize()
-        withdrawTokenTx.value = txValue
-
-        guard let tx = try? withdrawTokenTx.serializedData() else {
-            return nil
-        }
-
-        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
-                                chainId: chainId, from: from, delegatee: delegatee)
-        let txString = genTxString(tx: tx, typeUrl: TypeUrl.withdrawToken.rawValue, txParams: txParams,
-                                   privateKey: privateKey, publicKey: publicKey)
-
-        return txString
-    }
+//    public static func createWithdrawTokenTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
+//                                        to: String, chainType: String, foreignChainId: String, ttl: Date, value: BigUInt, didType: DidType)  -> String? {
+//        var withdrawTokenTx = Ocap_WithdrawTokenTx()
+//        withdrawTokenTx.to = to
+//        withdrawTokenTx.chainID = foreignChainId
+//        withdrawTokenTx.ttl = Google_Protobuf_Timestamp(date: ttl)
+//        withdrawTokenTx.chainType = chainType
+//        var txValue = Ocap_BigUint()
+//        txValue.value = value.serialize()
+//        withdrawTokenTx.value = txValue
+//
+//        guard let tx = try? withdrawTokenTx.serializedData() else {
+//            return nil
+//        }
+//
+//        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
+//                                chainId: chainId, from: from, delegatee: delegatee)
+//        let txString = genTxString(tx: tx, typeUrl: TypeUrl.withdrawToken.rawValue, txParams: txParams,
+//                                   privateKey: privateKey, publicKey: publicKey)
+//
+//        return txString
+//    }
 
     public static func createDelegateTx(chainId: String, publicKey: Data, privateKey: Data, from: String,
                                         to: String, ops: [String: [String]], didType: DidType)  -> String? {

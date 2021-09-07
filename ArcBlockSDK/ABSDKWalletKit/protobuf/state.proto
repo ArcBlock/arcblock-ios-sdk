@@ -4,7 +4,7 @@ package ocap;
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 import "type.proto";
-import "asset.proto";
+import "tx.proto";
 
 // State definition
 
@@ -32,18 +32,18 @@ message AccountState {
   repeated string migrated_from = 14;
 
   // DEPRECATED: will not be updated in future
-  string num_assets = 15;
+  string num_assets = 15 [ deprecated = true ];
 
-  StakeContext stake = 16;
+  StakeContext stake = 16 [ deprecated = true ];
   CircularQueue pinned_files = 17 [ deprecated = true ];
   // PokeInfo poke = 18; // deprecated
   // The current deposit this account has received. It cannot exceed the deposit cap.
-  BigUint deposit_received = 19;
+  BigUint deposit_received = 19 [ deprecated = true ];
 
-  CircularQueue withdraw_items = 20;
+  CircularQueue withdraw_items = 20 [ deprecated = true ];
   // 20-49 reserve for future
 
-  repeated ResponseFactoryInputToken tokens = 21;
+  repeated IndexedTokenInput tokens = 21;
 
   google.protobuf.Any data = 50;
 }
@@ -63,12 +63,8 @@ message AssetState {
   // event
   string parent = 9;
 
-  // 10-12 is reserved
-
-  StakeContext stake = 13;
+  StakeContext stake = 13 [ deprecated = true ];
   StateContext context = 14;
-
-  // 13-49 reserve for future
 
   google.protobuf.Any data = 50;
 }
@@ -122,19 +118,6 @@ message RootState {
   bytes custom = 7;
 }
 
-message StakeState {
-  string address = 1;
-  string from = 2;
-  string to = 3;
-  BigUint balance = 4;
-  string message = 5;
-
-  // state context, replace exiting fields
-  StateContext context = 14;
-  // app can extend this
-  google.protobuf.Any data = 15;
-}
-
 message StatisticsState {
   string address = 1;
   uint64 num_blocks = 2;
@@ -143,8 +126,6 @@ message StatisticsState {
   uint32 num_validators = 5;
   TxStatistics tx_statistics = 6;
 }
-
-message BlacklistState { repeated string address = 1; }
 
 // TODO: [peiling] We have already defined this state in core protocols repo.
 // The only reason we define this state here again is because the protobuf
@@ -229,7 +210,7 @@ message AssetFactoryState {
 
   repeated string trusted_issuers = 7;
 
-  ResponseAssetFactoryInput input = 8;
+  IndexedFactoryInput input = 8;
   CreateAssetTx output = 9;
   repeated AssetFactoryHook hooks = 10;
 
@@ -238,10 +219,140 @@ message AssetFactoryState {
   // mutable
   StateContext context = 12;
   BigUint balance = 13;
-  repeated ResponseFactoryInputToken tokens = 14;
+  repeated IndexedTokenInput tokens = 14;
   uint32 num_minted = 15;
   AssetDisplay display = 16;
 
   // mutable
   google.protobuf.Timestamp last_settlement = 17;
+}
+
+message StakeState {
+  string address = 1;
+
+  // Who can create/revoke this stake
+  string sender = 2;
+
+  // What is the stake for
+  string receiver = 3;
+
+  // Balance for staking
+  // Actual Structure in statedb: map<tokenAddress, balance>
+  // Structure when returned from graphql endpoint
+  repeated IndexedTokenInput tokens = 4;
+
+  // Balance for staking
+  // Actual Structure in statedb: map<tokenAddress, balance>
+  // Structure when returned from graphql endpoint
+  // FIXME: this need more consideration
+  // repeated IndexedTokenInput consumed = 5;
+
+  // Assets for staking
+  repeated string assets = 5;
+
+  // Can user unstake from this stake asset
+  // Usually used to lock the stake to avoid unexpected unstake
+  bool revocable = 6;
+
+  StateContext context = 30;
+  google.protobuf.Any data = 50;
+}
+
+message RollupState {
+  string address = 1;
+  string token_address = 2;
+  string erc20_token_address = 3;
+  string contract_address = 4;
+
+  // Future mutation to rollup validators and blocks must be signed by this validator.
+  repeated RollupValidator seed_validators = 5;
+
+  // List of verified validators that can handling rollup/rolludown traffic
+  // Can only be updated by JoinRollupTx and LeaveRollupTx
+  repeated RollupValidator validators = 6;
+
+  // Mutable
+  string min_stake_amount = 7;
+  string max_stake_amount = 8;
+
+  // Mutable
+  uint32 min_signer_count = 9; // default to 1
+  uint32 max_signer_count = 10;
+
+  // Mutable
+  uint32 min_block_size = 11; // default to 1
+  uint32 max_block_size = 12; // default to 1000, ideally cost < income
+
+  // Mutable
+  uint32 min_block_interval = 13; // in seconds
+
+  // Immutable
+  string foreign_chain_type = 14; // type of the foreign chain, possibly "eth", "bsc", "matic"
+  string foreign_chain_id = 15;   // chain id of the chain. Could be testnet or mainnet.
+
+  // Immutable
+  string issuer = 16;
+
+  // Following fields define the economic policy for the rollup
+  // All fee and share fields are devided by 10000, and then converted to percentage
+  // For example, deposit_fee_rate = 100 / 10000 = 1%, proposer_fee_share = 7000 / 10000 = 70%
+  // Then user user deposit 10000 ABT, will get 9900 ABT after deposit, and will pay 100 ABT for the deposit fee
+  // The proposer validator will get 100 * 70% = 70 ABT
+  // And the other 30% = 30 ABT will be divided evenly among other validators
+  uint32 deposit_fee_rate = 17;
+  uint32 withdraw_fee_rate = 18;
+  uint32 proposer_fee_share = 19;
+
+  string min_deposit_amount = 20;
+  string min_withdraw_amount = 21;
+
+  IndexedTokenInput token_info = 22;
+
+  StateContext context = 30;
+  google.protobuf.Any data = 50;
+}
+
+// RollupNode does not exist as an separate state
+// Because it can be represented by accounts
+
+message RollupBlock {
+  // = sha3(merkle_root + previous_hash + tx_hash)
+  string hash = 1;
+
+  uint64 height = 2;
+
+  // = merkle(txs.filter(x => x.type === withdraw))
+  string merkle_root = 3;
+
+  // = previous block hash
+  string previous_hash = 4;
+
+  // = sha3(sort(txs hash))
+  string tx_hash = 5;
+
+  // list of transaction hashes, can be used to recreate merkleRoot deterministicly
+  // must all be valid transactions (exist, succeed, not included in any block)
+  // must only contain deposit/withdraw transactions
+  // when a new block is accepted, tokens will be minted for deposit transactions and burn for withdraw transactions
+  repeated string txs = 6;
+
+  // Must refer to a known validator for this chain
+  string proposer = 7;
+
+  // List of signatures by validators
+  // This signature is generated by signing the block hash
+  repeated Multisig signatures = 8;
+
+  // All transactions included in this block should be executed before this time
+  // Also used by block validators to validate transaction list for this block
+  string checkpoint = 9;
+
+  string rollup = 10;
+
+  string block_reward = 11;
+  string minted_amount = 12;
+  string burned_amount = 13;
+
+  StateContext context = 30;
+  google.protobuf.Any data = 50;
 }
