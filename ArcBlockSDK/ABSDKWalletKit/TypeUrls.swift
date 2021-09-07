@@ -46,6 +46,7 @@ public enum TypeUrl: String, CaseIterable {
     case depositToken = "fg:t:deposit_token"
     case withdrawToken = "fg:t:withdraw_token"
     case revokeWithdraw = "fg:t:revoke_withdraw"
+    case revokeStake = "fg:t:revoke_stake"
 
     // v3
     case acquireAsset_v3 = "fg:t:acquire_asset_v3"
@@ -84,36 +85,20 @@ public enum TypeUrl: String, CaseIterable {
         switch self {
         case .accountMigrate:
             return try? Ocap_AccountMigrateTx(serializedData: value)
-        case .acquireAsset:
-            return try? Ocap_AcquireAssetTx(serializedData: value)
         case .createAsset:
             return try? Ocap_CreateAssetTx(serializedData: value)
-        case .consumeAsset:
-            return try? Ocap_ConsumeAssetTx(serializedData: value)
         case .declare:
             return try? Ocap_DeclareTx(serializedData: value)
         case .exchange:
             return try? Ocap_ExchangeTx(serializedData: value)
-        case .poke:
-            return try? Ocap_PokeTx(serializedData: value)
         case .transfer:
             return try? Ocap_TransferTx(serializedData: value)
         case .updateAsset:
             return try? Ocap_UpdateAssetTx(serializedData: value)
-        case .setupSwap:
-            return try? Ocap_SetupSwapTx(serializedData: value)
-        case .retrieveSwap:
-            return try? Ocap_RetrieveSwapTx(serializedData: value)
-        case .revokeSwap:
-            return try? Ocap_RevokeSwapTx(serializedData: value)
         case .delegate:
             return try? Ocap_DelegateTx(serializedData: value)
         case .revokeDelegate:
             return try? Ocap_RevokeDelegateTx(serializedData: value)
-        case .withdrawToken:
-            return try? Ocap_WithdrawTokenTx(serializedData: value)
-        case .revokeWithdraw:
-            return try? Ocap_RevokeWithdrawTx(serializedData: value)
         case .transfer_v2:
             return try? Ocap_TransferV2Tx(serializedData: value)
         case .exchange_v2:
@@ -124,6 +109,10 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_AcquireAssetV3Tx(serializedData: value)
         case .transfer_v3:
             return try? Ocap_TransferV3Tx(serializedData: value)
+        case .stake:
+            return try? Ocap_StakeTx(serializedData: value)
+        case .revokeStake:
+            return try? Ocap_RevokeStakeTx(serializedData: value)
         default:
             return nil
         }
