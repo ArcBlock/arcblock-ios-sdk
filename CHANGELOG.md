@@ -1,3 +1,7 @@
+## 0.11.6 (September 07, 2021)
+  - add revoke stake
+  - update proto
+
 ## 0.11.5 (August 02, 2021)
   - add transfer v3 and acquire v3
   - readd consume and acquire
