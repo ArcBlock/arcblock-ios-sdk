@@ -198,6 +198,30 @@ public struct Ocap_AccountFilter {
   public init() {}
 }
 
+public struct Ocap_TxFilter {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var txs: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_ValidatorFilter {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var validators: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Ocap_TimeFilter {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -207,12 +231,13 @@ public struct Ocap_TimeFilter {
 
   public var endDateTime: String = String()
 
+  public var field: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 }
 
-/// TODO: deprecated this
 public struct Ocap_AddressFilter {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -245,72 +270,6 @@ public struct Ocap_PageInfo {
   public init() {}
 }
 
-public struct Ocap_IndexedTransaction {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var hash: String {
-    get {return _storage._hash}
-    set {_uniqueStorage()._hash = newValue}
-  }
-
-  public var sender: String {
-    get {return _storage._sender}
-    set {_uniqueStorage()._sender = newValue}
-  }
-
-  public var receiver: String {
-    get {return _storage._receiver}
-    set {_uniqueStorage()._receiver = newValue}
-  }
-
-  public var time: String {
-    get {return _storage._time}
-    set {_uniqueStorage()._time = newValue}
-  }
-
-  public var type: String {
-    get {return _storage._type}
-    set {_uniqueStorage()._type = newValue}
-  }
-
-  public var tx: Ocap_Transaction {
-    get {return _storage._tx ?? Ocap_Transaction()}
-    set {_uniqueStorage()._tx = newValue}
-  }
-  /// Returns true if `tx` has been explicitly set.
-  public var hasTx: Bool {return _storage._tx != nil}
-  /// Clears the value of `tx`. Subsequent reads from it will return its default value.
-  public mutating func clearTx() {_uniqueStorage()._tx = nil}
-
-  public var valid: Bool {
-    get {return _storage._valid}
-    set {_uniqueStorage()._valid = newValue}
-  }
-
-  public var code: Ocap_StatusCode {
-    get {return _storage._code}
-    set {_uniqueStorage()._code = newValue}
-  }
-
-  public var tokenSymbols: [Ocap_TokenSymbol] {
-    get {return _storage._tokenSymbols}
-    set {_uniqueStorage()._tokenSymbols = newValue}
-  }
-
-  public var receipts: [Ocap_TransactionReceipt] {
-    get {return _storage._receipts}
-    set {_uniqueStorage()._receipts = newValue}
-  }
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _storage = _StorageClass.defaultInstance
-}
-
 public struct Ocap_TokenInfo {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -334,341 +293,6 @@ public struct Ocap_TokenInfo {
   public init() {}
 
   fileprivate var _balance: Ocap_BigUint? = nil
-}
-
-public struct Ocap_IndexedAccountState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var address: String = String()
-
-  public var balance: Ocap_BigUint {
-    get {return _balance ?? Ocap_BigUint()}
-    set {_balance = newValue}
-  }
-  /// Returns true if `balance` has been explicitly set.
-  public var hasBalance: Bool {return self._balance != nil}
-  /// Clears the value of `balance`. Subsequent reads from it will return its default value.
-  public mutating func clearBalance() {self._balance = nil}
-
-  public var numAssets: String = String()
-
-  public var numTxs: String = String()
-
-  public var nonce: String = String()
-
-  public var genesisTime: String = String()
-
-  public var renaissanceTime: String = String()
-
-  public var moniker: String = String()
-
-  public var migratedFrom: String = String()
-
-  public var migratedTo: String = String()
-
-  public var totalReceivedStakes: Ocap_BigUint {
-    get {return _totalReceivedStakes ?? Ocap_BigUint()}
-    set {_totalReceivedStakes = newValue}
-  }
-  /// Returns true if `totalReceivedStakes` has been explicitly set.
-  public var hasTotalReceivedStakes: Bool {return self._totalReceivedStakes != nil}
-  /// Clears the value of `totalReceivedStakes`. Subsequent reads from it will return its default value.
-  public mutating func clearTotalReceivedStakes() {self._totalReceivedStakes = nil}
-
-  public var totalStakes: Ocap_BigUint {
-    get {return _totalStakes ?? Ocap_BigUint()}
-    set {_totalStakes = newValue}
-  }
-  /// Returns true if `totalStakes` has been explicitly set.
-  public var hasTotalStakes: Bool {return self._totalStakes != nil}
-  /// Clears the value of `totalStakes`. Subsequent reads from it will return its default value.
-  public mutating func clearTotalStakes() {self._totalStakes = nil}
-
-  public var totalUnstakes: Ocap_BigUint {
-    get {return _totalUnstakes ?? Ocap_BigUint()}
-    set {_totalUnstakes = newValue}
-  }
-  /// Returns true if `totalUnstakes` has been explicitly set.
-  public var hasTotalUnstakes: Bool {return self._totalUnstakes != nil}
-  /// Clears the value of `totalUnstakes`. Subsequent reads from it will return its default value.
-  public mutating func clearTotalUnstakes() {self._totalUnstakes = nil}
-
-  public var recentNumTxs: [String] = []
-
-  public var tokens: [Ocap_TokenInfo] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _balance: Ocap_BigUint? = nil
-  fileprivate var _totalReceivedStakes: Ocap_BigUint? = nil
-  fileprivate var _totalStakes: Ocap_BigUint? = nil
-  fileprivate var _totalUnstakes: Ocap_BigUint? = nil
-}
-
-public struct Ocap_IndexedAssetState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var address: String = String()
-
-  public var owner: String = String()
-
-  public var genesisTime: String = String()
-
-  public var renaissanceTime: String = String()
-
-  public var moniker: String = String()
-
-  public var readonly: Bool = false
-
-  public var consumedTime: String = String()
-
-  public var issuer: String = String()
-
-  public var parent: String = String()
-
-  public var transferrable: Bool = false
-
-  public var ttl: String = String()
-
-  public var data: SwiftProtobuf.Google_Protobuf_Any {
-    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
-    set {_data = newValue}
-  }
-  /// Returns true if `data` has been explicitly set.
-  public var hasData: Bool {return self._data != nil}
-  /// Clears the value of `data`. Subsequent reads from it will return its default value.
-  public mutating func clearData() {self._data = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
-}
-
-public struct Ocap_IndexedStakeState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var address: String = String()
-
-  public var balance: Ocap_BigUint {
-    get {return _balance ?? Ocap_BigUint()}
-    set {_balance = newValue}
-  }
-  /// Returns true if `balance` has been explicitly set.
-  public var hasBalance: Bool {return self._balance != nil}
-  /// Clears the value of `balance`. Subsequent reads from it will return its default value.
-  public mutating func clearBalance() {self._balance = nil}
-
-  public var sender: String = String()
-
-  public var receiver: String = String()
-
-  public var genesisTime: String = String()
-
-  public var renaissanceTime: String = String()
-
-  public var message: String = String()
-
-  public var type: UInt32 = 0
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _balance: Ocap_BigUint? = nil
-}
-
-public struct Ocap_IndexedBlock {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var height: String = String()
-
-  public var time: String = String()
-
-  public var proposer: String = String()
-
-  public var numTxs: String = String()
-
-  public var numInvalidTxs: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_IndexedTokenState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var name: String = String()
-
-  public var description_p: String = String()
-
-  public var symbol: String = String()
-
-  public var unit: String = String()
-
-  public var decimal: Int32 = 0
-
-  public var issuer: String = String()
-
-  public var icon: String = String()
-
-  public var totalSupply: String = String()
-
-  public var address: String = String()
-
-  public var genesisTime: String = String()
-
-  public var renaissanceTime: String = String()
-
-  public var erc20ContractAddress: String = String()
-
-  /// forge won't touch this field. Only forge app shall handle it.
-  public var data: SwiftProtobuf.Google_Protobuf_Any {
-    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
-    set {_data = newValue}
-  }
-  /// Returns true if `data` has been explicitly set.
-  public var hasData: Bool {return self._data != nil}
-  /// Clears the value of `data`. Subsequent reads from it will return its default value.
-  public mutating func clearData() {self._data = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
-}
-
-public struct Ocap_IndexedFactoryState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var address: String {
-    get {return _storage._address}
-    set {_uniqueStorage()._address = newValue}
-  }
-
-  public var owner: String {
-    get {return _storage._owner}
-    set {_uniqueStorage()._owner = newValue}
-  }
-
-  public var name: String {
-    get {return _storage._name}
-    set {_uniqueStorage()._name = newValue}
-  }
-
-  public var description_p: String {
-    get {return _storage._description_p}
-    set {_uniqueStorage()._description_p = newValue}
-  }
-
-  public var settlement: String {
-    get {return _storage._settlement}
-    set {_uniqueStorage()._settlement = newValue}
-  }
-
-  public var limit: String {
-    get {return _storage._limit}
-    set {_uniqueStorage()._limit = newValue}
-  }
-
-  public var trustedIssuers: [String] {
-    get {return _storage._trustedIssuers}
-    set {_uniqueStorage()._trustedIssuers = newValue}
-  }
-
-  public var input: Ocap_ResponseAssetFactoryInput {
-    get {return _storage._input ?? Ocap_ResponseAssetFactoryInput()}
-    set {_uniqueStorage()._input = newValue}
-  }
-  /// Returns true if `input` has been explicitly set.
-  public var hasInput: Bool {return _storage._input != nil}
-  /// Clears the value of `input`. Subsequent reads from it will return its default value.
-  public mutating func clearInput() {_uniqueStorage()._input = nil}
-
-  public var output: Ocap_CreateAssetTx {
-    get {return _storage._output ?? Ocap_CreateAssetTx()}
-    set {_uniqueStorage()._output = newValue}
-  }
-  /// Returns true if `output` has been explicitly set.
-  public var hasOutput: Bool {return _storage._output != nil}
-  /// Clears the value of `output`. Subsequent reads from it will return its default value.
-  public mutating func clearOutput() {_uniqueStorage()._output = nil}
-
-  public var hooks: [Ocap_AssetFactoryHook] {
-    get {return _storage._hooks}
-    set {_uniqueStorage()._hooks = newValue}
-  }
-
-  public var data: SwiftProtobuf.Google_Protobuf_Any {
-    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
-    set {_uniqueStorage()._data = newValue}
-  }
-  /// Returns true if `data` has been explicitly set.
-  public var hasData: Bool {return _storage._data != nil}
-  /// Clears the value of `data`. Subsequent reads from it will return its default value.
-  public mutating func clearData() {_uniqueStorage()._data = nil}
-
-  public var balance: String {
-    get {return _storage._balance}
-    set {_uniqueStorage()._balance = newValue}
-  }
-
-  public var tokens: [Ocap_TokenInfo] {
-    get {return _storage._tokens}
-    set {_uniqueStorage()._tokens = newValue}
-  }
-
-  public var numMinted: UInt32 {
-    get {return _storage._numMinted}
-    set {_uniqueStorage()._numMinted = newValue}
-  }
-
-  public var lastSettlement: String {
-    get {return _storage._lastSettlement}
-    set {_uniqueStorage()._lastSettlement = newValue}
-  }
-
-  public var genesisTime: String {
-    get {return _storage._genesisTime}
-    set {_uniqueStorage()._genesisTime = newValue}
-  }
-
-  public var renaissanceTime: String {
-    get {return _storage._renaissanceTime}
-    set {_uniqueStorage()._renaissanceTime = newValue}
-  }
-
-  public var display: Ocap_AssetDisplay {
-    get {return _storage._display ?? Ocap_AssetDisplay()}
-    set {_uniqueStorage()._display = newValue}
-  }
-  /// Returns true if `display` has been explicitly set.
-  public var hasDisplay: Bool {return _storage._display != nil}
-  /// Clears the value of `display`. Subsequent reads from it will return its default value.
-  public mutating func clearDisplay() {_uniqueStorage()._display = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Ocap_HealthStatus {
@@ -902,6 +526,663 @@ public struct Ocap_ByHour {
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+}
+
+public struct Ocap_IndexedTransaction {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var hash: String {
+    get {return _storage._hash}
+    set {_uniqueStorage()._hash = newValue}
+  }
+
+  public var sender: String {
+    get {return _storage._sender}
+    set {_uniqueStorage()._sender = newValue}
+  }
+
+  public var receiver: String {
+    get {return _storage._receiver}
+    set {_uniqueStorage()._receiver = newValue}
+  }
+
+  public var time: String {
+    get {return _storage._time}
+    set {_uniqueStorage()._time = newValue}
+  }
+
+  public var type: String {
+    get {return _storage._type}
+    set {_uniqueStorage()._type = newValue}
+  }
+
+  public var tx: Ocap_Transaction {
+    get {return _storage._tx ?? Ocap_Transaction()}
+    set {_uniqueStorage()._tx = newValue}
+  }
+  /// Returns true if `tx` has been explicitly set.
+  public var hasTx: Bool {return _storage._tx != nil}
+  /// Clears the value of `tx`. Subsequent reads from it will return its default value.
+  public mutating func clearTx() {_uniqueStorage()._tx = nil}
+
+  public var valid: Bool {
+    get {return _storage._valid}
+    set {_uniqueStorage()._valid = newValue}
+  }
+
+  public var code: Ocap_StatusCode {
+    get {return _storage._code}
+    set {_uniqueStorage()._code = newValue}
+  }
+
+  public var tokenSymbols: [Ocap_TokenSymbol] {
+    get {return _storage._tokenSymbols}
+    set {_uniqueStorage()._tokenSymbols = newValue}
+  }
+
+  public var receipts: [Ocap_TransactionReceipt] {
+    get {return _storage._receipts}
+    set {_uniqueStorage()._receipts = newValue}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Ocap_IndexedAccountState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var balance: Ocap_BigUint {
+    get {return _balance ?? Ocap_BigUint()}
+    set {_balance = newValue}
+  }
+  /// Returns true if `balance` has been explicitly set.
+  public var hasBalance: Bool {return self._balance != nil}
+  /// Clears the value of `balance`. Subsequent reads from it will return its default value.
+  public mutating func clearBalance() {self._balance = nil}
+
+  public var numAssets: String = String()
+
+  public var numTxs: String = String()
+
+  public var nonce: String = String()
+
+  public var genesisTime: String = String()
+
+  public var renaissanceTime: String = String()
+
+  public var moniker: String = String()
+
+  public var migratedFrom: String = String()
+
+  public var migratedTo: String = String()
+
+  public var totalReceivedStakes: Ocap_BigUint {
+    get {return _totalReceivedStakes ?? Ocap_BigUint()}
+    set {_totalReceivedStakes = newValue}
+  }
+  /// Returns true if `totalReceivedStakes` has been explicitly set.
+  public var hasTotalReceivedStakes: Bool {return self._totalReceivedStakes != nil}
+  /// Clears the value of `totalReceivedStakes`. Subsequent reads from it will return its default value.
+  public mutating func clearTotalReceivedStakes() {self._totalReceivedStakes = nil}
+
+  public var totalStakes: Ocap_BigUint {
+    get {return _totalStakes ?? Ocap_BigUint()}
+    set {_totalStakes = newValue}
+  }
+  /// Returns true if `totalStakes` has been explicitly set.
+  public var hasTotalStakes: Bool {return self._totalStakes != nil}
+  /// Clears the value of `totalStakes`. Subsequent reads from it will return its default value.
+  public mutating func clearTotalStakes() {self._totalStakes = nil}
+
+  public var totalUnstakes: Ocap_BigUint {
+    get {return _totalUnstakes ?? Ocap_BigUint()}
+    set {_totalUnstakes = newValue}
+  }
+  /// Returns true if `totalUnstakes` has been explicitly set.
+  public var hasTotalUnstakes: Bool {return self._totalUnstakes != nil}
+  /// Clears the value of `totalUnstakes`. Subsequent reads from it will return its default value.
+  public mutating func clearTotalUnstakes() {self._totalUnstakes = nil}
+
+  public var recentNumTxs: [String] = []
+
+  public var tokens: [Ocap_TokenInfo] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _balance: Ocap_BigUint? = nil
+  fileprivate var _totalReceivedStakes: Ocap_BigUint? = nil
+  fileprivate var _totalStakes: Ocap_BigUint? = nil
+  fileprivate var _totalUnstakes: Ocap_BigUint? = nil
+}
+
+public struct Ocap_IndexedAssetState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var owner: String = String()
+
+  public var genesisTime: String = String()
+
+  public var renaissanceTime: String = String()
+
+  public var moniker: String = String()
+
+  public var readonly: Bool = false
+
+  public var consumedTime: String = String()
+
+  public var issuer: String = String()
+
+  public var parent: String = String()
+
+  public var transferrable: Bool = false
+
+  public var ttl: String = String()
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_IndexedBlock {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var height: String = String()
+
+  public var time: String = String()
+
+  public var proposer: String = String()
+
+  public var numTxs: String = String()
+
+  public var numInvalidTxs: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_IndexedTokenState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String = String()
+
+  public var description_p: String = String()
+
+  public var symbol: String = String()
+
+  public var unit: String = String()
+
+  public var decimal: Int32 = 0
+
+  public var issuer: String = String()
+
+  public var icon: String = String()
+
+  public var totalSupply: String = String()
+
+  public var address: String = String()
+
+  public var genesisTime: String = String()
+
+  public var renaissanceTime: String = String()
+
+  public var erc20ContractAddress: String = String()
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_IndexedFactoryState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String {
+    get {return _storage._address}
+    set {_uniqueStorage()._address = newValue}
+  }
+
+  public var owner: String {
+    get {return _storage._owner}
+    set {_uniqueStorage()._owner = newValue}
+  }
+
+  public var name: String {
+    get {return _storage._name}
+    set {_uniqueStorage()._name = newValue}
+  }
+
+  public var description_p: String {
+    get {return _storage._description_p}
+    set {_uniqueStorage()._description_p = newValue}
+  }
+
+  public var settlement: String {
+    get {return _storage._settlement}
+    set {_uniqueStorage()._settlement = newValue}
+  }
+
+  public var limit: String {
+    get {return _storage._limit}
+    set {_uniqueStorage()._limit = newValue}
+  }
+
+  public var trustedIssuers: [String] {
+    get {return _storage._trustedIssuers}
+    set {_uniqueStorage()._trustedIssuers = newValue}
+  }
+
+  public var input: Ocap_IndexedFactoryInput {
+    get {return _storage._input ?? Ocap_IndexedFactoryInput()}
+    set {_uniqueStorage()._input = newValue}
+  }
+  /// Returns true if `input` has been explicitly set.
+  public var hasInput: Bool {return _storage._input != nil}
+  /// Clears the value of `input`. Subsequent reads from it will return its default value.
+  public mutating func clearInput() {_uniqueStorage()._input = nil}
+
+  public var output: Ocap_CreateAssetTx {
+    get {return _storage._output ?? Ocap_CreateAssetTx()}
+    set {_uniqueStorage()._output = newValue}
+  }
+  /// Returns true if `output` has been explicitly set.
+  public var hasOutput: Bool {return _storage._output != nil}
+  /// Clears the value of `output`. Subsequent reads from it will return its default value.
+  public mutating func clearOutput() {_uniqueStorage()._output = nil}
+
+  public var hooks: [Ocap_AssetFactoryHook] {
+    get {return _storage._hooks}
+    set {_uniqueStorage()._hooks = newValue}
+  }
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return _storage._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {_uniqueStorage()._data = nil}
+
+  public var balance: String {
+    get {return _storage._balance}
+    set {_uniqueStorage()._balance = newValue}
+  }
+
+  public var tokens: [Ocap_TokenInfo] {
+    get {return _storage._tokens}
+    set {_uniqueStorage()._tokens = newValue}
+  }
+
+  public var numMinted: UInt32 {
+    get {return _storage._numMinted}
+    set {_uniqueStorage()._numMinted = newValue}
+  }
+
+  public var lastSettlement: String {
+    get {return _storage._lastSettlement}
+    set {_uniqueStorage()._lastSettlement = newValue}
+  }
+
+  public var genesisTime: String {
+    get {return _storage._genesisTime}
+    set {_uniqueStorage()._genesisTime = newValue}
+  }
+
+  public var renaissanceTime: String {
+    get {return _storage._renaissanceTime}
+    set {_uniqueStorage()._renaissanceTime = newValue}
+  }
+
+  public var display: Ocap_AssetDisplay {
+    get {return _storage._display ?? Ocap_AssetDisplay()}
+    set {_uniqueStorage()._display = newValue}
+  }
+  /// Returns true if `display` has been explicitly set.
+  public var hasDisplay: Bool {return _storage._display != nil}
+  /// Clears the value of `display`. Subsequent reads from it will return its default value.
+  public mutating func clearDisplay() {_uniqueStorage()._display = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Ocap_IndexedStakeState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var sender: String = String()
+
+  public var receiver: String = String()
+
+  public var tokens: [Ocap_TokenInfo] = []
+
+  public var assets: [String] = []
+
+  public var revocable: Bool = false
+
+  public var genesisTime: String = String()
+
+  public var renaissanceTime: String = String()
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_IndexedRollupState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String {
+    get {return _storage._address}
+    set {_uniqueStorage()._address = newValue}
+  }
+
+  public var tokenAddress: String {
+    get {return _storage._tokenAddress}
+    set {_uniqueStorage()._tokenAddress = newValue}
+  }
+
+  public var erc20TokenAddress: String {
+    get {return _storage._erc20TokenAddress}
+    set {_uniqueStorage()._erc20TokenAddress = newValue}
+  }
+
+  public var contractAddress: String {
+    get {return _storage._contractAddress}
+    set {_uniqueStorage()._contractAddress = newValue}
+  }
+
+  public var seedValidators: [Ocap_RollupValidator] {
+    get {return _storage._seedValidators}
+    set {_uniqueStorage()._seedValidators = newValue}
+  }
+
+  public var validators: [Ocap_RollupValidator] {
+    get {return _storage._validators}
+    set {_uniqueStorage()._validators = newValue}
+  }
+
+  public var minStakeAmount: String {
+    get {return _storage._minStakeAmount}
+    set {_uniqueStorage()._minStakeAmount = newValue}
+  }
+
+  public var maxStakeAmount: String {
+    get {return _storage._maxStakeAmount}
+    set {_uniqueStorage()._maxStakeAmount = newValue}
+  }
+
+  public var minSignerCount: UInt32 {
+    get {return _storage._minSignerCount}
+    set {_uniqueStorage()._minSignerCount = newValue}
+  }
+
+  public var maxSignerCount: UInt32 {
+    get {return _storage._maxSignerCount}
+    set {_uniqueStorage()._maxSignerCount = newValue}
+  }
+
+  public var minBlockSize: UInt32 {
+    get {return _storage._minBlockSize}
+    set {_uniqueStorage()._minBlockSize = newValue}
+  }
+
+  public var maxBlockSize: UInt32 {
+    get {return _storage._maxBlockSize}
+    set {_uniqueStorage()._maxBlockSize = newValue}
+  }
+
+  public var minBlockInterval: UInt32 {
+    get {return _storage._minBlockInterval}
+    set {_uniqueStorage()._minBlockInterval = newValue}
+  }
+
+  public var foreignChainType: String {
+    get {return _storage._foreignChainType}
+    set {_uniqueStorage()._foreignChainType = newValue}
+  }
+
+  public var foreignChainID: String {
+    get {return _storage._foreignChainID}
+    set {_uniqueStorage()._foreignChainID = newValue}
+  }
+
+  public var genesisTime: String {
+    get {return _storage._genesisTime}
+    set {_uniqueStorage()._genesisTime = newValue}
+  }
+
+  public var renaissanceTime: String {
+    get {return _storage._renaissanceTime}
+    set {_uniqueStorage()._renaissanceTime = newValue}
+  }
+
+  public var tokenInfo: Ocap_IndexedTokenInput {
+    get {return _storage._tokenInfo ?? Ocap_IndexedTokenInput()}
+    set {_uniqueStorage()._tokenInfo = newValue}
+  }
+  /// Returns true if `tokenInfo` has been explicitly set.
+  public var hasTokenInfo: Bool {return _storage._tokenInfo != nil}
+  /// Clears the value of `tokenInfo`. Subsequent reads from it will return its default value.
+  public mutating func clearTokenInfo() {_uniqueStorage()._tokenInfo = nil}
+
+  public var issuer: String {
+    get {return _storage._issuer}
+    set {_uniqueStorage()._issuer = newValue}
+  }
+
+  public var depositFeeRate: UInt32 {
+    get {return _storage._depositFeeRate}
+    set {_uniqueStorage()._depositFeeRate = newValue}
+  }
+
+  public var withdrawFeeRate: UInt32 {
+    get {return _storage._withdrawFeeRate}
+    set {_uniqueStorage()._withdrawFeeRate = newValue}
+  }
+
+  public var proposerFeeShare: UInt32 {
+    get {return _storage._proposerFeeShare}
+    set {_uniqueStorage()._proposerFeeShare = newValue}
+  }
+
+  public var minDepositAmount: String {
+    get {return _storage._minDepositAmount}
+    set {_uniqueStorage()._minDepositAmount = newValue}
+  }
+
+  public var minWithdrawAmount: String {
+    get {return _storage._minWithdrawAmount}
+    set {_uniqueStorage()._minWithdrawAmount = newValue}
+  }
+
+  public var blockHeight: UInt64 {
+    get {return _storage._blockHeight}
+    set {_uniqueStorage()._blockHeight = newValue}
+  }
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return _storage._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {_uniqueStorage()._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Ocap_IndexedRollupBlock {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var hash: String {
+    get {return _storage._hash}
+    set {_uniqueStorage()._hash = newValue}
+  }
+
+  public var height: UInt64 {
+    get {return _storage._height}
+    set {_uniqueStorage()._height = newValue}
+  }
+
+  public var merkleRoot: String {
+    get {return _storage._merkleRoot}
+    set {_uniqueStorage()._merkleRoot = newValue}
+  }
+
+  public var previousHash: String {
+    get {return _storage._previousHash}
+    set {_uniqueStorage()._previousHash = newValue}
+  }
+
+  public var txHash: String {
+    get {return _storage._txHash}
+    set {_uniqueStorage()._txHash = newValue}
+  }
+
+  public var txs: [String] {
+    get {return _storage._txs}
+    set {_uniqueStorage()._txs = newValue}
+  }
+
+  public var proposer: String {
+    get {return _storage._proposer}
+    set {_uniqueStorage()._proposer = newValue}
+  }
+
+  public var signatures: [Ocap_Multisig] {
+    get {return _storage._signatures}
+    set {_uniqueStorage()._signatures = newValue}
+  }
+
+  public var checkpoint: String {
+    get {return _storage._checkpoint}
+    set {_uniqueStorage()._checkpoint = newValue}
+  }
+
+  public var genesisTime: String {
+    get {return _storage._genesisTime}
+    set {_uniqueStorage()._genesisTime = newValue}
+  }
+
+  public var renaissanceTime: String {
+    get {return _storage._renaissanceTime}
+    set {_uniqueStorage()._renaissanceTime = newValue}
+  }
+
+  public var rollup: String {
+    get {return _storage._rollup}
+    set {_uniqueStorage()._rollup = newValue}
+  }
+
+  public var blockReward: String {
+    get {return _storage._blockReward}
+    set {_uniqueStorage()._blockReward = newValue}
+  }
+
+  public var mintedAmount: String {
+    get {return _storage._mintedAmount}
+    set {_uniqueStorage()._mintedAmount = newValue}
+  }
+
+  public var burnedAmount: String {
+    get {return _storage._burnedAmount}
+    set {_uniqueStorage()._burnedAmount = newValue}
+  }
+
+  public var tokenInfo: Ocap_IndexedTokenInput {
+    get {return _storage._tokenInfo ?? Ocap_IndexedTokenInput()}
+    set {_uniqueStorage()._tokenInfo = newValue}
+  }
+  /// Returns true if `tokenInfo` has been explicitly set.
+  public var hasTokenInfo: Bool {return _storage._tokenInfo != nil}
+  /// Clears the value of `tokenInfo`. Subsequent reads from it will return its default value.
+  public mutating func clearTokenInfo() {_uniqueStorage()._tokenInfo = nil}
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return _storage._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {_uniqueStorage()._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1166,11 +1447,76 @@ extension Ocap_AccountFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 }
 
+extension Ocap_TxFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TxFilter"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "txs"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.txs) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.txs.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.txs, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_TxFilter, rhs: Ocap_TxFilter) -> Bool {
+    if lhs.txs != rhs.txs {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ValidatorFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ValidatorFilter"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "validators"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.validators) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.validators.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.validators, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ValidatorFilter, rhs: Ocap_ValidatorFilter) -> Bool {
+    if lhs.validators != rhs.validators {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_TimeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TimeFilter"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "start_date_time"),
     2: .standard(proto: "end_date_time"),
+    3: .same(proto: "field"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1181,6 +1527,7 @@ extension Ocap_TimeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.startDateTime) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.endDateTime) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.field) }()
       default: break
       }
     }
@@ -1193,12 +1540,16 @@ extension Ocap_TimeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if !self.endDateTime.isEmpty {
       try visitor.visitSingularStringField(value: self.endDateTime, fieldNumber: 2)
     }
+    if !self.field.isEmpty {
+      try visitor.visitSingularStringField(value: self.field, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Ocap_TimeFilter, rhs: Ocap_TimeFilter) -> Bool {
     if lhs.startDateTime != rhs.startDateTime {return false}
     if lhs.endDateTime != rhs.endDateTime {return false}
+    if lhs.field != rhs.field {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1292,142 +1643,6 @@ extension Ocap_PageInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   }
 }
 
-extension Ocap_IndexedTransaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".IndexedTransaction"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "hash"),
-    2: .same(proto: "sender"),
-    3: .same(proto: "receiver"),
-    4: .same(proto: "time"),
-    5: .same(proto: "type"),
-    6: .same(proto: "tx"),
-    20: .same(proto: "valid"),
-    21: .same(proto: "code"),
-    22: .standard(proto: "token_symbols"),
-    16: .same(proto: "receipts"),
-  ]
-
-  fileprivate class _StorageClass {
-    var _hash: String = String()
-    var _sender: String = String()
-    var _receiver: String = String()
-    var _time: String = String()
-    var _type: String = String()
-    var _tx: Ocap_Transaction? = nil
-    var _valid: Bool = false
-    var _code: Ocap_StatusCode = .ok
-    var _tokenSymbols: [Ocap_TokenSymbol] = []
-    var _receipts: [Ocap_TransactionReceipt] = []
-
-    static let defaultInstance = _StorageClass()
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _hash = source._hash
-      _sender = source._sender
-      _receiver = source._receiver
-      _time = source._time
-      _type = source._type
-      _tx = source._tx
-      _valid = source._valid
-      _code = source._code
-      _tokenSymbols = source._tokenSymbols
-      _receipts = source._receipts
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularStringField(value: &_storage._hash) }()
-        case 2: try { try decoder.decodeSingularStringField(value: &_storage._sender) }()
-        case 3: try { try decoder.decodeSingularStringField(value: &_storage._receiver) }()
-        case 4: try { try decoder.decodeSingularStringField(value: &_storage._time) }()
-        case 5: try { try decoder.decodeSingularStringField(value: &_storage._type) }()
-        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._tx) }()
-        case 16: try { try decoder.decodeRepeatedMessageField(value: &_storage._receipts) }()
-        case 20: try { try decoder.decodeSingularBoolField(value: &_storage._valid) }()
-        case 21: try { try decoder.decodeSingularEnumField(value: &_storage._code) }()
-        case 22: try { try decoder.decodeRepeatedMessageField(value: &_storage._tokenSymbols) }()
-        default: break
-        }
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      if !_storage._hash.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._hash, fieldNumber: 1)
-      }
-      if !_storage._sender.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._sender, fieldNumber: 2)
-      }
-      if !_storage._receiver.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._receiver, fieldNumber: 3)
-      }
-      if !_storage._time.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._time, fieldNumber: 4)
-      }
-      if !_storage._type.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._type, fieldNumber: 5)
-      }
-      if let v = _storage._tx {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-      }
-      if !_storage._receipts.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._receipts, fieldNumber: 16)
-      }
-      if _storage._valid != false {
-        try visitor.visitSingularBoolField(value: _storage._valid, fieldNumber: 20)
-      }
-      if _storage._code != .ok {
-        try visitor.visitSingularEnumField(value: _storage._code, fieldNumber: 21)
-      }
-      if !_storage._tokenSymbols.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._tokenSymbols, fieldNumber: 22)
-      }
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_IndexedTransaction, rhs: Ocap_IndexedTransaction) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._hash != rhs_storage._hash {return false}
-        if _storage._sender != rhs_storage._sender {return false}
-        if _storage._receiver != rhs_storage._receiver {return false}
-        if _storage._time != rhs_storage._time {return false}
-        if _storage._type != rhs_storage._type {return false}
-        if _storage._tx != rhs_storage._tx {return false}
-        if _storage._valid != rhs_storage._valid {return false}
-        if _storage._code != rhs_storage._code {return false}
-        if _storage._tokenSymbols != rhs_storage._tokenSymbols {return false}
-        if _storage._receipts != rhs_storage._receipts {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Ocap_TokenInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TokenInfo"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1467,654 +1682,6 @@ extension Ocap_TokenInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if lhs.address != rhs.address {return false}
     if lhs._balance != rhs._balance {return false}
     if lhs.decimal != rhs.decimal {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_IndexedAccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".IndexedAccountState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-    2: .same(proto: "balance"),
-    3: .standard(proto: "num_assets"),
-    4: .standard(proto: "num_txs"),
-    5: .same(proto: "nonce"),
-    6: .standard(proto: "genesis_time"),
-    7: .standard(proto: "renaissance_time"),
-    8: .same(proto: "moniker"),
-    9: .standard(proto: "migrated_from"),
-    10: .standard(proto: "migrated_to"),
-    11: .standard(proto: "total_received_stakes"),
-    12: .standard(proto: "total_stakes"),
-    13: .standard(proto: "total_unstakes"),
-    14: .standard(proto: "recent_num_txs"),
-    15: .same(proto: "tokens"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._balance) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.numAssets) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.numTxs) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.nonce) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.moniker) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.migratedFrom) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.migratedTo) }()
-      case 11: try { try decoder.decodeSingularMessageField(value: &self._totalReceivedStakes) }()
-      case 12: try { try decoder.decodeSingularMessageField(value: &self._totalStakes) }()
-      case 13: try { try decoder.decodeSingularMessageField(value: &self._totalUnstakes) }()
-      case 14: try { try decoder.decodeRepeatedStringField(value: &self.recentNumTxs) }()
-      case 15: try { try decoder.decodeRepeatedMessageField(value: &self.tokens) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    if let v = self._balance {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if !self.numAssets.isEmpty {
-      try visitor.visitSingularStringField(value: self.numAssets, fieldNumber: 3)
-    }
-    if !self.numTxs.isEmpty {
-      try visitor.visitSingularStringField(value: self.numTxs, fieldNumber: 4)
-    }
-    if !self.nonce.isEmpty {
-      try visitor.visitSingularStringField(value: self.nonce, fieldNumber: 5)
-    }
-    if !self.genesisTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 6)
-    }
-    if !self.renaissanceTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 7)
-    }
-    if !self.moniker.isEmpty {
-      try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 8)
-    }
-    if !self.migratedFrom.isEmpty {
-      try visitor.visitSingularStringField(value: self.migratedFrom, fieldNumber: 9)
-    }
-    if !self.migratedTo.isEmpty {
-      try visitor.visitSingularStringField(value: self.migratedTo, fieldNumber: 10)
-    }
-    if let v = self._totalReceivedStakes {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-    }
-    if let v = self._totalStakes {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
-    }
-    if let v = self._totalUnstakes {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-    }
-    if !self.recentNumTxs.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.recentNumTxs, fieldNumber: 14)
-    }
-    if !self.tokens.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.tokens, fieldNumber: 15)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_IndexedAccountState, rhs: Ocap_IndexedAccountState) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs._balance != rhs._balance {return false}
-    if lhs.numAssets != rhs.numAssets {return false}
-    if lhs.numTxs != rhs.numTxs {return false}
-    if lhs.nonce != rhs.nonce {return false}
-    if lhs.genesisTime != rhs.genesisTime {return false}
-    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
-    if lhs.moniker != rhs.moniker {return false}
-    if lhs.migratedFrom != rhs.migratedFrom {return false}
-    if lhs.migratedTo != rhs.migratedTo {return false}
-    if lhs._totalReceivedStakes != rhs._totalReceivedStakes {return false}
-    if lhs._totalStakes != rhs._totalStakes {return false}
-    if lhs._totalUnstakes != rhs._totalUnstakes {return false}
-    if lhs.recentNumTxs != rhs.recentNumTxs {return false}
-    if lhs.tokens != rhs.tokens {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_IndexedAssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".IndexedAssetState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-    2: .same(proto: "owner"),
-    3: .standard(proto: "genesis_time"),
-    4: .standard(proto: "renaissance_time"),
-    5: .same(proto: "moniker"),
-    6: .same(proto: "readonly"),
-    7: .standard(proto: "consumed_time"),
-    8: .same(proto: "issuer"),
-    9: .same(proto: "parent"),
-    10: .same(proto: "transferrable"),
-    11: .same(proto: "ttl"),
-    50: .same(proto: "data"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.owner) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.moniker) }()
-      case 6: try { try decoder.decodeSingularBoolField(value: &self.readonly) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.consumedTime) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.issuer) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.parent) }()
-      case 10: try { try decoder.decodeSingularBoolField(value: &self.transferrable) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.ttl) }()
-      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    if !self.owner.isEmpty {
-      try visitor.visitSingularStringField(value: self.owner, fieldNumber: 2)
-    }
-    if !self.genesisTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 3)
-    }
-    if !self.renaissanceTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 4)
-    }
-    if !self.moniker.isEmpty {
-      try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 5)
-    }
-    if self.readonly != false {
-      try visitor.visitSingularBoolField(value: self.readonly, fieldNumber: 6)
-    }
-    if !self.consumedTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.consumedTime, fieldNumber: 7)
-    }
-    if !self.issuer.isEmpty {
-      try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 8)
-    }
-    if !self.parent.isEmpty {
-      try visitor.visitSingularStringField(value: self.parent, fieldNumber: 9)
-    }
-    if self.transferrable != false {
-      try visitor.visitSingularBoolField(value: self.transferrable, fieldNumber: 10)
-    }
-    if !self.ttl.isEmpty {
-      try visitor.visitSingularStringField(value: self.ttl, fieldNumber: 11)
-    }
-    if let v = self._data {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_IndexedAssetState, rhs: Ocap_IndexedAssetState) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs.owner != rhs.owner {return false}
-    if lhs.genesisTime != rhs.genesisTime {return false}
-    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
-    if lhs.moniker != rhs.moniker {return false}
-    if lhs.readonly != rhs.readonly {return false}
-    if lhs.consumedTime != rhs.consumedTime {return false}
-    if lhs.issuer != rhs.issuer {return false}
-    if lhs.parent != rhs.parent {return false}
-    if lhs.transferrable != rhs.transferrable {return false}
-    if lhs.ttl != rhs.ttl {return false}
-    if lhs._data != rhs._data {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".IndexedStakeState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-    2: .same(proto: "balance"),
-    3: .same(proto: "sender"),
-    4: .same(proto: "receiver"),
-    5: .standard(proto: "genesis_time"),
-    6: .standard(proto: "renaissance_time"),
-    7: .same(proto: "message"),
-    8: .same(proto: "type"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._balance) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.sender) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.message) }()
-      case 8: try { try decoder.decodeSingularUInt32Field(value: &self.type) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    if let v = self._balance {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if !self.sender.isEmpty {
-      try visitor.visitSingularStringField(value: self.sender, fieldNumber: 3)
-    }
-    if !self.receiver.isEmpty {
-      try visitor.visitSingularStringField(value: self.receiver, fieldNumber: 4)
-    }
-    if !self.genesisTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 5)
-    }
-    if !self.renaissanceTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 6)
-    }
-    if !self.message.isEmpty {
-      try visitor.visitSingularStringField(value: self.message, fieldNumber: 7)
-    }
-    if self.type != 0 {
-      try visitor.visitSingularUInt32Field(value: self.type, fieldNumber: 8)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_IndexedStakeState, rhs: Ocap_IndexedStakeState) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs._balance != rhs._balance {return false}
-    if lhs.sender != rhs.sender {return false}
-    if lhs.receiver != rhs.receiver {return false}
-    if lhs.genesisTime != rhs.genesisTime {return false}
-    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
-    if lhs.message != rhs.message {return false}
-    if lhs.type != rhs.type {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_IndexedBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".IndexedBlock"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "height"),
-    2: .same(proto: "time"),
-    3: .same(proto: "proposer"),
-    4: .standard(proto: "num_txs"),
-    5: .standard(proto: "num_invalid_txs"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.height) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.time) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.proposer) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.numTxs) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.numInvalidTxs) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.height.isEmpty {
-      try visitor.visitSingularStringField(value: self.height, fieldNumber: 1)
-    }
-    if !self.time.isEmpty {
-      try visitor.visitSingularStringField(value: self.time, fieldNumber: 2)
-    }
-    if !self.proposer.isEmpty {
-      try visitor.visitSingularStringField(value: self.proposer, fieldNumber: 3)
-    }
-    if !self.numTxs.isEmpty {
-      try visitor.visitSingularStringField(value: self.numTxs, fieldNumber: 4)
-    }
-    if !self.numInvalidTxs.isEmpty {
-      try visitor.visitSingularStringField(value: self.numInvalidTxs, fieldNumber: 5)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_IndexedBlock, rhs: Ocap_IndexedBlock) -> Bool {
-    if lhs.height != rhs.height {return false}
-    if lhs.time != rhs.time {return false}
-    if lhs.proposer != rhs.proposer {return false}
-    if lhs.numTxs != rhs.numTxs {return false}
-    if lhs.numInvalidTxs != rhs.numInvalidTxs {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".IndexedTokenState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "description"),
-    3: .same(proto: "symbol"),
-    4: .same(proto: "unit"),
-    5: .same(proto: "decimal"),
-    6: .same(proto: "issuer"),
-    7: .same(proto: "icon"),
-    8: .standard(proto: "total_supply"),
-    9: .same(proto: "address"),
-    10: .standard(proto: "genesis_time"),
-    11: .standard(proto: "renaissance_time"),
-    12: .standard(proto: "erc20_contract_address"),
-    20: .same(proto: "data"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.symbol) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.unit) }()
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self.decimal) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.issuer) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.icon) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.totalSupply) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
-      case 12: try { try decoder.decodeSingularStringField(value: &self.erc20ContractAddress) }()
-      case 20: try { try decoder.decodeSingularMessageField(value: &self._data) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
-    }
-    if !self.description_p.isEmpty {
-      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 2)
-    }
-    if !self.symbol.isEmpty {
-      try visitor.visitSingularStringField(value: self.symbol, fieldNumber: 3)
-    }
-    if !self.unit.isEmpty {
-      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 4)
-    }
-    if self.decimal != 0 {
-      try visitor.visitSingularInt32Field(value: self.decimal, fieldNumber: 5)
-    }
-    if !self.issuer.isEmpty {
-      try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 6)
-    }
-    if !self.icon.isEmpty {
-      try visitor.visitSingularStringField(value: self.icon, fieldNumber: 7)
-    }
-    if !self.totalSupply.isEmpty {
-      try visitor.visitSingularStringField(value: self.totalSupply, fieldNumber: 8)
-    }
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 9)
-    }
-    if !self.genesisTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 10)
-    }
-    if !self.renaissanceTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 11)
-    }
-    if !self.erc20ContractAddress.isEmpty {
-      try visitor.visitSingularStringField(value: self.erc20ContractAddress, fieldNumber: 12)
-    }
-    if let v = self._data {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_IndexedTokenState, rhs: Ocap_IndexedTokenState) -> Bool {
-    if lhs.name != rhs.name {return false}
-    if lhs.description_p != rhs.description_p {return false}
-    if lhs.symbol != rhs.symbol {return false}
-    if lhs.unit != rhs.unit {return false}
-    if lhs.decimal != rhs.decimal {return false}
-    if lhs.issuer != rhs.issuer {return false}
-    if lhs.icon != rhs.icon {return false}
-    if lhs.totalSupply != rhs.totalSupply {return false}
-    if lhs.address != rhs.address {return false}
-    if lhs.genesisTime != rhs.genesisTime {return false}
-    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
-    if lhs.erc20ContractAddress != rhs.erc20ContractAddress {return false}
-    if lhs._data != rhs._data {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_IndexedFactoryState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".IndexedFactoryState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-    2: .same(proto: "owner"),
-    3: .same(proto: "name"),
-    4: .same(proto: "description"),
-    5: .same(proto: "settlement"),
-    6: .same(proto: "limit"),
-    7: .standard(proto: "trusted_issuers"),
-    8: .same(proto: "input"),
-    9: .same(proto: "output"),
-    10: .same(proto: "hooks"),
-    11: .same(proto: "data"),
-    13: .same(proto: "balance"),
-    14: .same(proto: "tokens"),
-    15: .standard(proto: "num_minted"),
-    16: .standard(proto: "last_settlement"),
-    17: .standard(proto: "genesis_time"),
-    18: .standard(proto: "renaissance_time"),
-    19: .same(proto: "display"),
-  ]
-
-  fileprivate class _StorageClass {
-    var _address: String = String()
-    var _owner: String = String()
-    var _name: String = String()
-    var _description_p: String = String()
-    var _settlement: String = String()
-    var _limit: String = String()
-    var _trustedIssuers: [String] = []
-    var _input: Ocap_ResponseAssetFactoryInput? = nil
-    var _output: Ocap_CreateAssetTx? = nil
-    var _hooks: [Ocap_AssetFactoryHook] = []
-    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
-    var _balance: String = String()
-    var _tokens: [Ocap_TokenInfo] = []
-    var _numMinted: UInt32 = 0
-    var _lastSettlement: String = String()
-    var _genesisTime: String = String()
-    var _renaissanceTime: String = String()
-    var _display: Ocap_AssetDisplay? = nil
-
-    static let defaultInstance = _StorageClass()
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _address = source._address
-      _owner = source._owner
-      _name = source._name
-      _description_p = source._description_p
-      _settlement = source._settlement
-      _limit = source._limit
-      _trustedIssuers = source._trustedIssuers
-      _input = source._input
-      _output = source._output
-      _hooks = source._hooks
-      _data = source._data
-      _balance = source._balance
-      _tokens = source._tokens
-      _numMinted = source._numMinted
-      _lastSettlement = source._lastSettlement
-      _genesisTime = source._genesisTime
-      _renaissanceTime = source._renaissanceTime
-      _display = source._display
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
-        case 2: try { try decoder.decodeSingularStringField(value: &_storage._owner) }()
-        case 3: try { try decoder.decodeSingularStringField(value: &_storage._name) }()
-        case 4: try { try decoder.decodeSingularStringField(value: &_storage._description_p) }()
-        case 5: try { try decoder.decodeSingularStringField(value: &_storage._settlement) }()
-        case 6: try { try decoder.decodeSingularStringField(value: &_storage._limit) }()
-        case 7: try { try decoder.decodeRepeatedStringField(value: &_storage._trustedIssuers) }()
-        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._input) }()
-        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._output) }()
-        case 10: try { try decoder.decodeRepeatedMessageField(value: &_storage._hooks) }()
-        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
-        case 13: try { try decoder.decodeSingularStringField(value: &_storage._balance) }()
-        case 14: try { try decoder.decodeRepeatedMessageField(value: &_storage._tokens) }()
-        case 15: try { try decoder.decodeSingularUInt32Field(value: &_storage._numMinted) }()
-        case 16: try { try decoder.decodeSingularStringField(value: &_storage._lastSettlement) }()
-        case 17: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
-        case 18: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
-        case 19: try { try decoder.decodeSingularMessageField(value: &_storage._display) }()
-        default: break
-        }
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      if !_storage._address.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
-      }
-      if !_storage._owner.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._owner, fieldNumber: 2)
-      }
-      if !_storage._name.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._name, fieldNumber: 3)
-      }
-      if !_storage._description_p.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._description_p, fieldNumber: 4)
-      }
-      if !_storage._settlement.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._settlement, fieldNumber: 5)
-      }
-      if !_storage._limit.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._limit, fieldNumber: 6)
-      }
-      if !_storage._trustedIssuers.isEmpty {
-        try visitor.visitRepeatedStringField(value: _storage._trustedIssuers, fieldNumber: 7)
-      }
-      if let v = _storage._input {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-      }
-      if let v = _storage._output {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-      }
-      if !_storage._hooks.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._hooks, fieldNumber: 10)
-      }
-      if let v = _storage._data {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-      }
-      if !_storage._balance.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._balance, fieldNumber: 13)
-      }
-      if !_storage._tokens.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._tokens, fieldNumber: 14)
-      }
-      if _storage._numMinted != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._numMinted, fieldNumber: 15)
-      }
-      if !_storage._lastSettlement.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._lastSettlement, fieldNumber: 16)
-      }
-      if !_storage._genesisTime.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._genesisTime, fieldNumber: 17)
-      }
-      if !_storage._renaissanceTime.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._renaissanceTime, fieldNumber: 18)
-      }
-      if let v = _storage._display {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
-      }
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_IndexedFactoryState, rhs: Ocap_IndexedFactoryState) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._address != rhs_storage._address {return false}
-        if _storage._owner != rhs_storage._owner {return false}
-        if _storage._name != rhs_storage._name {return false}
-        if _storage._description_p != rhs_storage._description_p {return false}
-        if _storage._settlement != rhs_storage._settlement {return false}
-        if _storage._limit != rhs_storage._limit {return false}
-        if _storage._trustedIssuers != rhs_storage._trustedIssuers {return false}
-        if _storage._input != rhs_storage._input {return false}
-        if _storage._output != rhs_storage._output {return false}
-        if _storage._hooks != rhs_storage._hooks {return false}
-        if _storage._data != rhs_storage._data {return false}
-        if _storage._balance != rhs_storage._balance {return false}
-        if _storage._tokens != rhs_storage._tokens {return false}
-        if _storage._numMinted != rhs_storage._numMinted {return false}
-        if _storage._lastSettlement != rhs_storage._lastSettlement {return false}
-        if _storage._genesisTime != rhs_storage._genesisTime {return false}
-        if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
-        if _storage._display != rhs_storage._display {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2613,6 +2180,1252 @@ extension Ocap_ByHour: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
 
   public static func ==(lhs: Ocap_ByHour, rhs: Ocap_ByHour) -> Bool {
     if lhs.date != rhs.date {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedTransaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedTransaction"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "hash"),
+    2: .same(proto: "sender"),
+    3: .same(proto: "receiver"),
+    4: .same(proto: "time"),
+    5: .same(proto: "type"),
+    6: .same(proto: "tx"),
+    20: .same(proto: "valid"),
+    21: .same(proto: "code"),
+    22: .standard(proto: "token_symbols"),
+    16: .same(proto: "receipts"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _hash: String = String()
+    var _sender: String = String()
+    var _receiver: String = String()
+    var _time: String = String()
+    var _type: String = String()
+    var _tx: Ocap_Transaction? = nil
+    var _valid: Bool = false
+    var _code: Ocap_StatusCode = .ok
+    var _tokenSymbols: [Ocap_TokenSymbol] = []
+    var _receipts: [Ocap_TransactionReceipt] = []
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _hash = source._hash
+      _sender = source._sender
+      _receiver = source._receiver
+      _time = source._time
+      _type = source._type
+      _tx = source._tx
+      _valid = source._valid
+      _code = source._code
+      _tokenSymbols = source._tokenSymbols
+      _receipts = source._receipts
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._hash) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._sender) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._receiver) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._time) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._type) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._tx) }()
+        case 16: try { try decoder.decodeRepeatedMessageField(value: &_storage._receipts) }()
+        case 20: try { try decoder.decodeSingularBoolField(value: &_storage._valid) }()
+        case 21: try { try decoder.decodeSingularEnumField(value: &_storage._code) }()
+        case 22: try { try decoder.decodeRepeatedMessageField(value: &_storage._tokenSymbols) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._hash.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._hash, fieldNumber: 1)
+      }
+      if !_storage._sender.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sender, fieldNumber: 2)
+      }
+      if !_storage._receiver.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._receiver, fieldNumber: 3)
+      }
+      if !_storage._time.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._time, fieldNumber: 4)
+      }
+      if !_storage._type.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._type, fieldNumber: 5)
+      }
+      if let v = _storage._tx {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      }
+      if !_storage._receipts.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._receipts, fieldNumber: 16)
+      }
+      if _storage._valid != false {
+        try visitor.visitSingularBoolField(value: _storage._valid, fieldNumber: 20)
+      }
+      if _storage._code != .ok {
+        try visitor.visitSingularEnumField(value: _storage._code, fieldNumber: 21)
+      }
+      if !_storage._tokenSymbols.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._tokenSymbols, fieldNumber: 22)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedTransaction, rhs: Ocap_IndexedTransaction) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._hash != rhs_storage._hash {return false}
+        if _storage._sender != rhs_storage._sender {return false}
+        if _storage._receiver != rhs_storage._receiver {return false}
+        if _storage._time != rhs_storage._time {return false}
+        if _storage._type != rhs_storage._type {return false}
+        if _storage._tx != rhs_storage._tx {return false}
+        if _storage._valid != rhs_storage._valid {return false}
+        if _storage._code != rhs_storage._code {return false}
+        if _storage._tokenSymbols != rhs_storage._tokenSymbols {return false}
+        if _storage._receipts != rhs_storage._receipts {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedAccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedAccountState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "balance"),
+    3: .standard(proto: "num_assets"),
+    4: .standard(proto: "num_txs"),
+    5: .same(proto: "nonce"),
+    6: .standard(proto: "genesis_time"),
+    7: .standard(proto: "renaissance_time"),
+    8: .same(proto: "moniker"),
+    9: .standard(proto: "migrated_from"),
+    10: .standard(proto: "migrated_to"),
+    11: .standard(proto: "total_received_stakes"),
+    12: .standard(proto: "total_stakes"),
+    13: .standard(proto: "total_unstakes"),
+    14: .standard(proto: "recent_num_txs"),
+    15: .same(proto: "tokens"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._balance) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.numAssets) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.numTxs) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.nonce) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.moniker) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.migratedFrom) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.migratedTo) }()
+      case 11: try { try decoder.decodeSingularMessageField(value: &self._totalReceivedStakes) }()
+      case 12: try { try decoder.decodeSingularMessageField(value: &self._totalStakes) }()
+      case 13: try { try decoder.decodeSingularMessageField(value: &self._totalUnstakes) }()
+      case 14: try { try decoder.decodeRepeatedStringField(value: &self.recentNumTxs) }()
+      case 15: try { try decoder.decodeRepeatedMessageField(value: &self.tokens) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if let v = self._balance {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    if !self.numAssets.isEmpty {
+      try visitor.visitSingularStringField(value: self.numAssets, fieldNumber: 3)
+    }
+    if !self.numTxs.isEmpty {
+      try visitor.visitSingularStringField(value: self.numTxs, fieldNumber: 4)
+    }
+    if !self.nonce.isEmpty {
+      try visitor.visitSingularStringField(value: self.nonce, fieldNumber: 5)
+    }
+    if !self.genesisTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 6)
+    }
+    if !self.renaissanceTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 7)
+    }
+    if !self.moniker.isEmpty {
+      try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 8)
+    }
+    if !self.migratedFrom.isEmpty {
+      try visitor.visitSingularStringField(value: self.migratedFrom, fieldNumber: 9)
+    }
+    if !self.migratedTo.isEmpty {
+      try visitor.visitSingularStringField(value: self.migratedTo, fieldNumber: 10)
+    }
+    if let v = self._totalReceivedStakes {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+    }
+    if let v = self._totalStakes {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+    }
+    if let v = self._totalUnstakes {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+    }
+    if !self.recentNumTxs.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.recentNumTxs, fieldNumber: 14)
+    }
+    if !self.tokens.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.tokens, fieldNumber: 15)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedAccountState, rhs: Ocap_IndexedAccountState) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs._balance != rhs._balance {return false}
+    if lhs.numAssets != rhs.numAssets {return false}
+    if lhs.numTxs != rhs.numTxs {return false}
+    if lhs.nonce != rhs.nonce {return false}
+    if lhs.genesisTime != rhs.genesisTime {return false}
+    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
+    if lhs.moniker != rhs.moniker {return false}
+    if lhs.migratedFrom != rhs.migratedFrom {return false}
+    if lhs.migratedTo != rhs.migratedTo {return false}
+    if lhs._totalReceivedStakes != rhs._totalReceivedStakes {return false}
+    if lhs._totalStakes != rhs._totalStakes {return false}
+    if lhs._totalUnstakes != rhs._totalUnstakes {return false}
+    if lhs.recentNumTxs != rhs.recentNumTxs {return false}
+    if lhs.tokens != rhs.tokens {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedAssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedAssetState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "owner"),
+    3: .standard(proto: "genesis_time"),
+    4: .standard(proto: "renaissance_time"),
+    5: .same(proto: "moniker"),
+    6: .same(proto: "readonly"),
+    7: .standard(proto: "consumed_time"),
+    8: .same(proto: "issuer"),
+    9: .same(proto: "parent"),
+    10: .same(proto: "transferrable"),
+    11: .same(proto: "ttl"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.owner) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.moniker) }()
+      case 6: try { try decoder.decodeSingularBoolField(value: &self.readonly) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.consumedTime) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.issuer) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.parent) }()
+      case 10: try { try decoder.decodeSingularBoolField(value: &self.transferrable) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self.ttl) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.owner.isEmpty {
+      try visitor.visitSingularStringField(value: self.owner, fieldNumber: 2)
+    }
+    if !self.genesisTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 3)
+    }
+    if !self.renaissanceTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 4)
+    }
+    if !self.moniker.isEmpty {
+      try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 5)
+    }
+    if self.readonly != false {
+      try visitor.visitSingularBoolField(value: self.readonly, fieldNumber: 6)
+    }
+    if !self.consumedTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.consumedTime, fieldNumber: 7)
+    }
+    if !self.issuer.isEmpty {
+      try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 8)
+    }
+    if !self.parent.isEmpty {
+      try visitor.visitSingularStringField(value: self.parent, fieldNumber: 9)
+    }
+    if self.transferrable != false {
+      try visitor.visitSingularBoolField(value: self.transferrable, fieldNumber: 10)
+    }
+    if !self.ttl.isEmpty {
+      try visitor.visitSingularStringField(value: self.ttl, fieldNumber: 11)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedAssetState, rhs: Ocap_IndexedAssetState) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.owner != rhs.owner {return false}
+    if lhs.genesisTime != rhs.genesisTime {return false}
+    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
+    if lhs.moniker != rhs.moniker {return false}
+    if lhs.readonly != rhs.readonly {return false}
+    if lhs.consumedTime != rhs.consumedTime {return false}
+    if lhs.issuer != rhs.issuer {return false}
+    if lhs.parent != rhs.parent {return false}
+    if lhs.transferrable != rhs.transferrable {return false}
+    if lhs.ttl != rhs.ttl {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedBlock"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "height"),
+    2: .same(proto: "time"),
+    3: .same(proto: "proposer"),
+    4: .standard(proto: "num_txs"),
+    5: .standard(proto: "num_invalid_txs"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.height) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.time) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.proposer) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.numTxs) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.numInvalidTxs) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.height.isEmpty {
+      try visitor.visitSingularStringField(value: self.height, fieldNumber: 1)
+    }
+    if !self.time.isEmpty {
+      try visitor.visitSingularStringField(value: self.time, fieldNumber: 2)
+    }
+    if !self.proposer.isEmpty {
+      try visitor.visitSingularStringField(value: self.proposer, fieldNumber: 3)
+    }
+    if !self.numTxs.isEmpty {
+      try visitor.visitSingularStringField(value: self.numTxs, fieldNumber: 4)
+    }
+    if !self.numInvalidTxs.isEmpty {
+      try visitor.visitSingularStringField(value: self.numInvalidTxs, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedBlock, rhs: Ocap_IndexedBlock) -> Bool {
+    if lhs.height != rhs.height {return false}
+    if lhs.time != rhs.time {return false}
+    if lhs.proposer != rhs.proposer {return false}
+    if lhs.numTxs != rhs.numTxs {return false}
+    if lhs.numInvalidTxs != rhs.numInvalidTxs {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedTokenState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "description"),
+    3: .same(proto: "symbol"),
+    4: .same(proto: "unit"),
+    5: .same(proto: "decimal"),
+    6: .same(proto: "issuer"),
+    7: .same(proto: "icon"),
+    8: .standard(proto: "total_supply"),
+    9: .same(proto: "address"),
+    10: .standard(proto: "genesis_time"),
+    11: .standard(proto: "renaissance_time"),
+    12: .standard(proto: "erc20_contract_address"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.symbol) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.unit) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.decimal) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.issuer) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.icon) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.totalSupply) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
+      case 12: try { try decoder.decodeSingularStringField(value: &self.erc20ContractAddress) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if !self.description_p.isEmpty {
+      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 2)
+    }
+    if !self.symbol.isEmpty {
+      try visitor.visitSingularStringField(value: self.symbol, fieldNumber: 3)
+    }
+    if !self.unit.isEmpty {
+      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 4)
+    }
+    if self.decimal != 0 {
+      try visitor.visitSingularInt32Field(value: self.decimal, fieldNumber: 5)
+    }
+    if !self.issuer.isEmpty {
+      try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 6)
+    }
+    if !self.icon.isEmpty {
+      try visitor.visitSingularStringField(value: self.icon, fieldNumber: 7)
+    }
+    if !self.totalSupply.isEmpty {
+      try visitor.visitSingularStringField(value: self.totalSupply, fieldNumber: 8)
+    }
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 9)
+    }
+    if !self.genesisTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 10)
+    }
+    if !self.renaissanceTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 11)
+    }
+    if !self.erc20ContractAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.erc20ContractAddress, fieldNumber: 12)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedTokenState, rhs: Ocap_IndexedTokenState) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.description_p != rhs.description_p {return false}
+    if lhs.symbol != rhs.symbol {return false}
+    if lhs.unit != rhs.unit {return false}
+    if lhs.decimal != rhs.decimal {return false}
+    if lhs.issuer != rhs.issuer {return false}
+    if lhs.icon != rhs.icon {return false}
+    if lhs.totalSupply != rhs.totalSupply {return false}
+    if lhs.address != rhs.address {return false}
+    if lhs.genesisTime != rhs.genesisTime {return false}
+    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
+    if lhs.erc20ContractAddress != rhs.erc20ContractAddress {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedFactoryState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedFactoryState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "owner"),
+    3: .same(proto: "name"),
+    4: .same(proto: "description"),
+    5: .same(proto: "settlement"),
+    6: .same(proto: "limit"),
+    7: .standard(proto: "trusted_issuers"),
+    8: .same(proto: "input"),
+    9: .same(proto: "output"),
+    10: .same(proto: "hooks"),
+    11: .same(proto: "data"),
+    13: .same(proto: "balance"),
+    14: .same(proto: "tokens"),
+    15: .standard(proto: "num_minted"),
+    16: .standard(proto: "last_settlement"),
+    17: .standard(proto: "genesis_time"),
+    18: .standard(proto: "renaissance_time"),
+    19: .same(proto: "display"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _address: String = String()
+    var _owner: String = String()
+    var _name: String = String()
+    var _description_p: String = String()
+    var _settlement: String = String()
+    var _limit: String = String()
+    var _trustedIssuers: [String] = []
+    var _input: Ocap_IndexedFactoryInput? = nil
+    var _output: Ocap_CreateAssetTx? = nil
+    var _hooks: [Ocap_AssetFactoryHook] = []
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+    var _balance: String = String()
+    var _tokens: [Ocap_TokenInfo] = []
+    var _numMinted: UInt32 = 0
+    var _lastSettlement: String = String()
+    var _genesisTime: String = String()
+    var _renaissanceTime: String = String()
+    var _display: Ocap_AssetDisplay? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _owner = source._owner
+      _name = source._name
+      _description_p = source._description_p
+      _settlement = source._settlement
+      _limit = source._limit
+      _trustedIssuers = source._trustedIssuers
+      _input = source._input
+      _output = source._output
+      _hooks = source._hooks
+      _data = source._data
+      _balance = source._balance
+      _tokens = source._tokens
+      _numMinted = source._numMinted
+      _lastSettlement = source._lastSettlement
+      _genesisTime = source._genesisTime
+      _renaissanceTime = source._renaissanceTime
+      _display = source._display
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._owner) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._name) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._description_p) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._settlement) }()
+        case 6: try { try decoder.decodeSingularStringField(value: &_storage._limit) }()
+        case 7: try { try decoder.decodeRepeatedStringField(value: &_storage._trustedIssuers) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._input) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._output) }()
+        case 10: try { try decoder.decodeRepeatedMessageField(value: &_storage._hooks) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._balance) }()
+        case 14: try { try decoder.decodeRepeatedMessageField(value: &_storage._tokens) }()
+        case 15: try { try decoder.decodeSingularUInt32Field(value: &_storage._numMinted) }()
+        case 16: try { try decoder.decodeSingularStringField(value: &_storage._lastSettlement) }()
+        case 17: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
+        case 18: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
+        case 19: try { try decoder.decodeSingularMessageField(value: &_storage._display) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._address.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
+      }
+      if !_storage._owner.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._owner, fieldNumber: 2)
+      }
+      if !_storage._name.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._name, fieldNumber: 3)
+      }
+      if !_storage._description_p.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._description_p, fieldNumber: 4)
+      }
+      if !_storage._settlement.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._settlement, fieldNumber: 5)
+      }
+      if !_storage._limit.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._limit, fieldNumber: 6)
+      }
+      if !_storage._trustedIssuers.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._trustedIssuers, fieldNumber: 7)
+      }
+      if let v = _storage._input {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      }
+      if let v = _storage._output {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      }
+      if !_storage._hooks.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._hooks, fieldNumber: 10)
+      }
+      if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      }
+      if !_storage._balance.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._balance, fieldNumber: 13)
+      }
+      if !_storage._tokens.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._tokens, fieldNumber: 14)
+      }
+      if _storage._numMinted != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._numMinted, fieldNumber: 15)
+      }
+      if !_storage._lastSettlement.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._lastSettlement, fieldNumber: 16)
+      }
+      if !_storage._genesisTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._genesisTime, fieldNumber: 17)
+      }
+      if !_storage._renaissanceTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._renaissanceTime, fieldNumber: 18)
+      }
+      if let v = _storage._display {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedFactoryState, rhs: Ocap_IndexedFactoryState) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._owner != rhs_storage._owner {return false}
+        if _storage._name != rhs_storage._name {return false}
+        if _storage._description_p != rhs_storage._description_p {return false}
+        if _storage._settlement != rhs_storage._settlement {return false}
+        if _storage._limit != rhs_storage._limit {return false}
+        if _storage._trustedIssuers != rhs_storage._trustedIssuers {return false}
+        if _storage._input != rhs_storage._input {return false}
+        if _storage._output != rhs_storage._output {return false}
+        if _storage._hooks != rhs_storage._hooks {return false}
+        if _storage._data != rhs_storage._data {return false}
+        if _storage._balance != rhs_storage._balance {return false}
+        if _storage._tokens != rhs_storage._tokens {return false}
+        if _storage._numMinted != rhs_storage._numMinted {return false}
+        if _storage._lastSettlement != rhs_storage._lastSettlement {return false}
+        if _storage._genesisTime != rhs_storage._genesisTime {return false}
+        if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
+        if _storage._display != rhs_storage._display {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedStakeState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "sender"),
+    3: .same(proto: "receiver"),
+    4: .same(proto: "tokens"),
+    5: .same(proto: "assets"),
+    6: .same(proto: "revocable"),
+    7: .standard(proto: "genesis_time"),
+    8: .standard(proto: "renaissance_time"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.sender) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.tokens) }()
+      case 5: try { try decoder.decodeRepeatedStringField(value: &self.assets) }()
+      case 6: try { try decoder.decodeSingularBoolField(value: &self.revocable) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.sender.isEmpty {
+      try visitor.visitSingularStringField(value: self.sender, fieldNumber: 2)
+    }
+    if !self.receiver.isEmpty {
+      try visitor.visitSingularStringField(value: self.receiver, fieldNumber: 3)
+    }
+    if !self.tokens.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.tokens, fieldNumber: 4)
+    }
+    if !self.assets.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 5)
+    }
+    if self.revocable != false {
+      try visitor.visitSingularBoolField(value: self.revocable, fieldNumber: 6)
+    }
+    if !self.genesisTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 7)
+    }
+    if !self.renaissanceTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 8)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedStakeState, rhs: Ocap_IndexedStakeState) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.sender != rhs.sender {return false}
+    if lhs.receiver != rhs.receiver {return false}
+    if lhs.tokens != rhs.tokens {return false}
+    if lhs.assets != rhs.assets {return false}
+    if lhs.revocable != rhs.revocable {return false}
+    if lhs.genesisTime != rhs.genesisTime {return false}
+    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedRollupState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .standard(proto: "token_address"),
+    3: .standard(proto: "erc20_token_address"),
+    4: .standard(proto: "contract_address"),
+    5: .standard(proto: "seed_validators"),
+    6: .same(proto: "validators"),
+    7: .standard(proto: "min_stake_amount"),
+    8: .standard(proto: "max_stake_amount"),
+    9: .standard(proto: "min_signer_count"),
+    10: .standard(proto: "max_signer_count"),
+    11: .standard(proto: "min_block_size"),
+    12: .standard(proto: "max_block_size"),
+    13: .standard(proto: "min_block_interval"),
+    14: .standard(proto: "foreign_chain_type"),
+    15: .standard(proto: "foreign_chain_id"),
+    16: .standard(proto: "genesis_time"),
+    17: .standard(proto: "renaissance_time"),
+    18: .standard(proto: "token_info"),
+    19: .same(proto: "issuer"),
+    20: .standard(proto: "deposit_fee_rate"),
+    21: .standard(proto: "withdraw_fee_rate"),
+    22: .standard(proto: "proposer_fee_share"),
+    23: .standard(proto: "min_deposit_amount"),
+    24: .standard(proto: "min_withdraw_amount"),
+    25: .standard(proto: "block_height"),
+    50: .same(proto: "data"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _address: String = String()
+    var _tokenAddress: String = String()
+    var _erc20TokenAddress: String = String()
+    var _contractAddress: String = String()
+    var _seedValidators: [Ocap_RollupValidator] = []
+    var _validators: [Ocap_RollupValidator] = []
+    var _minStakeAmount: String = String()
+    var _maxStakeAmount: String = String()
+    var _minSignerCount: UInt32 = 0
+    var _maxSignerCount: UInt32 = 0
+    var _minBlockSize: UInt32 = 0
+    var _maxBlockSize: UInt32 = 0
+    var _minBlockInterval: UInt32 = 0
+    var _foreignChainType: String = String()
+    var _foreignChainID: String = String()
+    var _genesisTime: String = String()
+    var _renaissanceTime: String = String()
+    var _tokenInfo: Ocap_IndexedTokenInput? = nil
+    var _issuer: String = String()
+    var _depositFeeRate: UInt32 = 0
+    var _withdrawFeeRate: UInt32 = 0
+    var _proposerFeeShare: UInt32 = 0
+    var _minDepositAmount: String = String()
+    var _minWithdrawAmount: String = String()
+    var _blockHeight: UInt64 = 0
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _tokenAddress = source._tokenAddress
+      _erc20TokenAddress = source._erc20TokenAddress
+      _contractAddress = source._contractAddress
+      _seedValidators = source._seedValidators
+      _validators = source._validators
+      _minStakeAmount = source._minStakeAmount
+      _maxStakeAmount = source._maxStakeAmount
+      _minSignerCount = source._minSignerCount
+      _maxSignerCount = source._maxSignerCount
+      _minBlockSize = source._minBlockSize
+      _maxBlockSize = source._maxBlockSize
+      _minBlockInterval = source._minBlockInterval
+      _foreignChainType = source._foreignChainType
+      _foreignChainID = source._foreignChainID
+      _genesisTime = source._genesisTime
+      _renaissanceTime = source._renaissanceTime
+      _tokenInfo = source._tokenInfo
+      _issuer = source._issuer
+      _depositFeeRate = source._depositFeeRate
+      _withdrawFeeRate = source._withdrawFeeRate
+      _proposerFeeShare = source._proposerFeeShare
+      _minDepositAmount = source._minDepositAmount
+      _minWithdrawAmount = source._minWithdrawAmount
+      _blockHeight = source._blockHeight
+      _data = source._data
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._tokenAddress) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._erc20TokenAddress) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._contractAddress) }()
+        case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._seedValidators) }()
+        case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._validators) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._minStakeAmount) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._maxStakeAmount) }()
+        case 9: try { try decoder.decodeSingularUInt32Field(value: &_storage._minSignerCount) }()
+        case 10: try { try decoder.decodeSingularUInt32Field(value: &_storage._maxSignerCount) }()
+        case 11: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockSize) }()
+        case 12: try { try decoder.decodeSingularUInt32Field(value: &_storage._maxBlockSize) }()
+        case 13: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockInterval) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainType) }()
+        case 15: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainID) }()
+        case 16: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
+        case 17: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
+        case 18: try { try decoder.decodeSingularMessageField(value: &_storage._tokenInfo) }()
+        case 19: try { try decoder.decodeSingularStringField(value: &_storage._issuer) }()
+        case 20: try { try decoder.decodeSingularUInt32Field(value: &_storage._depositFeeRate) }()
+        case 21: try { try decoder.decodeSingularUInt32Field(value: &_storage._withdrawFeeRate) }()
+        case 22: try { try decoder.decodeSingularUInt32Field(value: &_storage._proposerFeeShare) }()
+        case 23: try { try decoder.decodeSingularStringField(value: &_storage._minDepositAmount) }()
+        case 24: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawAmount) }()
+        case 25: try { try decoder.decodeSingularUInt64Field(value: &_storage._blockHeight) }()
+        case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._address.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
+      }
+      if !_storage._tokenAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._tokenAddress, fieldNumber: 2)
+      }
+      if !_storage._erc20TokenAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._erc20TokenAddress, fieldNumber: 3)
+      }
+      if !_storage._contractAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._contractAddress, fieldNumber: 4)
+      }
+      if !_storage._seedValidators.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._seedValidators, fieldNumber: 5)
+      }
+      if !_storage._validators.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._validators, fieldNumber: 6)
+      }
+      if !_storage._minStakeAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minStakeAmount, fieldNumber: 7)
+      }
+      if !_storage._maxStakeAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxStakeAmount, fieldNumber: 8)
+      }
+      if _storage._minSignerCount != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minSignerCount, fieldNumber: 9)
+      }
+      if _storage._maxSignerCount != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._maxSignerCount, fieldNumber: 10)
+      }
+      if _storage._minBlockSize != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minBlockSize, fieldNumber: 11)
+      }
+      if _storage._maxBlockSize != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._maxBlockSize, fieldNumber: 12)
+      }
+      if _storage._minBlockInterval != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minBlockInterval, fieldNumber: 13)
+      }
+      if !_storage._foreignChainType.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._foreignChainType, fieldNumber: 14)
+      }
+      if !_storage._foreignChainID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._foreignChainID, fieldNumber: 15)
+      }
+      if !_storage._genesisTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._genesisTime, fieldNumber: 16)
+      }
+      if !_storage._renaissanceTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._renaissanceTime, fieldNumber: 17)
+      }
+      if let v = _storage._tokenInfo {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+      }
+      if !_storage._issuer.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._issuer, fieldNumber: 19)
+      }
+      if _storage._depositFeeRate != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._depositFeeRate, fieldNumber: 20)
+      }
+      if _storage._withdrawFeeRate != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._withdrawFeeRate, fieldNumber: 21)
+      }
+      if _storage._proposerFeeShare != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._proposerFeeShare, fieldNumber: 22)
+      }
+      if !_storage._minDepositAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minDepositAmount, fieldNumber: 23)
+      }
+      if !_storage._minWithdrawAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minWithdrawAmount, fieldNumber: 24)
+      }
+      if _storage._blockHeight != 0 {
+        try visitor.visitSingularUInt64Field(value: _storage._blockHeight, fieldNumber: 25)
+      }
+      if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedRollupState, rhs: Ocap_IndexedRollupState) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._tokenAddress != rhs_storage._tokenAddress {return false}
+        if _storage._erc20TokenAddress != rhs_storage._erc20TokenAddress {return false}
+        if _storage._contractAddress != rhs_storage._contractAddress {return false}
+        if _storage._seedValidators != rhs_storage._seedValidators {return false}
+        if _storage._validators != rhs_storage._validators {return false}
+        if _storage._minStakeAmount != rhs_storage._minStakeAmount {return false}
+        if _storage._maxStakeAmount != rhs_storage._maxStakeAmount {return false}
+        if _storage._minSignerCount != rhs_storage._minSignerCount {return false}
+        if _storage._maxSignerCount != rhs_storage._maxSignerCount {return false}
+        if _storage._minBlockSize != rhs_storage._minBlockSize {return false}
+        if _storage._maxBlockSize != rhs_storage._maxBlockSize {return false}
+        if _storage._minBlockInterval != rhs_storage._minBlockInterval {return false}
+        if _storage._foreignChainType != rhs_storage._foreignChainType {return false}
+        if _storage._foreignChainID != rhs_storage._foreignChainID {return false}
+        if _storage._genesisTime != rhs_storage._genesisTime {return false}
+        if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
+        if _storage._tokenInfo != rhs_storage._tokenInfo {return false}
+        if _storage._issuer != rhs_storage._issuer {return false}
+        if _storage._depositFeeRate != rhs_storage._depositFeeRate {return false}
+        if _storage._withdrawFeeRate != rhs_storage._withdrawFeeRate {return false}
+        if _storage._proposerFeeShare != rhs_storage._proposerFeeShare {return false}
+        if _storage._minDepositAmount != rhs_storage._minDepositAmount {return false}
+        if _storage._minWithdrawAmount != rhs_storage._minWithdrawAmount {return false}
+        if _storage._blockHeight != rhs_storage._blockHeight {return false}
+        if _storage._data != rhs_storage._data {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedRollupBlock"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "hash"),
+    2: .same(proto: "height"),
+    3: .standard(proto: "merkle_root"),
+    4: .standard(proto: "previous_hash"),
+    5: .standard(proto: "tx_hash"),
+    6: .same(proto: "txs"),
+    7: .same(proto: "proposer"),
+    8: .same(proto: "signatures"),
+    9: .same(proto: "checkpoint"),
+    10: .standard(proto: "genesis_time"),
+    11: .standard(proto: "renaissance_time"),
+    12: .same(proto: "rollup"),
+    13: .same(proto: "blockReward"),
+    14: .same(proto: "mintedAmount"),
+    15: .same(proto: "burnedAmount"),
+    16: .standard(proto: "token_info"),
+    50: .same(proto: "data"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _hash: String = String()
+    var _height: UInt64 = 0
+    var _merkleRoot: String = String()
+    var _previousHash: String = String()
+    var _txHash: String = String()
+    var _txs: [String] = []
+    var _proposer: String = String()
+    var _signatures: [Ocap_Multisig] = []
+    var _checkpoint: String = String()
+    var _genesisTime: String = String()
+    var _renaissanceTime: String = String()
+    var _rollup: String = String()
+    var _blockReward: String = String()
+    var _mintedAmount: String = String()
+    var _burnedAmount: String = String()
+    var _tokenInfo: Ocap_IndexedTokenInput? = nil
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _hash = source._hash
+      _height = source._height
+      _merkleRoot = source._merkleRoot
+      _previousHash = source._previousHash
+      _txHash = source._txHash
+      _txs = source._txs
+      _proposer = source._proposer
+      _signatures = source._signatures
+      _checkpoint = source._checkpoint
+      _genesisTime = source._genesisTime
+      _renaissanceTime = source._renaissanceTime
+      _rollup = source._rollup
+      _blockReward = source._blockReward
+      _mintedAmount = source._mintedAmount
+      _burnedAmount = source._burnedAmount
+      _tokenInfo = source._tokenInfo
+      _data = source._data
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._hash) }()
+        case 2: try { try decoder.decodeSingularUInt64Field(value: &_storage._height) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._merkleRoot) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._previousHash) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._txHash) }()
+        case 6: try { try decoder.decodeRepeatedStringField(value: &_storage._txs) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._proposer) }()
+        case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._signatures) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._checkpoint) }()
+        case 10: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
+        case 11: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._rollup) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._blockReward) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._mintedAmount) }()
+        case 15: try { try decoder.decodeSingularStringField(value: &_storage._burnedAmount) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._tokenInfo) }()
+        case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._hash.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._hash, fieldNumber: 1)
+      }
+      if _storage._height != 0 {
+        try visitor.visitSingularUInt64Field(value: _storage._height, fieldNumber: 2)
+      }
+      if !_storage._merkleRoot.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._merkleRoot, fieldNumber: 3)
+      }
+      if !_storage._previousHash.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._previousHash, fieldNumber: 4)
+      }
+      if !_storage._txHash.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._txHash, fieldNumber: 5)
+      }
+      if !_storage._txs.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._txs, fieldNumber: 6)
+      }
+      if !_storage._proposer.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._proposer, fieldNumber: 7)
+      }
+      if !_storage._signatures.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._signatures, fieldNumber: 8)
+      }
+      if !_storage._checkpoint.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._checkpoint, fieldNumber: 9)
+      }
+      if !_storage._genesisTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._genesisTime, fieldNumber: 10)
+      }
+      if !_storage._renaissanceTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._renaissanceTime, fieldNumber: 11)
+      }
+      if !_storage._rollup.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._rollup, fieldNumber: 12)
+      }
+      if !_storage._blockReward.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._blockReward, fieldNumber: 13)
+      }
+      if !_storage._mintedAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._mintedAmount, fieldNumber: 14)
+      }
+      if !_storage._burnedAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._burnedAmount, fieldNumber: 15)
+      }
+      if let v = _storage._tokenInfo {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      }
+      if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedRollupBlock, rhs: Ocap_IndexedRollupBlock) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._hash != rhs_storage._hash {return false}
+        if _storage._height != rhs_storage._height {return false}
+        if _storage._merkleRoot != rhs_storage._merkleRoot {return false}
+        if _storage._previousHash != rhs_storage._previousHash {return false}
+        if _storage._txHash != rhs_storage._txHash {return false}
+        if _storage._txs != rhs_storage._txs {return false}
+        if _storage._proposer != rhs_storage._proposer {return false}
+        if _storage._signatures != rhs_storage._signatures {return false}
+        if _storage._checkpoint != rhs_storage._checkpoint {return false}
+        if _storage._genesisTime != rhs_storage._genesisTime {return false}
+        if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
+        if _storage._rollup != rhs_storage._rollup {return false}
+        if _storage._blockReward != rhs_storage._blockReward {return false}
+        if _storage._mintedAmount != rhs_storage._mintedAmount {return false}
+        if _storage._burnedAmount != rhs_storage._burnedAmount {return false}
+        if _storage._tokenInfo != rhs_storage._tokenInfo {return false}
+        if _storage._data != rhs_storage._data {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

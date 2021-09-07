@@ -8,6 +8,13 @@ import "state.proto";
 import "trace-type.proto";
 
 // Request / Response message definition
+message RequestEmpty {}
+message RequestPaginated {}
+message RequestGetState {
+  string address = 1;
+  repeated string keys = 2;
+  uint64 height = 3;
+}
 
 // send_tx(tx, wallet, token, commit \\ false)
 message RequestSendTx {
@@ -16,7 +23,6 @@ message RequestSendTx {
   string token = 3 [ deprecated = true ];
   bool commit = 4;
 }
-
 message ResponseSendTx {
   StatusCode code = 1;
   string hash = 2;
@@ -24,7 +30,6 @@ message ResponseSendTx {
 
 // get_tx(hash)
 message RequestGetTx { string hash = 1; }
-
 message ResponseGetTx {
   StatusCode code = 1;
   TransactionInfo info = 2;
@@ -32,7 +37,6 @@ message ResponseGetTx {
 
 // get_block(height)
 message RequestGetBlock { uint64 height = 1; }
-
 message ResponseGetBlock {
   StatusCode code = 1;
   BlockInfo block = 2;
@@ -43,7 +47,6 @@ message RequestGetBlocks {
   RangeFilter height_filter = 2;
   bool empty_excluded = 3;
 }
-
 message ResponseGetBlocks {
   StatusCode code = 1;
   PageInfo page = 2;
@@ -53,21 +56,9 @@ message ResponseGetBlocks {
 // get_account_state(address, key): retrieve the current state from a list of
 // wallet addresses, return the value of the key. If key is omitted, return
 // entire account states
-message RequestGetAccountState {
-  string address = 1;
-  repeated string keys = 2;
-  uint64 height = 3;
-}
-
 message ResponseGetAccountState {
   StatusCode code = 1;
   AccountState state = 2;
-}
-
-message RequestGetAssetState {
-  string address = 1;
-  repeated string keys = 2;
-  uint64 height = 3;
 }
 
 message ResponseGetAssetState {
@@ -77,31 +68,14 @@ message ResponseGetAssetState {
 
 // get_forge_state(key): retrieve Forge state by key. If key is omitted, return
 // entire Forge state
-message RequestGetForgeState {
-  repeated string keys = 1;
-  uint64 height = 3;
-}
-
 message ResponseGetForgeState {
   StatusCode code = 1;
   ForgeState state = 2;
 }
 
-message RequestGetSwapState {
-  string address = 1;
-  repeated string keys = 2;
-  uint64 height = 3;
-}
-
 message ResponseGetSwapState {
   StatusCode code = 1;
   SwapState state = 2;
-}
-
-message RequestGetDelegateState {
-  string address = 1;
-  repeated string keys = 2;
-  uint64 height = 3;
 }
 
 message ResponseGetDelegateState {
@@ -110,22 +84,16 @@ message ResponseGetDelegateState {
 }
 
 // get_chain_info(): retrieve the current chain information
-message RequestGetChainInfo {}
-
 message ResponseGetChainInfo {
   StatusCode code = 1;
   ChainInfo info = 2;
 }
 
 // get_node_info(): retrieve the current node information
-message RequestGetNodeInfo {}
-
 message ResponseGetNodeInfo {
   StatusCode code = 1;
   NodeInfo info = 2;
 }
-
-message RequestGetUnconfirmedTxs { Page paging = 1; }
 
 message ResponseGetUnconfirmedTxs {
   StatusCode code = 1;
@@ -133,14 +101,10 @@ message ResponseGetUnconfirmedTxs {
   UnconfirmedTxs unconfirmed_txs = 3;
 }
 
-message RequestGetNetInfo {}
-
 message ResponseGetNetInfo {
   StatusCode code = 1;
   NetInfo net_info = 2;
 }
-
-message RequestGetValidatorsInfo {}
 
 message ResponseGetValidatorsInfo {
   StatusCode code = 1;
@@ -155,7 +119,6 @@ message RequestSubscribe {
   string topic = 1;
   string filter = 2;
 }
-
 message ResponseSubscribe {
   StatusCode code = 1;
   oneof value {
@@ -208,7 +171,6 @@ message ResponseSubscribe {
 }
 
 message RequestUnsubscribe { string topic = 1; }
-
 message ResponseUnsubscribe { StatusCode code = 1; }
 
 // get config
@@ -224,7 +186,6 @@ message RequestGetForgeStats {
     ByHour date = 2;
   }
 }
-
 message ResponseGetForgeStats {
   StatusCode code = 1;
   ForgeStats forge_stats = 2;
@@ -241,7 +202,6 @@ message RequestListTransactions {
   AssetFilter asset_filter = 8;
   AccountFilter account_filter = 9;
 }
-
 message ResponseListTransactions {
   StatusCode code = 1;
   PageInfo page = 2;
@@ -252,37 +212,18 @@ message RequestListAssets {
   Page paging = 1;
   string owner_address = 2;
   string factory_address = 3;
+  TimeFilter time_filter = 4;
 }
-
 message ResponseListAssets {
   StatusCode code = 1;
   PageInfo page = 2;
   repeated IndexedAssetState assets = 3;
 }
 
-message RequestListStakes {
-  Page paging = 1;
-  AddressFilter address_filter = 2;
-}
-
-message ResponseListStakes {
-  StatusCode code = 1;
-  PageInfo page = 2;
-  repeated IndexedStakeState stakes = 3;
-}
-
-message RequestListAccount { string owner_address = 1; }
-
-message ResponseListAccount {
-  StatusCode code = 1;
-  IndexedAccountState account = 2;
-}
-
 message RequestListTopAccounts {
   Page paging = 1;
   string tokenAddress = 2;
 }
-
 message ResponseListTopAccounts {
   StatusCode code = 1;
   PageInfo page = 2;
@@ -293,7 +234,6 @@ message RequestListAssetTransactions {
   Page paging = 1;
   string address = 2;
 }
-
 message ResponseListAssetTransactions {
   StatusCode code = 1;
   PageInfo page = 2;
@@ -308,7 +248,6 @@ message RequestListBlocks {
   RangeFilter num_txs_filter = 5;
   RangeFilter num_invalid_txs_filter = 6;
 }
-
 message ResponseListBlocks {
   StatusCode code = 1;
   PageInfo page = 2;
@@ -321,7 +260,6 @@ message RequestListSwap {
   string receiver = 3;
   bool available = 4;
 }
-
 message ResponseListSwap {
   StatusCode code = 1;
   PageInfo page = 2;
@@ -329,13 +267,10 @@ message ResponseListSwap {
 }
 
 message RequestGetSwapStatistics { string address = 1; }
-
 message ResponseGetSwapStatistics {
   StatusCode code = 1;
   SwapStatistics statistics = 2;
 }
-
-message RequestGetHealthStatus {}
 
 message ResponseGetHealthStatus {
   StatusCode code = 1;
@@ -343,13 +278,11 @@ message ResponseGetHealthStatus {
 }
 
 // token related
-message RequestGetTokenState {
-  string address = 1;
-}
 message ResponseGetTokenState {
   StatusCode code = 1;
   TokenState state = 2;
 }
+
 message RequestListTokens {
   Page paging = 1;
   string issuer_address = 2;
@@ -361,9 +294,6 @@ message ResponseListTokens {
 }
 
 // asset factory related apis
-message RequestGetFactoryState {
-  string address = 1;
-}
 message ResponseGetFactoryState {
   StatusCode code = 1;
   AssetFactoryState state = 2;
@@ -387,4 +317,58 @@ message RequestGetAccountTokens {
 message ResponseGetAccountTokens {
   StatusCode code = 1;
   repeated AccountToken tokens = 3;
+}
+
+// stakes
+message ResponseGetStakeState {
+  StatusCode code = 1;
+  StakeState state = 2;
+}
+message RequestListStakes {
+  Page paging = 1;
+  AddressFilter address_filter = 2;
+  TimeFilter time_filter = 3;
+  AssetFilter asset_filter = 4;
+}
+message ResponseListStakes {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedStakeState stakes = 3;
+}
+
+// Rollup
+message ResponseGetRollupState {
+  StatusCode code = 1;
+  RollupState state = 2;
+}
+
+message ResponseListRollups {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedRollupState rollups = 3;
+}
+
+message RequestGetRollupBlock {
+  string hash = 1;
+  uint64 height = 2;
+}
+message ResponseGetRollupBlock {
+  StatusCode code = 1;
+  RollupBlock block = 2;
+}
+
+message RequestListRollupBlocks {
+  Page paging = 1;
+  string rollup_address = 2;
+  string token_address = 3;
+  string proposer = 4;
+  ValidatorFilter validator_filter = 5;
+  TxFilter tx_filter = 6;
+  TimeFilter time_filter = 7;
+}
+message ResponseListRollupBlocks {
+  StatusCode code = 1;
+  PageInfo page = 2;
+
+  repeated IndexedRollupBlock blocks = 3;
 }
