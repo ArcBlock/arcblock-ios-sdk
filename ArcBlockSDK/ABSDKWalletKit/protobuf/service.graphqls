@@ -62,7 +62,12 @@ type RootQueryType {
   getSwapStatistics(address: String): ResponseGetSwapStatistics
 
   listAssetTransactions(address: String, paging: PageInput): ResponseListAssetTransactions
-  listAssets(ownerAddress: String, paging: PageInput, factoryAddress: String): ResponseListAssets
+  listAssets(
+    ownerAddress: String
+    paging: PageInput
+    factoryAddress: String
+    timeFilter: TimeFilterInput
+  ): ResponseListAssets
   listBlocks(
     heightFilter: RangeFilterInput
     numInvalidTxsFilter: RangeFilterInput
@@ -71,7 +76,6 @@ type RootQueryType {
     proposer: String
     timeFilter: TimeFilterInput
   ): ResponseListBlocks
-  listStakes(addressFilter: AddressFilterInput, paging: PageInput): ResponseListStakes
   listSwap(available: Boolean, paging: String, receiver: String, sender: String): ResponseListSwap
   listTopAccounts(paging: PageInput, tokenAddress: String): ResponseListTopAccounts
   listTransactions(
@@ -92,6 +96,23 @@ type RootQueryType {
 
   # since v1.8.3
   getAccountTokens(address: String, token: String): ResponseGetAccountTokens
+
+  # since v1.13.x
+  getStakeState(address: String, height: String, keys: [String]): ResponseGetStakeState
+  listStakes(addressFilter: AddressFilterInput, paging: PageInput): ResponseListStakes
+
+  getRollupState(address: String, height: String, keys: [String]): ResponseGetRollupState
+  listRollups(paging: PageInput): ResponseListRollups
+  getRollupBlock(hash: String, height: String): ResponseGetRollupBlock
+  listRollupBlocks(
+    paging: PageInput
+    rollupAddress: String
+    tokenAddress: String
+    erc20TokenAddress: String
+    proposer: String
+    validatorFilter: ValidatorFilterInput
+    txFilter: TxFilterInput
+  ): ResponseListRollupBlocks
 }
 
 type RootSubscriptionType {

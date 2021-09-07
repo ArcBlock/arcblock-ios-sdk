@@ -189,6 +189,13 @@ message TransactionInput {
   repeated string assets = 3;
 }
 
+message VariableInput {
+  string name = 1;
+  string value = 2;
+  string description = 3;
+  bool required = 4;
+}
+
 // How do we define tx.itx.outputs
 // They are exactly the same as tx.itx.inputs
 
@@ -436,8 +443,49 @@ message TokenSwapConfig {
 
 message Evidence {
   string hash = 1;       // tx hash from a foreign chain
-  string chain_type = 2; // type of the chain, currently only "eth"
-  string chain_id = 3;   // chain id of the chain. Could be testnet or mainnet.
-  bytes original_tx = 4; // the binary for the original tx
-  string receiver_address = 5; // the address of the receiver (can only be controlled account)
+}
+
+message AssetDisplay {
+  string type = 1; // can be svg_gzipped, base64, url
+  string content = 2;
+}
+
+message AssetIssuer {
+  string id = 1;
+  string pk = 2;
+  string name = 3;
+}
+
+message AssetFactoryHook {
+  string name = 1; // can be mint/postMint
+  string type = 2; // can be callback/contract
+  string hook = 3;
+}
+
+message IndexedTokenInput {
+  string address = 1;
+  string value = 2;
+  int32 decimal = 3;
+  string unit = 4;
+  string symbol = 5;
+  string key = 10; // TODO: 这里是为了测试时兼容，应该删除
+}
+
+// 和 AssetFactoryInput 数据结构类似，可以参考其注释
+message IndexedFactoryInput {
+  string value = 1;
+  repeated IndexedTokenInput tokens = 2;
+  repeated string assets = 3;
+  repeated VariableInput variables = 4;
+}
+
+message RollupValidator {
+  string pk = 1;
+  string address = 2;
+  string endpoint = 3;
+}
+
+message RollupSignature {
+  string signer = 1;
+  string signature = 2;
 }

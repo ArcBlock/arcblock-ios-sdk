@@ -101,6 +101,8 @@ public enum Ocap_StatusCode: SwiftProtobuf.Enum {
   case invalidFactoryProps // = 75
   case invalidFactoryInput // = 76
   case invalidToken // = 77
+  case invalidRollup // = 78
+  case invalidBlock // = 79
   case forbidden // = 403
   case `internal` // = 500
   case timeout // = 504
@@ -182,6 +184,8 @@ public enum Ocap_StatusCode: SwiftProtobuf.Enum {
     case 75: self = .invalidFactoryProps
     case 76: self = .invalidFactoryInput
     case 77: self = .invalidToken
+    case 78: self = .invalidRollup
+    case 79: self = .invalidBlock
     case 403: self = .forbidden
     case 500: self = .internal
     case 504: self = .timeout
@@ -261,6 +265,8 @@ public enum Ocap_StatusCode: SwiftProtobuf.Enum {
     case .invalidFactoryProps: return 75
     case .invalidFactoryInput: return 76
     case .invalidToken: return 77
+    case .invalidRollup: return 78
+    case .invalidBlock: return 79
     case .forbidden: return 403
     case .internal: return 500
     case .timeout: return 504
@@ -345,6 +351,8 @@ extension Ocap_StatusCode: CaseIterable {
     .invalidFactoryProps,
     .invalidFactoryInput,
     .invalidToken,
+    .invalidRollup,
+    .invalidBlock,
     .forbidden,
     .internal,
     .timeout,
@@ -516,6 +524,9 @@ public enum Ocap_RoleType: SwiftProtobuf.Enum {
   case roleVc // = 14
   case roleBlocklet // = 15
   case roleRegistry // = 16
+  case roleToken // = 17
+  case roleFactory // = 18
+  case roleRollup // = 19
   case roleAny // = 63
   case UNRECOGNIZED(Int)
 
@@ -542,6 +553,9 @@ public enum Ocap_RoleType: SwiftProtobuf.Enum {
     case 14: self = .roleVc
     case 15: self = .roleBlocklet
     case 16: self = .roleRegistry
+    case 17: self = .roleToken
+    case 18: self = .roleFactory
+    case 19: self = .roleRollup
     case 63: self = .roleAny
     default: self = .UNRECOGNIZED(rawValue)
     }
@@ -566,6 +580,9 @@ public enum Ocap_RoleType: SwiftProtobuf.Enum {
     case .roleVc: return 14
     case .roleBlocklet: return 15
     case .roleRegistry: return 16
+    case .roleToken: return 17
+    case .roleFactory: return 18
+    case .roleRollup: return 19
     case .roleAny: return 63
     case .UNRECOGNIZED(let i): return i
     }
@@ -595,6 +612,9 @@ extension Ocap_RoleType: CaseIterable {
     .roleVc,
     .roleBlocklet,
     .roleRegistry,
+    .roleToken,
+    .roleFactory,
+    .roleRollup,
     .roleAny,
   ]
 }
@@ -984,6 +1004,8 @@ extension Ocap_StatusCode: SwiftProtobuf._ProtoNameProviding {
     75: .same(proto: "INVALID_FACTORY_PROPS"),
     76: .same(proto: "INVALID_FACTORY_INPUT"),
     77: .same(proto: "INVALID_TOKEN"),
+    78: .same(proto: "INVALID_ROLLUP"),
+    79: .same(proto: "INVALID_BLOCK"),
     403: .same(proto: "FORBIDDEN"),
     500: .same(proto: "INTERNAL"),
     504: .same(proto: "TIMEOUT"),
@@ -1036,6 +1058,9 @@ extension Ocap_RoleType: SwiftProtobuf._ProtoNameProviding {
     14: .same(proto: "ROLE_VC"),
     15: .same(proto: "ROLE_BLOCKLET"),
     16: .same(proto: "ROLE_REGISTRY"),
+    17: .same(proto: "ROLE_TOKEN"),
+    18: .same(proto: "ROLE_FACTORY"),
+    19: .same(proto: "ROLE_ROLLUP"),
     63: .same(proto: "ROLE_ANY"),
   ]
 }
