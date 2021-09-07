@@ -1,4 +1,7 @@
 ## 0.11.6 (September 07, 2021)
+
+
+## 0.11.6 (September 07, 2021)
   - add revoke stake
   - update proto
 
