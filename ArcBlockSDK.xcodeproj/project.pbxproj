@@ -65,8 +65,6 @@
 		270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185F20E603F700884659 /* Reachability.framework */; };
 		270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446FB231DECF6007BA477 /* secp256k1.framework */; };
 		270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185B20E4DD8900884659 /* SQLite.framework */; };
-		270447F5231E00AA007BA477 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27240D8C211942ED00A4D2A2 /* Starscream.framework */; };
-		270447F6231E00AA007BA477 /* SwiftPhoenixClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2715D3A1211ADBB700C631DB /* SwiftPhoenixClient.framework */; };
 		270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446FD231DED19007BA477 /* SwiftProtobuf.framework */; };
 		270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446F9231DECD6007BA477 /* web3swift.framework */; };
 		270447FC231E00AA007BA477 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447F9231E00AA007BA477 /* BigInt.framework */; };
@@ -180,8 +178,6 @@
 				270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */,
 				270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */,
 				270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */,
-				270447F5231E00AA007BA477 /* Starscream.framework in Frameworks */,
-				270447F6231E00AA007BA477 /* SwiftPhoenixClient.framework in Frameworks */,
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
 				270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */,
 				016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */,
