@@ -27,6 +27,7 @@
 		1A534A2F26E702F300513949 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1E26E702F300513949 /* type.proto */; };
 		1A534A3026E702F300513949 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1F26E702F300513949 /* enum.proto */; };
 		1A534A3126E702F300513949 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A2026E702F300513949 /* vendor.pb.swift */; };
+		1AB8FBA326F099B900557DB6 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1AB8FBA226F099B900557DB6 /* CryptoSwift */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
 		27044789231E0052007BA477 /* ed25519_fe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044729231E0052007BA477 /* ed25519_fe.swift */; };
 		2704478A231E0052007BA477 /* ed25519_open.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704472A231E0052007BA477 /* ed25519_open.swift */; };
@@ -61,7 +62,6 @@
 		270447EC231E0061007BA477 /* BIP44UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270447E5231E0060007BA477 /* BIP44UtilsSpec.swift */; };
 		270447EF231E0061007BA477 /* DidHelperSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270447E8231E0061007BA477 /* DidHelperSpec.swift */; };
 		270447F0231E00AA007BA477 /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185C20E4DD8900884659 /* Apollo.framework */; };
-		270447F1231E00AA007BA477 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736343521902B8100A9ED97 /* CryptoSwift.framework */; };
 		270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185F20E603F700884659 /* Reachability.framework */; };
 		270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446FB231DECF6007BA477 /* secp256k1.framework */; };
 		270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185B20E4DD8900884659 /* SQLite.framework */; };
@@ -174,7 +174,7 @@
 				270447FC231E00AA007BA477 /* BigInt.framework in Frameworks */,
 				270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */,
 				270447F0231E00AA007BA477 /* Apollo.framework in Frameworks */,
-				270447F1231E00AA007BA477 /* CryptoSwift.framework in Frameworks */,
+				1AB8FBA326F099B900557DB6 /* CryptoSwift in Frameworks */,
 				270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */,
 				270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */,
 				270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */,
@@ -422,6 +422,7 @@
 			name = ArcBlockSDK;
 			packageProductDependencies = (
 				1A379E4A25FF43000064A3E7 /* JWTKit */,
+				1AB8FBA226F099B900557DB6 /* CryptoSwift */,
 			);
 			productName = ArcBlockSDK;
 			productReference = 2704470F231DFF97007BA477 /* ArcBlockSDK.framework */;
@@ -475,6 +476,7 @@
 			mainGroup = 277E6B4D20A0DAB50054707E;
 			packageReferences = (
 				1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */,
+				1AB8FBA126F099B900557DB6 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 			);
 			productRefGroup = 277E6B5A20A0DB160054707E /* Products */;
 			projectDirPath = "";
@@ -1026,6 +1028,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		1AB8FBA126F099B900557DB6 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1033,6 +1043,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */;
 			productName = JWTKit;
+		};
+		1AB8FBA226F099B900557DB6 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1AB8FBA126F099B900557DB6 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
