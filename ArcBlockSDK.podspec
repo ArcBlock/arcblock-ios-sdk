@@ -41,8 +41,7 @@ TODO: Add long description of the pod here.
     sc.dependency 'SQLite.swift/SQLCipher'
     sc.dependency 'ReachabilitySwift'
     sc.dependency 'SwiftPhoenixClient'
-    sc.dependency 'CryptoSwift'
-    sc.dependency 'web3.swift.pod', '~> 2.2.0'
+    sc.dependency 'web3swift'
 
     sc.weak_framework='CryptoKit'
   end
