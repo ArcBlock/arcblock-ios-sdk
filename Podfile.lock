@@ -38,7 +38,7 @@ DEPENDENCIES:
   - ReachabilitySwift
   - SQLite.swift/SQLCipher (from `https://github.com/ArcBlock/SQLite.swift.git`)
   - SwiftProtobuf (~> 1.0)
-  - web3swift (from `https://github.com/skywinder/web3swift.git`)
+  - web3swift (from `https://github.com/karthuszY/web3swift.git`)
 
 SPEC REPOS:
   trunk:
@@ -59,7 +59,7 @@ EXTERNAL SOURCES:
   SQLite.swift:
     :git: https://github.com/ArcBlock/SQLite.swift.git
   web3swift:
-    :git: https://github.com/skywinder/web3swift.git
+    :git: https://github.com/karthuszY/web3swift.git
 
 CHECKOUT OPTIONS:
   Apollo:
@@ -70,7 +70,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/ArcBlock/SQLite.swift.git
   web3swift:
     :commit: a3b2acfe9afaa50361cb5178a94fdd9e505e50e9
-    :git: https://github.com/skywinder/web3swift.git
+    :git: https://github.com/karthuszY/web3swift.git
 
 SPEC CHECKSUMS:
   Apollo: 62d6b51db171203eee046596c7097cf3015e48e1
@@ -87,6 +87,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
   web3swift: dcc8da6f0944a062faa381869ce64114ddb5f8d3
 
-PODFILE CHECKSUM: b1bef1a1ef2fe4c08ebd489b69ef27f7cc2ded7e
+PODFILE CHECKSUM: 991b4f607981662169d37f90cbc5436583fb8dc5
 
 COCOAPODS: 1.10.1
