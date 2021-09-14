@@ -64,7 +64,6 @@
 		270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446FB231DECF6007BA477 /* secp256k1.framework */; };
 		270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185B20E4DD8900884659 /* SQLite.framework */; };
 		270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446FD231DED19007BA477 /* SwiftProtobuf.framework */; };
-		270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446F9231DECD6007BA477 /* web3swift.framework */; };
 		270447FC231E00AA007BA477 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447F9231E00AA007BA477 /* BigInt.framework */; };
 		270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447FB231E00AA007BA477 /* PromiseKit.framework */; };
 		27044801231E01F4007BA477 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
@@ -103,6 +102,9 @@
 		1A534A1E26E702F300513949 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
 		1A534A1F26E702F300513949 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
 		1A534A2026E702F300513949 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1AB8FBA426F09EF500557DB6 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBA626F09F0900557DB6 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBA826F09F1B00557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		270446F9231DECD6007BA477 /* web3swift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = web3swift.framework; path = Carthage/Build/iOS/web3swift.framework; sourceTree = "<group>"; };
 		270446FB231DECF6007BA477 /* secp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = secp256k1.framework; path = Carthage/Build/iOS/secp256k1.framework; sourceTree = "<group>"; };
 		270446FD231DED19007BA477 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
@@ -175,7 +177,6 @@
 				270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */,
 				270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */,
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
-				270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */,
 				016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +369,9 @@
 		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1AB8FBA826F09F1B00557DB6 /* CryptoSwift.framework */,
+				1AB8FBA626F09F0900557DB6 /* web3swift.framework */,
+				1AB8FBA426F09EF500557DB6 /* web3swift.framework */,
 				270447F9231E00AA007BA477 /* BigInt.framework */,
 				270447FB231E00AA007BA477 /* PromiseKit.framework */,
 				270447FA231E00AA007BA477 /* SipHash.framework */,
