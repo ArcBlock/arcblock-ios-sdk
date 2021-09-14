@@ -38,9 +38,7 @@ TODO: Add long description of the pod here.
   s.subspec 'CoreKit' do |sc|
     sc.source_files = 'ArcBlockSDK/ABSDKCoreKit/**/*.{h,m,swift}'
     sc.dependency 'Apollo'
-    sc.dependency 'SQLite.swift/SQLCipher'
     sc.dependency 'ReachabilitySwift'
-    sc.dependency 'SwiftPhoenixClient'
     sc.dependency 'web3swift'
     sc.dependency 'CryptoSwift', '~> 1.4.0'
 
