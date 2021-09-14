@@ -33,6 +33,7 @@ PODS:
 
 DEPENDENCIES:
   - Apollo (from `https://github.com/ArcBlock/apollo-ios.git`)
+  - CryptoSwift (~> 1.4.0)
   - Nimble
   - Quick
   - ReachabilitySwift
@@ -87,6 +88,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
   web3swift: dcc8da6f0944a062faa381869ce64114ddb5f8d3
 
-PODFILE CHECKSUM: f39ed1e7ae322c0c7f6fbb9203f17c9392926866
+PODFILE CHECKSUM: dc03f99f2d7a9219ae7f7ae266668d4522738f6d
 
 COCOAPODS: 1.10.1
