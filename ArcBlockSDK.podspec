@@ -39,9 +39,10 @@ TODO: Add long description of the pod here.
     sc.source_files = 'ArcBlockSDK/ABSDKCoreKit/**/*.{h,m,swift}'
     sc.dependency 'Apollo'
     sc.dependency 'ReachabilitySwift'
+    sc.dependency 'CryptoSwift', '~> 1.4.0'
     # sc.dependency 'web3swift', :git => 'https://github.com/skywinder/web3swift.git'
 
-    sc.weak_framework='CryptoKit'
+    # sc.weak_framework='CryptoKit'
   end
 
   s.subspec 'WalletKit' do |sc|
