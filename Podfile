@@ -6,7 +6,7 @@ target 'ArcBlockSDK' do
     pod 'ReachabilitySwift'
     pod 'CryptoSwift'
     pod 'SwiftProtobuf', '~> 1.0'
-    pod 'web3.swift.pod', '~> 2.2.0'
+    pod 'web3swift', :git => 'https://github.com/skywinder/web3swift.git'
 end
 
 target 'ArcBlockSDKTests' do
@@ -20,5 +20,5 @@ target 'ArcBlockSDKTests' do
     pod 'ReachabilitySwift'
     pod 'CryptoSwift'
     pod 'SwiftProtobuf', '~> 1.0'
-    pod 'web3.swift.pod', '~> 2.2.0'
+    pod 'web3swift', :git => 'https://github.com/skywinder/web3swift.git'
 end
