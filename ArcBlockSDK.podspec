@@ -42,6 +42,7 @@ TODO: Add long description of the pod here.
     sc.dependency 'ReachabilitySwift'
     sc.dependency 'SwiftPhoenixClient'
     sc.dependency 'web3swift'
+    sc.dependency 'CryptoSwift', '~> 1.4.0'
 
     sc.weak_framework='CryptoKit'
   end
