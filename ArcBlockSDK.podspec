@@ -40,7 +40,6 @@ TODO: Add long description of the pod here.
     sc.dependency 'Apollo'
     sc.dependency 'ReachabilitySwift'
     sc.dependency 'web3swift'
-    # sc.dependency 'CryptoSwift', '~> 1.4.0'
 
     sc.weak_framework='CryptoKit'
   end
