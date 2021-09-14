@@ -40,7 +40,6 @@ TODO: Add long description of the pod here.
     sc.dependency 'Apollo'
     sc.dependency 'ReachabilitySwift'
     sc.dependency 'web3swift'
-    sc.dependency 'BigInt', '~> 5.2.0'
 
     sc.weak_framework='CryptoKit'
   end
@@ -49,6 +48,8 @@ TODO: Add long description of the pod here.
     sc.source_files = 'ArcBlockSDK/ABSDKWalletKit/**/*.{h,m,swift}'
     sc.dependency 'SwiftProtobuf', '~> 1.0'
     sc.dependency 'ArcBlockSDK/CoreKit'
+    sc.dependency 'BigInt', '~> 5.2.0'
+
   end
 
   # s.subspec 'AccountKit' do |sa|
