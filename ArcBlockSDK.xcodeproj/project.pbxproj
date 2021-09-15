@@ -26,6 +26,10 @@
 		1A534A2F26E702F300513949 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1E26E702F300513949 /* type.proto */; };
 		1A534A3026E702F300513949 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1F26E702F300513949 /* enum.proto */; };
 		1A534A3126E702F300513949 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A2026E702F300513949 /* vendor.pb.swift */; };
+		1AAF056926F1E1B600A5C097 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056826F1E1B600A5C097 /* web3swift.framework */; };
+		1AAF056A26F1E1B600A5C097 /* web3swift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056826F1E1B600A5C097 /* web3swift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1AAF056D26F1E1D600A5C097 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056C26F1E1D400A5C097 /* web3swift.framework */; };
+		1AAF056E26F1E1D600A5C097 /* web3swift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056C26F1E1D400A5C097 /* web3swift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */; };
 		1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
@@ -83,6 +87,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1AAF056B26F1E1B600A5C097 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1AAF056A26F1E1B600A5C097 /* web3swift.framework in Embed Frameworks */,
+				1AAF056E26F1E1D600A5C097 /* web3swift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignVerifySpec.swift; sourceTree = "<group>"; };
@@ -103,6 +122,8 @@
 		1A534A1E26E702F300513949 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
 		1A534A1F26E702F300513949 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
 		1A534A2026E702F300513949 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1AAF056826F1E1B600A5C097 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AAF056C26F1E1D400A5C097 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBA426F09EF500557DB6 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBA626F09F0900557DB6 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBA826F09F1B00557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,12 +198,14 @@
 				1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */,
 				1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */,
 				270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */,
+				1AAF056D26F1E1D600A5C097 /* web3swift.framework in Frameworks */,
 				270447F0231E00AA007BA477 /* Apollo.framework in Frameworks */,
 				270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */,
 				270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */,
 				270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */,
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
 				016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */,
+				1AAF056926F1E1B600A5C097 /* web3swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +397,8 @@
 		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1AAF056C26F1E1D400A5C097 /* web3swift.framework */,
+				1AAF056826F1E1B600A5C097 /* web3swift.framework */,
 				1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */,
 				1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */,
 				1AB8FBAA26F0BF5C00557DB6 /* CryptoSwift.framework */,
@@ -422,6 +447,7 @@
 				2704470B231DFF97007BA477 /* Sources */,
 				2704470C231DFF97007BA477 /* Frameworks */,
 				2704470D231DFF97007BA477 /* Resources */,
+				1AAF056B26F1E1B600A5C097 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -712,6 +738,20 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Apollo/Apollo.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BigInt/BigInt.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift/CryptoSwift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift/Reachability.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SQLCipher/SQLCipher.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SQLite.swift/SQLite.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Starscream/Starscream.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftProtobuf/SwiftProtobuf.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/secp256k1.c/secp256k1.framework/Headers\"",
+					"$(PODS_ROOT)/SQLCipher",
+				);
 				INFOPLIST_FILE = ArcBlockSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -723,6 +763,41 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Apollo\"",
+					"-framework",
+					"\"BigInt\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CryptoSwift\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"PromiseKit\"",
+					"-framework",
+					"\"Reachability\"",
+					"-framework",
+					"\"SQLCipher\"",
+					"-framework",
+					"\"SQLite\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Starscream\"",
+					"-framework",
+					"\"SwiftProtobuf\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"secp256k1\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.arcblock.ArcBlockSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
@@ -791,6 +866,20 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Apollo/Apollo.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BigInt/BigInt.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift/CryptoSwift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift/Reachability.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SQLCipher/SQLCipher.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SQLite.swift/SQLite.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Starscream/Starscream.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftProtobuf/SwiftProtobuf.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/secp256k1.c/secp256k1.framework/Headers\"",
+					"$(PODS_ROOT)/SQLCipher",
+				);
 				INFOPLIST_FILE = ArcBlockSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -801,6 +890,41 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Apollo\"",
+					"-framework",
+					"\"BigInt\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CryptoSwift\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"PromiseKit\"",
+					"-framework",
+					"\"Reachability\"",
+					"-framework",
+					"\"SQLCipher\"",
+					"-framework",
+					"\"SQLite\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Starscream\"",
+					"-framework",
+					"\"SwiftProtobuf\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"secp256k1\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.arcblock.ArcBlockSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
