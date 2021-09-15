@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import web3swift
+import zYweb3swift
 
 public enum RoleType: Int8 {
     case account = 0

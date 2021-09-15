@@ -23,7 +23,7 @@
 import Quick
 import Nimble
 import ArcBlockSDK
-import web3swift
+import zYweb3swift
 
 class DidHelperSpec: QuickSpec {
     override func spec() {
