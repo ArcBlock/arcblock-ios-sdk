@@ -24,7 +24,7 @@ import Foundation
 #if canImport(CryptoKit)
 import CryptoKit
 #endif
-import zYweb3swift
+import web3swift
 import secp256k1
 
 public struct MCrypto {

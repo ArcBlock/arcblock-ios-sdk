@@ -25,7 +25,7 @@ import Quick
 import Nimble
 import CryptoSwift
 import ArcBlockSDK
-import zYweb3swift
+import web3swift
 
 class MCryptoSpec: QuickSpec {
     override func spec() {

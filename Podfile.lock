@@ -24,7 +24,7 @@ PODS:
     - SQLCipher (>= 3.4.0)
   - Starscream (4.0.4)
   - SwiftProtobuf (1.17.0)
-  - zYweb3swift (2.3.0):
+  - web3swift (2.3.0):
     - BigInt (~> 5.2)
     - CryptoSwift (~> 1.4.0)
     - PromiseKit (~> 6.15.3)
@@ -38,7 +38,7 @@ DEPENDENCIES:
   - ReachabilitySwift
   - SQLite.swift/SQLCipher (from `https://github.com/ArcBlock/SQLite.swift.git`)
   - SwiftProtobuf (~> 1.0)
-  - zYweb3swift (from `https://github.com/karthuszY/web3swift.git`)
+  - web3swift (from `https://github.com/ArcBlock/web3swift.git`)
 
 SPEC REPOS:
   trunk:
@@ -58,8 +58,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/ArcBlock/apollo-ios.git
   SQLite.swift:
     :git: https://github.com/ArcBlock/SQLite.swift.git
-  zYweb3swift:
-    :git: https://github.com/karthuszY/web3swift.git
+  web3swift:
+    :git: https://github.com/ArcBlock/web3swift.git
 
 CHECKOUT OPTIONS:
   Apollo:
@@ -68,9 +68,9 @@ CHECKOUT OPTIONS:
   SQLite.swift:
     :commit: 58c4b19367a8a29728673f8b11d4c90889ecee75
     :git: https://github.com/ArcBlock/SQLite.swift.git
-  zYweb3swift:
-    :commit: 0e1739e776f02a2f71e425ee15e80af06abe6180
-    :git: https://github.com/karthuszY/web3swift.git
+  web3swift:
+    :commit: 2e4740ebf4cdfc90b1b4b0e044ba7ba9b9a14f7a
+    :git: https://github.com/ArcBlock/web3swift.git
 
 SPEC CHECKSUMS:
   Apollo: 62d6b51db171203eee046596c7097cf3015e48e1
@@ -85,8 +85,8 @@ SPEC CHECKSUMS:
   SQLite.swift: 70f830d00b7ccd59dd634e2177d43f7541066fdc
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
-  zYweb3swift: 4690300224c3622d6adb0c0e42c35a9ff03e5bc5
+  web3swift: a47f8f9cffae54d87dae7bc7359816fa3b485bc5
 
-PODFILE CHECKSUM: e24d10f5ffcec6b9d0de3d66a4960c737704af8e
+PODFILE CHECKSUM: 97a0233eef1cfe18dd37dc7f7faf9b8b5237e4cc
 
 COCOAPODS: 1.10.1
