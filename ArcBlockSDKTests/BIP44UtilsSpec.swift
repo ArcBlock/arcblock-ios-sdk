@@ -22,7 +22,7 @@
 
 import Quick
 import Nimble
-import web3swift
+import zYweb3swift
 import ArcBlockSDK
 
 class BIP44UtilsSpec: QuickSpec {

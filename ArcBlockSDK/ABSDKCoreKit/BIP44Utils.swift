@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 import CryptoSwift
-import web3swift
+import zYweb3swift
 
 public class BIP44Utils {
     public static func generateRecoveryCode() -> String {

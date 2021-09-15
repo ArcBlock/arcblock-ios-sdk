@@ -25,7 +25,7 @@
 import Foundation
 import SwiftProtobuf
 import BigInt
-import web3swift
+import zYweb3swift
 
 public struct TxParams {
     var hashType: HashType
