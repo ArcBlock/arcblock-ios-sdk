@@ -26,10 +26,8 @@
 		1A534A2F26E702F300513949 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1E26E702F300513949 /* type.proto */; };
 		1A534A3026E702F300513949 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1F26E702F300513949 /* enum.proto */; };
 		1A534A3126E702F300513949 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A2026E702F300513949 /* vendor.pb.swift */; };
-		1AAF056926F1E1B600A5C097 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056826F1E1B600A5C097 /* web3swift.framework */; };
-		1AAF056A26F1E1B600A5C097 /* web3swift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056826F1E1B600A5C097 /* web3swift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1AAF056D26F1E1D600A5C097 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056C26F1E1D400A5C097 /* web3swift.framework */; };
-		1AAF056E26F1E1D600A5C097 /* web3swift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF056C26F1E1D400A5C097 /* web3swift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1A924F9126F3498A003FD383 /* SQLCipher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A924F9026F3498A003FD383 /* SQLCipher.framework */; };
+		1A924F9326F34C0F003FD383 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A924F9226F34C0F003FD383 /* web3swift.framework */; };
 		1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */; };
 		1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
@@ -94,8 +92,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1AAF056A26F1E1B600A5C097 /* web3swift.framework in Embed Frameworks */,
-				1AAF056E26F1E1D600A5C097 /* web3swift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -122,6 +118,8 @@
 		1A534A1E26E702F300513949 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
 		1A534A1F26E702F300513949 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
 		1A534A2026E702F300513949 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1A924F9026F3498A003FD383 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A924F9226F34C0F003FD383 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AAF056826F1E1B600A5C097 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AAF056C26F1E1D400A5C097 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBA426F09EF500557DB6 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,14 +196,14 @@
 				1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */,
 				1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */,
 				270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */,
-				1AAF056D26F1E1D600A5C097 /* web3swift.framework in Frameworks */,
+				1A924F9326F34C0F003FD383 /* web3swift.framework in Frameworks */,
 				270447F0231E00AA007BA477 /* Apollo.framework in Frameworks */,
 				270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */,
 				270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */,
 				270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */,
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
 				016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */,
-				1AAF056926F1E1B600A5C097 /* web3swift.framework in Frameworks */,
+				1A924F9126F3498A003FD383 /* SQLCipher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +395,8 @@
 		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A924F9226F34C0F003FD383 /* web3swift.framework */,
+				1A924F9026F3498A003FD383 /* SQLCipher.framework */,
 				1AAF056C26F1E1D400A5C097 /* web3swift.framework */,
 				1AAF056826F1E1B600A5C097 /* web3swift.framework */,
 				1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */,
