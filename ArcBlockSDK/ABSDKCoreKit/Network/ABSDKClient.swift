@@ -46,8 +46,6 @@ public class ABSDKClientConfiguration {
     fileprivate var accessKey: String?
     fileprivate var accessSecret: String?
 
-    fileprivate var databaseURL: URL?
-
     fileprivate var allowsCellularAccess: Bool = true
     fileprivate var autoSubmitOfflineMutations: Bool = true
 
@@ -61,12 +59,10 @@ public class ABSDKClientConfiguration {
     ///   - databaseURL: The path to local sqlite database for persistent storage, if nil, an in-memory database is used.
     public init(url: URL,
                 urlSessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default,
-                databaseURL: URL? = nil,
                 accessKey: String? = nil,
                 accessSecret: String? = nil) {
         self.url = url
         self.urlSessionConfiguration = urlSessionConfiguration
-        self.databaseURL = databaseURL
         self.accessKey = accessKey
         self.accessSecret = accessSecret
     }
@@ -112,16 +108,8 @@ public class ABSDKClient {
     ///   - configuration: The `ABSDKClientConfiguration` object.
     public init(configuration: ABSDKClientConfiguration) throws {
         self.configuration = configuration
-
-        var store = ApolloStore(cache: InMemoryNormalizedCache())
-        if let databaseURL = self.configuration.databaseURL {
-            do {
-                store = try ApolloStore(cache: ABSDKSQLLiteNormalizedCache(fileURL: databaseURL))
-            } catch {
-                // Use in memory cache incase database init fails
-            }
-        }
-        self.store = store
+        
+        self.store = ApolloStore(cache: InMemoryNormalizedCache())
 
         self.networkTransport = ABSDKHTTPNetworkTransport(url: self.configuration.url,
                                                           configuration: self.configuration.urlSessionConfiguration,
