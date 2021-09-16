@@ -40,7 +40,6 @@ TODO: Add long description of the pod here.
     sc.dependency 'Apollo'
     sc.dependency 'ReachabilitySwift'
     sc.dependency 'CryptoSwift', '~> 1.4.0'
-    sc.dependency 'SQLite.swift/SQLCipher'
     sc.dependency 'BigInt', '~> 5.2.0'
     sc.dependency 'SwiftPhoenixClient'
     sc.dependency 'web3swift', '~> 2.3.0'
