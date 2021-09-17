@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
-		1A379E4B25FF43000064A3E7 /* JWTKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1A379E4A25FF43000064A3E7 /* JWTKit */; };
 		1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */; };
 		1A534A2126E702F300513949 /* trace-type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1026E702F300513949 /* trace-type.pb.swift */; };
 		1A534A2226E702F300513949 /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1126E702F300513949 /* state.pb.swift */; };
@@ -27,6 +26,9 @@
 		1A534A2F26E702F300513949 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1E26E702F300513949 /* type.proto */; };
 		1A534A3026E702F300513949 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1F26E702F300513949 /* enum.proto */; };
 		1A534A3126E702F300513949 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A2026E702F300513949 /* vendor.pb.swift */; };
+		1A924F9326F34C0F003FD383 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A924F9226F34C0F003FD383 /* web3swift.framework */; };
+		1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */; };
+		1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
 		27044789231E0052007BA477 /* ed25519_fe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044729231E0052007BA477 /* ed25519_fe.swift */; };
 		2704478A231E0052007BA477 /* ed25519_open.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704472A231E0052007BA477 /* ed25519_open.swift */; };
@@ -38,7 +40,6 @@
 		27044790231E0052007BA477 /* DidHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044730231E0052007BA477 /* DidHelper.swift */; };
 		27044791231E0052007BA477 /* ABSDKPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044732231E0052007BA477 /* ABSDKPagination.swift */; };
 		27044792231E0052007BA477 /* ABSDKDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044733231E0052007BA477 /* ABSDKDataSource.swift */; };
-		27044793231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044734231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift */; };
 		27044794231E0052007BA477 /* ABSDKView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044735231E0052007BA477 /* ABSDKView.swift */; };
 		27044795231E0052007BA477 /* ABSDKHTTPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044736231E0052007BA477 /* ABSDKHTTPTransport.swift */; };
 		27044797231E0052007BA477 /* ABSDKPagedArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044738231E0052007BA477 /* ABSDKPagedArrayDataSource.swift */; };
@@ -61,13 +62,9 @@
 		270447EC231E0061007BA477 /* BIP44UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270447E5231E0060007BA477 /* BIP44UtilsSpec.swift */; };
 		270447EF231E0061007BA477 /* DidHelperSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270447E8231E0061007BA477 /* DidHelperSpec.swift */; };
 		270447F0231E00AA007BA477 /* Apollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185C20E4DD8900884659 /* Apollo.framework */; };
-		270447F1231E00AA007BA477 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736343521902B8100A9ED97 /* CryptoSwift.framework */; };
 		270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185F20E603F700884659 /* Reachability.framework */; };
 		270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446FB231DECF6007BA477 /* secp256k1.framework */; };
-		270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274B185B20E4DD8900884659 /* SQLite.framework */; };
 		270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446FD231DED19007BA477 /* SwiftProtobuf.framework */; };
-		270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270446F9231DECD6007BA477 /* web3swift.framework */; };
-		270447FC231E00AA007BA477 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447F9231E00AA007BA477 /* BigInt.framework */; };
 		270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447FB231E00AA007BA477 /* PromiseKit.framework */; };
 		27044801231E01F4007BA477 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		27044802231E01F4007BA477 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
@@ -84,6 +81,19 @@
 			remoteInfo = ArcBlockSDK;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1AAF056B26F1E1B600A5C097 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +115,16 @@
 		1A534A1E26E702F300513949 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
 		1A534A1F26E702F300513949 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
 		1A534A2026E702F300513949 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1A924F9026F3498A003FD383 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A924F9226F34C0F003FD383 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AAF056826F1E1B600A5C097 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AAF056C26F1E1D400A5C097 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBA426F09EF500557DB6 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBA626F09F0900557DB6 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBA826F09F1B00557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBAA26F0BF5C00557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		270446F9231DECD6007BA477 /* web3swift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = web3swift.framework; path = Carthage/Build/iOS/web3swift.framework; sourceTree = "<group>"; };
 		270446FB231DECF6007BA477 /* secp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = secp256k1.framework; path = Carthage/Build/iOS/secp256k1.framework; sourceTree = "<group>"; };
 		270446FD231DED19007BA477 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
@@ -123,7 +143,6 @@
 		27044730231E0052007BA477 /* DidHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DidHelper.swift; sourceTree = "<group>"; };
 		27044732231E0052007BA477 /* ABSDKPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKPagination.swift; sourceTree = "<group>"; };
 		27044733231E0052007BA477 /* ABSDKDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKDataSource.swift; sourceTree = "<group>"; };
-		27044734231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKSQLLiteNormalizedCache.swift; sourceTree = "<group>"; };
 		27044735231E0052007BA477 /* ABSDKView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKView.swift; sourceTree = "<group>"; };
 		27044736231E0052007BA477 /* ABSDKHTTPTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKHTTPTransport.swift; sourceTree = "<group>"; };
 		27044738231E0052007BA477 /* ABSDKPagedArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKPagedArrayDataSource.swift; sourceTree = "<group>"; };
@@ -170,16 +189,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A379E4B25FF43000064A3E7 /* JWTKit in Frameworks */,
-				270447FC231E00AA007BA477 /* BigInt.framework in Frameworks */,
+				1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */,
+				1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */,
 				270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */,
+				1A924F9326F34C0F003FD383 /* web3swift.framework in Frameworks */,
 				270447F0231E00AA007BA477 /* Apollo.framework in Frameworks */,
-				270447F1231E00AA007BA477 /* CryptoSwift.framework in Frameworks */,
 				270447F2231E00AA007BA477 /* Reachability.framework in Frameworks */,
 				270447F3231E00AA007BA477 /* secp256k1.framework in Frameworks */,
-				270447F4231E00AA007BA477 /* SQLite.framework in Frameworks */,
 				270447F7231E00AA007BA477 /* SwiftProtobuf.framework in Frameworks */,
-				270447F8231E00AA007BA477 /* web3swift.framework in Frameworks */,
 				016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,7 +282,6 @@
 			children = (
 				27044732231E0052007BA477 /* ABSDKPagination.swift */,
 				27044733231E0052007BA477 /* ABSDKDataSource.swift */,
-				27044734231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift */,
 				27044735231E0052007BA477 /* ABSDKView.swift */,
 				27044736231E0052007BA477 /* ABSDKHTTPTransport.swift */,
 				27044738231E0052007BA477 /* ABSDKPagedArrayDataSource.swift */,
@@ -372,6 +388,16 @@
 		279CD3D220AC8E11009E1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A924F9226F34C0F003FD383 /* web3swift.framework */,
+				1A924F9026F3498A003FD383 /* SQLCipher.framework */,
+				1AAF056C26F1E1D400A5C097 /* web3swift.framework */,
+				1AAF056826F1E1B600A5C097 /* web3swift.framework */,
+				1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */,
+				1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */,
+				1AB8FBAA26F0BF5C00557DB6 /* CryptoSwift.framework */,
+				1AB8FBA826F09F1B00557DB6 /* CryptoSwift.framework */,
+				1AB8FBA626F09F0900557DB6 /* web3swift.framework */,
+				1AB8FBA426F09EF500557DB6 /* web3swift.framework */,
 				270447F9231E00AA007BA477 /* BigInt.framework */,
 				270447FB231E00AA007BA477 /* PromiseKit.framework */,
 				270447FA231E00AA007BA477 /* SipHash.framework */,
@@ -414,6 +440,7 @@
 				2704470B231DFF97007BA477 /* Sources */,
 				2704470C231DFF97007BA477 /* Frameworks */,
 				2704470D231DFF97007BA477 /* Resources */,
+				1AAF056B26F1E1B600A5C097 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -421,7 +448,6 @@
 			);
 			name = ArcBlockSDK;
 			packageProductDependencies = (
-				1A379E4A25FF43000064A3E7 /* JWTKit */,
 			);
 			productName = ArcBlockSDK;
 			productReference = 2704470F231DFF97007BA477 /* ArcBlockSDK.framework */;
@@ -474,7 +500,6 @@
 			);
 			mainGroup = 277E6B4D20A0DAB50054707E;
 			packageReferences = (
-				1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */,
 			);
 			productRefGroup = 277E6B5A20A0DB160054707E /* Products */;
 			projectDirPath = "";
@@ -604,7 +629,6 @@
 				27044797231E0052007BA477 /* ABSDKPagedArrayDataSource.swift in Sources */,
 				2704479E231E0052007BA477 /* Multibase.swift in Sources */,
 				27044794231E0052007BA477 /* ABSDKView.swift in Sources */,
-				27044793231E0052007BA477 /* ABSDKSQLLiteNormalizedCache.swift in Sources */,
 				1A534A2B26E702F300513949 /* enum.pb.swift in Sources */,
 				1A534A2926E702F300513949 /* vendor.proto in Sources */,
 				2704478C231E0052007BA477 /* ed25519_ge.swift in Sources */,
@@ -706,6 +730,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Apollo/Apollo.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BigInt/BigInt.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift/CryptoSwift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift/Reachability.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Starscream/Starscream.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftProtobuf/SwiftProtobuf.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/secp256k1.c/secp256k1.framework/Headers\"",
+					"$(PODS_ROOT)/SQLCipher",
+				);
 				INFOPLIST_FILE = ArcBlockSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -717,6 +753,37 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Apollo\"",
+					"-framework",
+					"\"BigInt\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CryptoSwift\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"PromiseKit\"",
+					"-framework",
+					"\"Reachability\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Starscream\"",
+					"-framework",
+					"\"SwiftProtobuf\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"secp256k1\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.arcblock.ArcBlockSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
@@ -785,6 +852,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Apollo/Apollo.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BigInt/BigInt.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift/CryptoSwift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift/Reachability.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Starscream/Starscream.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftProtobuf/SwiftProtobuf.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/secp256k1.c/secp256k1.framework/Headers\"",
+					"$(PODS_ROOT)/SQLCipher",
+				);
 				INFOPLIST_FILE = ArcBlockSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -795,6 +874,37 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Apollo\"",
+					"-framework",
+					"\"BigInt\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CryptoSwift\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"PromiseKit\"",
+					"-framework",
+					"\"Reachability\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Starscream\"",
+					"-framework",
+					"\"SwiftProtobuf\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"secp256k1\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.arcblock.ArcBlockSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
@@ -1016,25 +1126,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vapor/jwt-kit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		1A379E4A25FF43000064A3E7 /* JWTKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1A379E4925FF43000064A3E7 /* XCRemoteSwiftPackageReference "jwt-kit" */;
-			productName = JWTKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 277E6B4E20A0DAB50054707E /* Project object */;
 }

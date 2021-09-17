@@ -255,7 +255,7 @@ public class ABSDKHTTPNetworkTransport: NetworkTransport {
                 keyPairs.append(keyPair)
             }
             let message = keyPairs.joined(separator: "&")
-            guard let digest: String = try hmac.authenticate(message.bytes).toBase64() else { return nil }
+            let digest: String = try hmac.authenticate(message.bytes).toBase64()
 
             return "AB1-HMAC-SHA256 access_key=" + accessKey + ",timestamp=" + timestamp + ",signature=" + digest
         } catch {

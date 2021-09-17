@@ -1,3 +1,46 @@
+## 0.11.8 (September 17, 2021)
+  - remove sqlite.swift sdk
+  - clean sdk
+  - test
+  - fix err
+  - test
+  - update
+  - update
+  - delete junk file
+  - update
+  - test
+  - test
+  - update
+  - test
+  - update spec
+  - update spec
+  - update spec
+  - update spec
+  - update spec
+  - update spec
+  - fix
+  - update spec
+  - add crypto
+  - update
+  - update spec
+  - update spec
+  - update spec
+  - update spec
+  - update spec
+  - add bigint
+  - update spec
+  - update spec
+  - update spec
+  - update spec
+  - update spec
+  - updated
+  - test
+  - remove spm
+  - test
+  - spm update
+  - update crypto swift
+  - update lib
+
 ## 0.11.7 (September 09, 2021)
   - remove sdk
 
