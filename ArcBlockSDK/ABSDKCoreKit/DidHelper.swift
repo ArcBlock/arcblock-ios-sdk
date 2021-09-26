@@ -385,7 +385,7 @@ public class DidHelper {
         }
 
         let didTypeBytes = Array(encodedDidData.bytes.prefix(2))
-        guard !didTypeBytes.isEmpty else {
+        guard didTypeBytes.count >= 2 else {
             return nil
         }
         let u16 = UInt16(didTypeBytes[0]) << 8 + UInt16(didTypeBytes[1])
