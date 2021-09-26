@@ -380,12 +380,14 @@ public class DidHelper {
         if encodedDid.hasPrefix("0x") {
             encodedDid.removeFirst(2)
         }
-        
         guard let encodedDidData = Data.init(multibaseEncoded: encodedDid) else {
             return nil
         }
 
         let didTypeBytes = Array(encodedDidData.bytes.prefix(2))
+        guard !didTypeBytes.isEmpty else {
+            return nil
+        }
         let u16 = UInt16(didTypeBytes[0]) << 8 + UInt16(didTypeBytes[1])
         guard let hashType = HashType.init(rawValue: Int8(u16 & 0b00011111)),
             let keyType = KeyType.init(rawValue: Int8((u16 >> 5) & 0b00011111)),
