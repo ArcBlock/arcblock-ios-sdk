@@ -1,3 +1,6 @@
+## 0.11.9 (九月 26, 2021)
+  - Array-Bound Fix
+
 ## 0.11.8 (September 17, 2021)
   - remove sqlite.swift sdk
   - clean sdk
