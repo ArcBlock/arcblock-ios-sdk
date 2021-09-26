@@ -71,6 +71,9 @@ public extension Data {
         let byteString = Data(multibaseString.utf8)
         guard byteString.count > 0,
             let base = BaseEncoding(rawValue: byteString[0]) else { return nil }
+        guard byteString.count >= 2 else {
+            return nil
+        }
         let string = String(bytes: byteString[1...], encoding: String.Encoding.utf8)!
 
         switch base {
