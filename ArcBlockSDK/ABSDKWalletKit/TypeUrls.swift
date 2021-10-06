@@ -44,6 +44,7 @@ public enum TypeUrl: String, CaseIterable {
     case delegate = "fg:t:delegate"
     case revokeDelegate = "fg:t:revoke_delegate"
     case depositToken = "fg:t:deposit_token"
+    case depositTokenV2 = "fg:t:deposit_token_v2"
     case withdrawToken = "fg:t:withdraw_token"
     case revokeWithdraw = "fg:t:revoke_withdraw"
     case revokeStake = "fg:t:revoke_stake"
