@@ -5,11 +5,3 @@
   Created by zY on 2021/11/9.
   
 */
-
-"invalid_gas_price" = "请输入合法的 Gas Price";
-
-"low_gas_price_tip" = "Gas Price 太低可能会影响交易确认时间";
-
-"invalid_gas_limit" = "请输入合法的 Gas Limit，最低%@";
-
-"invalid_amount" = "请输入合法的金额";
