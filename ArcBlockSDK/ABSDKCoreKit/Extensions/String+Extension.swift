@@ -28,7 +28,7 @@ public extension String {
     
     func isValidDigital(decimals: Int? = 18) -> Bool {
         let realDecimal = decimals ?? 18
-        let reg = "^[0-9]+(.[0-9]{0,\(realDecimal)})?$"
+        let reg = "^[0-9]+(.[0-9]{1,\(realDecimal)})?$"
         let pre = NSPredicate(format: "SELF MATCHES %@", reg)
         if pre.evaluate(with: self) {
             return true

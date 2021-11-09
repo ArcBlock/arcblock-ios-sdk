@@ -30,6 +30,11 @@ class InputSpec: QuickSpec {
         describe("Amount input") {
             it("works", closure: {
                 expect("".isValidAmount(decimal: 18)).to(equal(false))
+                expect(".".isValidAmount(decimal: 18)).to(equal(false))
+                expect("11.".isValidAmount(decimal: 18)).to(equal(false))
+                expect(".1".isValidAmount(decimal: 18)).to(equal(false))
+                expect("11.0".isValidAmount(decimal: 18)).to(equal(true))
+                expect("11".isValidAmount(decimal: 18)).to(equal(true))
                 
                 expect("111.123456".isValidAmount(decimal: 18)).to(equal(true))
                 expect("1234.1234567".isValidAmount(decimal: 18)).to(equal(false))
