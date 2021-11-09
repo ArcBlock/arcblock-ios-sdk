@@ -1,0 +1,15 @@
+/* 
+  Localizable.string.strings
+  ArcBlockSDK
+
+  Created by zY on 2021/11/9.
+  
+*/
+
+"invalid_gas_price" = "Please enter a valid Gas Price";
+
+"low_gas_price_tip" = "Too low a Gas Price will affect the transaction confirming time";
+
+"invalid_gas_limit" = "Please enter a valid Gas Limit, at least %@";
+
+"invalid_amount" = "Please enter a valid amount";
