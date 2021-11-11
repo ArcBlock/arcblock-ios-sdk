@@ -1,7 +1,6 @@
 syntax = "proto3";
 package ocap;
 
-import "vendor.proto";
 import "enum.proto";
 import "type.proto";
 import "state.proto";
@@ -111,68 +110,6 @@ message ResponseGetValidatorsInfo {
   ValidatorsInfo validators_info = 2;
 }
 
-// event subscription
-
-// filter could be: value.header.height > 10086 and value.byzantine_validators
-// != []
-message RequestSubscribe {
-  string topic = 1;
-  string filter = 2;
-}
-message ResponseSubscribe {
-  StatusCode code = 1;
-  oneof value {
-    string topic = 2;
-    Transaction transfer = 3;
-    Transaction account_migrate = 4;
-    Transaction confirm = 5;
-    Transaction create_asset = 6;
-    Transaction exchange = 7;
-    // Transaction revoke = 8 [ deprecated = true ];
-
-    vendor.RequestBeginBlock begin_block = 16;
-    vendor.RequestEndBlock end_block = 17;
-
-    Transaction declare = 19;
-    Transaction update_asset = 20;
-    Transaction consensus_upgrade = 21;
-    // Transaction declare_file = 22 [ deprecated = true ];
-    Transaction sys_upgrade = 23;
-    Transaction stake = 24;
-    Transaction delegate = 25;
-    // Transaction activate_protocol = 26 [ deprecated = true ];
-    // Transaction deactivate_protocol = 27 [ deprecated = true ];
-    Transaction revoke_delegate = 28;
-    Transaction deposit_token = 29;
-    Transaction withdraw_token = 30;
-    Transaction approve_withdraw = 31;
-    Transaction revoke_withdraw = 32;
-    Transaction setup_swap = 33;
-    Transaction revoke_swap = 34;
-    Transaction retrieve_swap = 35;
-    // Transaction poke = 36 [ deprecated = true ];
-    // Transaction deploy_protocol = 37 [ deprecated = true ];
-    Transaction consume_asset = 38;
-    Transaction acquire_asset = 39;
-    Transaction upgrade_node = 40;
-    Transaction update_validator = 41;
-    Transaction update_consensus_params = 42;
-
-    AccountState account_state = 129;
-    AssetState asset_state = 130;
-    ForgeState forge_state = 131;
-    // StakeState stake_state = 132 [ deprecated = true ];
-    // ProtocolState protocol_state = 133 [ deprecated = true ];
-    DelegateState delegate_state = 134;
-    SwapState swap_state = 135;
-
-    Transaction create_token = 136;
-  }
-}
-
-message RequestUnsubscribe { string topic = 1; }
-message ResponseUnsubscribe { StatusCode code = 1; }
-
 // get config
 message RequestGetConfig { bool parsed = 1; }
 message ResponseGetConfig {
@@ -201,6 +138,8 @@ message RequestListTransactions {
   TokenFilter token_filter = 7;
   AssetFilter asset_filter = 8;
   AccountFilter account_filter = 9;
+  TxFilter tx_filter = 10;
+  RollupFilter rollup_filter = 11;
 }
 message ResponseListTransactions {
   StatusCode code = 1;
@@ -342,6 +281,12 @@ message ResponseGetRollupState {
   RollupState state = 2;
 }
 
+message RequestListRollups {
+  Page paging = 1;
+  string token_address = 2;
+  string erc20_token_address = 3; // TODO: deprecate this
+  string foreign_token_address = 4; // same as erc20_token_address
+}
 message ResponseListRollups {
   StatusCode code = 1;
   PageInfo page = 2;
@@ -351,6 +296,7 @@ message ResponseListRollups {
 message RequestGetRollupBlock {
   string hash = 1;
   uint64 height = 2;
+  string rollup_address = 3;
 }
 message ResponseGetRollupBlock {
   StatusCode code = 1;
@@ -369,6 +315,33 @@ message RequestListRollupBlocks {
 message ResponseListRollupBlocks {
   StatusCode code = 1;
   PageInfo page = 2;
-
   repeated IndexedRollupBlock blocks = 3;
+}
+
+message RequestListRollupValidators {
+  Page paging = 1;
+  string rollup_address = 2;
+}
+message ResponseListRollupValidators {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedRollupValidator validators = 3;
+}
+
+message RequestSearch {
+  Page paging = 1;
+  string keyword = 2;
+}
+message ResponseSearch {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated SearchResult results = 3;
+}
+
+message RequestGetEvidenceState {
+  string hash = 1;
+}
+message ResponseGetEvidenceState {
+  StatusCode code = 1;
+  EvidenceState state = 2;
 }

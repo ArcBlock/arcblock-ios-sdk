@@ -138,8 +138,15 @@ message CreateTokenTx {
   string total_supply = 7;
   string address = 8;
 
+  // For tokens that supports rollup, the initial supply should be very small
+  // Initial supply should be less than total supply
+  string initial_supply = 9;
+
   // It's recommended that you set this, so your token will possibly have a price in fiat currency.
-  string erc20_contract_address = 15;
+  // string erc20_contract_address = 15; // deprecated
+  ForeignToken foreign_token = 16;
+
+
 
   // the chain won't touch this field. Only the dapp shall handle it.
   google.protobuf.Any data = 20;
@@ -317,6 +324,12 @@ message StakeTx {
   // Lock the stake on creation, does not have any effect when append to existing stake
   bool locked = 4;
 
+  // Human readable messge help to identify the purpose of the stake
+  string message = 5;
+
+  // Period to wait before revoked stake can be claimed, in seconds
+  uint32 revoke_waiting_period = 6;
+
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 50;
 }
@@ -331,13 +344,27 @@ message RevokeStakeTx {
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 50;
 }
+// Claim revoked stake
+message ClaimStakeTx {
+  // Which stake to claim from
+  string address = 1;
+
+  // Revoke transaction
+  Evidence evidence = 2;
+
+  // ocap won't touch this field. Only app shall handle it.
+  google.protobuf.Any data = 50;
+}
 
 // --------------------- Rollup Related -------------------------------------
 message CreateRollupTx {
-  // Immutable
   string address = 1;
+
+  // can be token or factory adddress
   string token_address = 2;
-  string erc20_token_address = 3;
+
+  // string erc20_token_address = 3; // deprecated
+
   string contract_address = 4;
 
   // Immutable
@@ -357,6 +384,7 @@ message CreateRollupTx {
 
   // Mutable
   uint32 min_block_interval = 12;
+  uint32 min_block_confirmation = 13;
 
   // Immutable
   string foreign_chain_type = 14; // type of the foreign chain, possibly "eth", "bsc", "matic"
@@ -371,8 +399,17 @@ message CreateRollupTx {
   string min_deposit_amount = 19;
   string min_withdraw_amount = 20;
 
-  // Mutable
-  uint64 block_height = 21;
+  // Added since v1.13.45
+  string max_deposit_amount = 21;
+  string max_withdraw_amount = 22;
+  string min_deposit_fee = 23;
+  string max_deposit_fee = 24;
+  string min_withdraw_fee = 25;
+  string max_withdraw_fee = 26;
+  bool paused = 27;
+
+  // Added since v1.13.53
+  uint32 leave_waiting_period = 28;
 
   google.protobuf.Any data = 50;
 }
@@ -388,13 +425,24 @@ message UpdateRollupTx {
   uint32 max_block_size = 6; // default to 1000, ideally cost < income
 
   uint32 min_block_interval = 7;
+  uint32 min_block_confirmation = 8;
 
-  uint32 deposit_fee_rate = 8;
-  uint32 withdraw_fee_rate = 9;
-  uint32 proposer_fee_share = 10;
+  uint32 deposit_fee_rate = 9;
+  uint32 withdraw_fee_rate = 10;
+  uint32 proposer_fee_share = 11;
 
-  string min_deposit_amount = 11;
-  string min_withdraw_amount = 12;
+  string min_deposit_amount = 12;
+  string min_withdraw_amount = 13;
+
+  // Added since v1.13.45
+  string max_deposit_amount = 14;
+  string max_withdraw_amount = 15;
+  string min_deposit_fee = 16;
+  string max_deposit_fee = 17;
+  string min_withdraw_fee = 18;
+  string max_withdraw_fee = 19;
+  bool paused = 20;
+  string rollup = 21;
 
   google.protobuf.Any data = 50;
 }
@@ -409,12 +457,26 @@ message JoinRollupTx {
   // The node does not have to make any changes to the stake
   string endpoint = 2;
 
+  // The foreign chain tx hash that the node has added itsself from the contract
+  // The node must pass a group of challenges before actually join the rollup
+  Evidence evidence = 3;
+
+  // Signature from other nodes that verified the evidence
+  // The current validator should not be included
+  repeated Multisig signatures = 4;
+
   google.protobuf.Any data = 50;
 }
-// TODO: this workflow need more design, since there will be a delay before submit and finalize
 message LeaveRollupTx {
   // The staking can only be revoked when the node is not in the validator list anymore
   string rollup = 1;
+
+  // The foreign chain tx hash that the node has removed itsself from the contract
+  Evidence evidence = 2;
+
+  // Signature from other nodes that verified the evidence
+  // The current validator should not be included
+  repeated Multisig signatures = 3;
 
   google.protobuf.Any data = 50;
 }
@@ -425,7 +487,7 @@ message CreateRollupBlockTx {
   string merkle_root = 3;
   string previous_hash = 4;
 
-  string tx_hash = 5;
+  string txs_hash = 5;
 
   repeated string txs = 6;
 
@@ -433,7 +495,8 @@ message CreateRollupBlockTx {
 
   repeated Multisig signatures = 8;
 
-  string checkpoint = 9; // must be valid iso date string
+  // Deprecated
+  // string checkpoint = 9; // must be valid iso date string
 
   // the rollup chainId
   string rollup = 10;
@@ -463,41 +526,45 @@ message WithdrawTokenV2Tx {
 // All valid tx protocols should be listed here
 message ItxStub {
   oneof value {
+    // Accounts
     DeclareTx declare = 1;
     DelegateTx delegate = 2;
     RevokeDelegateTx revoke_delegate = 3;
     AccountMigrateTx account_migrate = 4;
 
+    // Assets
     CreateAssetTx create_asset = 5;
     UpdateAssetTx update_asset = 6;
 
-    CreateFactoryTx create_factory = 7;
+    // Trade
+    ExchangeTx exchange = 10;
+    ExchangeV2Tx exchange_v2 = 12;
+    TransferTx transfer = 13;
+    TransferV2Tx transfer_v2 = 14;
+    TransferV3Tx transfer_v3 = 15;
 
-    ExchangeTx exchange = 9;
-    ExchangeV2Tx exchange_v2 = 10;
-    TransferTx transfer = 11;
-    TransferV2Tx transfer_v2 = 12;
-    TransferV3Tx transfer_v3 = 13;
+    // Tokens
+    CreateTokenTx create_token = 20;
+    DepositTokenV2Tx deposit_token = 21;
+    WithdrawTokenV2Tx withdraw_token = 22;
 
-    UpgradeNodeTx upgrade_node = 15;
+    // NFTs
+    CreateFactoryTx create_factory = 30;
+    AcquireAssetV2Tx acquire_asset_v2 = 31;
+    AcquireAssetV3Tx acquire_asset_v3 = 32;
+    MintAssetTx mint_asset = 33;
 
-    CreateTokenTx create_token = 19;
+    // Governance
+    StakeTx stake = 40;
+    RevokeStakeTx revoke_stake = 41;
+    ClaimStakeTx claim_stake = 42;
+    UpgradeNodeTx upgrade_node = 49;
 
-    AcquireAssetV2Tx acquire_asset_v2 = 20;
-    MintAssetTx mint_asset = 21;
-
-    AcquireAssetV3Tx acquire_asset_v3 = 22;
-
-    StakeTx stake = 23;
-    RevokeStakeTx revoke_stake = 24;
-
-    CreateRollupTx create_rollup = 25;
-    UpdateRollupTx update_rollup = 26;
-    JoinRollupTx join_rollup = 27;
-    LeaveRollupTx leave_rollup = 28;
-    CreateRollupBlockTx create_rollup_block = 29;
-
-    DepositTokenV2Tx deposit_token = 30;
-    WithdrawTokenV2Tx withdraw_token = 31;
+    // Rollup
+    CreateRollupTx create_rollup = 50;
+    UpdateRollupTx update_rollup = 51;
+    JoinRollupTx join_rollup = 52;
+    LeaveRollupTx leave_rollup = 53;
+    CreateRollupBlockTx create_rollup_block = 54;
   }
 }

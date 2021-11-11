@@ -49,6 +49,7 @@ public enum TypeUrl: String, CaseIterable {
     case withdrawTokenV2 = "fg:t:withdraw_token_v2"
     case revokeWithdraw = "fg:t:revoke_withdraw"
     case revokeStake = "fg:t:revoke_stake"
+    case claimStake = "fg:t:claim_stake"
 
     // v3
     case acquireAsset_v3 = "fg:t:acquire_asset_v3"
@@ -115,6 +116,8 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_StakeTx(serializedData: value)
         case .revokeStake:
             return try? Ocap_RevokeStakeTx(serializedData: value)
+        case .claimStake:
+            return try? Ocap_ClaimStakeTx(serializedData: value)
         default:
             return nil
         }

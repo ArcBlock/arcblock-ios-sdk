@@ -1651,9 +1651,6 @@ public struct Ocap_IndexedTokenInput {
 
   public var symbol: String = String()
 
-  /// TODO: 这里是为了测试时兼容，应该删除
-  public var key: String = String()
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1702,6 +1699,44 @@ public struct Ocap_RollupSignature {
   public var signer: String = String()
 
   public var signature: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_ForeignToken {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// can be erc20, brc20, erc721
+  public var type: String = String()
+
+  public var contractAddress: String = String()
+
+  /// can be ethereum, bsc, fantom, matic
+  public var chainType: String = String()
+
+  /// can be rinkeby, main, test
+  public var chainName: String = String()
+
+  /// can be 1, 4
+  public var chainID: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_RevokedStake {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tokens: [Ocap_TokenInput] = []
+
+  public var assets: [String] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -4846,7 +4881,6 @@ extension Ocap_IndexedTokenInput: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     3: .same(proto: "decimal"),
     4: .same(proto: "unit"),
     5: .same(proto: "symbol"),
-    10: .same(proto: "key"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4860,7 +4894,6 @@ extension Ocap_IndexedTokenInput: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.decimal) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.unit) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.symbol) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.key) }()
       default: break
       }
     }
@@ -4882,9 +4915,6 @@ extension Ocap_IndexedTokenInput: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.symbol.isEmpty {
       try visitor.visitSingularStringField(value: self.symbol, fieldNumber: 5)
     }
-    if !self.key.isEmpty {
-      try visitor.visitSingularStringField(value: self.key, fieldNumber: 10)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4894,7 +4924,6 @@ extension Ocap_IndexedTokenInput: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.decimal != rhs.decimal {return false}
     if lhs.unit != rhs.unit {return false}
     if lhs.symbol != rhs.symbol {return false}
-    if lhs.key != rhs.key {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5027,6 +5056,100 @@ extension Ocap_RollupSignature: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   public static func ==(lhs: Ocap_RollupSignature, rhs: Ocap_RollupSignature) -> Bool {
     if lhs.signer != rhs.signer {return false}
     if lhs.signature != rhs.signature {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ForeignToken: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ForeignToken"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .standard(proto: "contract_address"),
+    3: .standard(proto: "chain_type"),
+    4: .standard(proto: "chain_name"),
+    5: .standard(proto: "chain_id"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.contractAddress) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.chainType) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.chainName) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.chainID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 1)
+    }
+    if !self.contractAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.contractAddress, fieldNumber: 2)
+    }
+    if !self.chainType.isEmpty {
+      try visitor.visitSingularStringField(value: self.chainType, fieldNumber: 3)
+    }
+    if !self.chainName.isEmpty {
+      try visitor.visitSingularStringField(value: self.chainName, fieldNumber: 4)
+    }
+    if self.chainID != 0 {
+      try visitor.visitSingularInt32Field(value: self.chainID, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ForeignToken, rhs: Ocap_ForeignToken) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.contractAddress != rhs.contractAddress {return false}
+    if lhs.chainType != rhs.chainType {return false}
+    if lhs.chainName != rhs.chainName {return false}
+    if lhs.chainID != rhs.chainID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RevokedStake: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RevokedStake"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tokens"),
+    2: .same(proto: "assets"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.tokens) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.assets) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tokens.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.tokens, fieldNumber: 1)
+    }
+    if !self.assets.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RevokedStake, rhs: Ocap_RevokedStake) -> Bool {
+    if lhs.tokens != rhs.tokens {return false}
+    if lhs.assets != rhs.assets {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

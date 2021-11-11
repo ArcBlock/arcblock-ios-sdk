@@ -525,8 +525,20 @@ public struct Ocap_CreateTokenTx {
 
   public var address: String = String()
 
+  /// For tokens that supports rollup, the initial supply should be very small
+  /// Initial supply should be less than total supply
+  public var initialSupply: String = String()
+
   /// It's recommended that you set this, so your token will possibly have a price in fiat currency.
-  public var erc20ContractAddress: String = String()
+  /// string erc20_contract_address = 15; // deprecated
+  public var foreignToken: Ocap_ForeignToken {
+    get {return _foreignToken ?? Ocap_ForeignToken()}
+    set {_foreignToken = newValue}
+  }
+  /// Returns true if `foreignToken` has been explicitly set.
+  public var hasForeignToken: Bool {return self._foreignToken != nil}
+  /// Clears the value of `foreignToken`. Subsequent reads from it will return its default value.
+  public mutating func clearForeignToken() {self._foreignToken = nil}
 
   /// the chain won't touch this field. Only the dapp shall handle it.
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -542,6 +554,7 @@ public struct Ocap_CreateTokenTx {
 
   public init() {}
 
+  fileprivate var _foreignToken: Ocap_ForeignToken? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
@@ -904,6 +917,12 @@ public struct Ocap_StakeTx {
   /// Lock the stake on creation, does not have any effect when append to existing stake
   public var locked: Bool = false
 
+  /// Human readable messge help to identify the purpose of the stake
+  public var message: String = String()
+
+  /// Period to wait before revoked stake can be claimed, in seconds
+  public var revokeWaitingPeriod: UInt32 = 0
+
   /// ocap won't touch this field. Only app shall handle it.
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -950,26 +969,58 @@ public struct Ocap_RevokeStakeTx {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
+/// Claim revoked stake
+public struct Ocap_ClaimStakeTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Which stake to claim from
+  public var address: String = String()
+
+  /// Revoke transaction
+  public var evidence: Ocap_Evidence {
+    get {return _evidence ?? Ocap_Evidence()}
+    set {_evidence = newValue}
+  }
+  /// Returns true if `evidence` has been explicitly set.
+  public var hasEvidence: Bool {return self._evidence != nil}
+  /// Clears the value of `evidence`. Subsequent reads from it will return its default value.
+  public mutating func clearEvidence() {self._evidence = nil}
+
+  /// ocap won't touch this field. Only app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _evidence: Ocap_Evidence? = nil
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
 /// --------------------- Rollup Related -------------------------------------
 public struct Ocap_CreateRollupTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// Immutable
   public var address: String {
     get {return _storage._address}
     set {_uniqueStorage()._address = newValue}
   }
 
+  /// can be token or factory adddress
   public var tokenAddress: String {
     get {return _storage._tokenAddress}
     set {_uniqueStorage()._tokenAddress = newValue}
-  }
-
-  public var erc20TokenAddress: String {
-    get {return _storage._erc20TokenAddress}
-    set {_uniqueStorage()._erc20TokenAddress = newValue}
   }
 
   public var contractAddress: String {
@@ -1023,6 +1074,11 @@ public struct Ocap_CreateRollupTx {
     set {_uniqueStorage()._minBlockInterval = newValue}
   }
 
+  public var minBlockConfirmation: UInt32 {
+    get {return _storage._minBlockConfirmation}
+    set {_uniqueStorage()._minBlockConfirmation = newValue}
+  }
+
   /// Immutable
   public var foreignChainType: String {
     get {return _storage._foreignChainType}
@@ -1062,10 +1118,46 @@ public struct Ocap_CreateRollupTx {
     set {_uniqueStorage()._minWithdrawAmount = newValue}
   }
 
-  /// Mutable
-  public var blockHeight: UInt64 {
-    get {return _storage._blockHeight}
-    set {_uniqueStorage()._blockHeight = newValue}
+  /// Added since v1.13.45
+  public var maxDepositAmount: String {
+    get {return _storage._maxDepositAmount}
+    set {_uniqueStorage()._maxDepositAmount = newValue}
+  }
+
+  public var maxWithdrawAmount: String {
+    get {return _storage._maxWithdrawAmount}
+    set {_uniqueStorage()._maxWithdrawAmount = newValue}
+  }
+
+  public var minDepositFee: String {
+    get {return _storage._minDepositFee}
+    set {_uniqueStorage()._minDepositFee = newValue}
+  }
+
+  public var maxDepositFee: String {
+    get {return _storage._maxDepositFee}
+    set {_uniqueStorage()._maxDepositFee = newValue}
+  }
+
+  public var minWithdrawFee: String {
+    get {return _storage._minWithdrawFee}
+    set {_uniqueStorage()._minWithdrawFee = newValue}
+  }
+
+  public var maxWithdrawFee: String {
+    get {return _storage._maxWithdrawFee}
+    set {_uniqueStorage()._maxWithdrawFee = newValue}
+  }
+
+  public var paused: Bool {
+    get {return _storage._paused}
+    set {_uniqueStorage()._paused = newValue}
+  }
+
+  /// Added since v1.13.53
+  public var leaveWaitingPeriod: UInt32 {
+    get {return _storage._leaveWaitingPeriod}
+    set {_uniqueStorage()._leaveWaitingPeriod = newValue}
   }
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -1090,47 +1182,129 @@ public struct Ocap_UpdateRollupTx {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var minStakeAmount: String = String()
+  public var minStakeAmount: String {
+    get {return _storage._minStakeAmount}
+    set {_uniqueStorage()._minStakeAmount = newValue}
+  }
 
-  public var maxStakeAmount: String = String()
+  public var maxStakeAmount: String {
+    get {return _storage._maxStakeAmount}
+    set {_uniqueStorage()._maxStakeAmount = newValue}
+  }
 
   /// default to 1
-  public var minSignerCount: UInt32 = 0
+  public var minSignerCount: UInt32 {
+    get {return _storage._minSignerCount}
+    set {_uniqueStorage()._minSignerCount = newValue}
+  }
 
-  public var maxSignerCount: UInt32 = 0
+  public var maxSignerCount: UInt32 {
+    get {return _storage._maxSignerCount}
+    set {_uniqueStorage()._maxSignerCount = newValue}
+  }
 
   /// default to 1
-  public var minBlockSize: UInt32 = 0
+  public var minBlockSize: UInt32 {
+    get {return _storage._minBlockSize}
+    set {_uniqueStorage()._minBlockSize = newValue}
+  }
 
   /// default to 1000, ideally cost < income
-  public var maxBlockSize: UInt32 = 0
+  public var maxBlockSize: UInt32 {
+    get {return _storage._maxBlockSize}
+    set {_uniqueStorage()._maxBlockSize = newValue}
+  }
 
-  public var minBlockInterval: UInt32 = 0
+  public var minBlockInterval: UInt32 {
+    get {return _storage._minBlockInterval}
+    set {_uniqueStorage()._minBlockInterval = newValue}
+  }
 
-  public var depositFeeRate: UInt32 = 0
+  public var minBlockConfirmation: UInt32 {
+    get {return _storage._minBlockConfirmation}
+    set {_uniqueStorage()._minBlockConfirmation = newValue}
+  }
 
-  public var withdrawFeeRate: UInt32 = 0
+  public var depositFeeRate: UInt32 {
+    get {return _storage._depositFeeRate}
+    set {_uniqueStorage()._depositFeeRate = newValue}
+  }
 
-  public var proposerFeeShare: UInt32 = 0
+  public var withdrawFeeRate: UInt32 {
+    get {return _storage._withdrawFeeRate}
+    set {_uniqueStorage()._withdrawFeeRate = newValue}
+  }
 
-  public var minDepositAmount: String = String()
+  public var proposerFeeShare: UInt32 {
+    get {return _storage._proposerFeeShare}
+    set {_uniqueStorage()._proposerFeeShare = newValue}
+  }
 
-  public var minWithdrawAmount: String = String()
+  public var minDepositAmount: String {
+    get {return _storage._minDepositAmount}
+    set {_uniqueStorage()._minDepositAmount = newValue}
+  }
+
+  public var minWithdrawAmount: String {
+    get {return _storage._minWithdrawAmount}
+    set {_uniqueStorage()._minWithdrawAmount = newValue}
+  }
+
+  /// Added since v1.13.45
+  public var maxDepositAmount: String {
+    get {return _storage._maxDepositAmount}
+    set {_uniqueStorage()._maxDepositAmount = newValue}
+  }
+
+  public var maxWithdrawAmount: String {
+    get {return _storage._maxWithdrawAmount}
+    set {_uniqueStorage()._maxWithdrawAmount = newValue}
+  }
+
+  public var minDepositFee: String {
+    get {return _storage._minDepositFee}
+    set {_uniqueStorage()._minDepositFee = newValue}
+  }
+
+  public var maxDepositFee: String {
+    get {return _storage._maxDepositFee}
+    set {_uniqueStorage()._maxDepositFee = newValue}
+  }
+
+  public var minWithdrawFee: String {
+    get {return _storage._minWithdrawFee}
+    set {_uniqueStorage()._minWithdrawFee = newValue}
+  }
+
+  public var maxWithdrawFee: String {
+    get {return _storage._maxWithdrawFee}
+    set {_uniqueStorage()._maxWithdrawFee = newValue}
+  }
+
+  public var paused: Bool {
+    get {return _storage._paused}
+    set {_uniqueStorage()._paused = newValue}
+  }
+
+  public var rollup: String {
+    get {return _storage._rollup}
+    set {_uniqueStorage()._rollup = newValue}
+  }
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
-    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
-    set {_data = newValue}
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
   }
   /// Returns true if `data` has been explicitly set.
-  public var hasData: Bool {return self._data != nil}
+  public var hasData: Bool {return _storage._data != nil}
   /// Clears the value of `data`. Subsequent reads from it will return its default value.
-  public mutating func clearData() {self._data = nil}
+  public mutating func clearData() {_uniqueStorage()._data = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Ocap_JoinRollupTx {
@@ -1148,6 +1322,21 @@ public struct Ocap_JoinRollupTx {
   /// The node does not have to make any changes to the stake
   public var endpoint: String = String()
 
+  /// The foreign chain tx hash that the node has added itsself from the contract
+  /// The node must pass a group of challenges before actually join the rollup
+  public var evidence: Ocap_Evidence {
+    get {return _evidence ?? Ocap_Evidence()}
+    set {_evidence = newValue}
+  }
+  /// Returns true if `evidence` has been explicitly set.
+  public var hasEvidence: Bool {return self._evidence != nil}
+  /// Clears the value of `evidence`. Subsequent reads from it will return its default value.
+  public mutating func clearEvidence() {self._evidence = nil}
+
+  /// Signature from other nodes that verified the evidence
+  /// The current validator should not be included
+  public var signatures: [Ocap_Multisig] = []
+
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_data = newValue}
@@ -1161,10 +1350,10 @@ public struct Ocap_JoinRollupTx {
 
   public init() {}
 
+  fileprivate var _evidence: Ocap_Evidence? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
-/// TODO: this workflow need more design, since there will be a delay before submit and finalize
 public struct Ocap_LeaveRollupTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1173,6 +1362,20 @@ public struct Ocap_LeaveRollupTx {
   /// The staking can only be revoked when the node is not in the validator list anymore
   public var rollup: String = String()
 
+  /// The foreign chain tx hash that the node has removed itsself from the contract
+  public var evidence: Ocap_Evidence {
+    get {return _evidence ?? Ocap_Evidence()}
+    set {_evidence = newValue}
+  }
+  /// Returns true if `evidence` has been explicitly set.
+  public var hasEvidence: Bool {return self._evidence != nil}
+  /// Clears the value of `evidence`. Subsequent reads from it will return its default value.
+  public mutating func clearEvidence() {self._evidence = nil}
+
+  /// Signature from other nodes that verified the evidence
+  /// The current validator should not be included
+  public var signatures: [Ocap_Multisig] = []
+
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_data = newValue}
@@ -1186,6 +1389,7 @@ public struct Ocap_LeaveRollupTx {
 
   public init() {}
 
+  fileprivate var _evidence: Ocap_Evidence? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
@@ -1203,16 +1407,13 @@ public struct Ocap_CreateRollupBlockTx {
 
   public var previousHash: String = String()
 
-  public var txHash: String = String()
+  public var txsHash: String = String()
 
   public var txs: [String] = []
 
   public var proposer: String = String()
 
   public var signatures: [Ocap_Multisig] = []
-
-  /// must be valid iso date string
-  public var checkpoint: String = String()
 
   /// the rollup chainId
   public var rollup: String = String()
@@ -1333,6 +1534,7 @@ public struct Ocap_ItxStub {
 
   public var value: Ocap_ItxStub.OneOf_Value? = nil
 
+  /// Accounts
   public var declare: Ocap_DeclareTx {
     get {
       if case .declare(let v)? = value {return v}
@@ -1365,6 +1567,7 @@ public struct Ocap_ItxStub {
     set {value = .accountMigrate(newValue)}
   }
 
+  /// Assets
   public var createAsset: Ocap_CreateAssetTx {
     get {
       if case .createAsset(let v)? = value {return v}
@@ -1381,14 +1584,7 @@ public struct Ocap_ItxStub {
     set {value = .updateAsset(newValue)}
   }
 
-  public var createFactory: Ocap_CreateFactoryTx {
-    get {
-      if case .createFactory(let v)? = value {return v}
-      return Ocap_CreateFactoryTx()
-    }
-    set {value = .createFactory(newValue)}
-  }
-
+  /// Trade
   public var exchange: Ocap_ExchangeTx {
     get {
       if case .exchange(let v)? = value {return v}
@@ -1429,20 +1625,38 @@ public struct Ocap_ItxStub {
     set {value = .transferV3(newValue)}
   }
 
-  public var upgradeNode: Ocap_UpgradeNodeTx {
-    get {
-      if case .upgradeNode(let v)? = value {return v}
-      return Ocap_UpgradeNodeTx()
-    }
-    set {value = .upgradeNode(newValue)}
-  }
-
+  /// Tokens
   public var createToken: Ocap_CreateTokenTx {
     get {
       if case .createToken(let v)? = value {return v}
       return Ocap_CreateTokenTx()
     }
     set {value = .createToken(newValue)}
+  }
+
+  public var depositToken: Ocap_DepositTokenV2Tx {
+    get {
+      if case .depositToken(let v)? = value {return v}
+      return Ocap_DepositTokenV2Tx()
+    }
+    set {value = .depositToken(newValue)}
+  }
+
+  public var withdrawToken: Ocap_WithdrawTokenV2Tx {
+    get {
+      if case .withdrawToken(let v)? = value {return v}
+      return Ocap_WithdrawTokenV2Tx()
+    }
+    set {value = .withdrawToken(newValue)}
+  }
+
+  /// NFTs
+  public var createFactory: Ocap_CreateFactoryTx {
+    get {
+      if case .createFactory(let v)? = value {return v}
+      return Ocap_CreateFactoryTx()
+    }
+    set {value = .createFactory(newValue)}
   }
 
   public var acquireAssetV2: Ocap_AcquireAssetV2Tx {
@@ -1453,14 +1667,6 @@ public struct Ocap_ItxStub {
     set {value = .acquireAssetV2(newValue)}
   }
 
-  public var mintAsset: Ocap_MintAssetTx {
-    get {
-      if case .mintAsset(let v)? = value {return v}
-      return Ocap_MintAssetTx()
-    }
-    set {value = .mintAsset(newValue)}
-  }
-
   public var acquireAssetV3: Ocap_AcquireAssetV3Tx {
     get {
       if case .acquireAssetV3(let v)? = value {return v}
@@ -1469,6 +1675,15 @@ public struct Ocap_ItxStub {
     set {value = .acquireAssetV3(newValue)}
   }
 
+  public var mintAsset: Ocap_MintAssetTx {
+    get {
+      if case .mintAsset(let v)? = value {return v}
+      return Ocap_MintAssetTx()
+    }
+    set {value = .mintAsset(newValue)}
+  }
+
+  /// Governance
   public var stake: Ocap_StakeTx {
     get {
       if case .stake(let v)? = value {return v}
@@ -1485,6 +1700,23 @@ public struct Ocap_ItxStub {
     set {value = .revokeStake(newValue)}
   }
 
+  public var claimStake: Ocap_ClaimStakeTx {
+    get {
+      if case .claimStake(let v)? = value {return v}
+      return Ocap_ClaimStakeTx()
+    }
+    set {value = .claimStake(newValue)}
+  }
+
+  public var upgradeNode: Ocap_UpgradeNodeTx {
+    get {
+      if case .upgradeNode(let v)? = value {return v}
+      return Ocap_UpgradeNodeTx()
+    }
+    set {value = .upgradeNode(newValue)}
+  }
+
+  /// Rollup
   public var createRollup: Ocap_CreateRollupTx {
     get {
       if case .createRollup(let v)? = value {return v}
@@ -1525,51 +1757,43 @@ public struct Ocap_ItxStub {
     set {value = .createRollupBlock(newValue)}
   }
 
-  public var depositToken: Ocap_DepositTokenV2Tx {
-    get {
-      if case .depositToken(let v)? = value {return v}
-      return Ocap_DepositTokenV2Tx()
-    }
-    set {value = .depositToken(newValue)}
-  }
-
-  public var withdrawToken: Ocap_WithdrawTokenV2Tx {
-    get {
-      if case .withdrawToken(let v)? = value {return v}
-      return Ocap_WithdrawTokenV2Tx()
-    }
-    set {value = .withdrawToken(newValue)}
-  }
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Value: Equatable {
+    /// Accounts
     case declare(Ocap_DeclareTx)
     case delegate(Ocap_DelegateTx)
     case revokeDelegate(Ocap_RevokeDelegateTx)
     case accountMigrate(Ocap_AccountMigrateTx)
+    /// Assets
     case createAsset(Ocap_CreateAssetTx)
     case updateAsset(Ocap_UpdateAssetTx)
-    case createFactory(Ocap_CreateFactoryTx)
+    /// Trade
     case exchange(Ocap_ExchangeTx)
     case exchangeV2(Ocap_ExchangeV2Tx)
     case transfer(Ocap_TransferTx)
     case transferV2(Ocap_TransferV2Tx)
     case transferV3(Ocap_TransferV3Tx)
-    case upgradeNode(Ocap_UpgradeNodeTx)
+    /// Tokens
     case createToken(Ocap_CreateTokenTx)
+    case depositToken(Ocap_DepositTokenV2Tx)
+    case withdrawToken(Ocap_WithdrawTokenV2Tx)
+    /// NFTs
+    case createFactory(Ocap_CreateFactoryTx)
     case acquireAssetV2(Ocap_AcquireAssetV2Tx)
-    case mintAsset(Ocap_MintAssetTx)
     case acquireAssetV3(Ocap_AcquireAssetV3Tx)
+    case mintAsset(Ocap_MintAssetTx)
+    /// Governance
     case stake(Ocap_StakeTx)
     case revokeStake(Ocap_RevokeStakeTx)
+    case claimStake(Ocap_ClaimStakeTx)
+    case upgradeNode(Ocap_UpgradeNodeTx)
+    /// Rollup
     case createRollup(Ocap_CreateRollupTx)
     case updateRollup(Ocap_UpdateRollupTx)
     case joinRollup(Ocap_JoinRollupTx)
     case leaveRollup(Ocap_LeaveRollupTx)
     case createRollupBlock(Ocap_CreateRollupBlockTx)
-    case depositToken(Ocap_DepositTokenV2Tx)
-    case withdrawToken(Ocap_WithdrawTokenV2Tx)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Ocap_ItxStub.OneOf_Value, rhs: Ocap_ItxStub.OneOf_Value) -> Bool {
@@ -1601,10 +1825,6 @@ public struct Ocap_ItxStub {
         guard case .updateAsset(let l) = lhs, case .updateAsset(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.createFactory, .createFactory): return {
-        guard case .createFactory(let l) = lhs, case .createFactory(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
       case (.exchange, .exchange): return {
         guard case .exchange(let l) = lhs, case .exchange(let r) = rhs else { preconditionFailure() }
         return l == r
@@ -1625,24 +1845,32 @@ public struct Ocap_ItxStub {
         guard case .transferV3(let l) = lhs, case .transferV3(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.upgradeNode, .upgradeNode): return {
-        guard case .upgradeNode(let l) = lhs, case .upgradeNode(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
       case (.createToken, .createToken): return {
         guard case .createToken(let l) = lhs, case .createToken(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.depositToken, .depositToken): return {
+        guard case .depositToken(let l) = lhs, case .depositToken(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.withdrawToken, .withdrawToken): return {
+        guard case .withdrawToken(let l) = lhs, case .withdrawToken(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.createFactory, .createFactory): return {
+        guard case .createFactory(let l) = lhs, case .createFactory(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.acquireAssetV2, .acquireAssetV2): return {
         guard case .acquireAssetV2(let l) = lhs, case .acquireAssetV2(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.mintAsset, .mintAsset): return {
-        guard case .mintAsset(let l) = lhs, case .mintAsset(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
       case (.acquireAssetV3, .acquireAssetV3): return {
         guard case .acquireAssetV3(let l) = lhs, case .acquireAssetV3(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.mintAsset, .mintAsset): return {
+        guard case .mintAsset(let l) = lhs, case .mintAsset(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.stake, .stake): return {
@@ -1651,6 +1879,14 @@ public struct Ocap_ItxStub {
       }()
       case (.revokeStake, .revokeStake): return {
         guard case .revokeStake(let l) = lhs, case .revokeStake(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.claimStake, .claimStake): return {
+        guard case .claimStake(let l) = lhs, case .claimStake(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.upgradeNode, .upgradeNode): return {
+        guard case .upgradeNode(let l) = lhs, case .upgradeNode(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.createRollup, .createRollup): return {
@@ -1671,14 +1907,6 @@ public struct Ocap_ItxStub {
       }()
       case (.createRollupBlock, .createRollupBlock): return {
         guard case .createRollupBlock(let l) = lhs, case .createRollupBlock(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.depositToken, .depositToken): return {
-        guard case .depositToken(let l) = lhs, case .depositToken(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.withdrawToken, .withdrawToken): return {
-        guard case .withdrawToken(let l) = lhs, case .withdrawToken(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -2375,7 +2603,8 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     6: .same(proto: "icon"),
     7: .standard(proto: "total_supply"),
     8: .same(proto: "address"),
-    15: .standard(proto: "erc20_contract_address"),
+    9: .standard(proto: "initial_supply"),
+    16: .standard(proto: "foreign_token"),
     20: .same(proto: "data"),
   ]
 
@@ -2393,7 +2622,8 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 6: try { try decoder.decodeSingularStringField(value: &self.icon) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.totalSupply) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 15: try { try decoder.decodeSingularStringField(value: &self.erc20ContractAddress) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.initialSupply) }()
+      case 16: try { try decoder.decodeSingularMessageField(value: &self._foreignToken) }()
       case 20: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -2425,8 +2655,11 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 8)
     }
-    if !self.erc20ContractAddress.isEmpty {
-      try visitor.visitSingularStringField(value: self.erc20ContractAddress, fieldNumber: 15)
+    if !self.initialSupply.isEmpty {
+      try visitor.visitSingularStringField(value: self.initialSupply, fieldNumber: 9)
+    }
+    if let v = self._foreignToken {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
     }
     if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
@@ -2443,7 +2676,8 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.icon != rhs.icon {return false}
     if lhs.totalSupply != rhs.totalSupply {return false}
     if lhs.address != rhs.address {return false}
-    if lhs.erc20ContractAddress != rhs.erc20ContractAddress {return false}
+    if lhs.initialSupply != rhs.initialSupply {return false}
+    if lhs._foreignToken != rhs._foreignToken {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -2961,6 +3195,8 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     2: .same(proto: "receiver"),
     3: .same(proto: "inputs"),
     4: .same(proto: "locked"),
+    5: .same(proto: "message"),
+    6: .standard(proto: "revoke_waiting_period"),
     50: .same(proto: "data"),
   ]
 
@@ -2974,6 +3210,8 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 2: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.inputs) }()
       case 4: try { try decoder.decodeSingularBoolField(value: &self.locked) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.message) }()
+      case 6: try { try decoder.decodeSingularUInt32Field(value: &self.revokeWaitingPeriod) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -2993,6 +3231,12 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if self.locked != false {
       try visitor.visitSingularBoolField(value: self.locked, fieldNumber: 4)
     }
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 5)
+    }
+    if self.revokeWaitingPeriod != 0 {
+      try visitor.visitSingularUInt32Field(value: self.revokeWaitingPeriod, fieldNumber: 6)
+    }
     if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     }
@@ -3004,6 +3248,8 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.receiver != rhs.receiver {return false}
     if lhs.inputs != rhs.inputs {return false}
     if lhs.locked != rhs.locked {return false}
+    if lhs.message != rhs.message {return false}
+    if lhs.revokeWaitingPeriod != rhs.revokeWaitingPeriod {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3054,12 +3300,55 @@ extension Ocap_RevokeStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 }
 
+extension Ocap_ClaimStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ClaimStakeTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "evidence"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._evidence) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if let v = self._evidence {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ClaimStakeTx, rhs: Ocap_ClaimStakeTx) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs._evidence != rhs._evidence {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CreateRollupTx"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .standard(proto: "token_address"),
-    3: .standard(proto: "erc20_token_address"),
     4: .standard(proto: "contract_address"),
     5: .standard(proto: "seed_validators"),
     6: .standard(proto: "min_stake_amount"),
@@ -3069,6 +3358,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     10: .standard(proto: "min_block_size"),
     11: .standard(proto: "max_block_size"),
     12: .standard(proto: "min_block_interval"),
+    13: .standard(proto: "min_block_confirmation"),
     14: .standard(proto: "foreign_chain_type"),
     15: .standard(proto: "foreign_chain_id"),
     16: .standard(proto: "deposit_fee_rate"),
@@ -3076,14 +3366,20 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     18: .standard(proto: "proposer_fee_share"),
     19: .standard(proto: "min_deposit_amount"),
     20: .standard(proto: "min_withdraw_amount"),
-    21: .standard(proto: "block_height"),
+    21: .standard(proto: "max_deposit_amount"),
+    22: .standard(proto: "max_withdraw_amount"),
+    23: .standard(proto: "min_deposit_fee"),
+    24: .standard(proto: "max_deposit_fee"),
+    25: .standard(proto: "min_withdraw_fee"),
+    26: .standard(proto: "max_withdraw_fee"),
+    27: .same(proto: "paused"),
+    28: .standard(proto: "leave_waiting_period"),
     50: .same(proto: "data"),
   ]
 
   fileprivate class _StorageClass {
     var _address: String = String()
     var _tokenAddress: String = String()
-    var _erc20TokenAddress: String = String()
     var _contractAddress: String = String()
     var _seedValidators: [Ocap_RollupValidator] = []
     var _minStakeAmount: String = String()
@@ -3093,6 +3389,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _minBlockSize: UInt32 = 0
     var _maxBlockSize: UInt32 = 0
     var _minBlockInterval: UInt32 = 0
+    var _minBlockConfirmation: UInt32 = 0
     var _foreignChainType: String = String()
     var _foreignChainID: String = String()
     var _depositFeeRate: UInt32 = 0
@@ -3100,7 +3397,14 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _proposerFeeShare: UInt32 = 0
     var _minDepositAmount: String = String()
     var _minWithdrawAmount: String = String()
-    var _blockHeight: UInt64 = 0
+    var _maxDepositAmount: String = String()
+    var _maxWithdrawAmount: String = String()
+    var _minDepositFee: String = String()
+    var _maxDepositFee: String = String()
+    var _minWithdrawFee: String = String()
+    var _maxWithdrawFee: String = String()
+    var _paused: Bool = false
+    var _leaveWaitingPeriod: UInt32 = 0
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -3110,7 +3414,6 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     init(copying source: _StorageClass) {
       _address = source._address
       _tokenAddress = source._tokenAddress
-      _erc20TokenAddress = source._erc20TokenAddress
       _contractAddress = source._contractAddress
       _seedValidators = source._seedValidators
       _minStakeAmount = source._minStakeAmount
@@ -3120,6 +3423,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _minBlockSize = source._minBlockSize
       _maxBlockSize = source._maxBlockSize
       _minBlockInterval = source._minBlockInterval
+      _minBlockConfirmation = source._minBlockConfirmation
       _foreignChainType = source._foreignChainType
       _foreignChainID = source._foreignChainID
       _depositFeeRate = source._depositFeeRate
@@ -3127,7 +3431,14 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _proposerFeeShare = source._proposerFeeShare
       _minDepositAmount = source._minDepositAmount
       _minWithdrawAmount = source._minWithdrawAmount
-      _blockHeight = source._blockHeight
+      _maxDepositAmount = source._maxDepositAmount
+      _maxWithdrawAmount = source._maxWithdrawAmount
+      _minDepositFee = source._minDepositFee
+      _maxDepositFee = source._maxDepositFee
+      _minWithdrawFee = source._minWithdrawFee
+      _maxWithdrawFee = source._maxWithdrawFee
+      _paused = source._paused
+      _leaveWaitingPeriod = source._leaveWaitingPeriod
       _data = source._data
     }
   }
@@ -3149,7 +3460,6 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         switch fieldNumber {
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._tokenAddress) }()
-        case 3: try { try decoder.decodeSingularStringField(value: &_storage._erc20TokenAddress) }()
         case 4: try { try decoder.decodeSingularStringField(value: &_storage._contractAddress) }()
         case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._seedValidators) }()
         case 6: try { try decoder.decodeSingularStringField(value: &_storage._minStakeAmount) }()
@@ -3159,6 +3469,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 10: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockSize) }()
         case 11: try { try decoder.decodeSingularUInt32Field(value: &_storage._maxBlockSize) }()
         case 12: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockInterval) }()
+        case 13: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockConfirmation) }()
         case 14: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainType) }()
         case 15: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainID) }()
         case 16: try { try decoder.decodeSingularUInt32Field(value: &_storage._depositFeeRate) }()
@@ -3166,7 +3477,14 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 18: try { try decoder.decodeSingularUInt32Field(value: &_storage._proposerFeeShare) }()
         case 19: try { try decoder.decodeSingularStringField(value: &_storage._minDepositAmount) }()
         case 20: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawAmount) }()
-        case 21: try { try decoder.decodeSingularUInt64Field(value: &_storage._blockHeight) }()
+        case 21: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositAmount) }()
+        case 22: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawAmount) }()
+        case 23: try { try decoder.decodeSingularStringField(value: &_storage._minDepositFee) }()
+        case 24: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositFee) }()
+        case 25: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawFee) }()
+        case 26: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawFee) }()
+        case 27: try { try decoder.decodeSingularBoolField(value: &_storage._paused) }()
+        case 28: try { try decoder.decodeSingularUInt32Field(value: &_storage._leaveWaitingPeriod) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -3181,9 +3499,6 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       }
       if !_storage._tokenAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._tokenAddress, fieldNumber: 2)
-      }
-      if !_storage._erc20TokenAddress.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._erc20TokenAddress, fieldNumber: 3)
       }
       if !_storage._contractAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._contractAddress, fieldNumber: 4)
@@ -3212,6 +3527,9 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if _storage._minBlockInterval != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._minBlockInterval, fieldNumber: 12)
       }
+      if _storage._minBlockConfirmation != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minBlockConfirmation, fieldNumber: 13)
+      }
       if !_storage._foreignChainType.isEmpty {
         try visitor.visitSingularStringField(value: _storage._foreignChainType, fieldNumber: 14)
       }
@@ -3233,8 +3551,29 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._minWithdrawAmount.isEmpty {
         try visitor.visitSingularStringField(value: _storage._minWithdrawAmount, fieldNumber: 20)
       }
-      if _storage._blockHeight != 0 {
-        try visitor.visitSingularUInt64Field(value: _storage._blockHeight, fieldNumber: 21)
+      if !_storage._maxDepositAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxDepositAmount, fieldNumber: 21)
+      }
+      if !_storage._maxWithdrawAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxWithdrawAmount, fieldNumber: 22)
+      }
+      if !_storage._minDepositFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minDepositFee, fieldNumber: 23)
+      }
+      if !_storage._maxDepositFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxDepositFee, fieldNumber: 24)
+      }
+      if !_storage._minWithdrawFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minWithdrawFee, fieldNumber: 25)
+      }
+      if !_storage._maxWithdrawFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxWithdrawFee, fieldNumber: 26)
+      }
+      if _storage._paused != false {
+        try visitor.visitSingularBoolField(value: _storage._paused, fieldNumber: 27)
+      }
+      if _storage._leaveWaitingPeriod != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._leaveWaitingPeriod, fieldNumber: 28)
       }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
@@ -3250,7 +3589,6 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         let rhs_storage = _args.1
         if _storage._address != rhs_storage._address {return false}
         if _storage._tokenAddress != rhs_storage._tokenAddress {return false}
-        if _storage._erc20TokenAddress != rhs_storage._erc20TokenAddress {return false}
         if _storage._contractAddress != rhs_storage._contractAddress {return false}
         if _storage._seedValidators != rhs_storage._seedValidators {return false}
         if _storage._minStakeAmount != rhs_storage._minStakeAmount {return false}
@@ -3260,6 +3598,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._minBlockSize != rhs_storage._minBlockSize {return false}
         if _storage._maxBlockSize != rhs_storage._maxBlockSize {return false}
         if _storage._minBlockInterval != rhs_storage._minBlockInterval {return false}
+        if _storage._minBlockConfirmation != rhs_storage._minBlockConfirmation {return false}
         if _storage._foreignChainType != rhs_storage._foreignChainType {return false}
         if _storage._foreignChainID != rhs_storage._foreignChainID {return false}
         if _storage._depositFeeRate != rhs_storage._depositFeeRate {return false}
@@ -3267,7 +3606,14 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._proposerFeeShare != rhs_storage._proposerFeeShare {return false}
         if _storage._minDepositAmount != rhs_storage._minDepositAmount {return false}
         if _storage._minWithdrawAmount != rhs_storage._minWithdrawAmount {return false}
-        if _storage._blockHeight != rhs_storage._blockHeight {return false}
+        if _storage._maxDepositAmount != rhs_storage._maxDepositAmount {return false}
+        if _storage._maxWithdrawAmount != rhs_storage._maxWithdrawAmount {return false}
+        if _storage._minDepositFee != rhs_storage._minDepositFee {return false}
+        if _storage._maxDepositFee != rhs_storage._maxDepositFee {return false}
+        if _storage._minWithdrawFee != rhs_storage._minWithdrawFee {return false}
+        if _storage._maxWithdrawFee != rhs_storage._maxWithdrawFee {return false}
+        if _storage._paused != rhs_storage._paused {return false}
+        if _storage._leaveWaitingPeriod != rhs_storage._leaveWaitingPeriod {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -3288,95 +3634,223 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     5: .standard(proto: "min_block_size"),
     6: .standard(proto: "max_block_size"),
     7: .standard(proto: "min_block_interval"),
-    8: .standard(proto: "deposit_fee_rate"),
-    9: .standard(proto: "withdraw_fee_rate"),
-    10: .standard(proto: "proposer_fee_share"),
-    11: .standard(proto: "min_deposit_amount"),
-    12: .standard(proto: "min_withdraw_amount"),
+    8: .standard(proto: "min_block_confirmation"),
+    9: .standard(proto: "deposit_fee_rate"),
+    10: .standard(proto: "withdraw_fee_rate"),
+    11: .standard(proto: "proposer_fee_share"),
+    12: .standard(proto: "min_deposit_amount"),
+    13: .standard(proto: "min_withdraw_amount"),
+    14: .standard(proto: "max_deposit_amount"),
+    15: .standard(proto: "max_withdraw_amount"),
+    16: .standard(proto: "min_deposit_fee"),
+    17: .standard(proto: "max_deposit_fee"),
+    18: .standard(proto: "min_withdraw_fee"),
+    19: .standard(proto: "max_withdraw_fee"),
+    20: .same(proto: "paused"),
+    21: .same(proto: "rollup"),
     50: .same(proto: "data"),
   ]
 
+  fileprivate class _StorageClass {
+    var _minStakeAmount: String = String()
+    var _maxStakeAmount: String = String()
+    var _minSignerCount: UInt32 = 0
+    var _maxSignerCount: UInt32 = 0
+    var _minBlockSize: UInt32 = 0
+    var _maxBlockSize: UInt32 = 0
+    var _minBlockInterval: UInt32 = 0
+    var _minBlockConfirmation: UInt32 = 0
+    var _depositFeeRate: UInt32 = 0
+    var _withdrawFeeRate: UInt32 = 0
+    var _proposerFeeShare: UInt32 = 0
+    var _minDepositAmount: String = String()
+    var _minWithdrawAmount: String = String()
+    var _maxDepositAmount: String = String()
+    var _maxWithdrawAmount: String = String()
+    var _minDepositFee: String = String()
+    var _maxDepositFee: String = String()
+    var _minWithdrawFee: String = String()
+    var _maxWithdrawFee: String = String()
+    var _paused: Bool = false
+    var _rollup: String = String()
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _minStakeAmount = source._minStakeAmount
+      _maxStakeAmount = source._maxStakeAmount
+      _minSignerCount = source._minSignerCount
+      _maxSignerCount = source._maxSignerCount
+      _minBlockSize = source._minBlockSize
+      _maxBlockSize = source._maxBlockSize
+      _minBlockInterval = source._minBlockInterval
+      _minBlockConfirmation = source._minBlockConfirmation
+      _depositFeeRate = source._depositFeeRate
+      _withdrawFeeRate = source._withdrawFeeRate
+      _proposerFeeShare = source._proposerFeeShare
+      _minDepositAmount = source._minDepositAmount
+      _minWithdrawAmount = source._minWithdrawAmount
+      _maxDepositAmount = source._maxDepositAmount
+      _maxWithdrawAmount = source._maxWithdrawAmount
+      _minDepositFee = source._minDepositFee
+      _maxDepositFee = source._maxDepositFee
+      _minWithdrawFee = source._minWithdrawFee
+      _maxWithdrawFee = source._maxWithdrawFee
+      _paused = source._paused
+      _rollup = source._rollup
+      _data = source._data
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.minStakeAmount) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.maxStakeAmount) }()
-      case 3: try { try decoder.decodeSingularUInt32Field(value: &self.minSignerCount) }()
-      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.maxSignerCount) }()
-      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.minBlockSize) }()
-      case 6: try { try decoder.decodeSingularUInt32Field(value: &self.maxBlockSize) }()
-      case 7: try { try decoder.decodeSingularUInt32Field(value: &self.minBlockInterval) }()
-      case 8: try { try decoder.decodeSingularUInt32Field(value: &self.depositFeeRate) }()
-      case 9: try { try decoder.decodeSingularUInt32Field(value: &self.withdrawFeeRate) }()
-      case 10: try { try decoder.decodeSingularUInt32Field(value: &self.proposerFeeShare) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.minDepositAmount) }()
-      case 12: try { try decoder.decodeSingularStringField(value: &self.minWithdrawAmount) }()
-      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._minStakeAmount) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._maxStakeAmount) }()
+        case 3: try { try decoder.decodeSingularUInt32Field(value: &_storage._minSignerCount) }()
+        case 4: try { try decoder.decodeSingularUInt32Field(value: &_storage._maxSignerCount) }()
+        case 5: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockSize) }()
+        case 6: try { try decoder.decodeSingularUInt32Field(value: &_storage._maxBlockSize) }()
+        case 7: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockInterval) }()
+        case 8: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockConfirmation) }()
+        case 9: try { try decoder.decodeSingularUInt32Field(value: &_storage._depositFeeRate) }()
+        case 10: try { try decoder.decodeSingularUInt32Field(value: &_storage._withdrawFeeRate) }()
+        case 11: try { try decoder.decodeSingularUInt32Field(value: &_storage._proposerFeeShare) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._minDepositAmount) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawAmount) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositAmount) }()
+        case 15: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawAmount) }()
+        case 16: try { try decoder.decodeSingularStringField(value: &_storage._minDepositFee) }()
+        case 17: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositFee) }()
+        case 18: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawFee) }()
+        case 19: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawFee) }()
+        case 20: try { try decoder.decodeSingularBoolField(value: &_storage._paused) }()
+        case 21: try { try decoder.decodeSingularStringField(value: &_storage._rollup) }()
+        case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.minStakeAmount.isEmpty {
-      try visitor.visitSingularStringField(value: self.minStakeAmount, fieldNumber: 1)
-    }
-    if !self.maxStakeAmount.isEmpty {
-      try visitor.visitSingularStringField(value: self.maxStakeAmount, fieldNumber: 2)
-    }
-    if self.minSignerCount != 0 {
-      try visitor.visitSingularUInt32Field(value: self.minSignerCount, fieldNumber: 3)
-    }
-    if self.maxSignerCount != 0 {
-      try visitor.visitSingularUInt32Field(value: self.maxSignerCount, fieldNumber: 4)
-    }
-    if self.minBlockSize != 0 {
-      try visitor.visitSingularUInt32Field(value: self.minBlockSize, fieldNumber: 5)
-    }
-    if self.maxBlockSize != 0 {
-      try visitor.visitSingularUInt32Field(value: self.maxBlockSize, fieldNumber: 6)
-    }
-    if self.minBlockInterval != 0 {
-      try visitor.visitSingularUInt32Field(value: self.minBlockInterval, fieldNumber: 7)
-    }
-    if self.depositFeeRate != 0 {
-      try visitor.visitSingularUInt32Field(value: self.depositFeeRate, fieldNumber: 8)
-    }
-    if self.withdrawFeeRate != 0 {
-      try visitor.visitSingularUInt32Field(value: self.withdrawFeeRate, fieldNumber: 9)
-    }
-    if self.proposerFeeShare != 0 {
-      try visitor.visitSingularUInt32Field(value: self.proposerFeeShare, fieldNumber: 10)
-    }
-    if !self.minDepositAmount.isEmpty {
-      try visitor.visitSingularStringField(value: self.minDepositAmount, fieldNumber: 11)
-    }
-    if !self.minWithdrawAmount.isEmpty {
-      try visitor.visitSingularStringField(value: self.minWithdrawAmount, fieldNumber: 12)
-    }
-    if let v = self._data {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._minStakeAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minStakeAmount, fieldNumber: 1)
+      }
+      if !_storage._maxStakeAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxStakeAmount, fieldNumber: 2)
+      }
+      if _storage._minSignerCount != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minSignerCount, fieldNumber: 3)
+      }
+      if _storage._maxSignerCount != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._maxSignerCount, fieldNumber: 4)
+      }
+      if _storage._minBlockSize != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minBlockSize, fieldNumber: 5)
+      }
+      if _storage._maxBlockSize != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._maxBlockSize, fieldNumber: 6)
+      }
+      if _storage._minBlockInterval != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minBlockInterval, fieldNumber: 7)
+      }
+      if _storage._minBlockConfirmation != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._minBlockConfirmation, fieldNumber: 8)
+      }
+      if _storage._depositFeeRate != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._depositFeeRate, fieldNumber: 9)
+      }
+      if _storage._withdrawFeeRate != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._withdrawFeeRate, fieldNumber: 10)
+      }
+      if _storage._proposerFeeShare != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._proposerFeeShare, fieldNumber: 11)
+      }
+      if !_storage._minDepositAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minDepositAmount, fieldNumber: 12)
+      }
+      if !_storage._minWithdrawAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minWithdrawAmount, fieldNumber: 13)
+      }
+      if !_storage._maxDepositAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxDepositAmount, fieldNumber: 14)
+      }
+      if !_storage._maxWithdrawAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxWithdrawAmount, fieldNumber: 15)
+      }
+      if !_storage._minDepositFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minDepositFee, fieldNumber: 16)
+      }
+      if !_storage._maxDepositFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxDepositFee, fieldNumber: 17)
+      }
+      if !_storage._minWithdrawFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minWithdrawFee, fieldNumber: 18)
+      }
+      if !_storage._maxWithdrawFee.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxWithdrawFee, fieldNumber: 19)
+      }
+      if _storage._paused != false {
+        try visitor.visitSingularBoolField(value: _storage._paused, fieldNumber: 20)
+      }
+      if !_storage._rollup.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._rollup, fieldNumber: 21)
+      }
+      if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Ocap_UpdateRollupTx, rhs: Ocap_UpdateRollupTx) -> Bool {
-    if lhs.minStakeAmount != rhs.minStakeAmount {return false}
-    if lhs.maxStakeAmount != rhs.maxStakeAmount {return false}
-    if lhs.minSignerCount != rhs.minSignerCount {return false}
-    if lhs.maxSignerCount != rhs.maxSignerCount {return false}
-    if lhs.minBlockSize != rhs.minBlockSize {return false}
-    if lhs.maxBlockSize != rhs.maxBlockSize {return false}
-    if lhs.minBlockInterval != rhs.minBlockInterval {return false}
-    if lhs.depositFeeRate != rhs.depositFeeRate {return false}
-    if lhs.withdrawFeeRate != rhs.withdrawFeeRate {return false}
-    if lhs.proposerFeeShare != rhs.proposerFeeShare {return false}
-    if lhs.minDepositAmount != rhs.minDepositAmount {return false}
-    if lhs.minWithdrawAmount != rhs.minWithdrawAmount {return false}
-    if lhs._data != rhs._data {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._minStakeAmount != rhs_storage._minStakeAmount {return false}
+        if _storage._maxStakeAmount != rhs_storage._maxStakeAmount {return false}
+        if _storage._minSignerCount != rhs_storage._minSignerCount {return false}
+        if _storage._maxSignerCount != rhs_storage._maxSignerCount {return false}
+        if _storage._minBlockSize != rhs_storage._minBlockSize {return false}
+        if _storage._maxBlockSize != rhs_storage._maxBlockSize {return false}
+        if _storage._minBlockInterval != rhs_storage._minBlockInterval {return false}
+        if _storage._minBlockConfirmation != rhs_storage._minBlockConfirmation {return false}
+        if _storage._depositFeeRate != rhs_storage._depositFeeRate {return false}
+        if _storage._withdrawFeeRate != rhs_storage._withdrawFeeRate {return false}
+        if _storage._proposerFeeShare != rhs_storage._proposerFeeShare {return false}
+        if _storage._minDepositAmount != rhs_storage._minDepositAmount {return false}
+        if _storage._minWithdrawAmount != rhs_storage._minWithdrawAmount {return false}
+        if _storage._maxDepositAmount != rhs_storage._maxDepositAmount {return false}
+        if _storage._maxWithdrawAmount != rhs_storage._maxWithdrawAmount {return false}
+        if _storage._minDepositFee != rhs_storage._minDepositFee {return false}
+        if _storage._maxDepositFee != rhs_storage._maxDepositFee {return false}
+        if _storage._minWithdrawFee != rhs_storage._minWithdrawFee {return false}
+        if _storage._maxWithdrawFee != rhs_storage._maxWithdrawFee {return false}
+        if _storage._paused != rhs_storage._paused {return false}
+        if _storage._rollup != rhs_storage._rollup {return false}
+        if _storage._data != rhs_storage._data {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3387,6 +3861,8 @@ extension Ocap_JoinRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "rollup"),
     2: .same(proto: "endpoint"),
+    3: .same(proto: "evidence"),
+    4: .same(proto: "signatures"),
     50: .same(proto: "data"),
   ]
 
@@ -3398,6 +3874,8 @@ extension Ocap_JoinRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.endpoint) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._evidence) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.signatures) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -3411,6 +3889,12 @@ extension Ocap_JoinRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if !self.endpoint.isEmpty {
       try visitor.visitSingularStringField(value: self.endpoint, fieldNumber: 2)
     }
+    if let v = self._evidence {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }
+    if !self.signatures.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.signatures, fieldNumber: 4)
+    }
     if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     }
@@ -3420,6 +3904,8 @@ extension Ocap_JoinRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   public static func ==(lhs: Ocap_JoinRollupTx, rhs: Ocap_JoinRollupTx) -> Bool {
     if lhs.rollup != rhs.rollup {return false}
     if lhs.endpoint != rhs.endpoint {return false}
+    if lhs._evidence != rhs._evidence {return false}
+    if lhs.signatures != rhs.signatures {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3430,6 +3916,8 @@ extension Ocap_LeaveRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   public static let protoMessageName: String = _protobuf_package + ".LeaveRollupTx"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "rollup"),
+    2: .same(proto: "evidence"),
+    3: .same(proto: "signatures"),
     50: .same(proto: "data"),
   ]
 
@@ -3440,6 +3928,8 @@ extension Ocap_LeaveRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._evidence) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.signatures) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -3450,6 +3940,12 @@ extension Ocap_LeaveRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
     }
+    if let v = self._evidence {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    if !self.signatures.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.signatures, fieldNumber: 3)
+    }
     if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     }
@@ -3458,6 +3954,8 @@ extension Ocap_LeaveRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
   public static func ==(lhs: Ocap_LeaveRollupTx, rhs: Ocap_LeaveRollupTx) -> Bool {
     if lhs.rollup != rhs.rollup {return false}
+    if lhs._evidence != rhs._evidence {return false}
+    if lhs.signatures != rhs.signatures {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3471,11 +3969,10 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .same(proto: "height"),
     3: .standard(proto: "merkle_root"),
     4: .standard(proto: "previous_hash"),
-    5: .standard(proto: "tx_hash"),
+    5: .standard(proto: "txs_hash"),
     6: .same(proto: "txs"),
     7: .same(proto: "proposer"),
     8: .same(proto: "signatures"),
-    9: .same(proto: "checkpoint"),
     10: .same(proto: "rollup"),
     50: .same(proto: "data"),
   ]
@@ -3490,11 +3987,10 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 2: try { try decoder.decodeSingularUInt64Field(value: &self.height) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.merkleRoot) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.previousHash) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.txHash) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.txsHash) }()
       case 6: try { try decoder.decodeRepeatedStringField(value: &self.txs) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.proposer) }()
       case 8: try { try decoder.decodeRepeatedMessageField(value: &self.signatures) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.checkpoint) }()
       case 10: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
@@ -3515,8 +4011,8 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if !self.previousHash.isEmpty {
       try visitor.visitSingularStringField(value: self.previousHash, fieldNumber: 4)
     }
-    if !self.txHash.isEmpty {
-      try visitor.visitSingularStringField(value: self.txHash, fieldNumber: 5)
+    if !self.txsHash.isEmpty {
+      try visitor.visitSingularStringField(value: self.txsHash, fieldNumber: 5)
     }
     if !self.txs.isEmpty {
       try visitor.visitRepeatedStringField(value: self.txs, fieldNumber: 6)
@@ -3526,9 +4022,6 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
     }
     if !self.signatures.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.signatures, fieldNumber: 8)
-    }
-    if !self.checkpoint.isEmpty {
-      try visitor.visitSingularStringField(value: self.checkpoint, fieldNumber: 9)
     }
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 10)
@@ -3544,11 +4037,10 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.height != rhs.height {return false}
     if lhs.merkleRoot != rhs.merkleRoot {return false}
     if lhs.previousHash != rhs.previousHash {return false}
-    if lhs.txHash != rhs.txHash {return false}
+    if lhs.txsHash != rhs.txsHash {return false}
     if lhs.txs != rhs.txs {return false}
     if lhs.proposer != rhs.proposer {return false}
     if lhs.signatures != rhs.signatures {return false}
-    if lhs.checkpoint != rhs.checkpoint {return false}
     if lhs.rollup != rhs.rollup {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -3677,26 +4169,27 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     4: .standard(proto: "account_migrate"),
     5: .standard(proto: "create_asset"),
     6: .standard(proto: "update_asset"),
-    7: .standard(proto: "create_factory"),
-    9: .same(proto: "exchange"),
-    10: .standard(proto: "exchange_v2"),
-    11: .same(proto: "transfer"),
-    12: .standard(proto: "transfer_v2"),
-    13: .standard(proto: "transfer_v3"),
-    15: .standard(proto: "upgrade_node"),
-    19: .standard(proto: "create_token"),
-    20: .standard(proto: "acquire_asset_v2"),
-    21: .standard(proto: "mint_asset"),
-    22: .standard(proto: "acquire_asset_v3"),
-    23: .same(proto: "stake"),
-    24: .standard(proto: "revoke_stake"),
-    25: .standard(proto: "create_rollup"),
-    26: .standard(proto: "update_rollup"),
-    27: .standard(proto: "join_rollup"),
-    28: .standard(proto: "leave_rollup"),
-    29: .standard(proto: "create_rollup_block"),
-    30: .standard(proto: "deposit_token"),
-    31: .standard(proto: "withdraw_token"),
+    10: .same(proto: "exchange"),
+    12: .standard(proto: "exchange_v2"),
+    13: .same(proto: "transfer"),
+    14: .standard(proto: "transfer_v2"),
+    15: .standard(proto: "transfer_v3"),
+    20: .standard(proto: "create_token"),
+    21: .standard(proto: "deposit_token"),
+    22: .standard(proto: "withdraw_token"),
+    30: .standard(proto: "create_factory"),
+    31: .standard(proto: "acquire_asset_v2"),
+    32: .standard(proto: "acquire_asset_v3"),
+    33: .standard(proto: "mint_asset"),
+    40: .same(proto: "stake"),
+    41: .standard(proto: "revoke_stake"),
+    42: .standard(proto: "claim_stake"),
+    49: .standard(proto: "upgrade_node"),
+    50: .standard(proto: "create_rollup"),
+    51: .standard(proto: "update_rollup"),
+    52: .standard(proto: "join_rollup"),
+    53: .standard(proto: "leave_rollup"),
+    54: .standard(proto: "create_rollup_block"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3759,16 +4252,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .updateAsset(v)}
       }()
-      case 7: try {
-        var v: Ocap_CreateFactoryTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .createFactory(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createFactory(v)}
-      }()
-      case 9: try {
+      case 10: try {
         var v: Ocap_ExchangeTx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3777,7 +4261,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .exchange(v)}
       }()
-      case 10: try {
+      case 12: try {
         var v: Ocap_ExchangeV2Tx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3786,7 +4270,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .exchangeV2(v)}
       }()
-      case 11: try {
+      case 13: try {
         var v: Ocap_TransferTx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3795,7 +4279,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .transfer(v)}
       }()
-      case 12: try {
+      case 14: try {
         var v: Ocap_TransferV2Tx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3804,7 +4288,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .transferV2(v)}
       }()
-      case 13: try {
+      case 15: try {
         var v: Ocap_TransferV3Tx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3813,16 +4297,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .transferV3(v)}
       }()
-      case 15: try {
-        var v: Ocap_UpgradeNodeTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .upgradeNode(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .upgradeNode(v)}
-      }()
-      case 19: try {
+      case 20: try {
         var v: Ocap_CreateTokenTx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3831,97 +4306,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .createToken(v)}
       }()
-      case 20: try {
-        var v: Ocap_AcquireAssetV2Tx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .acquireAssetV2(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .acquireAssetV2(v)}
-      }()
       case 21: try {
-        var v: Ocap_MintAssetTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .mintAsset(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .mintAsset(v)}
-      }()
-      case 22: try {
-        var v: Ocap_AcquireAssetV3Tx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .acquireAssetV3(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .acquireAssetV3(v)}
-      }()
-      case 23: try {
-        var v: Ocap_StakeTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .stake(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .stake(v)}
-      }()
-      case 24: try {
-        var v: Ocap_RevokeStakeTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .revokeStake(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .revokeStake(v)}
-      }()
-      case 25: try {
-        var v: Ocap_CreateRollupTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .createRollup(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createRollup(v)}
-      }()
-      case 26: try {
-        var v: Ocap_UpdateRollupTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .updateRollup(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .updateRollup(v)}
-      }()
-      case 27: try {
-        var v: Ocap_JoinRollupTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .joinRollup(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .joinRollup(v)}
-      }()
-      case 28: try {
-        var v: Ocap_LeaveRollupTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .leaveRollup(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .leaveRollup(v)}
-      }()
-      case 29: try {
-        var v: Ocap_CreateRollupBlockTx?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .createRollupBlock(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createRollupBlock(v)}
-      }()
-      case 30: try {
         var v: Ocap_DepositTokenV2Tx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3930,7 +4315,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .depositToken(v)}
       }()
-      case 31: try {
+      case 22: try {
         var v: Ocap_WithdrawTokenV2Tx?
         if let current = self.value {
           try decoder.handleConflictingOneOf()
@@ -3938,6 +4323,123 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .withdrawToken(v)}
+      }()
+      case 30: try {
+        var v: Ocap_CreateFactoryTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .createFactory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .createFactory(v)}
+      }()
+      case 31: try {
+        var v: Ocap_AcquireAssetV2Tx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .acquireAssetV2(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .acquireAssetV2(v)}
+      }()
+      case 32: try {
+        var v: Ocap_AcquireAssetV3Tx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .acquireAssetV3(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .acquireAssetV3(v)}
+      }()
+      case 33: try {
+        var v: Ocap_MintAssetTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .mintAsset(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .mintAsset(v)}
+      }()
+      case 40: try {
+        var v: Ocap_StakeTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .stake(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .stake(v)}
+      }()
+      case 41: try {
+        var v: Ocap_RevokeStakeTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .revokeStake(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .revokeStake(v)}
+      }()
+      case 42: try {
+        var v: Ocap_ClaimStakeTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .claimStake(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .claimStake(v)}
+      }()
+      case 49: try {
+        var v: Ocap_UpgradeNodeTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .upgradeNode(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .upgradeNode(v)}
+      }()
+      case 50: try {
+        var v: Ocap_CreateRollupTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .createRollup(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .createRollup(v)}
+      }()
+      case 51: try {
+        var v: Ocap_UpdateRollupTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .updateRollup(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .updateRollup(v)}
+      }()
+      case 52: try {
+        var v: Ocap_JoinRollupTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .joinRollup(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .joinRollup(v)}
+      }()
+      case 53: try {
+        var v: Ocap_LeaveRollupTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .leaveRollup(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .leaveRollup(v)}
+      }()
+      case 54: try {
+        var v: Ocap_CreateRollupBlockTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .createRollupBlock(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .createRollupBlock(v)}
       }()
       default: break
       }
@@ -3973,85 +4475,89 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       guard case .updateAsset(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     }()
-    case .createFactory?: try {
-      guard case .createFactory(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-    }()
     case .exchange?: try {
       guard case .exchange(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case .exchangeV2?: try {
       guard case .exchangeV2(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
     }()
     case .transfer?: try {
       guard case .transfer(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
     }()
     case .transferV2?: try {
       guard case .transferV2(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
     }()
     case .transferV3?: try {
       guard case .transferV3(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-    }()
-    case .upgradeNode?: try {
-      guard case .upgradeNode(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
     }()
     case .createToken?: try {
       guard case .createToken(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
-    }()
-    case .acquireAssetV2?: try {
-      guard case .acquireAssetV2(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-    }()
-    case .mintAsset?: try {
-      guard case .mintAsset(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 21)
-    }()
-    case .acquireAssetV3?: try {
-      guard case .acquireAssetV3(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 22)
-    }()
-    case .stake?: try {
-      guard case .stake(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 23)
-    }()
-    case .revokeStake?: try {
-      guard case .revokeStake(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 24)
-    }()
-    case .createRollup?: try {
-      guard case .createRollup(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 25)
-    }()
-    case .updateRollup?: try {
-      guard case .updateRollup(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 26)
-    }()
-    case .joinRollup?: try {
-      guard case .joinRollup(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 27)
-    }()
-    case .leaveRollup?: try {
-      guard case .leaveRollup(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 28)
-    }()
-    case .createRollupBlock?: try {
-      guard case .createRollupBlock(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 29)
     }()
     case .depositToken?: try {
       guard case .depositToken(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 21)
     }()
     case .withdrawToken?: try {
       guard case .withdrawToken(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 22)
+    }()
+    case .createFactory?: try {
+      guard case .createFactory(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
+    }()
+    case .acquireAssetV2?: try {
+      guard case .acquireAssetV2(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 31)
+    }()
+    case .acquireAssetV3?: try {
+      guard case .acquireAssetV3(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 32)
+    }()
+    case .mintAsset?: try {
+      guard case .mintAsset(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 33)
+    }()
+    case .stake?: try {
+      guard case .stake(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 40)
+    }()
+    case .revokeStake?: try {
+      guard case .revokeStake(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 41)
+    }()
+    case .claimStake?: try {
+      guard case .claimStake(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 42)
+    }()
+    case .upgradeNode?: try {
+      guard case .upgradeNode(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 49)
+    }()
+    case .createRollup?: try {
+      guard case .createRollup(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    }()
+    case .updateRollup?: try {
+      guard case .updateRollup(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 51)
+    }()
+    case .joinRollup?: try {
+      guard case .joinRollup(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 52)
+    }()
+    case .leaveRollup?: try {
+      guard case .leaveRollup(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 53)
+    }()
+    case .createRollupBlock?: try {
+      guard case .createRollupBlock(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 54)
     }()
     case nil: break
     }
