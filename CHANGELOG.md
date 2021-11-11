@@ -1,3 +1,7 @@
+## 0.11.12 (November 09, 2021)
+  - Merge remote-tracking branch 'origin/master' into digital-formatter
+  - input check
+
 ## 0.11.11 (November 09, 2021)
   - add withdraw v2
   - add deposit token v2
