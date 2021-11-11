@@ -23,12 +23,19 @@
 
 import Foundation
 import UIKit
+import BigInt
+import web3swift
 
 public extension String {
     
-    func isValidDigital(decimals: Int? = 18) -> Bool {
+    func isMatchRegex(decimals: Int? = 18) -> Bool {
+        guard !self.isEmpty,
+              self != "." else {
+                  return false
+              }
+        
         let realDecimal = decimals ?? 18
-        let reg = "^[0-9]+(.[0-9]{1,\(realDecimal)})?$"
+        let reg = "^[0-9]{0,18}+(\\.[0-9]{0,\(realDecimal)})?"
         let pre = NSPredicate(format: "SELF MATCHES %@", reg)
         if pre.evaluate(with: self) {
             return true
@@ -37,8 +44,15 @@ public extension String {
         }
     }
     
+    func isValidDigital(decimals: Int? = 18) -> Bool {
+        let isMatch = isMatchRegex(decimals: decimals)
+        let canBeBigUInt = Web3.Utils.parseToBigUInt(self, decimals: decimals ?? 18) != nil
+        
+        return isMatch && canBeBigUInt
+    }
+    
     func isValidAmount(decimal: Int? = 18) -> Bool {
-       let realDecimal = min(6, decimal ?? 18)
+        let realDecimal = min(6, decimal ?? 18)
         
         if !isValidDigital(decimals: realDecimal) {
             return false
