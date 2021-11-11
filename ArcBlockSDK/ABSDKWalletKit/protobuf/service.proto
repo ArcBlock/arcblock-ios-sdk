@@ -27,6 +27,7 @@ service Query {
   rpc getSwapState(stream RequestGetState) returns (stream ResponseGetSwapState);
   rpc getDelegateState(stream RequestGetState) returns (stream ResponseGetDelegateState);
   rpc getTokenState(stream RequestGetState) returns (stream ResponseGetTokenState);
+  rpc getEvidenceState(stream RequestGetEvidenceState) returns (stream ResponseGetEvidenceState);
 
   // For client side
   rpc getAccountTokens(stream RequestGetAccountTokens) returns (stream ResponseGetAccountTokens);
@@ -54,16 +55,15 @@ service Query {
 
   // rollup
   rpc getRollupState(stream RequestGetState) returns (stream ResponseGetRollupState);
-  rpc listRollups(RequestPaginated) returns (ResponseListRollups);
+  rpc listRollups(RequestListRollups) returns (ResponseListRollups);
   rpc getRollupBlock(stream RequestGetRollupBlock) returns (stream ResponseGetRollupBlock);
   rpc listRollupBlocks(RequestListRollupBlocks) returns (ResponseListRollupBlocks);
+  rpc listRollupValidators(RequestListRollupValidators) returns (ResponseListRollupValidators);
+
+  // search
+  rpc search(RequestSearch) returns (ResponseSearch);
 }
 
 service Mutation {
   rpc sendTx(RequestSendTx) returns (ResponseSendTx);
-  rpc unsubscribe(RequestUnsubscribe) returns (ResponseUnsubscribe);
-}
-
-service Subscription {
-  rpc subscribe(RequestSubscribe) returns (stream ResponseSubscribe);
 }

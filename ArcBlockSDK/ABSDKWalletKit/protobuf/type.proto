@@ -468,7 +468,6 @@ message IndexedTokenInput {
   int32 decimal = 3;
   string unit = 4;
   string symbol = 5;
-  string key = 10; // TODO: 这里是为了测试时兼容，应该删除
 }
 
 // 和 AssetFactoryInput 数据结构类似，可以参考其注释
@@ -488,4 +487,17 @@ message RollupValidator {
 message RollupSignature {
   string signer = 1;
   string signature = 2;
+}
+
+message ForeignToken {
+  string type = 1; // can be erc20, brc20, erc721
+  string contract_address = 2;
+  string chain_type = 3; // can be ethereum, bsc, fantom, matic
+  string chain_name = 4; // can be rinkeby, main, test
+  int32 chain_id = 5; // can be 1, 4
+}
+
+message RevokedStake {
+  repeated TokenInput tokens = 1;
+  repeated string assets = 2;
 }

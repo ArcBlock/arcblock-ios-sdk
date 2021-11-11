@@ -9,23 +9,23 @@
 /* Begin PBXBuildFile section */
 		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
 		1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */; };
-		1A534A2126E702F300513949 /* trace-type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1026E702F300513949 /* trace-type.pb.swift */; };
-		1A534A2226E702F300513949 /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1126E702F300513949 /* state.pb.swift */; };
-		1A534A2326E702F300513949 /* service.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 1A534A1226E702F300513949 /* service.graphqls */; };
-		1A534A2426E702F300513949 /* state.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1326E702F300513949 /* state.proto */; };
-		1A534A2526E702F300513949 /* service.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1426E702F300513949 /* service.proto */; };
-		1A534A2626E702F300513949 /* tx.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1526E702F300513949 /* tx.proto */; };
-		1A534A2726E702F300513949 /* tx.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1626E702F300513949 /* tx.pb.swift */; };
-		1A534A2826E702F300513949 /* service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1726E702F300513949 /* service.pb.swift */; };
-		1A534A2926E702F300513949 /* vendor.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1826E702F300513949 /* vendor.proto */; };
-		1A534A2A26E702F300513949 /* trace-type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1926E702F300513949 /* trace-type.proto */; };
-		1A534A2B26E702F300513949 /* enum.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1A26E702F300513949 /* enum.pb.swift */; };
-		1A534A2C26E702F300513949 /* rpc.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1B26E702F300513949 /* rpc.proto */; };
-		1A534A2D26E702F300513949 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1C26E702F300513949 /* rpc.pb.swift */; };
-		1A534A2E26E702F300513949 /* type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1D26E702F300513949 /* type.pb.swift */; };
-		1A534A2F26E702F300513949 /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1E26E702F300513949 /* type.proto */; };
-		1A534A3026E702F300513949 /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A1F26E702F300513949 /* enum.proto */; };
-		1A534A3126E702F300513949 /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A534A2026E702F300513949 /* vendor.pb.swift */; };
+		1A76D281273CD96B00C4B25B /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D270273CD96B00C4B25B /* rpc.pb.swift */; };
+		1A76D282273CD96B00C4B25B /* tx.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D271273CD96B00C4B25B /* tx.proto */; };
+		1A76D283273CD96B00C4B25B /* service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D272273CD96B00C4B25B /* service.pb.swift */; };
+		1A76D284273CD96B00C4B25B /* vendor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D273273CD96B00C4B25B /* vendor.pb.swift */; };
+		1A76D285273CD96B00C4B25B /* trace-type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D274273CD96B00C4B25B /* trace-type.proto */; };
+		1A76D286273CD96B00C4B25B /* enum.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D275273CD96B00C4B25B /* enum.proto */; };
+		1A76D287273CD96B00C4B25B /* trace-type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D276273CD96B00C4B25B /* trace-type.pb.swift */; };
+		1A76D288273CD96B00C4B25B /* state.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D277273CD96B00C4B25B /* state.proto */; };
+		1A76D289273CD96B00C4B25B /* vendor.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D278273CD96B00C4B25B /* vendor.proto */; };
+		1A76D28A273CD96B00C4B25B /* service.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D279273CD96B00C4B25B /* service.proto */; };
+		1A76D28B273CD96B00C4B25B /* rpc.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27A273CD96B00C4B25B /* rpc.proto */; };
+		1A76D28C273CD96B00C4B25B /* enum.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27B273CD96B00C4B25B /* enum.pb.swift */; };
+		1A76D28D273CD96B00C4B25B /* tx.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27C273CD96B00C4B25B /* tx.pb.swift */; };
+		1A76D28E273CD96B00C4B25B /* service.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 1A76D27D273CD96B00C4B25B /* service.graphqls */; };
+		1A76D28F273CD96B00C4B25B /* type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27E273CD96B00C4B25B /* type.pb.swift */; };
+		1A76D290273CD96B00C4B25B /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27F273CD96B00C4B25B /* type.proto */; };
+		1A76D291273CD96B00C4B25B /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D280273CD96B00C4B25B /* state.pb.swift */; };
 		1A924F9326F34C0F003FD383 /* web3swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A924F9226F34C0F003FD383 /* web3swift.framework */; };
 		1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */; };
 		1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */; };
@@ -98,23 +98,23 @@
 /* Begin PBXFileReference section */
 		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignVerifySpec.swift; sourceTree = "<group>"; };
-		1A534A1026E702F300513949 /* trace-type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "trace-type.pb.swift"; sourceTree = "<group>"; };
-		1A534A1126E702F300513949 /* state.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = state.pb.swift; sourceTree = "<group>"; };
-		1A534A1226E702F300513949 /* service.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = service.graphqls; sourceTree = "<group>"; };
-		1A534A1326E702F300513949 /* state.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = state.proto; sourceTree = "<group>"; };
-		1A534A1426E702F300513949 /* service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = service.proto; sourceTree = "<group>"; };
-		1A534A1526E702F300513949 /* tx.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = tx.proto; sourceTree = "<group>"; };
-		1A534A1626E702F300513949 /* tx.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tx.pb.swift; sourceTree = "<group>"; };
-		1A534A1726E702F300513949 /* service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = service.pb.swift; sourceTree = "<group>"; };
-		1A534A1826E702F300513949 /* vendor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = vendor.proto; sourceTree = "<group>"; };
-		1A534A1926E702F300513949 /* trace-type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = "trace-type.proto"; sourceTree = "<group>"; };
-		1A534A1A26E702F300513949 /* enum.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enum.pb.swift; sourceTree = "<group>"; };
-		1A534A1B26E702F300513949 /* rpc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = rpc.proto; sourceTree = "<group>"; };
-		1A534A1C26E702F300513949 /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
-		1A534A1D26E702F300513949 /* type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = type.pb.swift; sourceTree = "<group>"; };
-		1A534A1E26E702F300513949 /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
-		1A534A1F26E702F300513949 /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
-		1A534A2026E702F300513949 /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1A76D270273CD96B00C4B25B /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
+		1A76D271273CD96B00C4B25B /* tx.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = tx.proto; sourceTree = "<group>"; };
+		1A76D272273CD96B00C4B25B /* service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = service.pb.swift; sourceTree = "<group>"; };
+		1A76D273273CD96B00C4B25B /* vendor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vendor.pb.swift; sourceTree = "<group>"; };
+		1A76D274273CD96B00C4B25B /* trace-type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = "trace-type.proto"; sourceTree = "<group>"; };
+		1A76D275273CD96B00C4B25B /* enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = enum.proto; sourceTree = "<group>"; };
+		1A76D276273CD96B00C4B25B /* trace-type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "trace-type.pb.swift"; sourceTree = "<group>"; };
+		1A76D277273CD96B00C4B25B /* state.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = state.proto; sourceTree = "<group>"; };
+		1A76D278273CD96B00C4B25B /* vendor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = vendor.proto; sourceTree = "<group>"; };
+		1A76D279273CD96B00C4B25B /* service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = service.proto; sourceTree = "<group>"; };
+		1A76D27A273CD96B00C4B25B /* rpc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = rpc.proto; sourceTree = "<group>"; };
+		1A76D27B273CD96B00C4B25B /* enum.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enum.pb.swift; sourceTree = "<group>"; };
+		1A76D27C273CD96B00C4B25B /* tx.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tx.pb.swift; sourceTree = "<group>"; };
+		1A76D27D273CD96B00C4B25B /* service.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = service.graphqls; sourceTree = "<group>"; };
+		1A76D27E273CD96B00C4B25B /* type.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = type.pb.swift; sourceTree = "<group>"; };
+		1A76D27F273CD96B00C4B25B /* type.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = type.proto; sourceTree = "<group>"; };
+		1A76D280273CD96B00C4B25B /* state.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = state.pb.swift; sourceTree = "<group>"; };
 		1A924F9026F3498A003FD383 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A924F9226F34C0F003FD383 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AAF056826F1E1B600A5C097 /* web3swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = web3swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -337,23 +337,23 @@
 		2704474C231E0052007BA477 /* protobuf */ = {
 			isa = PBXGroup;
 			children = (
-				1A534A1A26E702F300513949 /* enum.pb.swift */,
-				1A534A1F26E702F300513949 /* enum.proto */,
-				1A534A1C26E702F300513949 /* rpc.pb.swift */,
-				1A534A1B26E702F300513949 /* rpc.proto */,
-				1A534A1226E702F300513949 /* service.graphqls */,
-				1A534A1726E702F300513949 /* service.pb.swift */,
-				1A534A1426E702F300513949 /* service.proto */,
-				1A534A1126E702F300513949 /* state.pb.swift */,
-				1A534A1326E702F300513949 /* state.proto */,
-				1A534A1026E702F300513949 /* trace-type.pb.swift */,
-				1A534A1926E702F300513949 /* trace-type.proto */,
-				1A534A1626E702F300513949 /* tx.pb.swift */,
-				1A534A1526E702F300513949 /* tx.proto */,
-				1A534A1D26E702F300513949 /* type.pb.swift */,
-				1A534A1E26E702F300513949 /* type.proto */,
-				1A534A2026E702F300513949 /* vendor.pb.swift */,
-				1A534A1826E702F300513949 /* vendor.proto */,
+				1A76D27B273CD96B00C4B25B /* enum.pb.swift */,
+				1A76D275273CD96B00C4B25B /* enum.proto */,
+				1A76D270273CD96B00C4B25B /* rpc.pb.swift */,
+				1A76D27A273CD96B00C4B25B /* rpc.proto */,
+				1A76D27D273CD96B00C4B25B /* service.graphqls */,
+				1A76D272273CD96B00C4B25B /* service.pb.swift */,
+				1A76D279273CD96B00C4B25B /* service.proto */,
+				1A76D280273CD96B00C4B25B /* state.pb.swift */,
+				1A76D277273CD96B00C4B25B /* state.proto */,
+				1A76D276273CD96B00C4B25B /* trace-type.pb.swift */,
+				1A76D274273CD96B00C4B25B /* trace-type.proto */,
+				1A76D27C273CD96B00C4B25B /* tx.pb.swift */,
+				1A76D271273CD96B00C4B25B /* tx.proto */,
+				1A76D27E273CD96B00C4B25B /* type.pb.swift */,
+				1A76D27F273CD96B00C4B25B /* type.proto */,
+				1A76D273273CD96B00C4B25B /* vendor.pb.swift */,
+				1A76D278273CD96B00C4B25B /* vendor.proto */,
 			);
 			path = protobuf;
 			sourceTree = "<group>";
@@ -516,7 +516,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A534A2326E702F300513949 /* service.graphqls in Resources */,
+				1A76D28E273CD96B00C4B25B /* service.graphqls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,50 +598,50 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A534A2C26E702F300513949 /* rpc.proto in Sources */,
+				1A76D286273CD96B00C4B25B /* enum.proto in Sources */,
 				2704479D231E0052007BA477 /* Base16String.swift in Sources */,
 				27044792231E0052007BA477 /* ABSDKDataSource.swift in Sources */,
 				2704478D231E0052007BA477 /* ed25519_utility.swift in Sources */,
-				1A534A3126E702F300513949 /* vendor.pb.swift in Sources */,
 				27044799231E0052007BA477 /* ABSDKCustomScalarTypes.swift in Sources */,
 				27044790231E0052007BA477 /* DidHelper.swift in Sources */,
+				1A76D288273CD96B00C4B25B /* state.proto in Sources */,
 				2704478B231E0052007BA477 /* ed25519_sign.swift in Sources */,
+				1A76D28B273CD96B00C4B25B /* rpc.proto in Sources */,
 				2704478A231E0052007BA477 /* ed25519_open.swift in Sources */,
 				2704479C231E0052007BA477 /* Base64String.swift in Sources */,
+				1A76D285273CD96B00C4B25B /* trace-type.proto in Sources */,
 				270447A3231E0052007BA477 /* StringExtension.swift in Sources */,
-				1A534A2826E702F300513949 /* service.pb.swift in Sources */,
 				270447A5231E0052007BA477 /* TxHelper.swift in Sources */,
-				1A534A2226E702F300513949 /* state.pb.swift in Sources */,
 				7A7988802679DE25001202D5 /* ABSDKClient.swift in Sources */,
-				1A534A2D26E702F300513949 /* rpc.pb.swift in Sources */,
-				1A534A2526E702F300513949 /* service.proto in Sources */,
 				270447A4231E0052007BA477 /* Base32String.swift in Sources */,
-				1A534A2726E702F300513949 /* tx.pb.swift in Sources */,
+				1A76D284273CD96B00C4B25B /* vendor.pb.swift in Sources */,
+				1A76D28A273CD96B00C4B25B /* service.proto in Sources */,
 				27044795231E0052007BA477 /* ABSDKHTTPTransport.swift in Sources */,
+				1A76D287273CD96B00C4B25B /* trace-type.pb.swift in Sources */,
+				1A76D28D273CD96B00C4B25B /* tx.pb.swift in Sources */,
 				27044789231E0052007BA477 /* ed25519_fe.swift in Sources */,
+				1A76D282273CD96B00C4B25B /* tx.proto in Sources */,
+				1A76D281273CD96B00C4B25B /* rpc.pb.swift in Sources */,
 				27044791231E0052007BA477 /* ABSDKPagination.swift in Sources */,
 				2704478E231E0052007BA477 /* ed25519_sc.swift in Sources */,
 				2704479F231E0052007BA477 /* Base58String.swift in Sources */,
 				270447A0231E0052007BA477 /* Base16.swift in Sources */,
-				1A534A2A26E702F300513949 /* trace-type.proto in Sources */,
 				2704479A231E0052007BA477 /* ABSDKTableViewController.swift in Sources */,
-				1A534A2626E702F300513949 /* tx.proto in Sources */,
 				27044797231E0052007BA477 /* ABSDKPagedArrayDataSource.swift in Sources */,
 				2704479E231E0052007BA477 /* Multibase.swift in Sources */,
+				1A76D289273CD96B00C4B25B /* vendor.proto in Sources */,
 				27044794231E0052007BA477 /* ABSDKView.swift in Sources */,
-				1A534A2B26E702F300513949 /* enum.pb.swift in Sources */,
-				1A534A2926E702F300513949 /* vendor.proto in Sources */,
 				2704478C231E0052007BA477 /* ed25519_ge.swift in Sources */,
-				1A534A2E26E702F300513949 /* type.pb.swift in Sources */,
+				1A76D28F273CD96B00C4B25B /* type.pb.swift in Sources */,
 				270447A1231E0052007BA477 /* Base32.swift in Sources */,
 				2704479B231E0052007BA477 /* Encoding.swift in Sources */,
-				1A534A2126E702F300513949 /* trace-type.pb.swift in Sources */,
+				1A76D291273CD96B00C4B25B /* state.pb.swift in Sources */,
 				2704478F231E0052007BA477 /* MCrypto.swift in Sources */,
-				1A534A2426E702F300513949 /* state.proto in Sources */,
-				1A534A3026E702F300513949 /* enum.proto in Sources */,
+				1A76D283273CD96B00C4B25B /* service.pb.swift in Sources */,
+				1A76D28C273CD96B00C4B25B /* enum.pb.swift in Sources */,
 				270447A2231E0052007BA477 /* shim.swift in Sources */,
 				27044788231E0052007BA477 /* BIP44Utils.swift in Sources */,
-				1A534A2F26E702F300513949 /* type.proto in Sources */,
+				1A76D290273CD96B00C4B25B /* type.proto in Sources */,
 				270447A6231E0052007BA477 /* TypeUrls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
