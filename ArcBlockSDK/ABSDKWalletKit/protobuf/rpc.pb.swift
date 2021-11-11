@@ -479,519 +479,6 @@ public struct Ocap_ResponseGetValidatorsInfo {
   fileprivate var _validatorsInfo: Ocap_ValidatorsInfo? = nil
 }
 
-/// filter could be: value.header.height > 10086 and value.byzantine_validators
-/// != []
-public struct Ocap_RequestSubscribe {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var topic: String = String()
-
-  public var filter: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_ResponseSubscribe {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: Ocap_StatusCode = .ok
-
-  public var value: Ocap_ResponseSubscribe.OneOf_Value? = nil
-
-  public var topic: String {
-    get {
-      if case .topic(let v)? = value {return v}
-      return String()
-    }
-    set {value = .topic(newValue)}
-  }
-
-  public var transfer: Ocap_Transaction {
-    get {
-      if case .transfer(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .transfer(newValue)}
-  }
-
-  public var accountMigrate: Ocap_Transaction {
-    get {
-      if case .accountMigrate(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .accountMigrate(newValue)}
-  }
-
-  public var confirm: Ocap_Transaction {
-    get {
-      if case .confirm(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .confirm(newValue)}
-  }
-
-  public var createAsset: Ocap_Transaction {
-    get {
-      if case .createAsset(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .createAsset(newValue)}
-  }
-
-  /// Transaction revoke = 8 [ deprecated = true ];
-  public var exchange: Ocap_Transaction {
-    get {
-      if case .exchange(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .exchange(newValue)}
-  }
-
-  public var beginBlock: Vendor_RequestBeginBlock {
-    get {
-      if case .beginBlock(let v)? = value {return v}
-      return Vendor_RequestBeginBlock()
-    }
-    set {value = .beginBlock(newValue)}
-  }
-
-  public var endBlock: Vendor_RequestEndBlock {
-    get {
-      if case .endBlock(let v)? = value {return v}
-      return Vendor_RequestEndBlock()
-    }
-    set {value = .endBlock(newValue)}
-  }
-
-  public var declare: Ocap_Transaction {
-    get {
-      if case .declare(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .declare(newValue)}
-  }
-
-  public var updateAsset: Ocap_Transaction {
-    get {
-      if case .updateAsset(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .updateAsset(newValue)}
-  }
-
-  public var consensusUpgrade: Ocap_Transaction {
-    get {
-      if case .consensusUpgrade(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .consensusUpgrade(newValue)}
-  }
-
-  /// Transaction declare_file = 22 [ deprecated = true ];
-  public var sysUpgrade: Ocap_Transaction {
-    get {
-      if case .sysUpgrade(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .sysUpgrade(newValue)}
-  }
-
-  public var stake: Ocap_Transaction {
-    get {
-      if case .stake(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .stake(newValue)}
-  }
-
-  public var delegate: Ocap_Transaction {
-    get {
-      if case .delegate(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .delegate(newValue)}
-  }
-
-  /// Transaction activate_protocol = 26 [ deprecated = true ];
-  /// Transaction deactivate_protocol = 27 [ deprecated = true ];
-  public var revokeDelegate: Ocap_Transaction {
-    get {
-      if case .revokeDelegate(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .revokeDelegate(newValue)}
-  }
-
-  public var depositToken: Ocap_Transaction {
-    get {
-      if case .depositToken(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .depositToken(newValue)}
-  }
-
-  public var withdrawToken: Ocap_Transaction {
-    get {
-      if case .withdrawToken(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .withdrawToken(newValue)}
-  }
-
-  public var approveWithdraw: Ocap_Transaction {
-    get {
-      if case .approveWithdraw(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .approveWithdraw(newValue)}
-  }
-
-  public var revokeWithdraw: Ocap_Transaction {
-    get {
-      if case .revokeWithdraw(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .revokeWithdraw(newValue)}
-  }
-
-  public var setupSwap: Ocap_Transaction {
-    get {
-      if case .setupSwap(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .setupSwap(newValue)}
-  }
-
-  public var revokeSwap: Ocap_Transaction {
-    get {
-      if case .revokeSwap(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .revokeSwap(newValue)}
-  }
-
-  public var retrieveSwap: Ocap_Transaction {
-    get {
-      if case .retrieveSwap(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .retrieveSwap(newValue)}
-  }
-
-  /// Transaction poke = 36 [ deprecated = true ];
-  /// Transaction deploy_protocol = 37 [ deprecated = true ];
-  public var consumeAsset: Ocap_Transaction {
-    get {
-      if case .consumeAsset(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .consumeAsset(newValue)}
-  }
-
-  public var acquireAsset: Ocap_Transaction {
-    get {
-      if case .acquireAsset(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .acquireAsset(newValue)}
-  }
-
-  public var upgradeNode: Ocap_Transaction {
-    get {
-      if case .upgradeNode(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .upgradeNode(newValue)}
-  }
-
-  public var updateValidator: Ocap_Transaction {
-    get {
-      if case .updateValidator(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .updateValidator(newValue)}
-  }
-
-  public var updateConsensusParams: Ocap_Transaction {
-    get {
-      if case .updateConsensusParams(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .updateConsensusParams(newValue)}
-  }
-
-  public var accountState: Ocap_AccountState {
-    get {
-      if case .accountState(let v)? = value {return v}
-      return Ocap_AccountState()
-    }
-    set {value = .accountState(newValue)}
-  }
-
-  public var assetState: Ocap_AssetState {
-    get {
-      if case .assetState(let v)? = value {return v}
-      return Ocap_AssetState()
-    }
-    set {value = .assetState(newValue)}
-  }
-
-  public var forgeState: Ocap_ForgeState {
-    get {
-      if case .forgeState(let v)? = value {return v}
-      return Ocap_ForgeState()
-    }
-    set {value = .forgeState(newValue)}
-  }
-
-  /// StakeState stake_state = 132 [ deprecated = true ];
-  /// ProtocolState protocol_state = 133 [ deprecated = true ];
-  public var delegateState: Ocap_DelegateState {
-    get {
-      if case .delegateState(let v)? = value {return v}
-      return Ocap_DelegateState()
-    }
-    set {value = .delegateState(newValue)}
-  }
-
-  public var swapState: Ocap_SwapState {
-    get {
-      if case .swapState(let v)? = value {return v}
-      return Ocap_SwapState()
-    }
-    set {value = .swapState(newValue)}
-  }
-
-  public var createToken: Ocap_Transaction {
-    get {
-      if case .createToken(let v)? = value {return v}
-      return Ocap_Transaction()
-    }
-    set {value = .createToken(newValue)}
-  }
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public enum OneOf_Value: Equatable {
-    case topic(String)
-    case transfer(Ocap_Transaction)
-    case accountMigrate(Ocap_Transaction)
-    case confirm(Ocap_Transaction)
-    case createAsset(Ocap_Transaction)
-    /// Transaction revoke = 8 [ deprecated = true ];
-    case exchange(Ocap_Transaction)
-    case beginBlock(Vendor_RequestBeginBlock)
-    case endBlock(Vendor_RequestEndBlock)
-    case declare(Ocap_Transaction)
-    case updateAsset(Ocap_Transaction)
-    case consensusUpgrade(Ocap_Transaction)
-    /// Transaction declare_file = 22 [ deprecated = true ];
-    case sysUpgrade(Ocap_Transaction)
-    case stake(Ocap_Transaction)
-    case delegate(Ocap_Transaction)
-    /// Transaction activate_protocol = 26 [ deprecated = true ];
-    /// Transaction deactivate_protocol = 27 [ deprecated = true ];
-    case revokeDelegate(Ocap_Transaction)
-    case depositToken(Ocap_Transaction)
-    case withdrawToken(Ocap_Transaction)
-    case approveWithdraw(Ocap_Transaction)
-    case revokeWithdraw(Ocap_Transaction)
-    case setupSwap(Ocap_Transaction)
-    case revokeSwap(Ocap_Transaction)
-    case retrieveSwap(Ocap_Transaction)
-    /// Transaction poke = 36 [ deprecated = true ];
-    /// Transaction deploy_protocol = 37 [ deprecated = true ];
-    case consumeAsset(Ocap_Transaction)
-    case acquireAsset(Ocap_Transaction)
-    case upgradeNode(Ocap_Transaction)
-    case updateValidator(Ocap_Transaction)
-    case updateConsensusParams(Ocap_Transaction)
-    case accountState(Ocap_AccountState)
-    case assetState(Ocap_AssetState)
-    case forgeState(Ocap_ForgeState)
-    /// StakeState stake_state = 132 [ deprecated = true ];
-    /// ProtocolState protocol_state = 133 [ deprecated = true ];
-    case delegateState(Ocap_DelegateState)
-    case swapState(Ocap_SwapState)
-    case createToken(Ocap_Transaction)
-
-  #if !swift(>=4.1)
-    public static func ==(lhs: Ocap_ResponseSubscribe.OneOf_Value, rhs: Ocap_ResponseSubscribe.OneOf_Value) -> Bool {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch (lhs, rhs) {
-      case (.topic, .topic): return {
-        guard case .topic(let l) = lhs, case .topic(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.transfer, .transfer): return {
-        guard case .transfer(let l) = lhs, case .transfer(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.accountMigrate, .accountMigrate): return {
-        guard case .accountMigrate(let l) = lhs, case .accountMigrate(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.confirm, .confirm): return {
-        guard case .confirm(let l) = lhs, case .confirm(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.createAsset, .createAsset): return {
-        guard case .createAsset(let l) = lhs, case .createAsset(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.exchange, .exchange): return {
-        guard case .exchange(let l) = lhs, case .exchange(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.beginBlock, .beginBlock): return {
-        guard case .beginBlock(let l) = lhs, case .beginBlock(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.endBlock, .endBlock): return {
-        guard case .endBlock(let l) = lhs, case .endBlock(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.declare, .declare): return {
-        guard case .declare(let l) = lhs, case .declare(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.updateAsset, .updateAsset): return {
-        guard case .updateAsset(let l) = lhs, case .updateAsset(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.consensusUpgrade, .consensusUpgrade): return {
-        guard case .consensusUpgrade(let l) = lhs, case .consensusUpgrade(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.sysUpgrade, .sysUpgrade): return {
-        guard case .sysUpgrade(let l) = lhs, case .sysUpgrade(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.stake, .stake): return {
-        guard case .stake(let l) = lhs, case .stake(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.delegate, .delegate): return {
-        guard case .delegate(let l) = lhs, case .delegate(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.revokeDelegate, .revokeDelegate): return {
-        guard case .revokeDelegate(let l) = lhs, case .revokeDelegate(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.depositToken, .depositToken): return {
-        guard case .depositToken(let l) = lhs, case .depositToken(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.withdrawToken, .withdrawToken): return {
-        guard case .withdrawToken(let l) = lhs, case .withdrawToken(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.approveWithdraw, .approveWithdraw): return {
-        guard case .approveWithdraw(let l) = lhs, case .approveWithdraw(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.revokeWithdraw, .revokeWithdraw): return {
-        guard case .revokeWithdraw(let l) = lhs, case .revokeWithdraw(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.setupSwap, .setupSwap): return {
-        guard case .setupSwap(let l) = lhs, case .setupSwap(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.revokeSwap, .revokeSwap): return {
-        guard case .revokeSwap(let l) = lhs, case .revokeSwap(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.retrieveSwap, .retrieveSwap): return {
-        guard case .retrieveSwap(let l) = lhs, case .retrieveSwap(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.consumeAsset, .consumeAsset): return {
-        guard case .consumeAsset(let l) = lhs, case .consumeAsset(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.acquireAsset, .acquireAsset): return {
-        guard case .acquireAsset(let l) = lhs, case .acquireAsset(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.upgradeNode, .upgradeNode): return {
-        guard case .upgradeNode(let l) = lhs, case .upgradeNode(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.updateValidator, .updateValidator): return {
-        guard case .updateValidator(let l) = lhs, case .updateValidator(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.updateConsensusParams, .updateConsensusParams): return {
-        guard case .updateConsensusParams(let l) = lhs, case .updateConsensusParams(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.accountState, .accountState): return {
-        guard case .accountState(let l) = lhs, case .accountState(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.assetState, .assetState): return {
-        guard case .assetState(let l) = lhs, case .assetState(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.forgeState, .forgeState): return {
-        guard case .forgeState(let l) = lhs, case .forgeState(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.delegateState, .delegateState): return {
-        guard case .delegateState(let l) = lhs, case .delegateState(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.swapState, .swapState): return {
-        guard case .swapState(let l) = lhs, case .swapState(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.createToken, .createToken): return {
-        guard case .createToken(let l) = lhs, case .createToken(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      default: return false
-      }
-    }
-  #endif
-  }
-
-  public init() {}
-}
-
-public struct Ocap_RequestUnsubscribe {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var topic: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_ResponseUnsubscribe {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: Ocap_StatusCode = .ok
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
 /// get config
 public struct Ocap_RequestGetConfig {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -1100,99 +587,109 @@ public struct Ocap_RequestListTransactions {
   // methods supported on all messages.
 
   public var paging: Ocap_Page {
-    get {return _paging ?? Ocap_Page()}
-    set {_paging = newValue}
+    get {return _storage._paging ?? Ocap_Page()}
+    set {_uniqueStorage()._paging = newValue}
   }
   /// Returns true if `paging` has been explicitly set.
-  public var hasPaging: Bool {return self._paging != nil}
+  public var hasPaging: Bool {return _storage._paging != nil}
   /// Clears the value of `paging`. Subsequent reads from it will return its default value.
-  public mutating func clearPaging() {self._paging = nil}
+  public mutating func clearPaging() {_uniqueStorage()._paging = nil}
 
   public var timeFilter: Ocap_TimeFilter {
-    get {return _timeFilter ?? Ocap_TimeFilter()}
-    set {_timeFilter = newValue}
+    get {return _storage._timeFilter ?? Ocap_TimeFilter()}
+    set {_uniqueStorage()._timeFilter = newValue}
   }
   /// Returns true if `timeFilter` has been explicitly set.
-  public var hasTimeFilter: Bool {return self._timeFilter != nil}
+  public var hasTimeFilter: Bool {return _storage._timeFilter != nil}
   /// Clears the value of `timeFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearTimeFilter() {self._timeFilter = nil}
+  public mutating func clearTimeFilter() {_uniqueStorage()._timeFilter = nil}
 
   public var addressFilter: Ocap_AddressFilter {
-    get {return _addressFilter ?? Ocap_AddressFilter()}
-    set {_addressFilter = newValue}
+    get {return _storage._addressFilter ?? Ocap_AddressFilter()}
+    set {_uniqueStorage()._addressFilter = newValue}
   }
   /// Returns true if `addressFilter` has been explicitly set.
-  public var hasAddressFilter: Bool {return self._addressFilter != nil}
+  public var hasAddressFilter: Bool {return _storage._addressFilter != nil}
   /// Clears the value of `addressFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearAddressFilter() {self._addressFilter = nil}
+  public mutating func clearAddressFilter() {_uniqueStorage()._addressFilter = nil}
 
   public var typeFilter: Ocap_TypeFilter {
-    get {return _typeFilter ?? Ocap_TypeFilter()}
-    set {_typeFilter = newValue}
+    get {return _storage._typeFilter ?? Ocap_TypeFilter()}
+    set {_uniqueStorage()._typeFilter = newValue}
   }
   /// Returns true if `typeFilter` has been explicitly set.
-  public var hasTypeFilter: Bool {return self._typeFilter != nil}
+  public var hasTypeFilter: Bool {return _storage._typeFilter != nil}
   /// Clears the value of `typeFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearTypeFilter() {self._typeFilter = nil}
+  public mutating func clearTypeFilter() {_uniqueStorage()._typeFilter = nil}
 
   public var validityFilter: Ocap_ValidityFilter {
-    get {return _validityFilter ?? Ocap_ValidityFilter()}
-    set {_validityFilter = newValue}
+    get {return _storage._validityFilter ?? Ocap_ValidityFilter()}
+    set {_uniqueStorage()._validityFilter = newValue}
   }
   /// Returns true if `validityFilter` has been explicitly set.
-  public var hasValidityFilter: Bool {return self._validityFilter != nil}
+  public var hasValidityFilter: Bool {return _storage._validityFilter != nil}
   /// Clears the value of `validityFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearValidityFilter() {self._validityFilter = nil}
+  public mutating func clearValidityFilter() {_uniqueStorage()._validityFilter = nil}
 
   public var factoryFilter: Ocap_FactoryFilter {
-    get {return _factoryFilter ?? Ocap_FactoryFilter()}
-    set {_factoryFilter = newValue}
+    get {return _storage._factoryFilter ?? Ocap_FactoryFilter()}
+    set {_uniqueStorage()._factoryFilter = newValue}
   }
   /// Returns true if `factoryFilter` has been explicitly set.
-  public var hasFactoryFilter: Bool {return self._factoryFilter != nil}
+  public var hasFactoryFilter: Bool {return _storage._factoryFilter != nil}
   /// Clears the value of `factoryFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearFactoryFilter() {self._factoryFilter = nil}
+  public mutating func clearFactoryFilter() {_uniqueStorage()._factoryFilter = nil}
 
   public var tokenFilter: Ocap_TokenFilter {
-    get {return _tokenFilter ?? Ocap_TokenFilter()}
-    set {_tokenFilter = newValue}
+    get {return _storage._tokenFilter ?? Ocap_TokenFilter()}
+    set {_uniqueStorage()._tokenFilter = newValue}
   }
   /// Returns true if `tokenFilter` has been explicitly set.
-  public var hasTokenFilter: Bool {return self._tokenFilter != nil}
+  public var hasTokenFilter: Bool {return _storage._tokenFilter != nil}
   /// Clears the value of `tokenFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearTokenFilter() {self._tokenFilter = nil}
+  public mutating func clearTokenFilter() {_uniqueStorage()._tokenFilter = nil}
 
   public var assetFilter: Ocap_AssetFilter {
-    get {return _assetFilter ?? Ocap_AssetFilter()}
-    set {_assetFilter = newValue}
+    get {return _storage._assetFilter ?? Ocap_AssetFilter()}
+    set {_uniqueStorage()._assetFilter = newValue}
   }
   /// Returns true if `assetFilter` has been explicitly set.
-  public var hasAssetFilter: Bool {return self._assetFilter != nil}
+  public var hasAssetFilter: Bool {return _storage._assetFilter != nil}
   /// Clears the value of `assetFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearAssetFilter() {self._assetFilter = nil}
+  public mutating func clearAssetFilter() {_uniqueStorage()._assetFilter = nil}
 
   public var accountFilter: Ocap_AccountFilter {
-    get {return _accountFilter ?? Ocap_AccountFilter()}
-    set {_accountFilter = newValue}
+    get {return _storage._accountFilter ?? Ocap_AccountFilter()}
+    set {_uniqueStorage()._accountFilter = newValue}
   }
   /// Returns true if `accountFilter` has been explicitly set.
-  public var hasAccountFilter: Bool {return self._accountFilter != nil}
+  public var hasAccountFilter: Bool {return _storage._accountFilter != nil}
   /// Clears the value of `accountFilter`. Subsequent reads from it will return its default value.
-  public mutating func clearAccountFilter() {self._accountFilter = nil}
+  public mutating func clearAccountFilter() {_uniqueStorage()._accountFilter = nil}
+
+  public var txFilter: Ocap_TxFilter {
+    get {return _storage._txFilter ?? Ocap_TxFilter()}
+    set {_uniqueStorage()._txFilter = newValue}
+  }
+  /// Returns true if `txFilter` has been explicitly set.
+  public var hasTxFilter: Bool {return _storage._txFilter != nil}
+  /// Clears the value of `txFilter`. Subsequent reads from it will return its default value.
+  public mutating func clearTxFilter() {_uniqueStorage()._txFilter = nil}
+
+  public var rollupFilter: Ocap_RollupFilter {
+    get {return _storage._rollupFilter ?? Ocap_RollupFilter()}
+    set {_uniqueStorage()._rollupFilter = newValue}
+  }
+  /// Returns true if `rollupFilter` has been explicitly set.
+  public var hasRollupFilter: Bool {return _storage._rollupFilter != nil}
+  /// Clears the value of `rollupFilter`. Subsequent reads from it will return its default value.
+  public mutating func clearRollupFilter() {_uniqueStorage()._rollupFilter = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _paging: Ocap_Page? = nil
-  fileprivate var _timeFilter: Ocap_TimeFilter? = nil
-  fileprivate var _addressFilter: Ocap_AddressFilter? = nil
-  fileprivate var _typeFilter: Ocap_TypeFilter? = nil
-  fileprivate var _validityFilter: Ocap_ValidityFilter? = nil
-  fileprivate var _factoryFilter: Ocap_FactoryFilter? = nil
-  fileprivate var _tokenFilter: Ocap_TokenFilter? = nil
-  fileprivate var _assetFilter: Ocap_AssetFilter? = nil
-  fileprivate var _accountFilter: Ocap_AccountFilter? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Ocap_ResponseListTransactions {
@@ -1874,6 +1371,35 @@ public struct Ocap_ResponseGetRollupState {
   fileprivate var _state: Ocap_RollupState? = nil
 }
 
+public struct Ocap_RequestListRollups {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var paging: Ocap_Page {
+    get {return _paging ?? Ocap_Page()}
+    set {_paging = newValue}
+  }
+  /// Returns true if `paging` has been explicitly set.
+  public var hasPaging: Bool {return self._paging != nil}
+  /// Clears the value of `paging`. Subsequent reads from it will return its default value.
+  public mutating func clearPaging() {self._paging = nil}
+
+  public var tokenAddress: String = String()
+
+  /// TODO: deprecate this
+  public var erc20TokenAddress: String = String()
+
+  /// same as erc20_token_address
+  public var foreignTokenAddress: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _paging: Ocap_Page? = nil
+}
+
 public struct Ocap_ResponseListRollups {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1907,6 +1433,8 @@ public struct Ocap_RequestGetRollupBlock {
   public var hash: String = String()
 
   public var height: UInt64 = 0
+
+  public var rollupAddress: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2016,6 +1544,137 @@ public struct Ocap_ResponseListRollupBlocks {
   public init() {}
 
   fileprivate var _page: Ocap_PageInfo? = nil
+}
+
+public struct Ocap_RequestListRollupValidators {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var paging: Ocap_Page {
+    get {return _paging ?? Ocap_Page()}
+    set {_paging = newValue}
+  }
+  /// Returns true if `paging` has been explicitly set.
+  public var hasPaging: Bool {return self._paging != nil}
+  /// Clears the value of `paging`. Subsequent reads from it will return its default value.
+  public mutating func clearPaging() {self._paging = nil}
+
+  public var rollupAddress: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _paging: Ocap_Page? = nil
+}
+
+public struct Ocap_ResponseListRollupValidators {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var page: Ocap_PageInfo {
+    get {return _page ?? Ocap_PageInfo()}
+    set {_page = newValue}
+  }
+  /// Returns true if `page` has been explicitly set.
+  public var hasPage: Bool {return self._page != nil}
+  /// Clears the value of `page`. Subsequent reads from it will return its default value.
+  public mutating func clearPage() {self._page = nil}
+
+  public var validators: [Ocap_IndexedRollupValidator] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _page: Ocap_PageInfo? = nil
+}
+
+public struct Ocap_RequestSearch {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var paging: Ocap_Page {
+    get {return _paging ?? Ocap_Page()}
+    set {_paging = newValue}
+  }
+  /// Returns true if `paging` has been explicitly set.
+  public var hasPaging: Bool {return self._paging != nil}
+  /// Clears the value of `paging`. Subsequent reads from it will return its default value.
+  public mutating func clearPaging() {self._paging = nil}
+
+  public var keyword: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _paging: Ocap_Page? = nil
+}
+
+public struct Ocap_ResponseSearch {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var page: Ocap_PageInfo {
+    get {return _page ?? Ocap_PageInfo()}
+    set {_page = newValue}
+  }
+  /// Returns true if `page` has been explicitly set.
+  public var hasPage: Bool {return self._page != nil}
+  /// Clears the value of `page`. Subsequent reads from it will return its default value.
+  public mutating func clearPage() {self._page = nil}
+
+  public var results: [Ocap_SearchResult] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _page: Ocap_PageInfo? = nil
+}
+
+public struct Ocap_RequestGetEvidenceState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var hash: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_ResponseGetEvidenceState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var state: Ocap_EvidenceState {
+    get {return _state ?? Ocap_EvidenceState()}
+    set {_state = newValue}
+  }
+  /// Returns true if `state` has been explicitly set.
+  public var hasState: Bool {return self._state != nil}
+  /// Clears the value of `state`. Subsequent reads from it will return its default value.
+  public mutating func clearState() {self._state = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _state: Ocap_EvidenceState? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -2840,606 +2499,6 @@ extension Ocap_ResponseGetValidatorsInfo: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-extension Ocap_RequestSubscribe: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".RequestSubscribe"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "topic"),
-    2: .same(proto: "filter"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.topic) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.filter) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.topic.isEmpty {
-      try visitor.visitSingularStringField(value: self.topic, fieldNumber: 1)
-    }
-    if !self.filter.isEmpty {
-      try visitor.visitSingularStringField(value: self.filter, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_RequestSubscribe, rhs: Ocap_RequestSubscribe) -> Bool {
-    if lhs.topic != rhs.topic {return false}
-    if lhs.filter != rhs.filter {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ResponseSubscribe: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseSubscribe"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    2: .same(proto: "topic"),
-    3: .same(proto: "transfer"),
-    4: .standard(proto: "account_migrate"),
-    5: .same(proto: "confirm"),
-    6: .standard(proto: "create_asset"),
-    7: .same(proto: "exchange"),
-    16: .standard(proto: "begin_block"),
-    17: .standard(proto: "end_block"),
-    19: .same(proto: "declare"),
-    20: .standard(proto: "update_asset"),
-    21: .standard(proto: "consensus_upgrade"),
-    23: .standard(proto: "sys_upgrade"),
-    24: .same(proto: "stake"),
-    25: .same(proto: "delegate"),
-    28: .standard(proto: "revoke_delegate"),
-    29: .standard(proto: "deposit_token"),
-    30: .standard(proto: "withdraw_token"),
-    31: .standard(proto: "approve_withdraw"),
-    32: .standard(proto: "revoke_withdraw"),
-    33: .standard(proto: "setup_swap"),
-    34: .standard(proto: "revoke_swap"),
-    35: .standard(proto: "retrieve_swap"),
-    38: .standard(proto: "consume_asset"),
-    39: .standard(proto: "acquire_asset"),
-    40: .standard(proto: "upgrade_node"),
-    41: .standard(proto: "update_validator"),
-    42: .standard(proto: "update_consensus_params"),
-    129: .standard(proto: "account_state"),
-    130: .standard(proto: "asset_state"),
-    131: .standard(proto: "forge_state"),
-    134: .standard(proto: "delegate_state"),
-    135: .standard(proto: "swap_state"),
-    136: .standard(proto: "create_token"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
-      case 2: try {
-        if self.value != nil {try decoder.handleConflictingOneOf()}
-        var v: String?
-        try decoder.decodeSingularStringField(value: &v)
-        if let v = v {self.value = .topic(v)}
-      }()
-      case 3: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .transfer(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .transfer(v)}
-      }()
-      case 4: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .accountMigrate(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .accountMigrate(v)}
-      }()
-      case 5: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .confirm(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .confirm(v)}
-      }()
-      case 6: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .createAsset(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createAsset(v)}
-      }()
-      case 7: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .exchange(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .exchange(v)}
-      }()
-      case 16: try {
-        var v: Vendor_RequestBeginBlock?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .beginBlock(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .beginBlock(v)}
-      }()
-      case 17: try {
-        var v: Vendor_RequestEndBlock?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .endBlock(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .endBlock(v)}
-      }()
-      case 19: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .declare(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .declare(v)}
-      }()
-      case 20: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .updateAsset(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .updateAsset(v)}
-      }()
-      case 21: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .consensusUpgrade(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .consensusUpgrade(v)}
-      }()
-      case 23: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .sysUpgrade(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .sysUpgrade(v)}
-      }()
-      case 24: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .stake(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .stake(v)}
-      }()
-      case 25: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .delegate(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .delegate(v)}
-      }()
-      case 28: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .revokeDelegate(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .revokeDelegate(v)}
-      }()
-      case 29: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .depositToken(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .depositToken(v)}
-      }()
-      case 30: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .withdrawToken(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .withdrawToken(v)}
-      }()
-      case 31: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .approveWithdraw(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .approveWithdraw(v)}
-      }()
-      case 32: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .revokeWithdraw(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .revokeWithdraw(v)}
-      }()
-      case 33: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .setupSwap(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .setupSwap(v)}
-      }()
-      case 34: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .revokeSwap(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .revokeSwap(v)}
-      }()
-      case 35: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .retrieveSwap(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .retrieveSwap(v)}
-      }()
-      case 38: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .consumeAsset(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .consumeAsset(v)}
-      }()
-      case 39: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .acquireAsset(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .acquireAsset(v)}
-      }()
-      case 40: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .upgradeNode(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .upgradeNode(v)}
-      }()
-      case 41: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .updateValidator(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .updateValidator(v)}
-      }()
-      case 42: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .updateConsensusParams(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .updateConsensusParams(v)}
-      }()
-      case 129: try {
-        var v: Ocap_AccountState?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .accountState(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .accountState(v)}
-      }()
-      case 130: try {
-        var v: Ocap_AssetState?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .assetState(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .assetState(v)}
-      }()
-      case 131: try {
-        var v: Ocap_ForgeState?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .forgeState(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .forgeState(v)}
-      }()
-      case 134: try {
-        var v: Ocap_DelegateState?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .delegateState(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .delegateState(v)}
-      }()
-      case 135: try {
-        var v: Ocap_SwapState?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .swapState(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .swapState(v)}
-      }()
-      case 136: try {
-        var v: Ocap_Transaction?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .createToken(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createToken(v)}
-      }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != .ok {
-      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
-    }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
-    switch self.value {
-    case .topic?: try {
-      guard case .topic(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
-    }()
-    case .transfer?: try {
-      guard case .transfer(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }()
-    case .accountMigrate?: try {
-      guard case .accountMigrate(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }()
-    case .confirm?: try {
-      guard case .confirm(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }()
-    case .createAsset?: try {
-      guard case .createAsset(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    }()
-    case .exchange?: try {
-      guard case .exchange(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-    }()
-    case .beginBlock?: try {
-      guard case .beginBlock(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-    }()
-    case .endBlock?: try {
-      guard case .endBlock(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
-    }()
-    case .declare?: try {
-      guard case .declare(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
-    }()
-    case .updateAsset?: try {
-      guard case .updateAsset(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-    }()
-    case .consensusUpgrade?: try {
-      guard case .consensusUpgrade(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 21)
-    }()
-    case .sysUpgrade?: try {
-      guard case .sysUpgrade(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 23)
-    }()
-    case .stake?: try {
-      guard case .stake(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 24)
-    }()
-    case .delegate?: try {
-      guard case .delegate(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 25)
-    }()
-    case .revokeDelegate?: try {
-      guard case .revokeDelegate(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 28)
-    }()
-    case .depositToken?: try {
-      guard case .depositToken(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 29)
-    }()
-    case .withdrawToken?: try {
-      guard case .withdrawToken(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
-    }()
-    case .approveWithdraw?: try {
-      guard case .approveWithdraw(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 31)
-    }()
-    case .revokeWithdraw?: try {
-      guard case .revokeWithdraw(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 32)
-    }()
-    case .setupSwap?: try {
-      guard case .setupSwap(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 33)
-    }()
-    case .revokeSwap?: try {
-      guard case .revokeSwap(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 34)
-    }()
-    case .retrieveSwap?: try {
-      guard case .retrieveSwap(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 35)
-    }()
-    case .consumeAsset?: try {
-      guard case .consumeAsset(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 38)
-    }()
-    case .acquireAsset?: try {
-      guard case .acquireAsset(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 39)
-    }()
-    case .upgradeNode?: try {
-      guard case .upgradeNode(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 40)
-    }()
-    case .updateValidator?: try {
-      guard case .updateValidator(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 41)
-    }()
-    case .updateConsensusParams?: try {
-      guard case .updateConsensusParams(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 42)
-    }()
-    case .accountState?: try {
-      guard case .accountState(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 129)
-    }()
-    case .assetState?: try {
-      guard case .assetState(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 130)
-    }()
-    case .forgeState?: try {
-      guard case .forgeState(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 131)
-    }()
-    case .delegateState?: try {
-      guard case .delegateState(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 134)
-    }()
-    case .swapState?: try {
-      guard case .swapState(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 135)
-    }()
-    case .createToken?: try {
-      guard case .createToken(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 136)
-    }()
-    case nil: break
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ResponseSubscribe, rhs: Ocap_ResponseSubscribe) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs.value != rhs.value {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_RequestUnsubscribe: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".RequestUnsubscribe"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "topic"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.topic) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.topic.isEmpty {
-      try visitor.visitSingularStringField(value: self.topic, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_RequestUnsubscribe, rhs: Ocap_RequestUnsubscribe) -> Bool {
-    if lhs.topic != rhs.topic {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ResponseUnsubscribe: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseUnsubscribe"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != .ok {
-      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ResponseUnsubscribe, rhs: Ocap_ResponseUnsubscribe) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Ocap_RequestGetConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RequestGetConfig"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -3621,69 +2680,133 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
     7: .standard(proto: "token_filter"),
     8: .standard(proto: "asset_filter"),
     9: .standard(proto: "account_filter"),
+    10: .standard(proto: "tx_filter"),
+    11: .standard(proto: "rollup_filter"),
   ]
 
+  fileprivate class _StorageClass {
+    var _paging: Ocap_Page? = nil
+    var _timeFilter: Ocap_TimeFilter? = nil
+    var _addressFilter: Ocap_AddressFilter? = nil
+    var _typeFilter: Ocap_TypeFilter? = nil
+    var _validityFilter: Ocap_ValidityFilter? = nil
+    var _factoryFilter: Ocap_FactoryFilter? = nil
+    var _tokenFilter: Ocap_TokenFilter? = nil
+    var _assetFilter: Ocap_AssetFilter? = nil
+    var _accountFilter: Ocap_AccountFilter? = nil
+    var _txFilter: Ocap_TxFilter? = nil
+    var _rollupFilter: Ocap_RollupFilter? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _paging = source._paging
+      _timeFilter = source._timeFilter
+      _addressFilter = source._addressFilter
+      _typeFilter = source._typeFilter
+      _validityFilter = source._validityFilter
+      _factoryFilter = source._factoryFilter
+      _tokenFilter = source._tokenFilter
+      _assetFilter = source._assetFilter
+      _accountFilter = source._accountFilter
+      _txFilter = source._txFilter
+      _rollupFilter = source._rollupFilter
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._timeFilter) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._addressFilter) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._typeFilter) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._validityFilter) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._factoryFilter) }()
-      case 7: try { try decoder.decodeSingularMessageField(value: &self._tokenFilter) }()
-      case 8: try { try decoder.decodeSingularMessageField(value: &self._assetFilter) }()
-      case 9: try { try decoder.decodeSingularMessageField(value: &self._accountFilter) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._paging) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._timeFilter) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._addressFilter) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._typeFilter) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._validityFilter) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._factoryFilter) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._tokenFilter) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._assetFilter) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._accountFilter) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._txFilter) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._rollupFilter) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._paging {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
-    if let v = self._timeFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if let v = self._addressFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }
-    if let v = self._typeFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    if let v = self._validityFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }
-    if let v = self._factoryFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    }
-    if let v = self._tokenFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-    }
-    if let v = self._assetFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    }
-    if let v = self._accountFilter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if let v = _storage._paging {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      }
+      if let v = _storage._timeFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      }
+      if let v = _storage._addressFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      }
+      if let v = _storage._typeFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      }
+      if let v = _storage._validityFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      }
+      if let v = _storage._factoryFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      }
+      if let v = _storage._tokenFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      }
+      if let v = _storage._assetFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      }
+      if let v = _storage._accountFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      }
+      if let v = _storage._txFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      }
+      if let v = _storage._rollupFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Ocap_RequestListTransactions, rhs: Ocap_RequestListTransactions) -> Bool {
-    if lhs._paging != rhs._paging {return false}
-    if lhs._timeFilter != rhs._timeFilter {return false}
-    if lhs._addressFilter != rhs._addressFilter {return false}
-    if lhs._typeFilter != rhs._typeFilter {return false}
-    if lhs._validityFilter != rhs._validityFilter {return false}
-    if lhs._factoryFilter != rhs._factoryFilter {return false}
-    if lhs._tokenFilter != rhs._tokenFilter {return false}
-    if lhs._assetFilter != rhs._assetFilter {return false}
-    if lhs._accountFilter != rhs._accountFilter {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._paging != rhs_storage._paging {return false}
+        if _storage._timeFilter != rhs_storage._timeFilter {return false}
+        if _storage._addressFilter != rhs_storage._addressFilter {return false}
+        if _storage._typeFilter != rhs_storage._typeFilter {return false}
+        if _storage._validityFilter != rhs_storage._validityFilter {return false}
+        if _storage._factoryFilter != rhs_storage._factoryFilter {return false}
+        if _storage._tokenFilter != rhs_storage._tokenFilter {return false}
+        if _storage._assetFilter != rhs_storage._assetFilter {return false}
+        if _storage._accountFilter != rhs_storage._accountFilter {return false}
+        if _storage._txFilter != rhs_storage._txFilter {return false}
+        if _storage._rollupFilter != rhs_storage._rollupFilter {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4791,6 +3914,56 @@ extension Ocap_ResponseGetRollupState: SwiftProtobuf.Message, SwiftProtobuf._Mes
   }
 }
 
+extension Ocap_RequestListRollups: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestListRollups"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "paging"),
+    2: .standard(proto: "token_address"),
+    3: .standard(proto: "erc20_token_address"),
+    4: .standard(proto: "foreign_token_address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.tokenAddress) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.erc20TokenAddress) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.foreignTokenAddress) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._paging {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }
+    if !self.tokenAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.tokenAddress, fieldNumber: 2)
+    }
+    if !self.erc20TokenAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.erc20TokenAddress, fieldNumber: 3)
+    }
+    if !self.foreignTokenAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.foreignTokenAddress, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestListRollups, rhs: Ocap_RequestListRollups) -> Bool {
+    if lhs._paging != rhs._paging {return false}
+    if lhs.tokenAddress != rhs.tokenAddress {return false}
+    if lhs.erc20TokenAddress != rhs.erc20TokenAddress {return false}
+    if lhs.foreignTokenAddress != rhs.foreignTokenAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_ResponseListRollups: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResponseListRollups"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -4840,6 +4013,7 @@ extension Ocap_RequestGetRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Mess
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "hash"),
     2: .same(proto: "height"),
+    3: .standard(proto: "rollup_address"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4850,6 +4024,7 @@ extension Ocap_RequestGetRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Mess
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.hash) }()
       case 2: try { try decoder.decodeSingularUInt64Field(value: &self.height) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.rollupAddress) }()
       default: break
       }
     }
@@ -4862,12 +4037,16 @@ extension Ocap_RequestGetRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.height != 0 {
       try visitor.visitSingularUInt64Field(value: self.height, fieldNumber: 2)
     }
+    if !self.rollupAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.rollupAddress, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Ocap_RequestGetRollupBlock, rhs: Ocap_RequestGetRollupBlock) -> Bool {
     if lhs.hash != rhs.hash {return false}
     if lhs.height != rhs.height {return false}
+    if lhs.rollupAddress != rhs.rollupAddress {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5018,6 +4197,240 @@ extension Ocap_ResponseListRollupBlocks: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.code != rhs.code {return false}
     if lhs._page != rhs._page {return false}
     if lhs.blocks != rhs.blocks {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestListRollupValidators: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestListRollupValidators"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "paging"),
+    2: .standard(proto: "rollup_address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.rollupAddress) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._paging {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }
+    if !self.rollupAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.rollupAddress, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestListRollupValidators, rhs: Ocap_RequestListRollupValidators) -> Bool {
+    if lhs._paging != rhs._paging {return false}
+    if lhs.rollupAddress != rhs.rollupAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseListRollupValidators: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseListRollupValidators"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "page"),
+    3: .same(proto: "validators"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._page) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.validators) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    if let v = self._page {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    if !self.validators.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.validators, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseListRollupValidators, rhs: Ocap_ResponseListRollupValidators) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._page != rhs._page {return false}
+    if lhs.validators != rhs.validators {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestSearch: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestSearch"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "paging"),
+    2: .same(proto: "keyword"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.keyword) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._paging {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }
+    if !self.keyword.isEmpty {
+      try visitor.visitSingularStringField(value: self.keyword, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestSearch, rhs: Ocap_RequestSearch) -> Bool {
+    if lhs._paging != rhs._paging {return false}
+    if lhs.keyword != rhs.keyword {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseSearch: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseSearch"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "page"),
+    3: .same(proto: "results"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._page) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.results) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    if let v = self._page {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    if !self.results.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.results, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseSearch, rhs: Ocap_ResponseSearch) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._page != rhs._page {return false}
+    if lhs.results != rhs.results {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestGetEvidenceState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestGetEvidenceState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "hash"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.hash) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.hash.isEmpty {
+      try visitor.visitSingularStringField(value: self.hash, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestGetEvidenceState, rhs: Ocap_RequestGetEvidenceState) -> Bool {
+    if lhs.hash != rhs.hash {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseGetEvidenceState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseGetEvidenceState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "state"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._state) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    if let v = self._state {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseGetEvidenceState, rhs: Ocap_ResponseGetEvidenceState) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._state != rhs._state {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -43,6 +43,10 @@ message TxFilter {
   repeated string txs = 1;
 }
 
+message RollupFilter {
+  repeated string rollups = 1;
+}
+
 message ValidatorFilter {
   repeated string validators = 1;
 }
@@ -73,8 +77,10 @@ message PageInfo {
 
 message TokenInfo {
   string address = 1;
-  BigUint balance = 2;
-  uint32 decimal = 3;
+  string balance = 2;
+  int32 decimal = 3;
+  string unit = 4;
+  string symbol = 5;
 }
 
 message HealthStatus {
@@ -214,7 +220,8 @@ message IndexedTokenState {
   string address = 9;
   string genesis_time = 10;
   string renaissance_time = 11;
-  string erc20_contract_address = 12;
+  string erc20_contract_address = 12; // TODO: deprecate this
+  ForeignToken foreign_token = 13;
   google.protobuf.Any data = 50;
 }
 
@@ -248,13 +255,17 @@ message IndexedStakeState {
   bool revocable = 6;
   string genesis_time = 7;
   string renaissance_time = 8;
+  string message = 9;
+  uint32 revoke_waiting_period = 10;
+  repeated TokenInfo revoked_tokens = 11;
+  repeated string revoked_assets = 12;
   google.protobuf.Any data = 50;
 }
 
 message IndexedRollupState {
   string address = 1;
   string token_address = 2;
-  string erc20_token_address = 3;
+  string erc20_token_address = 3; // TODO: deprecate this
   string contract_address = 4;
   repeated RollupValidator seed_validators = 5;
   repeated RollupValidator validators = 6;
@@ -265,8 +276,8 @@ message IndexedRollupState {
   uint32 min_block_size = 11;
   uint32 max_block_size = 12;
   uint32 min_block_interval = 13;
-  string foreign_chain_type = 14;
-  string foreign_chain_id = 15;
+  string foreign_chain_type = 14; // TODO: deprecate this
+  string foreign_chain_id = 15; // TODO: deprecate this
   string genesis_time = 16;
   string renaissance_time = 17;
   IndexedTokenInput token_info = 18;
@@ -277,6 +288,26 @@ message IndexedRollupState {
   string min_deposit_amount = 23;
   string min_withdraw_amount = 24;
   uint64 block_height = 25;
+  string block_hash = 26;
+  uint32 min_block_confirmation = 27;
+  string total_deposit_amount = 28;
+  string total_withdraw_amount = 29;
+
+  // Added since v1.13.45
+  string max_deposit_amount = 30;
+  string max_withdraw_amount = 31;
+  string min_deposit_fee = 32;
+  string max_deposit_fee = 33;
+  string min_withdraw_fee = 34;
+  string max_withdraw_fee = 35;
+  bool paused = 36;
+
+  // Added since v1.13.47
+  ForeignToken foreign_token = 37;
+
+  // Added since v1.13.53
+  uint32 leave_waiting_period = 38;
+
   google.protobuf.Any data = 50;
 }
 
@@ -285,11 +316,13 @@ message IndexedRollupBlock {
   uint64 height = 2;
   string merkle_root = 3;
   string previous_hash = 4;
-  string tx_hash = 5;
+  string txs_hash = 5;
   repeated string txs = 6;
   string proposer = 7;
   repeated Multisig signatures = 8;
-  string checkpoint = 9;
+
+  // Deprecated
+  // string checkpoint = 9;
 
   string genesis_time = 10;
   string renaissance_time = 11;
@@ -303,4 +336,35 @@ message IndexedRollupBlock {
   IndexedTokenInput token_info = 16;
 
   google.protobuf.Any data = 50;
+}
+
+message SearchResult {
+  string type = 1;
+  string id = 2;
+}
+
+message IndexedRollupValidator {
+  string pk = 1;
+  string address = 2;
+  string moniker = 3;
+  string endpoint = 4;
+
+  string join_time = 5;
+  string leave_time = 6;
+  string genesis_time = 7;
+  string renaissance_time = 8;
+
+  string total_stake = 9; // accumulative
+  string revoked_stake = 10; // accumulative
+  string available_stake = 11; // current
+
+  string total_gain = 12;
+
+  uint64 proposed_block_count = 13;
+  uint64 verified_block_count = 14;
+
+  uint64 latest_block_height = 15;
+  string latest_block_hash = 16;
+
+  string rollup = 17;
 }
