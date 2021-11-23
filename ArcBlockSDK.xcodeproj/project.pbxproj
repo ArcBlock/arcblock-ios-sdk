@@ -22,7 +22,6 @@
 		1A76D28B273CD96B00C4B25B /* rpc.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27A273CD96B00C4B25B /* rpc.proto */; };
 		1A76D28C273CD96B00C4B25B /* enum.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27B273CD96B00C4B25B /* enum.pb.swift */; };
 		1A76D28D273CD96B00C4B25B /* tx.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27C273CD96B00C4B25B /* tx.pb.swift */; };
-		1A76D28E273CD96B00C4B25B /* service.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = 1A76D27D273CD96B00C4B25B /* service.graphqls */; };
 		1A76D28F273CD96B00C4B25B /* type.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27E273CD96B00C4B25B /* type.pb.swift */; };
 		1A76D290273CD96B00C4B25B /* type.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D27F273CD96B00C4B25B /* type.proto */; };
 		1A76D291273CD96B00C4B25B /* state.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D280273CD96B00C4B25B /* state.pb.swift */; };
@@ -72,6 +71,8 @@
 		270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447FB231E00AA007BA477 /* PromiseKit.framework */; };
 		27044801231E01F4007BA477 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		27044802231E01F4007BA477 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
+		5637BDE5274CA63A0076143F /* AmountSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5637BDE4274CA63A0076143F /* AmountSpec.swift */; };
+		5637BDE9274CD49E0076143F /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5637BDE8274CD49E0076143F /* Double+Extension.swift */; };
 		7A7988802679DE25001202D5 /* ABSDKClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A79887F2679DE25001202D5 /* ABSDKClient.swift */; };
 		7F6C849E17C35B9149440791 /* Pods_ArcBlockSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */; };
 /* End PBXBuildFile section */
@@ -187,6 +188,8 @@
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		2887CC851616970ABA85CE61 /* Pods-ArcBlockSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		301F076836FA04A49FE48ED0 /* Pods-ArcBlockSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		5637BDE4274CA63A0076143F /* AmountSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountSpec.swift; sourceTree = "<group>"; };
+		5637BDE8274CD49E0076143F /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		7A79887F2679DE25001202D5 /* ABSDKClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABSDKClient.swift; sourceTree = "<group>"; };
 		814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,6 +240,7 @@
 		1AA3D925273A304A00BA3CA0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5637BDE8274CD49E0076143F /* Double+Extension.swift */,
 				1AA3D926273A30F300BA3CA0 /* BigUInt+Extension.swift */,
 				1AA3D928273A572C00BA3CA0 /* String+Extension.swift */,
 			);
@@ -264,6 +268,7 @@
 				270447E2231E0060007BA477 /* TxHelperSpec.swift */,
 				1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */,
 				1AA3D930273A6A7F00BA3CA0 /* InputSpec.swift */,
+				5637BDE4274CA63A0076143F /* AmountSpec.swift */,
 				2704471E231DFF98007BA477 /* Info.plist */,
 				270447E1231E0060007BA477 /* ArcBlockSDKTests-Bridging-Header.h */,
 			);
@@ -539,7 +544,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A534A2326E702F300513949 /* service.graphqls in Resources */,
 				1AA3D92C273A58CA00BA3CA0 /* Localizable.string.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +646,7 @@
 				1A76D284273CD96B00C4B25B /* vendor.pb.swift in Sources */,
 				1A76D28A273CD96B00C4B25B /* service.proto in Sources */,
 				27044795231E0052007BA477 /* ABSDKHTTPTransport.swift in Sources */,
+				5637BDE9274CD49E0076143F /* Double+Extension.swift in Sources */,
 				1A76D287273CD96B00C4B25B /* trace-type.pb.swift in Sources */,
 				1A76D28D273CD96B00C4B25B /* tx.pb.swift in Sources */,
 				27044789231E0052007BA477 /* ed25519_fe.swift in Sources */,
@@ -661,7 +666,6 @@
 				270447A1231E0052007BA477 /* Base32.swift in Sources */,
 				2704479B231E0052007BA477 /* Encoding.swift in Sources */,
 				1A76D291273CD96B00C4B25B /* state.pb.swift in Sources */,
-				1A534A2126E702F300513949 /* trace-type.pb.swift in Sources */,
 				1AA3D929273A572C00BA3CA0 /* String+Extension.swift in Sources */,
 				2704478F231E0052007BA477 /* MCrypto.swift in Sources */,
 				1A76D283273CD96B00C4B25B /* service.pb.swift in Sources */,
@@ -681,6 +685,7 @@
 				270447E9231E0061007BA477 /* TxHelperSpec.swift in Sources */,
 				270447EB231E0061007BA477 /* MCryptoSpec.swift in Sources */,
 				1AA3D931273A6A7F00BA3CA0 /* InputSpec.swift in Sources */,
+				5637BDE5274CA63A0076143F /* AmountSpec.swift in Sources */,
 				270447EC231E0061007BA477 /* BIP44UtilsSpec.swift in Sources */,
 				270447EF231E0061007BA477 /* DidHelperSpec.swift in Sources */,
 			);
