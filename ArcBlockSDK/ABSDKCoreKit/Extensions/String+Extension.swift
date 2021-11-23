@@ -76,4 +76,28 @@ public extension String {
         
         return intValue >= 21000
     }
+    
+    func toBigUInt(decimals: Int? = 18) -> BigUInt {
+        return Web3.Utils.parseToBigUInt(self, decimals: decimals ?? 18) ?? BigUInt(0)
+    }
+    
+    /// 将解析完成的BigUInt格式化成余额展示
+    ///
+    /// - Parameters:
+    ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
+    func toAmountString(formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
+        let balance = Double(self)
+        return balance?.toAmountString(formattingDecimals: formattingDecimals) ?? "0"
+    }
+    
+    /// 将未解析的BigUInt格式化成余额展示
+    ///
+    /// - Parameters:
+    ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
+    func toAmountString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
+        guard let balance = Web3.Utils.parseToBigUInt(self, decimals: 0) else {
+            return "0"
+        }
+        return balance.toAmountString(decimals: decimals, formattingDecimals: formattingDecimals)
+    }
 }
