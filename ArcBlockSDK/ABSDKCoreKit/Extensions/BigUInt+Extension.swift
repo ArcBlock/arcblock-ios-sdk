@@ -54,6 +54,24 @@ public extension BigUInt {
         }
     }
     
+    /// 格式化发送金额
+    ///
+    /// - Parameters:
+    ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
+    func toSendString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
+        let realDecimals = decimals ?? 18
+        var realFormattingDecimals = formattingDecimals
+        if realFormattingDecimals > Self.MinFormattingDecimals {
+            realFormattingDecimals = Self.MinFormattingDecimals
+        }
+        let amountStr = Web3.Utils.formatToPrecision(self, numberDecimals: realDecimals, formattingDecimals: realFormattingDecimals, decimalSeparator: ".", fallbackToScientific: false) ?? "0"
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        formatter.maximumFractionDigits = realFormattingDecimals
+        formatter.roundingMode = .floor
+        return formatter.string(from: NSDecimalNumber(string: amountStr)) ?? "0"
+    }
+    
     // TODO: - 待废弃
     func toAmountDouble(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> Double {
         let balance = self.toAmountString(decimals: decimals, formattingDecimals: formattingDecimals)
