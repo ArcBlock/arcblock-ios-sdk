@@ -31,6 +31,7 @@ class AmountSpec: QuickSpec {
     override func spec() {
         describe("BigUInt To Amount") {
             it("works", closure: {
+                expect(BigUInt("1123456789123456789").toAmountString()).to(equal("1.123456"))
                 expect(BigUInt("1123456789000000000").toAmountString()).to(equal("1.123456"))
                 expect(BigUInt("1123400000000000000").toAmountString()).to(equal("1.1234"))
                 expect(BigUInt("1000000000000000000").toAmountString()).to(equal("1"))
@@ -80,6 +81,7 @@ class AmountSpec: QuickSpec {
                 expect(0.123456789.toAmountString()).to(equal("0.123456"))
                 expect(0.123456789.toAmountString(formattingDecimals: 3)).to(equal("0.123"))
                 expect(0.0.toAmountString()).to(equal("0"))
+                expect(10000.toAmountString()).to(equal("10,000"))
             })
         }
     }

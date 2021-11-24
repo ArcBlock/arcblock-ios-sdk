@@ -39,12 +39,11 @@ public extension BigUInt {
             realFormattingDecimals = Self.MinFormattingDecimals
         }
         let amountStr = Web3.Utils.formatToPrecision(self, numberDecimals: realDecimals, formattingDecimals: realFormattingDecimals, decimalSeparator: ".", fallbackToScientific: false) ?? "0"
-        let ammount = Double(amountStr) ?? 0
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = realFormattingDecimals
         formatter.roundingMode = .floor
-        return formatter.string(from: NSNumber(floatLiteral: ammount)) ?? "0"
+        return formatter.string(from: NSDecimalNumber(string: amountStr)) ?? "0"
     }
     
     func toAmountFormattedString(decimals: Int? = 18) -> String {
