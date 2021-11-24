@@ -28,7 +28,7 @@ import BigInt
 public extension BigUInt {
     static var MinFormattingDecimals: Int = 6
     
-    /// 格式化余额展示
+    /// 将BigUInt格式化成余额字符串展示 如: 1123456789000000000 -> 1.123456
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
@@ -54,7 +54,7 @@ public extension BigUInt {
         }
     }
     
-    /// 格式化发送金额
+    /// 将BigUInt格式化成发送金额 用于显示在输入框中 不需要,分割数字 如  1123456789000000000000 -> 1123.456789
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
