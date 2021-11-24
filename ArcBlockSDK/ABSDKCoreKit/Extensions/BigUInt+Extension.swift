@@ -28,7 +28,7 @@ import BigInt
 public extension BigUInt {
     static var MinFormattingDecimals: Int = 6
     
-    /// 格式化余额展示
+    /// 将BigUInt格式化成余额字符串展示 如: 1123456789000000000 -> 1.123456
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
@@ -52,6 +52,24 @@ public extension BigUInt {
         } else {
             return self.toAmountString(decimals: decimals, formattingDecimals: 8)
         }
+    }
+    
+    /// 将BigUInt格式化成发送金额 用于显示在输入框中 不需要,分割数字 如  1123456789000000000000 -> 1123.456789
+    ///
+    /// - Parameters:
+    ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
+    func toSendString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
+        let realDecimals = decimals ?? 18
+        var realFormattingDecimals = formattingDecimals
+        if realFormattingDecimals > Self.MinFormattingDecimals {
+            realFormattingDecimals = Self.MinFormattingDecimals
+        }
+        let amountStr = Web3.Utils.formatToPrecision(self, numberDecimals: realDecimals, formattingDecimals: realFormattingDecimals, decimalSeparator: ".", fallbackToScientific: false) ?? "0"
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        formatter.maximumFractionDigits = realFormattingDecimals
+        formatter.roundingMode = .floor
+        return formatter.string(from: NSDecimalNumber(string: amountStr)) ?? "0"
     }
     
     // TODO: - 待废弃

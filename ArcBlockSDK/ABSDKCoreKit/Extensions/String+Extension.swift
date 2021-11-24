@@ -81,16 +81,23 @@ public extension String {
         return Web3.Utils.parseToBigUInt(self, decimals: decimals ?? 18) ?? BigUInt(0)
     }
     
-    /// 将解析完成的BigUInt格式化成余额展示
+    /// 将字符串格式化成余额展示(这里的字符串非BigUInt格式) 如: "12.121234543546" -> 12.121234
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
     func toAmountString(formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
-        let balance = Double(self)
-        return balance?.toAmountString(formattingDecimals: formattingDecimals) ?? "0"
+        guard !isEmpty else {
+            return "0"
+        }
+        let realFormattingDecimals = min(formattingDecimals, BigUInt.MinFormattingDecimals)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = realFormattingDecimals
+        formatter.roundingMode = .floor
+        return formatter.string(from: NSDecimalNumber(string: self)) ?? "0"
     }
     
-    /// 将未解析的BigUInt格式化成余额展示
+    /// 将字符串格式化成余额展示(这里的字符串为BigUInt格式) 如: "1123456789000000000" -> 1123456789000000000
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
