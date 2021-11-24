@@ -86,8 +86,15 @@ public extension String {
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
     func toAmountString(formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
-        let balance = Double(self)
-        return balance?.toAmountString(formattingDecimals: formattingDecimals) ?? "0"
+        guard !isEmpty else {
+            return "0"
+        }
+        let realFormattingDecimals = min(formattingDecimals, BigUInt.MinFormattingDecimals)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = realFormattingDecimals
+        formatter.roundingMode = .floor
+        return formatter.string(from: NSDecimalNumber(string: self)) ?? "0"
     }
     
     /// 将未解析的BigUInt格式化成余额展示
