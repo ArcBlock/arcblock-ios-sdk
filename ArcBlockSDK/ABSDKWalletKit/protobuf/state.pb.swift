@@ -668,12 +668,6 @@ public struct Ocap_TokenState {
     set {_uniqueStorage()._totalSupply = newValue}
   }
 
-  /// TODO: deprecate this
-  public var erc20ContractAddress: String {
-    get {return _storage._erc20ContractAddress}
-    set {_uniqueStorage()._erc20ContractAddress = newValue}
-  }
-
   public var foreignToken: Ocap_ForeignToken {
     get {return _storage._foreignToken ?? Ocap_ForeignToken()}
     set {_uniqueStorage()._foreignToken = newValue}
@@ -944,11 +938,6 @@ public struct Ocap_RollupState {
   }
 
   /// FUTURE: how to support main token on foreign chain: such as ETH and BNB
-  public var erc20TokenAddress: String {
-    get {return _storage._erc20TokenAddress}
-    set {_uniqueStorage()._erc20TokenAddress = newValue}
-  }
-
   public var contractAddress: String {
     get {return _storage._contractAddress}
     set {_uniqueStorage()._contractAddress = newValue}
@@ -1013,18 +1002,6 @@ public struct Ocap_RollupState {
     set {_uniqueStorage()._minBlockConfirmation = newValue}
   }
 
-  /// Immutable TODO: deprecate following 2 fields
-  public var foreignChainType: String {
-    get {return _storage._foreignChainType}
-    set {_uniqueStorage()._foreignChainType = newValue}
-  }
-
-  /// chain id of the chain. Could be testnet or mainnet.
-  public var foreignChainID: String {
-    get {return _storage._foreignChainID}
-    set {_uniqueStorage()._foreignChainID = newValue}
-  }
-
   /// Immutable
   public var issuer: String {
     get {return _storage._issuer}
@@ -1033,11 +1010,16 @@ public struct Ocap_RollupState {
 
   /// Mutable
   /// Following fields define the economic policy for the rollup
-  /// All fee and share fields are devided by 10000, and then converted to percentage
-  /// For example, deposit_fee_rate = 100 / 10000 = 1%, proposer_fee_share = 7000 / 10000 = 70%
-  /// Then user user deposit 10000 ABT, will get 9900 ABT after deposit, and will pay 100 ABT for the deposit fee
-  /// The proposer validator will get 100 * 70% = 70 ABT
-  /// And the other 30% = 30 ABT will be divided evenly among other validators
+  /// All fee and share fields are devided by 10000, and then converted to percentage for later calculation
+  /// Let's take following settings for example:
+  /// - deposit_fee_rate = 100 / 10000 = 1%,
+  /// - publisher_fee_share = 6000 / 10000 = 60%
+  /// - proposer_fee_share = 3000 / 10000 = 30%
+  /// When user deposit 10000 ABT, he will receive 9900 ABT after deposit, and pay 100 ABT as fee
+  /// After the tx is included in a block and published to foreign chain, the fee can be claimed:
+  /// - block publisher: 100 * 60% = 60 ABT, given to block publisher
+  /// - proposer total: 100 * 30% = 30 ABT, shared between tx proposer and block proposer
+  /// - validator total: 100 * 10% = 10 ABT, shared between all signers, including the proposer
   public var depositFeeRate: UInt32 {
     get {return _storage._depositFeeRate}
     set {_uniqueStorage()._depositFeeRate = newValue}
@@ -1051,6 +1033,11 @@ public struct Ocap_RollupState {
   public var proposerFeeShare: UInt32 {
     get {return _storage._proposerFeeShare}
     set {_uniqueStorage()._proposerFeeShare = newValue}
+  }
+
+  public var publisherFeeShare: UInt32 {
+    get {return _storage._publisherFeeShare}
+    set {_uniqueStorage()._publisherFeeShare = newValue}
   }
 
   /// Mutable
@@ -1141,9 +1128,24 @@ public struct Ocap_RollupState {
   public mutating func clearForeignToken() {_uniqueStorage()._foreignToken = nil}
 
   /// Added since v1.13.53
+  /// How long the staking will be locked after the validator leave and revoke stake
   public var leaveWaitingPeriod: UInt32 {
     get {return _storage._leaveWaitingPeriod}
     set {_uniqueStorage()._leaveWaitingPeriod = newValue}
+  }
+
+  /// Added since v1.13.61
+  /// How long have the non-producer publisher have to wait before he can publish the block
+  /// If a block is published by a non-producer, the producer will get slashed
+  public var publishWaitingPeriod: UInt32 {
+    get {return _storage._publishWaitingPeriod}
+    set {_uniqueStorage()._publishWaitingPeriod = newValue}
+  }
+
+  /// If set to 100, then 1% x min_stake_amount will be slashed from the producer
+  public var publishSlashRate: UInt32 {
+    get {return _storage._publishSlashRate}
+    set {_uniqueStorage()._publishSlashRate = newValue}
   }
 
   public var context: Ocap_StateContext {
@@ -1232,12 +1234,7 @@ public struct Ocap_RollupBlock {
     set {_uniqueStorage()._rollup = newValue}
   }
 
-  /// TODO: block_reward --> block_fee
-  public var blockReward: String {
-    get {return _storage._blockReward}
-    set {_uniqueStorage()._blockReward = newValue}
-  }
-
+  /// token stats
   public var mintedAmount: String {
     get {return _storage._mintedAmount}
     set {_uniqueStorage()._mintedAmount = newValue}
@@ -1246,6 +1243,21 @@ public struct Ocap_RollupBlock {
   public var burnedAmount: String {
     get {return _storage._burnedAmount}
     set {_uniqueStorage()._burnedAmount = newValue}
+  }
+
+  /// tatal reward amount for publisher, proposer and validator
+  public var rewardAmount: String {
+    get {return _storage._rewardAmount}
+    set {_uniqueStorage()._rewardAmount = newValue}
+  }
+
+  /// Added since v1.13.61
+  /// Used to calculate the actual reward for speedup txs
+  /// The total reward from all txs should not be less than the min reward
+  /// And the publisher share of total reward should cover the block sync cost
+  public var minReward: String {
+    get {return _storage._minReward}
+    set {_uniqueStorage()._minReward = newValue}
   }
 
   public var context: Ocap_StateContext {
@@ -2250,8 +2262,7 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     7: .same(proto: "decimal"),
     8: .same(proto: "icon"),
     9: .standard(proto: "total_supply"),
-    10: .standard(proto: "erc20_contract_address"),
-    11: .standard(proto: "foreign_token"),
+    10: .standard(proto: "foreign_token"),
     15: .same(proto: "context"),
     20: .same(proto: "data"),
   ]
@@ -2266,7 +2277,6 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _decimal: UInt32 = 0
     var _icon: String = String()
     var _totalSupply: String = String()
-    var _erc20ContractAddress: String = String()
     var _foreignToken: Ocap_ForeignToken? = nil
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
@@ -2285,7 +2295,6 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _decimal = source._decimal
       _icon = source._icon
       _totalSupply = source._totalSupply
-      _erc20ContractAddress = source._erc20ContractAddress
       _foreignToken = source._foreignToken
       _context = source._context
       _data = source._data
@@ -2316,8 +2325,7 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 7: try { try decoder.decodeSingularUInt32Field(value: &_storage._decimal) }()
         case 8: try { try decoder.decodeSingularStringField(value: &_storage._icon) }()
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._totalSupply) }()
-        case 10: try { try decoder.decodeSingularStringField(value: &_storage._erc20ContractAddress) }()
-        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._foreignToken) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._foreignToken) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 20: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -2355,11 +2363,8 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._totalSupply.isEmpty {
         try visitor.visitSingularStringField(value: _storage._totalSupply, fieldNumber: 9)
       }
-      if !_storage._erc20ContractAddress.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._erc20ContractAddress, fieldNumber: 10)
-      }
       if let v = _storage._foreignToken {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
       }
       if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
@@ -2385,7 +2390,6 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._decimal != rhs_storage._decimal {return false}
         if _storage._icon != rhs_storage._icon {return false}
         if _storage._totalSupply != rhs_storage._totalSupply {return false}
-        if _storage._erc20ContractAddress != rhs_storage._erc20ContractAddress {return false}
         if _storage._foreignToken != rhs_storage._foreignToken {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
@@ -2747,7 +2751,6 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .standard(proto: "token_address"),
-    3: .standard(proto: "erc20_token_address"),
     4: .standard(proto: "contract_address"),
     5: .standard(proto: "seed_validators"),
     6: .same(proto: "validators"),
@@ -2759,28 +2762,29 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     12: .standard(proto: "max_block_size"),
     13: .standard(proto: "min_block_interval"),
     14: .standard(proto: "min_block_confirmation"),
-    15: .standard(proto: "foreign_chain_type"),
-    16: .standard(proto: "foreign_chain_id"),
     17: .same(proto: "issuer"),
     18: .standard(proto: "deposit_fee_rate"),
     19: .standard(proto: "withdraw_fee_rate"),
     20: .standard(proto: "proposer_fee_share"),
-    21: .standard(proto: "min_deposit_amount"),
-    22: .standard(proto: "min_withdraw_amount"),
-    23: .standard(proto: "block_height"),
-    24: .standard(proto: "block_hash"),
-    25: .standard(proto: "token_info"),
-    26: .standard(proto: "total_deposit_amount"),
-    27: .standard(proto: "total_withdraw_amount"),
-    28: .standard(proto: "max_deposit_amount"),
-    29: .standard(proto: "max_withdraw_amount"),
-    30: .standard(proto: "min_deposit_fee"),
-    31: .standard(proto: "max_deposit_fee"),
-    32: .standard(proto: "min_withdraw_fee"),
-    33: .standard(proto: "max_withdraw_fee"),
-    34: .same(proto: "paused"),
-    35: .standard(proto: "foreign_token"),
-    36: .standard(proto: "leave_waiting_period"),
+    21: .standard(proto: "publisher_fee_share"),
+    22: .standard(proto: "min_deposit_amount"),
+    23: .standard(proto: "min_withdraw_amount"),
+    24: .standard(proto: "block_height"),
+    25: .standard(proto: "block_hash"),
+    26: .standard(proto: "token_info"),
+    27: .standard(proto: "total_deposit_amount"),
+    28: .standard(proto: "total_withdraw_amount"),
+    29: .standard(proto: "max_deposit_amount"),
+    30: .standard(proto: "max_withdraw_amount"),
+    31: .standard(proto: "min_deposit_fee"),
+    32: .standard(proto: "max_deposit_fee"),
+    33: .standard(proto: "min_withdraw_fee"),
+    34: .standard(proto: "max_withdraw_fee"),
+    35: .same(proto: "paused"),
+    36: .standard(proto: "foreign_token"),
+    37: .standard(proto: "leave_waiting_period"),
+    38: .standard(proto: "publish_waiting_period"),
+    39: .standard(proto: "publish_slash_rate"),
     40: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
@@ -2788,7 +2792,6 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   fileprivate class _StorageClass {
     var _address: String = String()
     var _tokenAddress: String = String()
-    var _erc20TokenAddress: String = String()
     var _contractAddress: String = String()
     var _seedValidators: [Ocap_RollupValidator] = []
     var _validators: [Ocap_RollupValidator] = []
@@ -2800,12 +2803,11 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     var _maxBlockSize: UInt32 = 0
     var _minBlockInterval: UInt32 = 0
     var _minBlockConfirmation: UInt32 = 0
-    var _foreignChainType: String = String()
-    var _foreignChainID: String = String()
     var _issuer: String = String()
     var _depositFeeRate: UInt32 = 0
     var _withdrawFeeRate: UInt32 = 0
     var _proposerFeeShare: UInt32 = 0
+    var _publisherFeeShare: UInt32 = 0
     var _minDepositAmount: String = String()
     var _minWithdrawAmount: String = String()
     var _blockHeight: UInt64 = 0
@@ -2822,6 +2824,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     var _paused: Bool = false
     var _foreignToken: Ocap_ForeignToken? = nil
     var _leaveWaitingPeriod: UInt32 = 0
+    var _publishWaitingPeriod: UInt32 = 0
+    var _publishSlashRate: UInt32 = 0
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -2832,7 +2836,6 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     init(copying source: _StorageClass) {
       _address = source._address
       _tokenAddress = source._tokenAddress
-      _erc20TokenAddress = source._erc20TokenAddress
       _contractAddress = source._contractAddress
       _seedValidators = source._seedValidators
       _validators = source._validators
@@ -2844,12 +2847,11 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       _maxBlockSize = source._maxBlockSize
       _minBlockInterval = source._minBlockInterval
       _minBlockConfirmation = source._minBlockConfirmation
-      _foreignChainType = source._foreignChainType
-      _foreignChainID = source._foreignChainID
       _issuer = source._issuer
       _depositFeeRate = source._depositFeeRate
       _withdrawFeeRate = source._withdrawFeeRate
       _proposerFeeShare = source._proposerFeeShare
+      _publisherFeeShare = source._publisherFeeShare
       _minDepositAmount = source._minDepositAmount
       _minWithdrawAmount = source._minWithdrawAmount
       _blockHeight = source._blockHeight
@@ -2866,6 +2868,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       _paused = source._paused
       _foreignToken = source._foreignToken
       _leaveWaitingPeriod = source._leaveWaitingPeriod
+      _publishWaitingPeriod = source._publishWaitingPeriod
+      _publishSlashRate = source._publishSlashRate
       _context = source._context
       _data = source._data
     }
@@ -2888,7 +2892,6 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         switch fieldNumber {
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._tokenAddress) }()
-        case 3: try { try decoder.decodeSingularStringField(value: &_storage._erc20TokenAddress) }()
         case 4: try { try decoder.decodeSingularStringField(value: &_storage._contractAddress) }()
         case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._seedValidators) }()
         case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._validators) }()
@@ -2900,28 +2903,29 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         case 12: try { try decoder.decodeSingularUInt32Field(value: &_storage._maxBlockSize) }()
         case 13: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockInterval) }()
         case 14: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockConfirmation) }()
-        case 15: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainType) }()
-        case 16: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainID) }()
         case 17: try { try decoder.decodeSingularStringField(value: &_storage._issuer) }()
         case 18: try { try decoder.decodeSingularUInt32Field(value: &_storage._depositFeeRate) }()
         case 19: try { try decoder.decodeSingularUInt32Field(value: &_storage._withdrawFeeRate) }()
         case 20: try { try decoder.decodeSingularUInt32Field(value: &_storage._proposerFeeShare) }()
-        case 21: try { try decoder.decodeSingularStringField(value: &_storage._minDepositAmount) }()
-        case 22: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawAmount) }()
-        case 23: try { try decoder.decodeSingularUInt64Field(value: &_storage._blockHeight) }()
-        case 24: try { try decoder.decodeSingularStringField(value: &_storage._blockHash) }()
-        case 25: try { try decoder.decodeSingularMessageField(value: &_storage._tokenInfo) }()
-        case 26: try { try decoder.decodeSingularStringField(value: &_storage._totalDepositAmount) }()
-        case 27: try { try decoder.decodeSingularStringField(value: &_storage._totalWithdrawAmount) }()
-        case 28: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositAmount) }()
-        case 29: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawAmount) }()
-        case 30: try { try decoder.decodeSingularStringField(value: &_storage._minDepositFee) }()
-        case 31: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositFee) }()
-        case 32: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawFee) }()
-        case 33: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawFee) }()
-        case 34: try { try decoder.decodeSingularBoolField(value: &_storage._paused) }()
-        case 35: try { try decoder.decodeSingularMessageField(value: &_storage._foreignToken) }()
-        case 36: try { try decoder.decodeSingularUInt32Field(value: &_storage._leaveWaitingPeriod) }()
+        case 21: try { try decoder.decodeSingularUInt32Field(value: &_storage._publisherFeeShare) }()
+        case 22: try { try decoder.decodeSingularStringField(value: &_storage._minDepositAmount) }()
+        case 23: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawAmount) }()
+        case 24: try { try decoder.decodeSingularUInt64Field(value: &_storage._blockHeight) }()
+        case 25: try { try decoder.decodeSingularStringField(value: &_storage._blockHash) }()
+        case 26: try { try decoder.decodeSingularMessageField(value: &_storage._tokenInfo) }()
+        case 27: try { try decoder.decodeSingularStringField(value: &_storage._totalDepositAmount) }()
+        case 28: try { try decoder.decodeSingularStringField(value: &_storage._totalWithdrawAmount) }()
+        case 29: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositAmount) }()
+        case 30: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawAmount) }()
+        case 31: try { try decoder.decodeSingularStringField(value: &_storage._minDepositFee) }()
+        case 32: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositFee) }()
+        case 33: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawFee) }()
+        case 34: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawFee) }()
+        case 35: try { try decoder.decodeSingularBoolField(value: &_storage._paused) }()
+        case 36: try { try decoder.decodeSingularMessageField(value: &_storage._foreignToken) }()
+        case 37: try { try decoder.decodeSingularUInt32Field(value: &_storage._leaveWaitingPeriod) }()
+        case 38: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishWaitingPeriod) }()
+        case 39: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishSlashRate) }()
         case 40: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -2937,9 +2941,6 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       }
       if !_storage._tokenAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._tokenAddress, fieldNumber: 2)
-      }
-      if !_storage._erc20TokenAddress.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._erc20TokenAddress, fieldNumber: 3)
       }
       if !_storage._contractAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._contractAddress, fieldNumber: 4)
@@ -2974,12 +2975,6 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if _storage._minBlockConfirmation != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._minBlockConfirmation, fieldNumber: 14)
       }
-      if !_storage._foreignChainType.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._foreignChainType, fieldNumber: 15)
-      }
-      if !_storage._foreignChainID.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._foreignChainID, fieldNumber: 16)
-      }
       if !_storage._issuer.isEmpty {
         try visitor.visitSingularStringField(value: _storage._issuer, fieldNumber: 17)
       }
@@ -2992,53 +2987,62 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if _storage._proposerFeeShare != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._proposerFeeShare, fieldNumber: 20)
       }
+      if _storage._publisherFeeShare != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._publisherFeeShare, fieldNumber: 21)
+      }
       if !_storage._minDepositAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._minDepositAmount, fieldNumber: 21)
+        try visitor.visitSingularStringField(value: _storage._minDepositAmount, fieldNumber: 22)
       }
       if !_storage._minWithdrawAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._minWithdrawAmount, fieldNumber: 22)
+        try visitor.visitSingularStringField(value: _storage._minWithdrawAmount, fieldNumber: 23)
       }
       if _storage._blockHeight != 0 {
-        try visitor.visitSingularUInt64Field(value: _storage._blockHeight, fieldNumber: 23)
+        try visitor.visitSingularUInt64Field(value: _storage._blockHeight, fieldNumber: 24)
       }
       if !_storage._blockHash.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._blockHash, fieldNumber: 24)
+        try visitor.visitSingularStringField(value: _storage._blockHash, fieldNumber: 25)
       }
       if let v = _storage._tokenInfo {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 25)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 26)
       }
       if !_storage._totalDepositAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._totalDepositAmount, fieldNumber: 26)
+        try visitor.visitSingularStringField(value: _storage._totalDepositAmount, fieldNumber: 27)
       }
       if !_storage._totalWithdrawAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._totalWithdrawAmount, fieldNumber: 27)
+        try visitor.visitSingularStringField(value: _storage._totalWithdrawAmount, fieldNumber: 28)
       }
       if !_storage._maxDepositAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._maxDepositAmount, fieldNumber: 28)
+        try visitor.visitSingularStringField(value: _storage._maxDepositAmount, fieldNumber: 29)
       }
       if !_storage._maxWithdrawAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._maxWithdrawAmount, fieldNumber: 29)
+        try visitor.visitSingularStringField(value: _storage._maxWithdrawAmount, fieldNumber: 30)
       }
       if !_storage._minDepositFee.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._minDepositFee, fieldNumber: 30)
+        try visitor.visitSingularStringField(value: _storage._minDepositFee, fieldNumber: 31)
       }
       if !_storage._maxDepositFee.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._maxDepositFee, fieldNumber: 31)
+        try visitor.visitSingularStringField(value: _storage._maxDepositFee, fieldNumber: 32)
       }
       if !_storage._minWithdrawFee.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._minWithdrawFee, fieldNumber: 32)
+        try visitor.visitSingularStringField(value: _storage._minWithdrawFee, fieldNumber: 33)
       }
       if !_storage._maxWithdrawFee.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._maxWithdrawFee, fieldNumber: 33)
+        try visitor.visitSingularStringField(value: _storage._maxWithdrawFee, fieldNumber: 34)
       }
       if _storage._paused != false {
-        try visitor.visitSingularBoolField(value: _storage._paused, fieldNumber: 34)
+        try visitor.visitSingularBoolField(value: _storage._paused, fieldNumber: 35)
       }
       if let v = _storage._foreignToken {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 35)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 36)
       }
       if _storage._leaveWaitingPeriod != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._leaveWaitingPeriod, fieldNumber: 36)
+        try visitor.visitSingularUInt32Field(value: _storage._leaveWaitingPeriod, fieldNumber: 37)
+      }
+      if _storage._publishWaitingPeriod != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._publishWaitingPeriod, fieldNumber: 38)
+      }
+      if _storage._publishSlashRate != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._publishSlashRate, fieldNumber: 39)
       }
       if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 40)
@@ -3057,7 +3061,6 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         let rhs_storage = _args.1
         if _storage._address != rhs_storage._address {return false}
         if _storage._tokenAddress != rhs_storage._tokenAddress {return false}
-        if _storage._erc20TokenAddress != rhs_storage._erc20TokenAddress {return false}
         if _storage._contractAddress != rhs_storage._contractAddress {return false}
         if _storage._seedValidators != rhs_storage._seedValidators {return false}
         if _storage._validators != rhs_storage._validators {return false}
@@ -3069,12 +3072,11 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         if _storage._maxBlockSize != rhs_storage._maxBlockSize {return false}
         if _storage._minBlockInterval != rhs_storage._minBlockInterval {return false}
         if _storage._minBlockConfirmation != rhs_storage._minBlockConfirmation {return false}
-        if _storage._foreignChainType != rhs_storage._foreignChainType {return false}
-        if _storage._foreignChainID != rhs_storage._foreignChainID {return false}
         if _storage._issuer != rhs_storage._issuer {return false}
         if _storage._depositFeeRate != rhs_storage._depositFeeRate {return false}
         if _storage._withdrawFeeRate != rhs_storage._withdrawFeeRate {return false}
         if _storage._proposerFeeShare != rhs_storage._proposerFeeShare {return false}
+        if _storage._publisherFeeShare != rhs_storage._publisherFeeShare {return false}
         if _storage._minDepositAmount != rhs_storage._minDepositAmount {return false}
         if _storage._minWithdrawAmount != rhs_storage._minWithdrawAmount {return false}
         if _storage._blockHeight != rhs_storage._blockHeight {return false}
@@ -3091,6 +3093,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         if _storage._paused != rhs_storage._paused {return false}
         if _storage._foreignToken != rhs_storage._foreignToken {return false}
         if _storage._leaveWaitingPeriod != rhs_storage._leaveWaitingPeriod {return false}
+        if _storage._publishWaitingPeriod != rhs_storage._publishWaitingPeriod {return false}
+        if _storage._publishSlashRate != rhs_storage._publishSlashRate {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
@@ -3114,9 +3118,10 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     7: .same(proto: "proposer"),
     8: .same(proto: "signatures"),
     10: .same(proto: "rollup"),
-    11: .standard(proto: "block_reward"),
-    12: .standard(proto: "minted_amount"),
-    13: .standard(proto: "burned_amount"),
+    11: .standard(proto: "minted_amount"),
+    12: .standard(proto: "burned_amount"),
+    13: .standard(proto: "reward_amount"),
+    14: .standard(proto: "min_reward"),
     30: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
@@ -3131,9 +3136,10 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     var _proposer: String = String()
     var _signatures: [Ocap_Multisig] = []
     var _rollup: String = String()
-    var _blockReward: String = String()
     var _mintedAmount: String = String()
     var _burnedAmount: String = String()
+    var _rewardAmount: String = String()
+    var _minReward: String = String()
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -3151,9 +3157,10 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       _proposer = source._proposer
       _signatures = source._signatures
       _rollup = source._rollup
-      _blockReward = source._blockReward
       _mintedAmount = source._mintedAmount
       _burnedAmount = source._burnedAmount
+      _rewardAmount = source._rewardAmount
+      _minReward = source._minReward
       _context = source._context
       _data = source._data
     }
@@ -3183,9 +3190,10 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         case 7: try { try decoder.decodeSingularStringField(value: &_storage._proposer) }()
         case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._signatures) }()
         case 10: try { try decoder.decodeSingularStringField(value: &_storage._rollup) }()
-        case 11: try { try decoder.decodeSingularStringField(value: &_storage._blockReward) }()
-        case 12: try { try decoder.decodeSingularStringField(value: &_storage._mintedAmount) }()
-        case 13: try { try decoder.decodeSingularStringField(value: &_storage._burnedAmount) }()
+        case 11: try { try decoder.decodeSingularStringField(value: &_storage._mintedAmount) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._burnedAmount) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._rewardAmount) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._minReward) }()
         case 30: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -3223,14 +3231,17 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if !_storage._rollup.isEmpty {
         try visitor.visitSingularStringField(value: _storage._rollup, fieldNumber: 10)
       }
-      if !_storage._blockReward.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._blockReward, fieldNumber: 11)
-      }
       if !_storage._mintedAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._mintedAmount, fieldNumber: 12)
+        try visitor.visitSingularStringField(value: _storage._mintedAmount, fieldNumber: 11)
       }
       if !_storage._burnedAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._burnedAmount, fieldNumber: 13)
+        try visitor.visitSingularStringField(value: _storage._burnedAmount, fieldNumber: 12)
+      }
+      if !_storage._rewardAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._rewardAmount, fieldNumber: 13)
+      }
+      if !_storage._minReward.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._minReward, fieldNumber: 14)
       }
       if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
@@ -3256,9 +3267,10 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         if _storage._proposer != rhs_storage._proposer {return false}
         if _storage._signatures != rhs_storage._signatures {return false}
         if _storage._rollup != rhs_storage._rollup {return false}
-        if _storage._blockReward != rhs_storage._blockReward {return false}
         if _storage._mintedAmount != rhs_storage._mintedAmount {return false}
         if _storage._burnedAmount != rhs_storage._burnedAmount {return false}
+        if _storage._rewardAmount != rhs_storage._rewardAmount {return false}
+        if _storage._minReward != rhs_storage._minReward {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true

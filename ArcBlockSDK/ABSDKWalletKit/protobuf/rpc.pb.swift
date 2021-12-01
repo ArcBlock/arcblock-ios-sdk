@@ -1387,9 +1387,6 @@ public struct Ocap_RequestListRollups {
 
   public var tokenAddress: String = String()
 
-  /// TODO: deprecate this
-  public var erc20TokenAddress: String = String()
-
   /// same as erc20_token_address
   public var foreignTokenAddress: String = String()
 
@@ -3919,8 +3916,7 @@ extension Ocap_RequestListRollups: SwiftProtobuf.Message, SwiftProtobuf._Message
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "paging"),
     2: .standard(proto: "token_address"),
-    3: .standard(proto: "erc20_token_address"),
-    4: .standard(proto: "foreign_token_address"),
+    3: .standard(proto: "foreign_token_address"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3931,8 +3927,7 @@ extension Ocap_RequestListRollups: SwiftProtobuf.Message, SwiftProtobuf._Message
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.tokenAddress) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.erc20TokenAddress) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.foreignTokenAddress) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.foreignTokenAddress) }()
       default: break
       }
     }
@@ -3945,11 +3940,8 @@ extension Ocap_RequestListRollups: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.tokenAddress.isEmpty {
       try visitor.visitSingularStringField(value: self.tokenAddress, fieldNumber: 2)
     }
-    if !self.erc20TokenAddress.isEmpty {
-      try visitor.visitSingularStringField(value: self.erc20TokenAddress, fieldNumber: 3)
-    }
     if !self.foreignTokenAddress.isEmpty {
-      try visitor.visitSingularStringField(value: self.foreignTokenAddress, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.foreignTokenAddress, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3957,7 +3949,6 @@ extension Ocap_RequestListRollups: SwiftProtobuf.Message, SwiftProtobuf._Message
   public static func ==(lhs: Ocap_RequestListRollups, rhs: Ocap_RequestListRollups) -> Bool {
     if lhs._paging != rhs._paging {return false}
     if lhs.tokenAddress != rhs.tokenAddress {return false}
-    if lhs.erc20TokenAddress != rhs.erc20TokenAddress {return false}
     if lhs.foreignTokenAddress != rhs.foreignTokenAddress {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
