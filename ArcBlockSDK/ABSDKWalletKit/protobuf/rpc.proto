@@ -284,8 +284,7 @@ message ResponseGetRollupState {
 message RequestListRollups {
   Page paging = 1;
   string token_address = 2;
-  string erc20_token_address = 3; // TODO: deprecate this
-  string foreign_token_address = 4; // same as erc20_token_address
+  string foreign_token_address = 3; // same as erc20_token_address
 }
 message ResponseListRollups {
   StatusCode code = 1;
