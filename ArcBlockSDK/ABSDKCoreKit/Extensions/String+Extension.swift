@@ -85,14 +85,13 @@ public extension String {
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
-    func toAmountString(formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
+    func toAmountString() -> String {
         guard !isEmpty else {
             return "0"
         }
-        let realFormattingDecimals = min(formattingDecimals, BigUInt.MinFormattingDecimals)
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = realFormattingDecimals
+        formatter.maximumFractionDigits = BigUInt.MinFormattingDecimals
         formatter.roundingMode = .floor
         return formatter.string(from: NSDecimalNumber(string: self)) ?? "0"
     }
@@ -101,10 +100,10 @@ public extension String {
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
-    func toAmountString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
+    func toAmountString(decimals: Int? = 18) -> String {
         guard let balance = Web3.Utils.parseToBigUInt(self, decimals: 0) else {
             return "0"
         }
-        return balance.toAmountString(decimals: decimals, formattingDecimals: formattingDecimals)
+        return balance.toAmountString(decimals: decimals)
     }
 }
