@@ -220,7 +220,6 @@ message IndexedTokenState {
   string address = 9;
   string genesis_time = 10;
   string renaissance_time = 11;
-  string erc20_contract_address = 12; // TODO: deprecate this
   ForeignToken foreign_token = 13;
   google.protobuf.Any data = 50;
 }
@@ -265,7 +264,6 @@ message IndexedStakeState {
 message IndexedRollupState {
   string address = 1;
   string token_address = 2;
-  string erc20_token_address = 3; // TODO: deprecate this
   string contract_address = 4;
   repeated RollupValidator seed_validators = 5;
   repeated RollupValidator validators = 6;
@@ -276,8 +274,6 @@ message IndexedRollupState {
   uint32 min_block_size = 11;
   uint32 max_block_size = 12;
   uint32 min_block_interval = 13;
-  string foreign_chain_type = 14; // TODO: deprecate this
-  string foreign_chain_id = 15; // TODO: deprecate this
   string genesis_time = 16;
   string renaissance_time = 17;
   IndexedTokenInput token_info = 18;
@@ -308,6 +304,13 @@ message IndexedRollupState {
   // Added since v1.13.53
   uint32 leave_waiting_period = 38;
 
+  // Added since v1.13.57
+  uint32 publisher_fee_share = 39;
+
+  // Added since v1.13.61
+  uint32 publish_waiting_period = 40;
+  uint32 publish_slash_rate = 41;
+
   google.protobuf.Any data = 50;
 }
 
@@ -329,11 +332,11 @@ message IndexedRollupBlock {
 
   string rollup = 12;
 
-  string blockReward = 13;
-  string mintedAmount = 14;
-  string burnedAmount = 15;
+  string minted_amount = 13;
+  string burned_amount = 14;
+  string reward_amount = 15;
 
-  IndexedTokenInput token_info = 16;
+  IndexedTokenInput token_info = 18;
 
   google.protobuf.Any data = 50;
 }

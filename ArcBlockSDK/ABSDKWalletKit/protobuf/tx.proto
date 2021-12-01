@@ -146,8 +146,6 @@ message CreateTokenTx {
   // string erc20_contract_address = 15; // deprecated
   ForeignToken foreign_token = 16;
 
-
-
   // the chain won't touch this field. Only the dapp shall handle it.
   google.protobuf.Any data = 20;
 }
@@ -411,6 +409,13 @@ message CreateRollupTx {
   // Added since v1.13.53
   uint32 leave_waiting_period = 28;
 
+  // Added since v1.13.57
+  uint32 publisher_fee_share = 29;
+
+  // Added since v1.13.61
+  uint32 publish_waiting_period = 30;
+  uint32 publish_slash_rate = 31;
+
   google.protobuf.Any data = 50;
 }
 // Should be a multi-signed transaction
@@ -443,6 +448,14 @@ message UpdateRollupTx {
   string max_withdraw_fee = 19;
   bool paused = 20;
   string rollup = 21;
+
+  // Added since v1.13.57
+  uint32 publisher_fee_share = 22;
+
+  // Added since v1.13.61
+  uint32 leave_waiting_period = 23;
+  uint32 publish_waiting_period = 24;
+  uint32 publish_slash_rate = 25;
 
   google.protobuf.Any data = 50;
 }
@@ -501,6 +514,24 @@ message CreateRollupBlockTx {
   // the rollup chainId
   string rollup = 10;
 
+  // Added since v1.13.61
+  string min_reward = 11;
+
+  google.protobuf.Any data = 50;
+}
+message ClaimBlockRewardTx {
+  // rollup and block hash
+  string rollup = 1;
+  uint64 block_height = 2;
+  string block_hash = 3;
+
+  // The foreign chain tx evidence of block publishing
+  Evidence evidence = 4;
+
+  // Who published the block to the contract, can get 70% of the block fee
+  // All validators will get 30% of the block fee
+  string publisher = 5;
+
   google.protobuf.Any data = 50;
 }
 message DepositTokenV2Tx {
@@ -512,12 +543,20 @@ message DepositTokenV2Tx {
   Evidence evidence = 4;          // the evidence of the original transaction
   string rollup = 5;              // the rollup chainId to deposit to
 
+  // Added since v1.13.61
+  string actual_fee = 7;       // the actual_fee charged for this tx
+
   google.protobuf.Any data = 15;
 }
 message WithdrawTokenV2Tx {
-  TokenInput token = 1;  // token address and amount to withdraw
-  string to = 2;         // foreign address to withdraw token to, should by same as tx.from
-  string rollup = 3;     // the rollup chainId to withdraw from
+  TokenInput token = 1;           // token address and amount to withdraw
+  string to = 2;                  // foreign address to withdraw token to, should by same as tx.from
+  string rollup = 3;              // the rollup chainId to withdraw from
+
+  // Added since v1.13.61
+  string proposer = 5;            // the rollup validator that proposed the max-reward
+  string max_fee = 6;             // the maximum fee amount that user is willing to pay for this tx to be committed
+  string actual_fee = 7;          // the actual_fee charged for this tx
 
   // the chain won't touch this field. Only the dapp shall handle it.
   google.protobuf.Any data = 15;
@@ -566,5 +605,6 @@ message ItxStub {
     JoinRollupTx join_rollup = 52;
     LeaveRollupTx leave_rollup = 53;
     CreateRollupBlockTx create_rollup_block = 54;
+    ClaimBlockRewardTx claim_block_reward = 55;
   }
 }
