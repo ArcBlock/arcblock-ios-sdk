@@ -797,12 +797,6 @@ public struct Ocap_IndexedTokenState {
     set {_uniqueStorage()._renaissanceTime = newValue}
   }
 
-  /// TODO: deprecate this
-  public var erc20ContractAddress: String {
-    get {return _storage._erc20ContractAddress}
-    set {_uniqueStorage()._erc20ContractAddress = newValue}
-  }
-
   public var foreignToken: Ocap_ForeignToken {
     get {return _storage._foreignToken ?? Ocap_ForeignToken()}
     set {_uniqueStorage()._foreignToken = newValue}
@@ -1006,12 +1000,6 @@ public struct Ocap_IndexedRollupState {
     set {_uniqueStorage()._tokenAddress = newValue}
   }
 
-  /// TODO: deprecate this
-  public var erc20TokenAddress: String {
-    get {return _storage._erc20TokenAddress}
-    set {_uniqueStorage()._erc20TokenAddress = newValue}
-  }
-
   public var contractAddress: String {
     get {return _storage._contractAddress}
     set {_uniqueStorage()._contractAddress = newValue}
@@ -1060,18 +1048,6 @@ public struct Ocap_IndexedRollupState {
   public var minBlockInterval: UInt32 {
     get {return _storage._minBlockInterval}
     set {_uniqueStorage()._minBlockInterval = newValue}
-  }
-
-  /// TODO: deprecate this
-  public var foreignChainType: String {
-    get {return _storage._foreignChainType}
-    set {_uniqueStorage()._foreignChainType = newValue}
-  }
-
-  /// TODO: deprecate this
-  public var foreignChainID: String {
-    get {return _storage._foreignChainID}
-    set {_uniqueStorage()._foreignChainID = newValue}
   }
 
   public var genesisTime: String {
@@ -1200,6 +1176,23 @@ public struct Ocap_IndexedRollupState {
     set {_uniqueStorage()._leaveWaitingPeriod = newValue}
   }
 
+  /// Added since v1.13.57
+  public var publisherFeeShare: UInt32 {
+    get {return _storage._publisherFeeShare}
+    set {_uniqueStorage()._publisherFeeShare = newValue}
+  }
+
+  /// Added since v1.13.61
+  public var publishWaitingPeriod: UInt32 {
+    get {return _storage._publishWaitingPeriod}
+    set {_uniqueStorage()._publishWaitingPeriod = newValue}
+  }
+
+  public var publishSlashRate: UInt32 {
+    get {return _storage._publishSlashRate}
+    set {_uniqueStorage()._publishSlashRate = newValue}
+  }
+
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_uniqueStorage()._data = newValue}
@@ -1276,11 +1269,6 @@ public struct Ocap_IndexedRollupBlock {
     set {_uniqueStorage()._rollup = newValue}
   }
 
-  public var blockReward: String {
-    get {return _storage._blockReward}
-    set {_uniqueStorage()._blockReward = newValue}
-  }
-
   public var mintedAmount: String {
     get {return _storage._mintedAmount}
     set {_uniqueStorage()._mintedAmount = newValue}
@@ -1289,6 +1277,11 @@ public struct Ocap_IndexedRollupBlock {
   public var burnedAmount: String {
     get {return _storage._burnedAmount}
     set {_uniqueStorage()._burnedAmount = newValue}
+  }
+
+  public var rewardAmount: String {
+    get {return _storage._rewardAmount}
+    set {_uniqueStorage()._rewardAmount = newValue}
   }
 
   public var tokenInfo: Ocap_IndexedTokenInput {
@@ -2894,7 +2887,6 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     9: .same(proto: "address"),
     10: .standard(proto: "genesis_time"),
     11: .standard(proto: "renaissance_time"),
-    12: .standard(proto: "erc20_contract_address"),
     13: .standard(proto: "foreign_token"),
     50: .same(proto: "data"),
   ]
@@ -2911,7 +2903,6 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     var _address: String = String()
     var _genesisTime: String = String()
     var _renaissanceTime: String = String()
-    var _erc20ContractAddress: String = String()
     var _foreignToken: Ocap_ForeignToken? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -2931,7 +2922,6 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       _address = source._address
       _genesisTime = source._genesisTime
       _renaissanceTime = source._renaissanceTime
-      _erc20ContractAddress = source._erc20ContractAddress
       _foreignToken = source._foreignToken
       _data = source._data
     }
@@ -2963,7 +2953,6 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         case 10: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
         case 11: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
-        case 12: try { try decoder.decodeSingularStringField(value: &_storage._erc20ContractAddress) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._foreignToken) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -3007,9 +2996,6 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       if !_storage._renaissanceTime.isEmpty {
         try visitor.visitSingularStringField(value: _storage._renaissanceTime, fieldNumber: 11)
       }
-      if !_storage._erc20ContractAddress.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._erc20ContractAddress, fieldNumber: 12)
-      }
       if let v = _storage._foreignToken {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
       }
@@ -3036,7 +3022,6 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
         if _storage._address != rhs_storage._address {return false}
         if _storage._genesisTime != rhs_storage._genesisTime {return false}
         if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
-        if _storage._erc20ContractAddress != rhs_storage._erc20ContractAddress {return false}
         if _storage._foreignToken != rhs_storage._foreignToken {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
@@ -3357,7 +3342,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .standard(proto: "token_address"),
-    3: .standard(proto: "erc20_token_address"),
     4: .standard(proto: "contract_address"),
     5: .standard(proto: "seed_validators"),
     6: .same(proto: "validators"),
@@ -3368,8 +3352,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
     11: .standard(proto: "min_block_size"),
     12: .standard(proto: "max_block_size"),
     13: .standard(proto: "min_block_interval"),
-    14: .standard(proto: "foreign_chain_type"),
-    15: .standard(proto: "foreign_chain_id"),
     16: .standard(proto: "genesis_time"),
     17: .standard(proto: "renaissance_time"),
     18: .standard(proto: "token_info"),
@@ -3393,13 +3375,15 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
     36: .same(proto: "paused"),
     37: .standard(proto: "foreign_token"),
     38: .standard(proto: "leave_waiting_period"),
+    39: .standard(proto: "publisher_fee_share"),
+    40: .standard(proto: "publish_waiting_period"),
+    41: .standard(proto: "publish_slash_rate"),
     50: .same(proto: "data"),
   ]
 
   fileprivate class _StorageClass {
     var _address: String = String()
     var _tokenAddress: String = String()
-    var _erc20TokenAddress: String = String()
     var _contractAddress: String = String()
     var _seedValidators: [Ocap_RollupValidator] = []
     var _validators: [Ocap_RollupValidator] = []
@@ -3410,8 +3394,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _minBlockSize: UInt32 = 0
     var _maxBlockSize: UInt32 = 0
     var _minBlockInterval: UInt32 = 0
-    var _foreignChainType: String = String()
-    var _foreignChainID: String = String()
     var _genesisTime: String = String()
     var _renaissanceTime: String = String()
     var _tokenInfo: Ocap_IndexedTokenInput? = nil
@@ -3435,6 +3417,9 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _paused: Bool = false
     var _foreignToken: Ocap_ForeignToken? = nil
     var _leaveWaitingPeriod: UInt32 = 0
+    var _publisherFeeShare: UInt32 = 0
+    var _publishWaitingPeriod: UInt32 = 0
+    var _publishSlashRate: UInt32 = 0
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -3444,7 +3429,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
     init(copying source: _StorageClass) {
       _address = source._address
       _tokenAddress = source._tokenAddress
-      _erc20TokenAddress = source._erc20TokenAddress
       _contractAddress = source._contractAddress
       _seedValidators = source._seedValidators
       _validators = source._validators
@@ -3455,8 +3439,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
       _minBlockSize = source._minBlockSize
       _maxBlockSize = source._maxBlockSize
       _minBlockInterval = source._minBlockInterval
-      _foreignChainType = source._foreignChainType
-      _foreignChainID = source._foreignChainID
       _genesisTime = source._genesisTime
       _renaissanceTime = source._renaissanceTime
       _tokenInfo = source._tokenInfo
@@ -3480,6 +3462,9 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
       _paused = source._paused
       _foreignToken = source._foreignToken
       _leaveWaitingPeriod = source._leaveWaitingPeriod
+      _publisherFeeShare = source._publisherFeeShare
+      _publishWaitingPeriod = source._publishWaitingPeriod
+      _publishSlashRate = source._publishSlashRate
       _data = source._data
     }
   }
@@ -3501,7 +3486,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         switch fieldNumber {
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._tokenAddress) }()
-        case 3: try { try decoder.decodeSingularStringField(value: &_storage._erc20TokenAddress) }()
         case 4: try { try decoder.decodeSingularStringField(value: &_storage._contractAddress) }()
         case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._seedValidators) }()
         case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._validators) }()
@@ -3512,8 +3496,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         case 11: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockSize) }()
         case 12: try { try decoder.decodeSingularUInt32Field(value: &_storage._maxBlockSize) }()
         case 13: try { try decoder.decodeSingularUInt32Field(value: &_storage._minBlockInterval) }()
-        case 14: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainType) }()
-        case 15: try { try decoder.decodeSingularStringField(value: &_storage._foreignChainID) }()
         case 16: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
         case 17: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._tokenInfo) }()
@@ -3537,6 +3519,9 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         case 36: try { try decoder.decodeSingularBoolField(value: &_storage._paused) }()
         case 37: try { try decoder.decodeSingularMessageField(value: &_storage._foreignToken) }()
         case 38: try { try decoder.decodeSingularUInt32Field(value: &_storage._leaveWaitingPeriod) }()
+        case 39: try { try decoder.decodeSingularUInt32Field(value: &_storage._publisherFeeShare) }()
+        case 40: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishWaitingPeriod) }()
+        case 41: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishSlashRate) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -3551,9 +3536,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
       }
       if !_storage._tokenAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._tokenAddress, fieldNumber: 2)
-      }
-      if !_storage._erc20TokenAddress.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._erc20TokenAddress, fieldNumber: 3)
       }
       if !_storage._contractAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._contractAddress, fieldNumber: 4)
@@ -3584,12 +3566,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
       }
       if _storage._minBlockInterval != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._minBlockInterval, fieldNumber: 13)
-      }
-      if !_storage._foreignChainType.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._foreignChainType, fieldNumber: 14)
-      }
-      if !_storage._foreignChainID.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._foreignChainID, fieldNumber: 15)
       }
       if !_storage._genesisTime.isEmpty {
         try visitor.visitSingularStringField(value: _storage._genesisTime, fieldNumber: 16)
@@ -3660,6 +3636,15 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
       if _storage._leaveWaitingPeriod != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._leaveWaitingPeriod, fieldNumber: 38)
       }
+      if _storage._publisherFeeShare != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._publisherFeeShare, fieldNumber: 39)
+      }
+      if _storage._publishWaitingPeriod != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._publishWaitingPeriod, fieldNumber: 40)
+      }
+      if _storage._publishSlashRate != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._publishSlashRate, fieldNumber: 41)
+      }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
       }
@@ -3674,7 +3659,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         let rhs_storage = _args.1
         if _storage._address != rhs_storage._address {return false}
         if _storage._tokenAddress != rhs_storage._tokenAddress {return false}
-        if _storage._erc20TokenAddress != rhs_storage._erc20TokenAddress {return false}
         if _storage._contractAddress != rhs_storage._contractAddress {return false}
         if _storage._seedValidators != rhs_storage._seedValidators {return false}
         if _storage._validators != rhs_storage._validators {return false}
@@ -3685,8 +3669,6 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._minBlockSize != rhs_storage._minBlockSize {return false}
         if _storage._maxBlockSize != rhs_storage._maxBlockSize {return false}
         if _storage._minBlockInterval != rhs_storage._minBlockInterval {return false}
-        if _storage._foreignChainType != rhs_storage._foreignChainType {return false}
-        if _storage._foreignChainID != rhs_storage._foreignChainID {return false}
         if _storage._genesisTime != rhs_storage._genesisTime {return false}
         if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
         if _storage._tokenInfo != rhs_storage._tokenInfo {return false}
@@ -3710,6 +3692,9 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._paused != rhs_storage._paused {return false}
         if _storage._foreignToken != rhs_storage._foreignToken {return false}
         if _storage._leaveWaitingPeriod != rhs_storage._leaveWaitingPeriod {return false}
+        if _storage._publisherFeeShare != rhs_storage._publisherFeeShare {return false}
+        if _storage._publishWaitingPeriod != rhs_storage._publishWaitingPeriod {return false}
+        if _storage._publishSlashRate != rhs_storage._publishSlashRate {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -3734,10 +3719,10 @@ extension Ocap_IndexedRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Message
     10: .standard(proto: "genesis_time"),
     11: .standard(proto: "renaissance_time"),
     12: .same(proto: "rollup"),
-    13: .same(proto: "blockReward"),
-    14: .same(proto: "mintedAmount"),
-    15: .same(proto: "burnedAmount"),
-    16: .standard(proto: "token_info"),
+    13: .standard(proto: "minted_amount"),
+    14: .standard(proto: "burned_amount"),
+    15: .standard(proto: "reward_amount"),
+    18: .standard(proto: "token_info"),
     50: .same(proto: "data"),
   ]
 
@@ -3753,9 +3738,9 @@ extension Ocap_IndexedRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _genesisTime: String = String()
     var _renaissanceTime: String = String()
     var _rollup: String = String()
-    var _blockReward: String = String()
     var _mintedAmount: String = String()
     var _burnedAmount: String = String()
+    var _rewardAmount: String = String()
     var _tokenInfo: Ocap_IndexedTokenInput? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -3775,9 +3760,9 @@ extension Ocap_IndexedRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Message
       _genesisTime = source._genesisTime
       _renaissanceTime = source._renaissanceTime
       _rollup = source._rollup
-      _blockReward = source._blockReward
       _mintedAmount = source._mintedAmount
       _burnedAmount = source._burnedAmount
+      _rewardAmount = source._rewardAmount
       _tokenInfo = source._tokenInfo
       _data = source._data
     }
@@ -3809,10 +3794,10 @@ extension Ocap_IndexedRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Message
         case 10: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
         case 11: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
         case 12: try { try decoder.decodeSingularStringField(value: &_storage._rollup) }()
-        case 13: try { try decoder.decodeSingularStringField(value: &_storage._blockReward) }()
-        case 14: try { try decoder.decodeSingularStringField(value: &_storage._mintedAmount) }()
-        case 15: try { try decoder.decodeSingularStringField(value: &_storage._burnedAmount) }()
-        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._tokenInfo) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._mintedAmount) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._burnedAmount) }()
+        case 15: try { try decoder.decodeSingularStringField(value: &_storage._rewardAmount) }()
+        case 18: try { try decoder.decodeSingularMessageField(value: &_storage._tokenInfo) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -3855,17 +3840,17 @@ extension Ocap_IndexedRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Message
       if !_storage._rollup.isEmpty {
         try visitor.visitSingularStringField(value: _storage._rollup, fieldNumber: 12)
       }
-      if !_storage._blockReward.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._blockReward, fieldNumber: 13)
-      }
       if !_storage._mintedAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._mintedAmount, fieldNumber: 14)
+        try visitor.visitSingularStringField(value: _storage._mintedAmount, fieldNumber: 13)
       }
       if !_storage._burnedAmount.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._burnedAmount, fieldNumber: 15)
+        try visitor.visitSingularStringField(value: _storage._burnedAmount, fieldNumber: 14)
+      }
+      if !_storage._rewardAmount.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._rewardAmount, fieldNumber: 15)
       }
       if let v = _storage._tokenInfo {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
       }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
@@ -3890,9 +3875,9 @@ extension Ocap_IndexedRollupBlock: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._genesisTime != rhs_storage._genesisTime {return false}
         if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
         if _storage._rollup != rhs_storage._rollup {return false}
-        if _storage._blockReward != rhs_storage._blockReward {return false}
         if _storage._mintedAmount != rhs_storage._mintedAmount {return false}
         if _storage._burnedAmount != rhs_storage._burnedAmount {return false}
+        if _storage._rewardAmount != rhs_storage._rewardAmount {return false}
         if _storage._tokenInfo != rhs_storage._tokenInfo {return false}
         if _storage._data != rhs_storage._data {return false}
         return true

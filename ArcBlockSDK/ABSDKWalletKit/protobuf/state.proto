@@ -190,8 +190,7 @@ message TokenState {
   uint32 decimal = 7;
   string icon = 8;
   string total_supply = 9;
-  string erc20_contract_address = 10; // TODO: deprecate this
-  ForeignToken foreign_token = 11;
+  ForeignToken foreign_token = 10;
 
   StateContext context = 15;
 
@@ -269,7 +268,6 @@ message RollupState {
   string token_address = 2;
 
   // FUTURE: how to support main token on foreign chain: such as ETH and BNB
-  string erc20_token_address = 3; // TODO: deprecate this
   string contract_address = 4;
 
   // Future mutation to rollup validators and blocks must be signed by this validator.
@@ -296,50 +294,60 @@ message RollupState {
   // Minimum confirmations for a tx on foreign chain before it can submit to ocap chain
   uint32 min_block_confirmation = 14;
 
-  // Immutable TODO: deprecate following 2 fields
-  string foreign_chain_type = 15; // type of the foreign chain, possibly "eth", "bsc", "matic"
-  string foreign_chain_id = 16;   // chain id of the chain. Could be testnet or mainnet.
-
   // Immutable
   string issuer = 17;
 
   // Mutable
   // Following fields define the economic policy for the rollup
-  // All fee and share fields are devided by 10000, and then converted to percentage
-  // For example, deposit_fee_rate = 100 / 10000 = 1%, proposer_fee_share = 7000 / 10000 = 70%
-  // Then user user deposit 10000 ABT, will get 9900 ABT after deposit, and will pay 100 ABT for the deposit fee
-  // The proposer validator will get 100 * 70% = 70 ABT
-  // And the other 30% = 30 ABT will be divided evenly among other validators
+  // All fee and share fields are devided by 10000, and then converted to percentage for later calculation
+  // Let's take following settings for example:
+  // - deposit_fee_rate = 100 / 10000 = 1%,
+  // - publisher_fee_share = 6000 / 10000 = 60%
+  // - proposer_fee_share = 3000 / 10000 = 30%
+  // When user deposit 10000 ABT, he will receive 9900 ABT after deposit, and pay 100 ABT as fee
+  // After the tx is included in a block and published to foreign chain, the fee can be claimed:
+  // - block publisher: 100 * 60% = 60 ABT, given to block publisher
+  // - proposer total: 100 * 30% = 30 ABT, shared between tx proposer and block proposer
+  // - validator total: 100 * 10% = 10 ABT, shared between all signers, including the proposer
   uint32 deposit_fee_rate = 18;
   uint32 withdraw_fee_rate = 19;
   uint32 proposer_fee_share = 20;
+  uint32 publisher_fee_share = 21;
 
   // Mutable
-  string min_deposit_amount = 21;
-  string min_withdraw_amount = 22;
+  string min_deposit_amount = 22;
+  string min_withdraw_amount = 23;
 
   // Mutable, updated on each new block
-  uint64 block_height = 23;
-  string block_hash = 24;
+  uint64 block_height = 24;
+  string block_hash = 25;
 
-  IndexedTokenInput token_info = 25;
-  string total_deposit_amount = 26;
-  string total_withdraw_amount = 27;
+  IndexedTokenInput token_info = 26;
+  string total_deposit_amount = 27;
+  string total_withdraw_amount = 28;
 
   // Added since v1.13.45
-  string max_deposit_amount = 28;
-  string max_withdraw_amount = 29;
-  string min_deposit_fee = 30;
-  string max_deposit_fee = 31;
-  string min_withdraw_fee = 32;
-  string max_withdraw_fee = 33;
-  bool paused = 34;
+  string max_deposit_amount = 29;
+  string max_withdraw_amount = 30;
+  string min_deposit_fee = 31;
+  string max_deposit_fee = 32;
+  string min_withdraw_fee = 33;
+  string max_withdraw_fee = 34;
+  bool paused = 35;
 
   // Added since v1.13.47
-  ForeignToken foreign_token = 35;
+  ForeignToken foreign_token = 36;
 
   // Added since v1.13.53
-  uint32 leave_waiting_period = 36;
+  // How long the staking will be locked after the validator leave and revoke stake
+  uint32 leave_waiting_period = 37;
+
+  // Added since v1.13.61
+  // How long have the non-producer publisher have to wait before he can publish the block
+  // If a block is published by a non-producer, the producer will get slashed
+  uint32 publish_waiting_period = 38;
+  // If set to 100, then 1% x min_stake_amount will be slashed from the producer
+  uint32 publish_slash_rate = 39;
 
   StateContext context = 40;
   google.protobuf.Any data = 50;
@@ -383,10 +391,18 @@ message RollupBlock {
 
   string rollup = 10;
 
-  // TODO: block_reward --> block_fee
-  string block_reward = 11;
-  string minted_amount = 12;
-  string burned_amount = 13;
+  // token stats
+  string minted_amount = 11;
+  string burned_amount = 12;
+
+  // tatal reward amount for publisher, proposer and validator
+  string reward_amount = 13;
+
+  // Added since v1.13.61
+  // Used to calculate the actual reward for speedup txs
+  // The total reward from all txs should not be less than the min reward
+  // And the publisher share of total reward should cover the block sync cost
+  string min_reward = 14;
 
   StateContext context = 30;
   google.protobuf.Any data = 50;
