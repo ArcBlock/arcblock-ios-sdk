@@ -85,7 +85,7 @@ public extension String {
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
-    func toAmountString() -> String {
+    func formatAmount() -> String {
         guard !isEmpty else {
             return "0"
         }
