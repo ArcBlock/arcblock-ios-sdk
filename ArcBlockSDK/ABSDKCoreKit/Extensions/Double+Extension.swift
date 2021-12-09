@@ -23,7 +23,7 @@ public extension Double {
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
-    func toAmountString() -> String {
+    func formatAmount() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = BigUInt.MinFormattingDecimals
