@@ -72,7 +72,7 @@ public extension BigUInt {
     
     // TODO: - 待废弃
     func toAmountDouble(decimals: Int? = 18) -> Double {
-        let balance = self.toAmountString(decimals: decimals)
+        let balance = self.toSendString(decimals: decimals)
         return Double(balance) ?? 0.0
     }
     
