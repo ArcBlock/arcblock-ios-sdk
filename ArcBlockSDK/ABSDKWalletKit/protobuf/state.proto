@@ -69,37 +69,19 @@ message AssetState {
   google.protobuf.Any data = 50;
 }
 
-message CoreProtocol {
-  string name = 1;
-  string address = 2;
-}
-
 message ForgeState {
   string address = 1;
   // consensus parameters, in future we shall be able to modify it
   ConsensusParams consensus = 2;
   map<uint64, UpgradeTasks> tasks = 3;
-  map<uint32, StakeSummary> stake_summary = 4;
-  string version = 5;
-  // string data_version = 6; current data version deprecated
+  string version = 4;
 
-  // app state returned by app
-  // bytes forge_app_hash = 7; deprecated
+  ForgeToken token = 5;
+  TransactionConfig tx_config = 6;
 
-  ForgeToken token = 8;
-  TransactionConfig tx_config = 9;
+  UpgradeInfo upgrade_info = 7;
 
-  // StakeConfig stake_config = 10; deprecated
-  // PokeConfig poke_config = 11; deprecated
-
-  repeated CoreProtocol protocols = 12;
-  map<string, uint32> gas = 13;
-  UpgradeInfo upgrade_info = 14;
-
-  // google.protobuf.Any data = 15; // deprecated
-
-  map<string, AccountConfig> account_config = 16;
-  TokenSwapConfig token_swap_config = 17;
+  repeated AccountConfig account_config = 8;
 
   google.protobuf.Any data = 2047; // app can define their own app state
 }
@@ -270,7 +252,7 @@ message RollupState {
   // FUTURE: how to support main token on foreign chain: such as ETH and BNB
   string contract_address = 4;
 
-  // Future mutation to rollup validators and blocks must be signed by this validator.
+  // Mutation to rollup validators and blocks must be signed by this validator.
   repeated RollupValidator seed_validators = 5;
 
   // List of verified validators that can handling rollup/rolludown traffic
@@ -349,7 +331,11 @@ message RollupState {
   // If set to 100, then 1% x min_stake_amount will be slashed from the producer
   uint32 publish_slash_rate = 39;
 
-  StateContext context = 40;
+  // Added since v1.13.71
+  // contract history from earliest to latest
+  repeated string migrate_history = 40;
+
+  StateContext context = 42;
   google.protobuf.Any data = 50;
 }
 

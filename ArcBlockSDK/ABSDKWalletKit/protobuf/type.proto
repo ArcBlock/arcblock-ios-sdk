@@ -148,6 +148,9 @@ message Transaction {
   google.protobuf.Any itx = 15;
 
   repeated TransactionReceipt receipts = 16;
+
+  // service fee for this tx
+  string service_fee = 17;
 }
 
 message TransactionInfo {
@@ -196,15 +199,6 @@ message VariableInput {
   bool required = 4;
 }
 
-// How do we define tx.itx.outputs
-// They are exactly the same as tx.itx.inputs
-
-message DeclareConfig {
-  bool restricted = 1;
-  uint32 hierarchy = 2;
-  BigUint cost = 3;
-}
-
 message DelegateConfig {
   // the interval used for calculate the num_txs_delta / num_tokens_delta
   uint32 delta_interval = 1;
@@ -212,14 +206,17 @@ message DelegateConfig {
   repeated string type_urls = 2;
 }
 
+message TxFeeConfig {
+  string type_url = 1;
+  string fee = 2;
+}
+
 message TransactionConfig {
   uint32 max_asset_size = 1;
   uint32 max_list_size = 2;
   uint32 max_multisig = 3;
-  string minimum_stake = 4;
-  DeclareConfig declare = 5;
-  DelegateConfig delegate = 6;
-  StakeConfig stake = 8;
+  DelegateConfig delegate = 4;
+  repeated TxFeeConfig tx_fee = 5;
 }
 
 message BlockInfo {
@@ -310,11 +307,6 @@ message StakeSummary {
   BigUint total_stakes = 1;
   BigUint total_unstakes = 2;
   StateContext context = 3;
-}
-
-message StakeConfig {
-  uint32 timeout_general = 1;
-  uint32 timeout_stake_for_node = 2;
 }
 
 message UnconfirmedTxs {
@@ -413,6 +405,7 @@ message ForgeToken {
   string initial_supply = 7; // token initial supply amount
   string total_supply = 8;   // token total supply amount
   uint32 inflation_rate = 9; // token inflation rate in integer
+  string address = 10;
 }
 
 message UpgradeInfo {
@@ -429,16 +422,6 @@ message AccountConfig {
   string address = 1;
   bytes pk = 2;
   BigUint balance = 3;
-}
-
-message TokenSwapConfig {
-  string commission_holder_address = 1;
-  // uint32 withdraw_interval = 2 [ deprecated = true ];
-  // BigUint commission = 3 [ deprecated = true ];
-  uint32 commission_rate = 4;
-  uint32 revoke_commission_rate = 5;
-  BigUint min_commission = 6;
-  BigUint max_commission = 7;
 }
 
 message Evidence {
