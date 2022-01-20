@@ -311,6 +311,9 @@ message IndexedRollupState {
   uint32 publish_waiting_period = 40;
   uint32 publish_slash_rate = 41;
 
+  // Added since v1.13.71
+  repeated string migrate_history = 42;
+
   google.protobuf.Any data = 50;
 }
 

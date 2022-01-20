@@ -167,61 +167,6 @@ public struct Ocap_RevokeDelegateTx {
 }
 
 /// --------------------- Governance Related ------------------------------------
-public struct Ocap_UpdateConsensusParamsTx {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  /// new delegate config
-  public var delegateConfig: Ocap_DelegateConfig {
-    get {return _delegateConfig ?? Ocap_DelegateConfig()}
-    set {_delegateConfig = newValue}
-  }
-  /// Returns true if `delegateConfig` has been explicitly set.
-  public var hasDelegateConfig: Bool {return self._delegateConfig != nil}
-  /// Clears the value of `delegateConfig`. Subsequent reads from it will return its default value.
-  public mutating func clearDelegateConfig() {self._delegateConfig = nil}
-
-  /// new declare config
-  public var declareConfig: Ocap_DeclareConfig {
-    get {return _declareConfig ?? Ocap_DeclareConfig()}
-    set {_declareConfig = newValue}
-  }
-  /// Returns true if `declareConfig` has been explicitly set.
-  public var hasDeclareConfig: Bool {return self._declareConfig != nil}
-  /// Clears the value of `declareConfig`. Subsequent reads from it will return its default value.
-  public mutating func clearDeclareConfig() {self._declareConfig = nil}
-
-  /// new token swap config
-  public var tokenSwapConfig: Ocap_TokenSwapConfig {
-    get {return _tokenSwapConfig ?? Ocap_TokenSwapConfig()}
-    set {_tokenSwapConfig = newValue}
-  }
-  /// Returns true if `tokenSwapConfig` has been explicitly set.
-  public var hasTokenSwapConfig: Bool {return self._tokenSwapConfig != nil}
-  /// Clears the value of `tokenSwapConfig`. Subsequent reads from it will return its default value.
-  public mutating func clearTokenSwapConfig() {self._tokenSwapConfig = nil}
-
-  /// new moderator address
-  public var moderatorConfig: Ocap_AccountConfig {
-    get {return _moderatorConfig ?? Ocap_AccountConfig()}
-    set {_moderatorConfig = newValue}
-  }
-  /// Returns true if `moderatorConfig` has been explicitly set.
-  public var hasModeratorConfig: Bool {return self._moderatorConfig != nil}
-  /// Clears the value of `moderatorConfig`. Subsequent reads from it will return its default value.
-  public mutating func clearModeratorConfig() {self._moderatorConfig = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _delegateConfig: Ocap_DelegateConfig? = nil
-  fileprivate var _declareConfig: Ocap_DeclareConfig? = nil
-  fileprivate var _tokenSwapConfig: Ocap_TokenSwapConfig? = nil
-  fileprivate var _moderatorConfig: Ocap_AccountConfig? = nil
-}
-
 public struct Ocap_UpgradeNodeTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1298,16 +1243,6 @@ public struct Ocap_UpdateRollupTx {
     set {_uniqueStorage()._maxWithdrawFee = newValue}
   }
 
-  public var paused: Bool {
-    get {return _storage._paused}
-    set {_uniqueStorage()._paused = newValue}
-  }
-
-  public var rollup: String {
-    get {return _storage._rollup}
-    set {_uniqueStorage()._rollup = newValue}
-  }
-
   /// Added since v1.13.57
   public var publisherFeeShare: UInt32 {
     get {return _storage._publisherFeeShare}
@@ -1328,6 +1263,11 @@ public struct Ocap_UpdateRollupTx {
   public var publishSlashRate: UInt32 {
     get {return _storage._publishSlashRate}
     set {_uniqueStorage()._publishSlashRate = newValue}
+  }
+
+  public var rollup: String {
+    get {return _storage._rollup}
+    set {_uniqueStorage()._rollup = newValue}
   }
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -1516,6 +1456,117 @@ public struct Ocap_ClaimBlockRewardTx {
   public init() {}
 
   fileprivate var _evidence: Ocap_Evidence? = nil
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_PauseRollupTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var rollup: String = String()
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_ResumeRollupTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var rollup: String = String()
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_MigrateRollupContractTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var rollup: String = String()
+
+  public var to: String = String()
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_MigrateRollupTokenTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var rollup: String = String()
+
+  /// from which contract
+  public var from: String = String()
+
+  /// to which contract, must points to latest contract address
+  public var to: String = String()
+
+  /// token address and amount to migrate
+  public var token: Ocap_TokenInput {
+    get {return _token ?? Ocap_TokenInput()}
+    set {_token = newValue}
+  }
+  /// Returns true if `token` has been explicitly set.
+  public var hasToken: Bool {return self._token != nil}
+  /// Clears the value of `token`. Subsequent reads from it will return its default value.
+  public mutating func clearToken() {self._token = nil}
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _token: Ocap_TokenInput? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
@@ -1862,6 +1913,38 @@ public struct Ocap_ItxStub {
     set {value = .claimBlockReward(newValue)}
   }
 
+  public var pauseRollup: Ocap_PauseRollupTx {
+    get {
+      if case .pauseRollup(let v)? = value {return v}
+      return Ocap_PauseRollupTx()
+    }
+    set {value = .pauseRollup(newValue)}
+  }
+
+  public var resumeRollup: Ocap_ResumeRollupTx {
+    get {
+      if case .resumeRollup(let v)? = value {return v}
+      return Ocap_ResumeRollupTx()
+    }
+    set {value = .resumeRollup(newValue)}
+  }
+
+  public var migrateRollupContract: Ocap_MigrateRollupContractTx {
+    get {
+      if case .migrateRollupContract(let v)? = value {return v}
+      return Ocap_MigrateRollupContractTx()
+    }
+    set {value = .migrateRollupContract(newValue)}
+  }
+
+  public var migrateRollupToken: Ocap_MigrateRollupTokenTx {
+    get {
+      if case .migrateRollupToken(let v)? = value {return v}
+      return Ocap_MigrateRollupTokenTx()
+    }
+    set {value = .migrateRollupToken(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Value: Equatable {
@@ -1900,6 +1983,10 @@ public struct Ocap_ItxStub {
     case leaveRollup(Ocap_LeaveRollupTx)
     case createRollupBlock(Ocap_CreateRollupBlockTx)
     case claimBlockReward(Ocap_ClaimBlockRewardTx)
+    case pauseRollup(Ocap_PauseRollupTx)
+    case resumeRollup(Ocap_ResumeRollupTx)
+    case migrateRollupContract(Ocap_MigrateRollupContractTx)
+    case migrateRollupToken(Ocap_MigrateRollupTokenTx)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Ocap_ItxStub.OneOf_Value, rhs: Ocap_ItxStub.OneOf_Value) -> Bool {
@@ -2017,6 +2104,22 @@ public struct Ocap_ItxStub {
       }()
       case (.claimBlockReward, .claimBlockReward): return {
         guard case .claimBlockReward(let l) = lhs, case .claimBlockReward(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.pauseRollup, .pauseRollup): return {
+        guard case .pauseRollup(let l) = lhs, case .pauseRollup(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.resumeRollup, .resumeRollup): return {
+        guard case .resumeRollup(let l) = lhs, case .resumeRollup(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.migrateRollupContract, .migrateRollupContract): return {
+        guard case .migrateRollupContract(let l) = lhs, case .migrateRollupContract(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.migrateRollupToken, .migrateRollupToken): return {
+        guard case .migrateRollupToken(let l) = lhs, case .migrateRollupToken(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -2259,56 +2362,6 @@ extension Ocap_RevokeDelegateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.to != rhs.to {return false}
     if lhs.typeUrls != rhs.typeUrls {return false}
     if lhs._data != rhs._data {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_UpdateConsensusParamsTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".UpdateConsensusParamsTx"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "delegate_config"),
-    2: .standard(proto: "declare_config"),
-    3: .standard(proto: "token_swap_config"),
-    4: .standard(proto: "moderator_config"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._delegateConfig) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._declareConfig) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._tokenSwapConfig) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._moderatorConfig) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._delegateConfig {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
-    if let v = self._declareConfig {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if let v = self._tokenSwapConfig {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }
-    if let v = self._moderatorConfig {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_UpdateConsensusParamsTx, rhs: Ocap_UpdateConsensusParamsTx) -> Bool {
-    if lhs._delegateConfig != rhs._delegateConfig {return false}
-    if lhs._declareConfig != rhs._declareConfig {return false}
-    if lhs._tokenSwapConfig != rhs._tokenSwapConfig {return false}
-    if lhs._moderatorConfig != rhs._moderatorConfig {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3780,12 +3833,11 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     17: .standard(proto: "max_deposit_fee"),
     18: .standard(proto: "min_withdraw_fee"),
     19: .standard(proto: "max_withdraw_fee"),
-    20: .same(proto: "paused"),
-    21: .same(proto: "rollup"),
-    22: .standard(proto: "publisher_fee_share"),
-    23: .standard(proto: "leave_waiting_period"),
-    24: .standard(proto: "publish_waiting_period"),
-    25: .standard(proto: "publish_slash_rate"),
+    20: .standard(proto: "publisher_fee_share"),
+    21: .standard(proto: "leave_waiting_period"),
+    22: .standard(proto: "publish_waiting_period"),
+    23: .standard(proto: "publish_slash_rate"),
+    40: .same(proto: "rollup"),
     50: .same(proto: "data"),
   ]
 
@@ -3809,12 +3861,11 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     var _maxDepositFee: String = String()
     var _minWithdrawFee: String = String()
     var _maxWithdrawFee: String = String()
-    var _paused: Bool = false
-    var _rollup: String = String()
     var _publisherFeeShare: UInt32 = 0
     var _leaveWaitingPeriod: UInt32 = 0
     var _publishWaitingPeriod: UInt32 = 0
     var _publishSlashRate: UInt32 = 0
+    var _rollup: String = String()
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -3841,12 +3892,11 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       _maxDepositFee = source._maxDepositFee
       _minWithdrawFee = source._minWithdrawFee
       _maxWithdrawFee = source._maxWithdrawFee
-      _paused = source._paused
-      _rollup = source._rollup
       _publisherFeeShare = source._publisherFeeShare
       _leaveWaitingPeriod = source._leaveWaitingPeriod
       _publishWaitingPeriod = source._publishWaitingPeriod
       _publishSlashRate = source._publishSlashRate
+      _rollup = source._rollup
       _data = source._data
     }
   }
@@ -3885,12 +3935,11 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         case 17: try { try decoder.decodeSingularStringField(value: &_storage._maxDepositFee) }()
         case 18: try { try decoder.decodeSingularStringField(value: &_storage._minWithdrawFee) }()
         case 19: try { try decoder.decodeSingularStringField(value: &_storage._maxWithdrawFee) }()
-        case 20: try { try decoder.decodeSingularBoolField(value: &_storage._paused) }()
-        case 21: try { try decoder.decodeSingularStringField(value: &_storage._rollup) }()
-        case 22: try { try decoder.decodeSingularUInt32Field(value: &_storage._publisherFeeShare) }()
-        case 23: try { try decoder.decodeSingularUInt32Field(value: &_storage._leaveWaitingPeriod) }()
-        case 24: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishWaitingPeriod) }()
-        case 25: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishSlashRate) }()
+        case 20: try { try decoder.decodeSingularUInt32Field(value: &_storage._publisherFeeShare) }()
+        case 21: try { try decoder.decodeSingularUInt32Field(value: &_storage._leaveWaitingPeriod) }()
+        case 22: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishWaitingPeriod) }()
+        case 23: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishSlashRate) }()
+        case 40: try { try decoder.decodeSingularStringField(value: &_storage._rollup) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -3957,23 +4006,20 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._maxWithdrawFee.isEmpty {
         try visitor.visitSingularStringField(value: _storage._maxWithdrawFee, fieldNumber: 19)
       }
-      if _storage._paused != false {
-        try visitor.visitSingularBoolField(value: _storage._paused, fieldNumber: 20)
-      }
-      if !_storage._rollup.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._rollup, fieldNumber: 21)
-      }
       if _storage._publisherFeeShare != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._publisherFeeShare, fieldNumber: 22)
+        try visitor.visitSingularUInt32Field(value: _storage._publisherFeeShare, fieldNumber: 20)
       }
       if _storage._leaveWaitingPeriod != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._leaveWaitingPeriod, fieldNumber: 23)
+        try visitor.visitSingularUInt32Field(value: _storage._leaveWaitingPeriod, fieldNumber: 21)
       }
       if _storage._publishWaitingPeriod != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._publishWaitingPeriod, fieldNumber: 24)
+        try visitor.visitSingularUInt32Field(value: _storage._publishWaitingPeriod, fieldNumber: 22)
       }
       if _storage._publishSlashRate != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._publishSlashRate, fieldNumber: 25)
+        try visitor.visitSingularUInt32Field(value: _storage._publishSlashRate, fieldNumber: 23)
+      }
+      if !_storage._rollup.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._rollup, fieldNumber: 40)
       }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
@@ -4006,12 +4052,11 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         if _storage._maxDepositFee != rhs_storage._maxDepositFee {return false}
         if _storage._minWithdrawFee != rhs_storage._minWithdrawFee {return false}
         if _storage._maxWithdrawFee != rhs_storage._maxWithdrawFee {return false}
-        if _storage._paused != rhs_storage._paused {return false}
-        if _storage._rollup != rhs_storage._rollup {return false}
         if _storage._publisherFeeShare != rhs_storage._publisherFeeShare {return false}
         if _storage._leaveWaitingPeriod != rhs_storage._leaveWaitingPeriod {return false}
         if _storage._publishWaitingPeriod != rhs_storage._publishWaitingPeriod {return false}
         if _storage._publishSlashRate != rhs_storage._publishSlashRate {return false}
+        if _storage._rollup != rhs_storage._rollup {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -4282,6 +4327,182 @@ extension Ocap_ClaimBlockRewardTx: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
+extension Ocap_PauseRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PauseRollupTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "rollup"),
+    10: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.rollup.isEmpty {
+      try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_PauseRollupTx, rhs: Ocap_PauseRollupTx) -> Bool {
+    if lhs.rollup != rhs.rollup {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResumeRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResumeRollupTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "rollup"),
+    10: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.rollup.isEmpty {
+      try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResumeRollupTx, rhs: Ocap_ResumeRollupTx) -> Bool {
+    if lhs.rollup != rhs.rollup {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_MigrateRollupContractTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MigrateRollupContractTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "rollup"),
+    2: .same(proto: "to"),
+    10: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.to) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.rollup.isEmpty {
+      try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
+    }
+    if !self.to.isEmpty {
+      try visitor.visitSingularStringField(value: self.to, fieldNumber: 2)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_MigrateRollupContractTx, rhs: Ocap_MigrateRollupContractTx) -> Bool {
+    if lhs.rollup != rhs.rollup {return false}
+    if lhs.to != rhs.to {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_MigrateRollupTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MigrateRollupTokenTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "rollup"),
+    2: .same(proto: "from"),
+    3: .same(proto: "to"),
+    4: .same(proto: "token"),
+    10: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.from) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.to) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._token) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.rollup.isEmpty {
+      try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
+    }
+    if !self.from.isEmpty {
+      try visitor.visitSingularStringField(value: self.from, fieldNumber: 2)
+    }
+    if !self.to.isEmpty {
+      try visitor.visitSingularStringField(value: self.to, fieldNumber: 3)
+    }
+    if let v = self._token {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_MigrateRollupTokenTx, rhs: Ocap_MigrateRollupTokenTx) -> Bool {
+    if lhs.rollup != rhs.rollup {return false}
+    if lhs.from != rhs.from {return false}
+    if lhs.to != rhs.to {return false}
+    if lhs._token != rhs._token {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_DepositTokenV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DepositTokenV2Tx"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -4449,6 +4670,10 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     53: .standard(proto: "leave_rollup"),
     54: .standard(proto: "create_rollup_block"),
     55: .standard(proto: "claim_block_reward"),
+    56: .standard(proto: "pause_rollup"),
+    57: .standard(proto: "resume_rollup"),
+    58: .standard(proto: "migrate_rollup_contract"),
+    59: .standard(proto: "migrate_rollup_token"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4709,6 +4934,42 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .claimBlockReward(v)}
       }()
+      case 56: try {
+        var v: Ocap_PauseRollupTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .pauseRollup(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .pauseRollup(v)}
+      }()
+      case 57: try {
+        var v: Ocap_ResumeRollupTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .resumeRollup(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .resumeRollup(v)}
+      }()
+      case 58: try {
+        var v: Ocap_MigrateRollupContractTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .migrateRollupContract(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .migrateRollupContract(v)}
+      }()
+      case 59: try {
+        var v: Ocap_MigrateRollupTokenTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .migrateRollupToken(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .migrateRollupToken(v)}
+      }()
       default: break
       }
     }
@@ -4830,6 +5091,22 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     case .claimBlockReward?: try {
       guard case .claimBlockReward(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 55)
+    }()
+    case .pauseRollup?: try {
+      guard case .pauseRollup(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 56)
+    }()
+    case .resumeRollup?: try {
+      guard case .resumeRollup(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 57)
+    }()
+    case .migrateRollupContract?: try {
+      guard case .migrateRollupContract(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 58)
+    }()
+    case .migrateRollupToken?: try {
+      guard case .migrateRollupToken(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 59)
     }()
     case nil: break
     }

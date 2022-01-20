@@ -1193,6 +1193,12 @@ public struct Ocap_IndexedRollupState {
     set {_uniqueStorage()._publishSlashRate = newValue}
   }
 
+  /// Added since v1.13.71
+  public var migrateHistory: [String] {
+    get {return _storage._migrateHistory}
+    set {_uniqueStorage()._migrateHistory = newValue}
+  }
+
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_uniqueStorage()._data = newValue}
@@ -3378,6 +3384,7 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
     39: .standard(proto: "publisher_fee_share"),
     40: .standard(proto: "publish_waiting_period"),
     41: .standard(proto: "publish_slash_rate"),
+    42: .standard(proto: "migrate_history"),
     50: .same(proto: "data"),
   ]
 
@@ -3420,6 +3427,7 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _publisherFeeShare: UInt32 = 0
     var _publishWaitingPeriod: UInt32 = 0
     var _publishSlashRate: UInt32 = 0
+    var _migrateHistory: [String] = []
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -3465,6 +3473,7 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
       _publisherFeeShare = source._publisherFeeShare
       _publishWaitingPeriod = source._publishWaitingPeriod
       _publishSlashRate = source._publishSlashRate
+      _migrateHistory = source._migrateHistory
       _data = source._data
     }
   }
@@ -3522,6 +3531,7 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         case 39: try { try decoder.decodeSingularUInt32Field(value: &_storage._publisherFeeShare) }()
         case 40: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishWaitingPeriod) }()
         case 41: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishSlashRate) }()
+        case 42: try { try decoder.decodeRepeatedStringField(value: &_storage._migrateHistory) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -3645,6 +3655,9 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
       if _storage._publishSlashRate != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._publishSlashRate, fieldNumber: 41)
       }
+      if !_storage._migrateHistory.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._migrateHistory, fieldNumber: 42)
+      }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
       }
@@ -3695,6 +3708,7 @@ extension Ocap_IndexedRollupState: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._publisherFeeShare != rhs_storage._publisherFeeShare {return false}
         if _storage._publishWaitingPeriod != rhs_storage._publishWaitingPeriod {return false}
         if _storage._publishSlashRate != rhs_storage._publishSlashRate {return false}
+        if _storage._migrateHistory != rhs_storage._migrateHistory {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }

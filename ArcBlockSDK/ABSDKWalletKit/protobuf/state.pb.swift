@@ -264,20 +264,6 @@ public struct Ocap_AssetState {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public struct Ocap_CoreProtocol {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var name: String = String()
-
-  public var address: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
 public struct Ocap_ForgeState {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -303,12 +289,6 @@ public struct Ocap_ForgeState {
     set {_uniqueStorage()._tasks = newValue}
   }
 
-  public var stakeSummary: Dictionary<UInt32,Ocap_StakeSummary> {
-    get {return _storage._stakeSummary}
-    set {_uniqueStorage()._stakeSummary = newValue}
-  }
-
-  /// string data_version = 6; current data version deprecated
   public var version: String {
     get {return _storage._version}
     set {_uniqueStorage()._version = newValue}
@@ -332,16 +312,6 @@ public struct Ocap_ForgeState {
   /// Clears the value of `txConfig`. Subsequent reads from it will return its default value.
   public mutating func clearTxConfig() {_uniqueStorage()._txConfig = nil}
 
-  public var protocols: [Ocap_CoreProtocol] {
-    get {return _storage._protocols}
-    set {_uniqueStorage()._protocols = newValue}
-  }
-
-  public var gas: Dictionary<String,UInt32> {
-    get {return _storage._gas}
-    set {_uniqueStorage()._gas = newValue}
-  }
-
   public var upgradeInfo: Ocap_UpgradeInfo {
     get {return _storage._upgradeInfo ?? Ocap_UpgradeInfo()}
     set {_uniqueStorage()._upgradeInfo = newValue}
@@ -351,19 +321,10 @@ public struct Ocap_ForgeState {
   /// Clears the value of `upgradeInfo`. Subsequent reads from it will return its default value.
   public mutating func clearUpgradeInfo() {_uniqueStorage()._upgradeInfo = nil}
 
-  public var accountConfig: Dictionary<String,Ocap_AccountConfig> {
+  public var accountConfig: [Ocap_AccountConfig] {
     get {return _storage._accountConfig}
     set {_uniqueStorage()._accountConfig = newValue}
   }
-
-  public var tokenSwapConfig: Ocap_TokenSwapConfig {
-    get {return _storage._tokenSwapConfig ?? Ocap_TokenSwapConfig()}
-    set {_uniqueStorage()._tokenSwapConfig = newValue}
-  }
-  /// Returns true if `tokenSwapConfig` has been explicitly set.
-  public var hasTokenSwapConfig: Bool {return _storage._tokenSwapConfig != nil}
-  /// Clears the value of `tokenSwapConfig`. Subsequent reads from it will return its default value.
-  public mutating func clearTokenSwapConfig() {_uniqueStorage()._tokenSwapConfig = nil}
 
   /// app can define their own app state
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -943,7 +904,7 @@ public struct Ocap_RollupState {
     set {_uniqueStorage()._contractAddress = newValue}
   }
 
-  /// Future mutation to rollup validators and blocks must be signed by this validator.
+  /// Mutation to rollup validators and blocks must be signed by this validator.
   public var seedValidators: [Ocap_RollupValidator] {
     get {return _storage._seedValidators}
     set {_uniqueStorage()._seedValidators = newValue}
@@ -1146,6 +1107,13 @@ public struct Ocap_RollupState {
   public var publishSlashRate: UInt32 {
     get {return _storage._publishSlashRate}
     set {_uniqueStorage()._publishSlashRate = newValue}
+  }
+
+  /// Added since v1.13.71
+  /// contract history from earliest to latest
+  public var migrateHistory: [String] {
+    get {return _storage._migrateHistory}
+    set {_uniqueStorage()._migrateHistory = newValue}
   }
 
   public var context: Ocap_StateContext {
@@ -1674,59 +1642,17 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 }
 
-extension Ocap_CoreProtocol: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".CoreProtocol"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "address"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
-    }
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_CoreProtocol, rhs: Ocap_CoreProtocol) -> Bool {
-    if lhs.name != rhs.name {return false}
-    if lhs.address != rhs.address {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ForgeState"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .same(proto: "consensus"),
     3: .same(proto: "tasks"),
-    4: .standard(proto: "stake_summary"),
-    5: .same(proto: "version"),
-    8: .same(proto: "token"),
-    9: .standard(proto: "tx_config"),
-    12: .same(proto: "protocols"),
-    13: .same(proto: "gas"),
-    14: .standard(proto: "upgrade_info"),
-    16: .standard(proto: "account_config"),
-    17: .standard(proto: "token_swap_config"),
+    4: .same(proto: "version"),
+    5: .same(proto: "token"),
+    6: .standard(proto: "tx_config"),
+    7: .standard(proto: "upgrade_info"),
+    8: .standard(proto: "account_config"),
     2047: .same(proto: "data"),
   ]
 
@@ -1734,15 +1660,11 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _address: String = String()
     var _consensus: Ocap_ConsensusParams? = nil
     var _tasks: Dictionary<UInt64,Ocap_UpgradeTasks> = [:]
-    var _stakeSummary: Dictionary<UInt32,Ocap_StakeSummary> = [:]
     var _version: String = String()
     var _token: Ocap_ForgeToken? = nil
     var _txConfig: Ocap_TransactionConfig? = nil
-    var _protocols: [Ocap_CoreProtocol] = []
-    var _gas: Dictionary<String,UInt32> = [:]
     var _upgradeInfo: Ocap_UpgradeInfo? = nil
-    var _accountConfig: Dictionary<String,Ocap_AccountConfig> = [:]
-    var _tokenSwapConfig: Ocap_TokenSwapConfig? = nil
+    var _accountConfig: [Ocap_AccountConfig] = []
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -1753,15 +1675,11 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _address = source._address
       _consensus = source._consensus
       _tasks = source._tasks
-      _stakeSummary = source._stakeSummary
       _version = source._version
       _token = source._token
       _txConfig = source._txConfig
-      _protocols = source._protocols
-      _gas = source._gas
       _upgradeInfo = source._upgradeInfo
       _accountConfig = source._accountConfig
-      _tokenSwapConfig = source._tokenSwapConfig
       _data = source._data
     }
   }
@@ -1784,15 +1702,11 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         case 2: try { try decoder.decodeSingularMessageField(value: &_storage._consensus) }()
         case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt64,Ocap_UpgradeTasks>.self, value: &_storage._tasks) }()
-        case 4: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt32,Ocap_StakeSummary>.self, value: &_storage._stakeSummary) }()
-        case 5: try { try decoder.decodeSingularStringField(value: &_storage._version) }()
-        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._token) }()
-        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._txConfig) }()
-        case 12: try { try decoder.decodeRepeatedMessageField(value: &_storage._protocols) }()
-        case 13: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufUInt32>.self, value: &_storage._gas) }()
-        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._upgradeInfo) }()
-        case 16: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Ocap_AccountConfig>.self, value: &_storage._accountConfig) }()
-        case 17: try { try decoder.decodeSingularMessageField(value: &_storage._tokenSwapConfig) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._version) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._token) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._txConfig) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._upgradeInfo) }()
+        case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._accountConfig) }()
         case 2047: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -1811,32 +1725,20 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._tasks.isEmpty {
         try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt64,Ocap_UpgradeTasks>.self, value: _storage._tasks, fieldNumber: 3)
       }
-      if !_storage._stakeSummary.isEmpty {
-        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt32,Ocap_StakeSummary>.self, value: _storage._stakeSummary, fieldNumber: 4)
-      }
       if !_storage._version.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._version, fieldNumber: 5)
+        try visitor.visitSingularStringField(value: _storage._version, fieldNumber: 4)
       }
       if let v = _storage._token {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
       }
       if let v = _storage._txConfig {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-      }
-      if !_storage._protocols.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._protocols, fieldNumber: 12)
-      }
-      if !_storage._gas.isEmpty {
-        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufUInt32>.self, value: _storage._gas, fieldNumber: 13)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
       }
       if let v = _storage._upgradeInfo {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
       }
       if !_storage._accountConfig.isEmpty {
-        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Ocap_AccountConfig>.self, value: _storage._accountConfig, fieldNumber: 16)
-      }
-      if let v = _storage._tokenSwapConfig {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+        try visitor.visitRepeatedMessageField(value: _storage._accountConfig, fieldNumber: 8)
       }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 2047)
@@ -1853,15 +1755,11 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._address != rhs_storage._address {return false}
         if _storage._consensus != rhs_storage._consensus {return false}
         if _storage._tasks != rhs_storage._tasks {return false}
-        if _storage._stakeSummary != rhs_storage._stakeSummary {return false}
         if _storage._version != rhs_storage._version {return false}
         if _storage._token != rhs_storage._token {return false}
         if _storage._txConfig != rhs_storage._txConfig {return false}
-        if _storage._protocols != rhs_storage._protocols {return false}
-        if _storage._gas != rhs_storage._gas {return false}
         if _storage._upgradeInfo != rhs_storage._upgradeInfo {return false}
         if _storage._accountConfig != rhs_storage._accountConfig {return false}
-        if _storage._tokenSwapConfig != rhs_storage._tokenSwapConfig {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -2785,7 +2683,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     37: .standard(proto: "leave_waiting_period"),
     38: .standard(proto: "publish_waiting_period"),
     39: .standard(proto: "publish_slash_rate"),
-    40: .same(proto: "context"),
+    40: .standard(proto: "migrate_history"),
+    42: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
 
@@ -2826,6 +2725,7 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     var _leaveWaitingPeriod: UInt32 = 0
     var _publishWaitingPeriod: UInt32 = 0
     var _publishSlashRate: UInt32 = 0
+    var _migrateHistory: [String] = []
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -2870,6 +2770,7 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       _leaveWaitingPeriod = source._leaveWaitingPeriod
       _publishWaitingPeriod = source._publishWaitingPeriod
       _publishSlashRate = source._publishSlashRate
+      _migrateHistory = source._migrateHistory
       _context = source._context
       _data = source._data
     }
@@ -2926,7 +2827,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         case 37: try { try decoder.decodeSingularUInt32Field(value: &_storage._leaveWaitingPeriod) }()
         case 38: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishWaitingPeriod) }()
         case 39: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishSlashRate) }()
-        case 40: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
+        case 40: try { try decoder.decodeRepeatedStringField(value: &_storage._migrateHistory) }()
+        case 42: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -3044,8 +2946,11 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if _storage._publishSlashRate != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._publishSlashRate, fieldNumber: 39)
       }
+      if !_storage._migrateHistory.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._migrateHistory, fieldNumber: 40)
+      }
       if let v = _storage._context {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 40)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 42)
       }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
@@ -3095,6 +3000,7 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         if _storage._leaveWaitingPeriod != rhs_storage._leaveWaitingPeriod {return false}
         if _storage._publishWaitingPeriod != rhs_storage._publishWaitingPeriod {return false}
         if _storage._publishSlashRate != rhs_storage._publishSlashRate {return false}
+        if _storage._migrateHistory != rhs_storage._migrateHistory {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true

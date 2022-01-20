@@ -49,16 +49,6 @@ message RevokeDelegateTx {
 }
 
 // --------------------- Governance Related ------------------------------------
-message UpdateConsensusParamsTx {
-  // new delegate config
-  DelegateConfig delegate_config = 1;
-  // new declare config
-  DeclareConfig declare_config = 2;
-  // new token swap config
-  TokenSwapConfig token_swap_config = 3;
-  // new moderator address
-  AccountConfig moderator_config = 4;
-}
 message UpgradeNodeTx {
   // the height node will be stopped at.
   uint64 height = 1;
@@ -446,17 +436,16 @@ message UpdateRollupTx {
   string max_deposit_fee = 17;
   string min_withdraw_fee = 18;
   string max_withdraw_fee = 19;
-  bool paused = 20;
-  string rollup = 21;
 
   // Added since v1.13.57
-  uint32 publisher_fee_share = 22;
+  uint32 publisher_fee_share = 20;
 
   // Added since v1.13.61
-  uint32 leave_waiting_period = 23;
-  uint32 publish_waiting_period = 24;
-  uint32 publish_slash_rate = 25;
+  uint32 leave_waiting_period = 21;
+  uint32 publish_waiting_period = 22;
+  uint32 publish_slash_rate = 23;
 
+  string rollup = 40;
   google.protobuf.Any data = 50;
 }
 message JoinRollupTx {
@@ -534,6 +523,26 @@ message ClaimBlockRewardTx {
 
   google.protobuf.Any data = 50;
 }
+message PauseRollupTx {
+  string rollup = 1;
+  google.protobuf.Any data = 10;
+}
+message ResumeRollupTx {
+  string rollup = 1;
+  google.protobuf.Any data = 10;
+}
+message MigrateRollupContractTx {
+  string rollup = 1;
+  string to = 2;
+  google.protobuf.Any data = 10;
+}
+message MigrateRollupTokenTx {
+  string rollup = 1;
+  string from = 2;       // from which contract
+  string to = 3;         // to which contract, must points to latest contract address
+  TokenInput token = 4;           // token address and amount to migrate
+  google.protobuf.Any data = 10;
+}
 message DepositTokenV2Tx {
   // Should be a multi-signed transaction
   // Submited by user, signed by rollup validators
@@ -606,5 +615,9 @@ message ItxStub {
     LeaveRollupTx leave_rollup = 53;
     CreateRollupBlockTx create_rollup_block = 54;
     ClaimBlockRewardTx claim_block_reward = 55;
+    PauseRollupTx pause_rollup = 56;
+    ResumeRollupTx resume_rollup = 57;
+    MigrateRollupContractTx migrate_rollup_contract = 58;
+    MigrateRollupTokenTx migrate_rollup_token = 59;
   }
 }

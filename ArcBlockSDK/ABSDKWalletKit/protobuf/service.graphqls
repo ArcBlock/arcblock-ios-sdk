@@ -21,6 +21,7 @@ type Transaction {
   itxJson: Json!
   sender: String
   receiver: String
+  serviceFee: String
 }
 type StateContext {
   genesisTx: TransactionInfo
