@@ -176,6 +176,7 @@ public class TxHelper {
             transaction.from = delegatee
         }
         transaction.pk = publicKey
+        transaction.serviceFee = "0"
 
         return transaction
     }
