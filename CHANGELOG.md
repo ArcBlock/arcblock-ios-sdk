@@ -1,3 +1,6 @@
+## 0.11.21 (February 16, 2022)
+  - add test case
+
 ## 0.11.20 (January 20, 2022)
   - add 0 service fee
   - update proto
