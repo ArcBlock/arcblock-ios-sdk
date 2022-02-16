@@ -96,14 +96,11 @@ public extension String {
         return formatter.string(from: NSDecimalNumber(string: self)) ?? "0"
     }
     
-    /// 将字符串格式化成余额展示(这里的字符串为BigUInt格式) 如: "1123456789000000000" -> 1123456789000000000
+    /// 将字符串格式化成余额展示(这里的字符串为BigUInt格式) 如: "1123456789000000000" -> 1.123456
     ///
     /// - Parameters:
-    ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
+    ///   - decimals: 默认18
     func toAmountString(decimals: Int? = 18) -> String {
-        guard let balance = Web3.Utils.parseToBigUInt(self, decimals: 0) else {
-            return "0"
-        }
-        return balance.toAmountString(decimals: decimals)
+        BigUInt(self)?.toAmountString(decimals: decimals) ?? "0"
     }
 }
