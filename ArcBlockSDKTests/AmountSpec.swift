@@ -88,17 +88,17 @@ class AmountSpec: QuickSpec {
         
         describe("Double To Amount") {
             it("works", closure: {
-                expect(12.00.toAmountString()).to(equal("12"))
-                expect(12.121234543546.toAmountString()).to(equal("12.121234"))
-                expect(12.1212345435460000.toAmountString()).to(equal("12.121234"))
-                expect(12.1212345435460000.toAmountString()).to(equal("12.121234"))
-                expect(1000.2345.toAmountString()).to(equal("1,000.2345"))
-                expect(1000.2345.toAmountString()).to(equal("1,000.2345"))
-                expect(10.0.toAmountString()).to(equal("10"))
-                expect(0.123456789.toAmountString()).to(equal("0.123456"))
-                expect(0.123456789.toAmountString()).to(equal("0.123456"))
-                expect(0.0.toAmountString()).to(equal("0"))
-                expect(10000.toAmountString()).to(equal("10,000"))
+                expect(12.00.formatAmount()).to(equal("12"))
+                expect(12.121234543546.formatAmount()).to(equal("12.121234"))
+                expect(12.1212345435460000.formatAmount()).to(equal("12.121234"))
+                expect(12.1212345435460000.formatAmount()).to(equal("12.121234"))
+                expect(1000.2345.formatAmount()).to(equal("1,000.2345"))
+                expect(1000.2345.formatAmount()).to(equal("1,000.2345"))
+                expect(10.0.formatAmount()).to(equal("10"))
+                expect(0.123456789.formatAmount()).to(equal("0.123456"))
+                expect(0.123456789.formatAmount()).to(equal("0.123456"))
+                expect(0.0.formatAmount()).to(equal("0"))
+                expect(10000.formatAmount()).to(equal("10,000"))
             })
         }
     }
