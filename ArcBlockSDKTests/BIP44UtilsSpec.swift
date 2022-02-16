@@ -57,23 +57,23 @@ class BIP44UtilsSpec: QuickSpec {
                 expect(address).to(equal("0x30a61514525283de572e521afee0500a6b0dee8c"))
             })
         }
-        
+
         describe("Mnemonics generation") {
             it("works", closure: {
                 guard let mnemonics = BIP44Utils.generateMnemonics() else { return }
                 let seed = BIP44Utils.getSeedByMnemonics(mnemonics: mnemonics)
                 guard let entropy = BIP39.mnemonicsToEntropy(mnemonics.joined(separator: " ")) else { return }
-                expect(seed).to(equal(BIP39.seedFromEntropy(entropy)))                
+                expect(seed).to(equal(BIP39.seedFromEntropy(entropy)))
             })
         }
-        
+
         describe("Mnemonics validate") {
             it("works", closure: {
                 guard let mnemonics = BIP44Utils.generateMnemonics() else { return }
                 let result = BIP44Utils.validate(mnemonics: mnemonics)
                 expect(result).to(beTrue())
             })
-            
+
             it("works", closure: {
                 guard var mnemonics = BIP44Utils.generateMnemonics() else { return }
                 mnemonics.removeLast()
@@ -82,11 +82,31 @@ class BIP44UtilsSpec: QuickSpec {
                 expect(result).to(beFalse())
             })
         }
-        
+
         describe("keyDerivePathForAppDid") {
             it("works", closure: {
                 let path = BIP44Utils.keyDerivePathForAppDid(appDid: "", index: 0)
                 expect(path).notTo(beNil())
+            })
+        }
+        
+        describe("Test Keypari") {
+            it("works", closure: {
+                let code = "virus million sister elite junior comfort since grain train artefact lunch fever".components(separatedBy: " ")
+                    guard let seed = BIP44Utils.getSeedByMnemonics(mnemonics: code) else { return }
+                    
+                    let didType = DidType.Types.didTypeForgeEthereum
+                    
+                    let didTypePath = BIP44Utils.keyDerivePathForAppDid(appDid: "", index: 0)
+                    let didTypeSk = BIP44Utils.generatePrivateKey(seed: seed, path: didTypePath!)
+                    let didTypeAddress = DidHelper.getUserDid(didType: didType, privateKey: didTypeSk!)
+                    expect(didTypeAddress).to(equal("0xBA6f19e811A21a18F31D1320C18842b77f6D3afD"))
+                                
+                    let ethTypePath = HDNode.defaultPathMetamask
+                    let ethTypeSk = BIP44Utils.generatePrivateKey(seed: seed, path: ethTypePath)
+                    let ethTypeAddress = DidHelper.getUserDid(didType: didType, privateKey: ethTypeSk!)
+                    expect(ethTypeAddress).to(equal("0xd89972DC4247fdf76570116A1CF643135a062916"))
+                    
             })
             
         }
