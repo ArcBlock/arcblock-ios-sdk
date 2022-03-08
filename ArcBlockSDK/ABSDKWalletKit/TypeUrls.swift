@@ -27,6 +27,8 @@ public enum TypeUrl: String, CaseIterable {
     case acquireAsset = "fg:t:acquire_asset"
     case acquireAsset_v2 = "fg:t:acquire_asset_v2"
     case createAsset = "fg:t:create_asset"
+    case createToken = "fg:t:create_token"
+    case createFactory = "fg:t:create_factory"
     case consumeAsset = "fg:t:consume_asset"
     case declare = "fg:t:declare"
     case exchange = "fg:t:exchange"
@@ -90,6 +92,10 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_AccountMigrateTx(serializedData: value)
         case .createAsset:
             return try? Ocap_CreateAssetTx(serializedData: value)
+        case .createToken:
+            return try? Ocap_CreateTokenTx(serializedData: value)
+        case .createFactory:
+            return try? Ocap_CreateFactoryTx(serializedData: value)
         case .declare:
             return try? Ocap_DeclareTx(serializedData: value)
         case .exchange:
