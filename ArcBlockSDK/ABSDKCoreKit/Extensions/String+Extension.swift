@@ -85,13 +85,13 @@ public extension String {
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
-    func formatAmount() -> String {
+    func formatAmount(formattingDecimals: Int = BigUnit.MinFormattingDecimals) -> String {
         guard !isEmpty else {
             return "0"
         }
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = BigUInt.MinFormattingDecimals
+        formatter.maximumFractionDigits = min(formattingDecimals, BigUnit.MinFormattingDecimals)
         formatter.roundingMode = .floor
         return formatter.string(from: NSDecimalNumber(string: self)) ?? "0"
     }
