@@ -1,3 +1,6 @@
+## 0.11.24 (March 28, 2022)
+  - fix formatting decimals
+
 ## 0.11.23 (March 23, 2022)
   - apollo fix
 

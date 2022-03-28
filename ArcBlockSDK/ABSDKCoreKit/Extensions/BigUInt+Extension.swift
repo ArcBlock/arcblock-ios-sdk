@@ -33,7 +33,8 @@ public extension BigUInt {
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
     func toAmountString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
-        let realDecimals = min(formattingDecimals, BigUInt.MinFormattingDecimals)
+        // 无法使用min(_,_) ???
+        let realDecimals = formattingDecimals > BigUInt.MinFormattingDecimals ? formattingDecimals : BigUInt.MinFormattingDecimals
         let amountStr = Web3.Utils.formatToPrecision(self, numberDecimals: decimals ?? 18, formattingDecimals: realDecimals, decimalSeparator: ".", fallbackToScientific: false) ?? "0"
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -55,7 +56,7 @@ public extension BigUInt {
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
     func toSendString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
-        let realDecimals = min(formattingDecimals, BigUInt.MinFormattingDecimals)
+        let realDecimals = formattingDecimals > BigUInt.MinFormattingDecimals ? formattingDecimals : BigUInt.MinFormattingDecimals
         let amountStr = Web3.Utils.formatToPrecision(self, numberDecimals: decimals ?? 18, formattingDecimals: realDecimals, decimalSeparator: ".", fallbackToScientific: false) ?? "0"
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
