@@ -100,7 +100,7 @@ public extension String {
     ///
     /// - Parameters:
     ///   - decimals: 默认18
-    func toAmountString(decimals: Int? = 18) -> String {
-        BigUInt(self)?.toAmountString(decimals: decimals) ?? "0"
+    func toAmountString(decimals: Int? = 18, formattingDecimals: Int = BigUnit.MinFormattingDecimals) -> String {
+        BigUInt(self)?.toAmountString(decimals: decimals, formattingDecimals: formattingDecimals) ?? "0"
     }
 }
