@@ -23,10 +23,10 @@ public extension Double {
     ///
     /// - Parameters:
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
-    func formatAmount() -> String {
+    func formatAmount(formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = BigUInt.MinFormattingDecimals
+        formatter.maximumFractionDigits = min(formattingDecimals, BigUInt.MinFormattingDecimals)
         formatter.roundingMode = .floor
         return formatter.string(from: NSNumber(floatLiteral: self)) ?? "0"
     }
