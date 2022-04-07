@@ -68,38 +68,6 @@ public class TxHelper {
         return txString
     }
 
-    public static func createTransferTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                        to: String, message: String?, value: BigUInt, assets: [String]? = nil, didType: DidType)  -> String? {
-
-        var transferTx = Ocap_TransferTx()
-        var txMessage = Google_Protobuf_Any.init()
-
-        if let message = message,
-            let temp = message.data(using: .utf8) {
-            txMessage.value = temp
-        }
-
-        transferTx.data = txMessage
-        transferTx.to = to
-        var txValue = Ocap_BigUint()
-        txValue.value = value.serialize()
-        transferTx.value = txValue
-        
-        if let assets = assets {
-            transferTx.assets = assets
-        }
-
-        guard let tx = try? transferTx.serializedData() else {
-            return nil
-        }
-
-        let txParams = TxParams(hashType: didType.hashType, keyType: didType.keyType,
-                                chainId: chainId, from: from, delegatee: delegatee)
-        let txString = genTxString(tx: tx, typeUrl: TypeUrl.transfer.rawValue,
-                                   txParams: txParams, privateKey: privateKey, publicKey: publicKey)
-        return txString
-    }
-
     public static func createDelegateTx(chainId: String, publicKey: Data, privateKey: Data, from: String,
                                         to: String, ops: [String: [String]], didType: DidType)  -> String? {
         guard let delegateAddress = DidHelper.getDelegateAddress(sender: from, receiver: to),
@@ -224,8 +192,17 @@ public class TxHelper {
     }
     
     // MARK: - Ocap V2
-    public static func createTransferSecondaryTx(chainId: String, publicKey: Data, privateKey: Data, from: String, delegatee: String? = nil,
-                                                 to: String, message: String?, value: String, assets: [String]? = nil, didType: DidType, tokenAddress: String)  -> String? {
+    public static func createTransferV2Tx(chainId: String,
+                                          publicKey: Data,
+                                          privateKey: Data,
+                                          from: String,
+                                          delegatee: String? = nil,
+                                          to: String,
+                                          message: String?,
+                                          value: String,
+                                          assets: [String]? = nil,
+                                          didType: DidType,
+                                          tokenAddress: String?)  -> String? {
 
         var transferTx = Ocap_TransferV2Tx()
         var txMessage = Google_Protobuf_Any.init()
@@ -240,9 +217,12 @@ public class TxHelper {
         
         var tokens = [Ocap_TokenInput]()
         var token = Ocap_TokenInput()
-        token.address = tokenAddress
-        token.value = value
-        tokens.append(token)
+        if let tokenAddress = tokenAddress,
+           !tokenAddress.isEmpty {
+            token.address = tokenAddress
+            token.value = value
+            tokens.append(token)
+        }
         transferTx.tokens = tokens
         
         if let assets = assets {

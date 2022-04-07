@@ -1,3 +1,6 @@
+## 0.11.25 (April 07, 2022)
+  - transfer fix
+
 ## 0.11.24 (March 28, 2022)
   - fix formatting decimals
 
