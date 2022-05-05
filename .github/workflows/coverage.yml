@@ -13,10 +13,10 @@ jobs:
     name: Start Test
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: swift test --enable-code-coverage
-    - name: Test coverage
-      uses: maxep/spm-lcov-action@0.3.0
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: swift test --enable-code-coverage
+      - name: Test coverage
+        uses: maxep/spm-lcov-action@0.3.0
         with:
           output-file: ./coverage/lcov.info
