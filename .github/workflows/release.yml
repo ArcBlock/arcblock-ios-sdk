@@ -1,0 +1,22 @@
+name: iOS Release
+
+# 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Start The Release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # NOTE @v2 uses the token as an auth http header. Set it to
+          # a Personal Access Token instead of secrets.GITHUB_TOKEN
+          # so that tag pushes trigger repo push events.
+          token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Start The Release
+        run: make release

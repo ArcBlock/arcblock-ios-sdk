@@ -1,4 +1,4 @@
-name: Release
+name: Code Coverage
 
 # 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
 
@@ -22,10 +22,8 @@ jobs:
       - name: Install Dependency
         run: |
           pod install
-      # - name: Start The Release
-      #   run: make release
       - name: Run tests
-        run: make test --enable-code-coverage
+        run: swift test --enable-code-coverage
       - name: Test coverage
         uses: maxep/spm-lcov-action@0.3.0
         with:
