@@ -1,0 +1,4 @@
+module arcblock_ios_sdk {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock-ios-sdk-Swift.h"
+    requires objc
+}

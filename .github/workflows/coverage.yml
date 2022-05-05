@@ -9,29 +9,14 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    name: Start The Release
-    runs-on: macos-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  codecov:
+    container:
+      image: swift:5.3
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set Xcode Version
-        run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
-      - name: Install Dependency
-        run: |
-          pod install
-    - name: Generate coverage report
-      run: |
-        pip install pytest
-        pip install pytest-cov
-        pytest --cov=./ --cov-report=xml
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2
-      with:
-        directory: ./coverage/reports/
-        env_vars: OS,PYTHON
-        fail_ci_if_error: true
-        path_to_write_report: ./coverage/codecov_report.txt
-        verbose: true
+      - uses: actions/checkout@v2
+      - run: swift test --enable-test-discovery --enable-code-coverage
+      - uses: mattpolzin/swift-codecov-action@0.7.3
+        with:
+          MINIMUM_COVERAGE: 50
+          INCLUDE_TESTS: "true"

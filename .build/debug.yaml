@@ -1,0 +1,78 @@
+client:
+  name: basic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "arcblock-ios-sdk-debug.module": ["<arcblock-ios-sdk-debug.module>"]
+  "arcblock-ios-sdkPackageTests-debug.test": ["<arcblock-ios-sdkPackageTests-debug.test>"]
+  "arcblock-ios-sdkTests-debug.module": ["<arcblock-ios-sdkTests-debug.module>"]
+  "main": ["<arcblock-ios-sdk-debug.module>"]
+  "test": ["<arcblock-ios-sdk-debug.module>","<arcblock-ios-sdkPackageTests-debug.test>","<arcblock-ios-sdkTests-debug.module>"]
+default: "main"
+nodes:
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Sources/arcblock-ios-sdk/":
+    is-directory-structure: true
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Tests/arcblock-ios-sdkTests/":
+    is-directory-structure: true
+commands:
+  "<arcblock-ios-sdk-debug.module>":
+    tool: phony
+    inputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk.swift.o","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.swiftmodule"]
+    outputs: ["<arcblock-ios-sdk-debug.module>"]
+
+  "<arcblock-ios-sdkPackageTests-debug.test>":
+    tool: phony
+    inputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock-ios-sdkPackageTests.xctest/Contents/MacOS/arcblock-ios-sdkPackageTests"]
+    outputs: ["<arcblock-ios-sdkPackageTests-debug.test>"]
+
+  "<arcblock-ios-sdkTests-debug.module>":
+    tool: phony
+    inputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.build/arcblock_ios_sdkTests.swift.o","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.swiftmodule"]
+    outputs: ["<arcblock-ios-sdkTests-debug.module>"]
+
+  "C.arcblock-ios-sdk-debug.module":
+    tool: swift-compiler
+    inputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Sources/arcblock-ios-sdk/arcblock_ios_sdk.swift"]
+    outputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk.swift.o","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.swiftmodule"]
+    executable: "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    module-name: "arcblock_ios_sdk"
+    module-output-path: "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.swiftmodule"
+    import-paths: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug"]
+    temps-path: "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build"
+    objects: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk.swift.o"]
+    other-args: ["-target","arm64-apple-macosx10.10","-swift-version","5","-enable-batch-mode","-index-store-path","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/index/store","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-Onone","-enable-testing","-g","-j8","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock-ios-sdk-Swift.h","-profile-coverage-mapping","-profile-generate","-color-diagnostics"]
+    sources: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Sources/arcblock-ios-sdk/arcblock_ios_sdk.swift"]
+    is-library: true
+    enable-whole-module-optimization: false
+    num-threads: 8
+
+  "C.arcblock-ios-sdkPackageTests-debug.test":
+    tool: shell
+    inputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk.swift.o","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.build/arcblock_ios_sdkTests.swift.o"]
+    outputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock-ios-sdkPackageTests.xctest/Contents/MacOS/arcblock-ios-sdkPackageTests"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/arcblock-ios-sdkPackageTests.xctest/Contents/MacOS/arcblock-ios-sdkPackageTests"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug","-o","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock-ios-sdkPackageTests.xctest/Contents/MacOS/arcblock-ios-sdkPackageTests","-module-name","arcblock_ios_sdkPackageTests","-profile-coverage-mapping","-profile-generate","-Xlinker","-bundle","-Xlinker","-rpath","-Xlinker","@loader_path/../../../","@/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock-ios-sdkPackageTests.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx","-target","arm64-apple-macosx11.0","-Xlinker","-add_ast_path","-Xlinker","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.swiftmodule","-L","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib"]
+
+  "C.arcblock-ios-sdkTests-debug.module":
+    tool: swift-compiler
+    inputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Tests/arcblock-ios-sdkTests/arcblock_ios_sdkTests.swift","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.swiftmodule"]
+    outputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.build/arcblock_ios_sdkTests.swift.o","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.swiftmodule"]
+    executable: "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    module-name: "arcblock_ios_sdkTests"
+    module-output-path: "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.swiftmodule"
+    import-paths: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug"]
+    temps-path: "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.build"
+    objects: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdkTests.build/arcblock_ios_sdkTests.swift.o"]
+    other-args: ["-target","arm64-apple-macosx11.0","-swift-version","5","-enable-batch-mode","-index-store-path","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/index/store","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-Onone","-enable-testing","-g","-j8","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-profile-coverage-mapping","-profile-generate","-color-diagnostics"]
+    sources: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Tests/arcblock-ios-sdkTests/arcblock_ios_sdkTests.swift"]
+    is-library: true
+    enable-whole-module-optimization: false
+    num-threads: 8
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Sources/arcblock-ios-sdk/","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Tests/arcblock-ios-sdkTests/","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Package.swift","/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

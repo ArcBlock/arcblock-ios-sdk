@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/master.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Sources/arcblock-ios-sdk/arcblock_ios_sdk.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/arcblock_ios_sdk.build/arcblock_ios_sdk.swiftdeps"
+  }
+}

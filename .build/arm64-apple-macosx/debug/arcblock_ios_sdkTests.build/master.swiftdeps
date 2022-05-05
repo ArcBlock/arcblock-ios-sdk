@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)"
+options: "f8e0e4c8d5058b0e4dcd7b0b81fd2b5895152af79c82f0fa1ffbc1d901e2005c"
+build_start_time: [1651744129, 932857990]
+build_end_time: [1651744135, 916208982]
+inputs:
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/Tests/arcblock-ios-sdkTests/arcblock_ios_sdkTests.swift": [1651744105, 780587673]
