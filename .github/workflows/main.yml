@@ -1,0 +1,36 @@
+name: Release
+
+# 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Start The Release
+    runs-on: macos-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
+      - name: Install Dependency
+        run: |
+          pod install
+      # - name: Start The Release
+      #   run: make release
+      - name: Run tests
+        run: make test --enable-code-coverage
+      - name: Test coverage
+        uses: maxep/spm-lcov-action@0.3.0
+        with:
+          output-file: ./coverage/lcov.info
+      - name: Comment on PR
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          lcov-file: ./coverage/lcov.info
