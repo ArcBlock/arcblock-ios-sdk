@@ -20,9 +20,10 @@ jobs:
         uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           workspace: ArcBlockSDK.xcworkspace
+          project: ArcBlockSDK.xcodeproj
           sdk: iphonesimulator
           configuration: Debug
-          scheme: ArcBlockSDK build test | xcpretty -c
+          scheme: ArcBlockSDK
           derived-data-path: ./output
           destination: "platform=iOS Simulator,name=iPhone 8"
           action: test
