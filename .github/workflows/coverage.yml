@@ -22,9 +22,9 @@ jobs:
           workspace: ArcBlockSDK.xcworkspace
           sdk: iphonesimulator
           configuration: Debug
-          scheme: ArcBlockSDK
+          scheme: ArcBlockSDK build test | xcpretty -c
           derived-data-path: ./output
-          destination: "OS=14.4,name=iPhone 12 Pro"
+          destination: "platform=iOS Simulator,name=iPhone 8"
           action: test
           enable-code-coverage: true
       - name: Test Coverage
