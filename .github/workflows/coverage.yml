@@ -25,13 +25,13 @@ jobs:
           scheme: ArcBlockSDK
           derived-data-path: ./output
           destination: "platform=iOS Simulator,name=iPhone 8"
-          action: test
+          action: build
           enable-code-coverage: true
       - name: Test Coverage
         uses: maxep/xcodebuild-lcov-action@0.1.0
         with:
           derived-data-path: ./output
-          target: ArcBlockSDK.framwork
+          target: ArcBlockSDK.framework
           output-file: ./output/lcov.info
       - name: Comment on PR
         uses: romeovs/lcov-reporter-action@v0.2.16
