@@ -14,12 +14,23 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+      # - name: Run tests
+      #   run: swift test --enable-code-coverage
       - name: Run tests
-        run: swift test --enable-code-coverage
-      - name: Test coverage
-        uses: maxep/spm-lcov-action@0.3.0
+        uses: sersoft-gmbh/xcodebuild-action@v1
         with:
-          output-file: ./coverage/lcov.info
+          project: ArcBlockSDK.xcworkspace
+          scheme: ArcBlockSDK
+          derived-data-path: ./output
+          destination: "OS=14.4,name=iPhone 12 Pro"
+          action: test
+          enable-code-coverage: true
+      - name: Test Coverage
+        uses: maxep/xcodebuild-lcov-action@0.1.0
+        with:
+          derived-data-path: ./output
+          target: ArcBlockSDK.framwork
+          output-file: ./output/lcov.info
       - name: Comment on PR
         uses: romeovs/lcov-reporter-action@v0.2.16
         with:
