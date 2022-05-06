@@ -20,7 +20,6 @@ jobs:
         uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           workspace: ArcBlockSDK.xcworkspace
-          project: ArcBlockSDK.xcodeproj
           sdk: iphonesimulator
           configuration: Debug
           scheme: ArcBlockSDK
