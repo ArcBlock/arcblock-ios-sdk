@@ -37,7 +37,7 @@ jobs:
           target: ArcBlockSDK.framework
           output-file: ./output/lcov.info
       - name: Comment on PR
-        uses: romeovs/lcov-reporter-action@v0.2.16
+        uses: mszlgr/lcov-reporter-action@v0.2.23
         with:
           lcov-file: ./output/lcov.info
           github-token: ${{ secrets.ACCESS_TOKEN }}
