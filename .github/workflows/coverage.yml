@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Start Test
+    name: Start Coverage Test
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,5 +39,5 @@ jobs:
       - name: Comment on PR
         uses: romeovs/lcov-reporter-action@v0.2.16
         with:
-          lcov-file: ./coverage/lcov.info
+          lcov-file: ./output/lcov.info
           github-token: ${{ secrets.ACCESS_TOKEN }}
