@@ -19,7 +19,9 @@ jobs:
       - name: Run tests
         uses: sersoft-gmbh/xcodebuild-action@v1
         with:
-          project: ArcBlockSDK.xcworkspace
+          workspace: ArcBlockSDK.xcworkspace
+          sdk: iphonesimulator
+          configuration: Debug
           scheme: ArcBlockSDK
           derived-data-path: ./output
           destination: "OS=14.4,name=iPhone 12 Pro"
