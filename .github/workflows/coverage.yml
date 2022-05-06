@@ -16,6 +16,9 @@ jobs:
       - uses: actions/checkout@v2
       # - name: Run tests
       #   run: swift test --enable-code-coverage
+      - name: Install Dependency
+        run: |
+          pod install
       - name: Run tests
         uses: sersoft-gmbh/xcodebuild-action@v1
         with:
