@@ -1,0 +1,40 @@
+name: Code Coverage
+
+# 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Start Test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      # - name: Run tests
+      #   run: swift test --enable-code-coverage
+      - name: Run tests
+        uses: sersoft-gmbh/xcodebuild-action@v1
+        with:
+          workspace: ArcBlockSDK.xcworkspace
+          sdk: iphonesimulator
+          configuration: Debug
+          scheme: ArcBlockSDK
+          derived-data-path: ./output
+          destination: "platform=iOS Simulator,name=iPhone 8"
+          action: test
+          enable-code-coverage: true
+      - name: Test Coverage
+        uses: maxep/xcodebuild-lcov-action@0.1.0
+        with:
+          derived-data-path: ./output
+          target: ArcBlockSDK.framwork
+          output-file: ./output/lcov.info
+      - name: Comment on PR
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          lcov-file: ./coverage/lcov.info
+          github-token: ${{ secrets.ACCESS_TOKEN }}
