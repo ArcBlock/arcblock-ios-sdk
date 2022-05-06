@@ -21,11 +21,11 @@ jobs:
         with:
           workspace: ArcBlockSDK.xcworkspace
           sdk: iphonesimulator
+          destination: "platform=iOS Simulator,name=iPhone 8"
           configuration: Debug
           scheme: ArcBlockSDK
           derived-data-path: ./output
-          destination: "platform=iOS Simulator,name=iPhone 8"
-          action: build
+          action: test
           enable-code-coverage: true
       - name: Test Coverage
         uses: maxep/xcodebuild-lcov-action@0.1.0
