@@ -37,6 +37,6 @@ jobs:
         run: |
           fastlane code_coverage
       - name: Comment PR
-        uses: machine-learning-apps/pr-comment@master
+        uses: NejcZdovc/comment-pr@v1
         with:
           path: cov_reports/report.md
