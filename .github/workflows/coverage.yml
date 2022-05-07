@@ -31,6 +31,7 @@ jobs:
           destination: "platform=iOS Simulator,name=iPhone 8"
           configuration: Debug
           scheme: ArcBlockSDK
+          derived-data-path: ./output
           action: test
           enable-code-coverage: true
       - name: Generate Coverage Report
