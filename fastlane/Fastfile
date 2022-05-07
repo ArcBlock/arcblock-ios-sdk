@@ -22,7 +22,7 @@ platform :ios do
       workspace: "ArcBlockSDK.xcworkspace",
       scheme: "ArcBlockSDK",
       markdown_report: true,
-      output_directory: "cov_reports",      
+      output_directory: ".github/workflows/cov_reports",      
       ignore_file_path: "fastlane/xcovignore",
     )  end
 end
