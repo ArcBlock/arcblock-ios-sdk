@@ -20,7 +20,7 @@ or alternatively using `brew install fastlane`
 ```
 fastlane ios code_coverage
 ```
-Description of what the lane does
+Generate code coverage report
 
 ----
 

@@ -14,10 +14,9 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      # - name: Run tests
-      #   run: swift test --enable-code-coverage
       - name: Install Dependency
         run: |
+          bundle install
           pod install
       - name: Run tests
         uses: sersoft-gmbh/xcodebuild-action@v1
@@ -30,14 +29,12 @@ jobs:
           derived-data-path: ./output
           action: test
           enable-code-coverage: true
-      - name: Test Coverage
-        uses: maxep/xcodebuild-lcov-action@0.1.0
+      - name: Generate Coverage Report
+        run: |
+          fastlane code_coverage
+      - name: Comment PR
+        uses: machine-learning-apps/pr-comment@master
+         env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
-          derived-data-path: ./output
-          target: ArcBlockSDK.framework
-          output-file: ./output/lcov.info
-      - name: Comment on PR
-        uses: mszlgr/lcov-reporter-action@v0.2.23
-        with:
-          lcov-file: ./output/lcov.info
-          github-token: ${{ secrets.ACCESS_TOKEN }}
+          path: cov_reports/report.md

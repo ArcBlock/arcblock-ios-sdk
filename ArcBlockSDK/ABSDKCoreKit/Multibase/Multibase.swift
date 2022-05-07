@@ -46,14 +46,6 @@ public extension Data {
             return stringBaseEncoding + self.base16EncodedString().lowercased()
         case .base16Upper:
             return stringBaseEncoding + self.base16EncodedString().uppercased()
-        case .base32Pad:
-            return stringBaseEncoding + self.base32EncodedString().lowercased()
-        case .base32PadUpper:
-            return stringBaseEncoding + self.base32EncodedString().uppercased()
-        case .base32HexPad:
-            return stringBaseEncoding + self.base32HexEncodedString().lowercased()
-        case .base32HexPadUpper:
-            return stringBaseEncoding + self.base32HexEncodedString().uppercased()
         case .base58BTC:
             return stringBaseEncoding + self.base58EncodedString(alphabet: Base58String.btcAlphabet)
         case .base58Flickr:
@@ -81,16 +73,6 @@ public extension Data {
             self = byteString[1...]
         case .base16, .base16Upper:
             guard let decoded = Data(base16Encoded: string) else {
-                return nil
-            }
-            self = decoded
-        case .base32Pad, .base32PadUpper:
-            guard let decoded = Data(base32Encoded: string) else {
-                return nil
-            }
-            self = decoded
-        case .base32HexPad, .base32HexPadUpper:
-            guard let decoded = Data(base32HexEncoded: string) else {
                 return nil
             }
             self = decoded

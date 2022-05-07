@@ -16,12 +16,13 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
+  desc "Generate code coverage report"
   lane :code_coverage do
     xcov(
       workspace: "ArcBlockSDK.xcworkspace",
       scheme: "ArcBlockSDK",
+      markdown_report: true,
       output_directory: "cov_reports",
-      ignore_file_path: "fastlane/xcovignore"
+      ignore_file_path: "fastlane/xcovignore",
     )  end
 end
