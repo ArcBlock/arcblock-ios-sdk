@@ -4,16 +4,19 @@ name: Code Coverage
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   build:
     name: Start Coverage Test
     runs-on: macos-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependency
@@ -36,7 +39,5 @@ jobs:
           fastlane code_coverage
       - name: Comment PR
         uses: machine-learning-apps/pr-comment@master
-         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           path: cov_reports/report.md
