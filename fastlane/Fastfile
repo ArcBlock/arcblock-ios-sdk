@@ -24,6 +24,5 @@ platform :ios do
       markdown_report: true,
       output_directory: "cov_reports",      
       ignore_file_path: "fastlane/xcovignore",
-      xccov_file_direct_path: "/Users/runner/Library/Developer/Xcode/DerivedData/",
     )  end
 end
