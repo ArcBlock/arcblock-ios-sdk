@@ -39,4 +39,4 @@ jobs:
       - name: Comment PR
         uses: NejcZdovc/comment-pr@v1
         with:
-          file: ./cov_reports/report.md
+          file: cov_reports/report.md
