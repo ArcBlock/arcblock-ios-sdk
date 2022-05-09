@@ -35,16 +35,16 @@ class DidHelperSpec: QuickSpec {
             })
         }
 
-        // TODO: - 
-//        describe("seed to did") {
-//            it("works", closure: {
-//                let seed = Data.init(hex: "07abfceff5cdfb0cd164d2da98099c15b7223fc5a1b8c02c2cf1f74670c72aac27e1d28ed47cf4f2c4330a6e6e1dc0724721e80fa56177fdba926937a253fe7e")
-//                let path = BIP44Utils.keyDerivePathForAppDid(appDid: "did:abt:z", index: 0)
-//                let privateKey = BIP44Utils.generatePrivateKey(seed: seed, path: path!)
-//                let did = DidHelper.getUserDid(didType: DidType.Types.didTypeForge, privateKey: privateKey!)
-//                expect(did).to(equal("did:abt:z1Zhi9h6do1EUNkM63CEXHonyHx47WQKtxB"))
-//            })
-//        }
+        
+        describe("seed to did") {
+            it("works", closure: {
+                let seed = Data.init(hex: "07abfceff5cdfb0cd164d2da98099c15b7223fc5a1b8c02c2cf1f74670c72aac27e1d28ed47cf4f2c4330a6e6e1dc0724721e80fa56177fdba926937a253fe7e")
+                let path = BIP44Utils.keyDerivePathForAppDid(appDid: "", index: 0)
+                let privateKey = BIP44Utils.generatePrivateKey(seed: seed, path: path!)
+                let did = DidHelper.getUserDid(didType: DidType.Types.didTypeForge, privateKey: privateKey!)
+                expect(did).to(equal("did:abt:z1Zhi9h6do1EUNkM63CEXHonyHx47WQKtxB"))
+            })
+        }
 
         describe("verify did with pk") {
             it("works", closure: {
@@ -174,6 +174,15 @@ class DidHelperSpec: QuickSpec {
                 expect(DidHelper.isValidDid("z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(beTrue())
                 expect(DidHelper.isValidDid("z2muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(beFalse())
                 expect(DidHelper.isValidDid("z1muQ3xqHQK2uiACHyChikobsiY5kLqtSha")).to(beFalse())
+            })
+        }
+        
+        describe("Did extension") {
+            it("works", closure: {
+                expect(DidHelper.removeDidPrefix("did:abt:z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(equal("z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA"))
+                expect(DidHelper.removeDidPrefix("z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(equal("z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA"))
+                expect(DidHelper.addDidPrefix("z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(equal("did:abt:z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA"))
+                expect(DidHelper.addDidPrefix("did:abt:z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA")).to(equal("did:abt:z1muQ3xqHQK2uiACHyChikobsiY5kLqtShA"))
             })
         }
     }

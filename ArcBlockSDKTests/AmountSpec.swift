@@ -98,6 +98,20 @@ class AmountSpec: QuickSpec {
                 expect(10000.formatAmount()).to(equal("10,000"))
             })
         }
+        
+        describe("Format currency") {
+            it("works", closure: {
+                expect(12.2233.formatCurrency).to(equal("12.22"))
+                expect(66.0023.formatCurrency).to(equal("66.00"))
+            })
+        }
+        
+        describe("BigUInt extension") {
+            it("works", closure: {
+                expect(BigUInt("3000000000").toGasPriceInt()).to(equal(3))
+                expect(BigUInt("23000000000").toGasPriceInt()).to(equal(23))
+            })
+        }
     }
 
 }
