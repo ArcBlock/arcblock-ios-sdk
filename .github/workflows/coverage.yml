@@ -1,0 +1,42 @@
+name: Code Coverage
+
+# 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Start Coverage Test
+    runs-on: macos-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependency
+        run: |
+          bundle update
+          pod install
+      - name: Run tests
+        uses: sersoft-gmbh/xcodebuild-action@v1
+        with:
+          workspace: ArcBlockSDK.xcworkspace
+          sdk: iphonesimulator
+          destination: "platform=iOS Simulator,name=iPhone 8"
+          configuration: Debug
+          scheme: ArcBlockSDK
+          action: test
+          enable-code-coverage: true
+      - name: Generate Coverage Report
+        run: |
+          fastlane code_coverage
+      - name: Comment PR
+        uses: NejcZdovc/comment-pr@v1
+        with:
+          file: cov_reports/report.md

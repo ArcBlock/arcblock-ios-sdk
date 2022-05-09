@@ -70,15 +70,19 @@ class MCryptoSpec: QuickSpec {
                 let sk = "D67C071B6F51D2B61180B9B1AA9BE0DD0704619F0E30453AB4A592B036EDE644E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7"
                 let pk = "E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7"
                 expect(MCrypto.Signer.ED25519.privateKeyToPublicKey(privateKey: Data.init(hex: sk))?.toHexString().uppercased()).to(equal(pk))
+                // low than iOS 13
+                expect(Data.init(Ed25519.crypto_pk(Array(Data.init(hex: sk).bytes.prefix(32)))).toHexString().uppercased()).to(equal(pk))
             })
-
+            
             it("sign and verify works", closure: {
                 let sk = Data.init(hex: "D67C071B6F51D2B61180B9B1AA9BE0DD0704619F0E30453AB4A592B036EDE644E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7")
                 let pk = Data.init(hex: "E4852B7091317E3622068E62A5127D1FB0D4AE2FC50213295E10652D2F0ABFC7")
                 let message = "15D0014A9CF581EC068B67500683A2784A15E1F68057E5E37AAF3A0F58F3C43F083D6A5630130399D4E5003EA191FDE30849"
                 let signature = "321EE8262407BF091F16ED190A3074339EBDF956B3924A9CF29B86A366C9570C72C6A8D8363705182D5A99FAF152C617FD89D291C9D944F2A95DF57019303200"
-//                expect(MCrypto.Signer.ED25519.sign(message: Data.init(hex: message), privateKey: sk)?.toHexString().uppercased()).to(equal(signature))
                 expect(MCrypto.Signer.ED25519.verify(message: Data.init(hex: message), signature: Data.init(hex: signature), publicKey: pk)).to(beTrue())
+                
+                let signatureAndMessage = Data.init(hex: signature).bytes + Data.init(hex: message).bytes
+                expect(Ed25519.crypto_sign_open(signatureAndMessage, pk.bytes)).to(beTrue())
             })
 
             it("verify jwt signature works", closure: {
