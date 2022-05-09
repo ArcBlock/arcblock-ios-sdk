@@ -1,3 +1,5 @@
 # Exclude all dependencies
 - Pods
 - ArcBlockSDK/ABSDKWalletKit/protobuf
+- ArcBlockSDK/ABSDKWalletKit/TxHelper.swift
+- ArcBlockSDK/ABSDKWalletKit/TypeUrls.swift
