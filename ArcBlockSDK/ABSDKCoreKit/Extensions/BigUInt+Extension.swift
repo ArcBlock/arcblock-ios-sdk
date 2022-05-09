@@ -42,15 +42,7 @@ public extension BigUInt {
         formatter.roundingMode = .floor
         return formatter.string(from: NSDecimalNumber(string: amountStr)) ?? "0"
     }
-    
-    func toAmountFormattedString(decimals: Int? = 18) -> String {
-        if self >= "1".toBigUInt(decimals: decimals) {
-            return self.toAmountString(decimals: decimals)
-        } else {
-            return self.toAmountString(decimals: decimals)
-        }
-    }
-    
+        
     /// 将BigUInt格式化成发送金额 用于显示在输入框中 不需要,分割数字 如  1123456789000000000000 -> 1123.456789
     ///
     /// - Parameters:

@@ -129,7 +129,7 @@ public class TxHelper {
         return sig.base64URLPadEncodedString()
     }
 
-    private static func composePartialTxData(tx: Data, typeUrl: String, txParams: TxParams, publicKey: Data) -> Ocap_Transaction {
+    public static func composePartialTxData(tx: Data, typeUrl: String, txParams: TxParams, publicKey: Data) -> Ocap_Transaction {
         var anyMessage = Google_Protobuf_Any.init()
         anyMessage.value = tx
         anyMessage.typeURL = typeUrl
