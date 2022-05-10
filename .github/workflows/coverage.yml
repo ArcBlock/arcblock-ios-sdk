@@ -3,8 +3,6 @@ name: Code Coverage
 # 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
 
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
 

@@ -1,22 +1,24 @@
-name: iOS Release
-
-# 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
+name: Release tag workflow
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "*"
+
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Start The Release
+    name: Release tag
     runs-on: macos-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    env:
+      GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
         with:
-          # NOTE @v2 uses the token as an auth http header. Set it to
-          # a Personal Access Token instead of secrets.GITHUB_TOKEN
-          # so that tag pushes trigger repo push events.
-          token: ${{ secrets.ACCESS_TOKEN }}
-      - name: Start The Release
-        run: make release
+          tag_name: ${{ github.ref }}
+          name: Release ${{ github.ref }}
