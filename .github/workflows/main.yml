@@ -1,4 +1,4 @@
-name: iOS Release
+name: Prerelease
 
 # 当提交不需要打版本的commit时，只需要不bump version，则后续fastlane action不会触发
 
