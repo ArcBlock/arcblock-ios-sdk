@@ -1,8 +1,6 @@
-## 0.11.28 (May 09, 2022)
-
-
-## 0.11.27 (May 07, 2022)
-
+## 0.11.29 (May 09, 2022)
+  - add code coverage report
+  - improve CI
 
 ## 0.11.26 (May 05, 2022)
   - add yml
