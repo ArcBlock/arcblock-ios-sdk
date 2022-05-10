@@ -1,3 +1,6 @@
+## 0.11.30 (May 09, 2022)
+  - fix tag push
+
 ## 0.11.29 (May 09, 2022)
   - add code coverage report
   - improve CI
