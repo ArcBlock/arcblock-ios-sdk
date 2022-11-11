@@ -1,3 +1,6 @@
+## 0.11.31 (November 11, 2022)
+  - add get stake address
+
 ## 0.11.30 (May 09, 2022)
   - fix tag push
 
