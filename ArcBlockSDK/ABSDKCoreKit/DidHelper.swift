@@ -316,6 +316,14 @@ public class DidHelper {
         }
         return nil
     }
+    
+    public static func getStakeAddress(sender: String, receiver: String) -> String? {
+        if let senderData = sender.data(using: .utf8),
+            let receiverData = receiver.data(using: .utf8) {
+            return hashToAddress(didType: DidType.Types.didTypeForgeStake, hash: MCrypto.Hasher.Sha3.sha(senderData + receiverData))
+        }
+        return nil
+    }
 
     public static func getUserPk(userPrivateKey: Data, didType: DidType) -> Data? {
         return didType.getUserPk(privateKey: userPrivateKey)
