@@ -1,3 +1,6 @@
+## 0.11.32 (November 18, 2022)
+  - add role type
+
 ## 0.11.31 (November 11, 2022)
   - add get stake address
 
