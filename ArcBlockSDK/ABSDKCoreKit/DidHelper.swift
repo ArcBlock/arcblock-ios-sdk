@@ -42,6 +42,8 @@ public enum RoleType: Int8 {
     case blocklet = 15
     case registry = 16
     case token = 17
+    case factory = 18
+    case rollup = 19
     case any = 63
 
     public static func roleTypeWithName(_ name: String) -> RoleType {
@@ -82,6 +84,10 @@ public enum RoleType: Int8 {
             return .registry
         case "token":
             return .token
+        case "factory":
+            return .factory
+        case "rollup":
+            return .rollup
         default:
             return .any
         }
