@@ -186,6 +186,18 @@ public struct Ocap_TokenFilter {
   public init() {}
 }
 
+public struct Ocap_StakeFilter {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var stakes: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Ocap_AccountFilter {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -296,169 +308,6 @@ public struct Ocap_TokenInfo {
   public var unit: String = String()
 
   public var symbol: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_HealthStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var consensus: Ocap_ConsensusStatus {
-    get {return _consensus ?? Ocap_ConsensusStatus()}
-    set {_consensus = newValue}
-  }
-  /// Returns true if `consensus` has been explicitly set.
-  public var hasConsensus: Bool {return self._consensus != nil}
-  /// Clears the value of `consensus`. Subsequent reads from it will return its default value.
-  public mutating func clearConsensus() {self._consensus = nil}
-
-  public var network: Ocap_NetworkStatus {
-    get {return _network ?? Ocap_NetworkStatus()}
-    set {_network = newValue}
-  }
-  /// Returns true if `network` has been explicitly set.
-  public var hasNetwork: Bool {return self._network != nil}
-  /// Clears the value of `network`. Subsequent reads from it will return its default value.
-  public mutating func clearNetwork() {self._network = nil}
-
-  public var storage: Ocap_StorageStatus {
-    get {return _storage ?? Ocap_StorageStatus()}
-    set {_storage = newValue}
-  }
-  /// Returns true if `storage` has been explicitly set.
-  public var hasStorage: Bool {return self._storage != nil}
-  /// Clears the value of `storage`. Subsequent reads from it will return its default value.
-  public mutating func clearStorage() {self._storage = nil}
-
-  public var forge: Ocap_ForgeStatus {
-    get {return _forge ?? Ocap_ForgeStatus()}
-    set {_forge = newValue}
-  }
-  /// Returns true if `forge` has been explicitly set.
-  public var hasForge: Bool {return self._forge != nil}
-  /// Clears the value of `forge`. Subsequent reads from it will return its default value.
-  public mutating func clearForge() {self._forge = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _consensus: Ocap_ConsensusStatus? = nil
-  fileprivate var _network: Ocap_NetworkStatus? = nil
-  fileprivate var _storage: Ocap_StorageStatus? = nil
-  fileprivate var _forge: Ocap_ForgeStatus? = nil
-}
-
-public struct Ocap_ConsensusStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var health: Bool = false
-
-  public var synced: Bool = false
-
-  public var blockHeight: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_NetworkStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var health: Bool = false
-
-  public var numPeers: UInt32 = 0
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_StorageStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var health: Bool = false
-
-  public var indexerServer: String = String()
-
-  public var stateDb: String = String()
-
-  public var diskSpace: Ocap_DiskSpaceStatus {
-    get {return _diskSpace ?? Ocap_DiskSpaceStatus()}
-    set {_diskSpace = newValue}
-  }
-  /// Returns true if `diskSpace` has been explicitly set.
-  public var hasDiskSpace: Bool {return self._diskSpace != nil}
-  /// Clears the value of `diskSpace`. Subsequent reads from it will return its default value.
-  public mutating func clearDiskSpace() {self._diskSpace = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _diskSpace: Ocap_DiskSpaceStatus? = nil
-}
-
-public struct Ocap_DiskSpaceStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var forgeUsage: String = String()
-
-  public var total: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_ForgeStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var health: Bool = false
-
-  public var abiServer: String = String()
-
-  public var forgeWeb: String = String()
-
-  public var abciServer: Ocap_AbciServerStatus {
-    get {return _abciServer ?? Ocap_AbciServerStatus()}
-    set {_abciServer = newValue}
-  }
-  /// Returns true if `abciServer` has been explicitly set.
-  public var hasAbciServer: Bool {return self._abciServer != nil}
-  /// Clears the value of `abciServer`. Subsequent reads from it will return its default value.
-  public mutating func clearAbciServer() {self._abciServer = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _abciServer: Ocap_AbciServerStatus? = nil
-}
-
-public struct Ocap_AbciServerStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var abciConsensus: String = String()
-
-  public var abciInfo: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -679,42 +528,98 @@ public struct Ocap_IndexedAssetState {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var address: String = String()
+  public var address: String {
+    get {return _storage._address}
+    set {_uniqueStorage()._address = newValue}
+  }
 
-  public var owner: String = String()
+  public var owner: String {
+    get {return _storage._owner}
+    set {_uniqueStorage()._owner = newValue}
+  }
 
-  public var genesisTime: String = String()
+  public var genesisTime: String {
+    get {return _storage._genesisTime}
+    set {_uniqueStorage()._genesisTime = newValue}
+  }
 
-  public var renaissanceTime: String = String()
+  public var renaissanceTime: String {
+    get {return _storage._renaissanceTime}
+    set {_uniqueStorage()._renaissanceTime = newValue}
+  }
 
-  public var moniker: String = String()
+  public var moniker: String {
+    get {return _storage._moniker}
+    set {_uniqueStorage()._moniker = newValue}
+  }
 
-  public var readonly: Bool = false
+  public var readonly: Bool {
+    get {return _storage._readonly}
+    set {_uniqueStorage()._readonly = newValue}
+  }
 
-  public var consumedTime: String = String()
+  public var consumedTime: String {
+    get {return _storage._consumedTime}
+    set {_uniqueStorage()._consumedTime = newValue}
+  }
 
-  public var issuer: String = String()
+  public var issuer: String {
+    get {return _storage._issuer}
+    set {_uniqueStorage()._issuer = newValue}
+  }
 
-  public var parent: String = String()
+  public var parent: String {
+    get {return _storage._parent}
+    set {_uniqueStorage()._parent = newValue}
+  }
 
-  public var transferrable: Bool = false
+  public var transferrable: Bool {
+    get {return _storage._transferrable}
+    set {_uniqueStorage()._transferrable = newValue}
+  }
 
-  public var ttl: String = String()
+  public var ttl: String {
+    get {return _storage._ttl}
+    set {_uniqueStorage()._ttl = newValue}
+  }
+
+  public var display: Ocap_NFTDisplay {
+    get {return _storage._display ?? Ocap_NFTDisplay()}
+    set {_uniqueStorage()._display = newValue}
+  }
+  /// Returns true if `display` has been explicitly set.
+  public var hasDisplay: Bool {return _storage._display != nil}
+  /// Clears the value of `display`. Subsequent reads from it will return its default value.
+  public mutating func clearDisplay() {_uniqueStorage()._display = nil}
+
+  public var endpoint: Ocap_NFTEndpoint {
+    get {return _storage._endpoint ?? Ocap_NFTEndpoint()}
+    set {_uniqueStorage()._endpoint = newValue}
+  }
+  /// Returns true if `endpoint` has been explicitly set.
+  public var hasEndpoint: Bool {return _storage._endpoint != nil}
+  /// Clears the value of `endpoint`. Subsequent reads from it will return its default value.
+  public mutating func clearEndpoint() {_uniqueStorage()._endpoint = nil}
+
+  public var tags: [String] {
+    get {return _storage._tags}
+    set {_uniqueStorage()._tags = newValue}
+  }
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
-    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
-    set {_data = newValue}
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
   }
   /// Returns true if `data` has been explicitly set.
-  public var hasData: Bool {return self._data != nil}
+  public var hasData: Bool {return _storage._data != nil}
   /// Clears the value of `data`. Subsequent reads from it will return its default value.
-  public mutating func clearData() {self._data = nil}
+  public mutating func clearData() {_uniqueStorage()._data = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Ocap_IndexedBlock {
@@ -924,8 +829,8 @@ public struct Ocap_IndexedFactoryState {
     set {_uniqueStorage()._renaissanceTime = newValue}
   }
 
-  public var display: Ocap_AssetDisplay {
-    get {return _storage._display ?? Ocap_AssetDisplay()}
+  public var display: Ocap_NFTDisplay {
+    get {return _storage._display ?? Ocap_NFTDisplay()}
     set {_uniqueStorage()._display = newValue}
   }
   /// Returns true if `display` has been explicitly set.
@@ -968,6 +873,8 @@ public struct Ocap_IndexedStakeState {
   public var revokedTokens: [Ocap_TokenInfo] = []
 
   public var revokedAssets: [String] = []
+
+  public var slashers: [String] = []
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -1659,6 +1566,38 @@ extension Ocap_TokenFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
+extension Ocap_StakeFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StakeFilter"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "stakes"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.stakes) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.stakes.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.stakes, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_StakeFilter, rhs: Ocap_StakeFilter) -> Bool {
+    if lhs.stakes != rhs.stakes {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_AccountFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AccountFilter"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1970,314 +1909,6 @@ extension Ocap_TokenInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if lhs.decimal != rhs.decimal {return false}
     if lhs.unit != rhs.unit {return false}
     if lhs.symbol != rhs.symbol {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_HealthStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".HealthStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "consensus"),
-    2: .same(proto: "network"),
-    3: .same(proto: "storage"),
-    4: .same(proto: "forge"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._consensus) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._network) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._storage) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._forge) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._consensus {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
-    if let v = self._network {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if let v = self._storage {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }
-    if let v = self._forge {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_HealthStatus, rhs: Ocap_HealthStatus) -> Bool {
-    if lhs._consensus != rhs._consensus {return false}
-    if lhs._network != rhs._network {return false}
-    if lhs._storage != rhs._storage {return false}
-    if lhs._forge != rhs._forge {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ConsensusStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ConsensusStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "health"),
-    2: .same(proto: "synced"),
-    3: .standard(proto: "block_height"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBoolField(value: &self.health) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.synced) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.blockHeight) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.health != false {
-      try visitor.visitSingularBoolField(value: self.health, fieldNumber: 1)
-    }
-    if self.synced != false {
-      try visitor.visitSingularBoolField(value: self.synced, fieldNumber: 2)
-    }
-    if !self.blockHeight.isEmpty {
-      try visitor.visitSingularStringField(value: self.blockHeight, fieldNumber: 3)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ConsensusStatus, rhs: Ocap_ConsensusStatus) -> Bool {
-    if lhs.health != rhs.health {return false}
-    if lhs.synced != rhs.synced {return false}
-    if lhs.blockHeight != rhs.blockHeight {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_NetworkStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".NetworkStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "health"),
-    2: .standard(proto: "num_peers"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBoolField(value: &self.health) }()
-      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.numPeers) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.health != false {
-      try visitor.visitSingularBoolField(value: self.health, fieldNumber: 1)
-    }
-    if self.numPeers != 0 {
-      try visitor.visitSingularUInt32Field(value: self.numPeers, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_NetworkStatus, rhs: Ocap_NetworkStatus) -> Bool {
-    if lhs.health != rhs.health {return false}
-    if lhs.numPeers != rhs.numPeers {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_StorageStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".StorageStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "health"),
-    2: .standard(proto: "indexer_server"),
-    3: .standard(proto: "state_db"),
-    4: .standard(proto: "disk_space"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBoolField(value: &self.health) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.indexerServer) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.stateDb) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._diskSpace) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.health != false {
-      try visitor.visitSingularBoolField(value: self.health, fieldNumber: 1)
-    }
-    if !self.indexerServer.isEmpty {
-      try visitor.visitSingularStringField(value: self.indexerServer, fieldNumber: 2)
-    }
-    if !self.stateDb.isEmpty {
-      try visitor.visitSingularStringField(value: self.stateDb, fieldNumber: 3)
-    }
-    if let v = self._diskSpace {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_StorageStatus, rhs: Ocap_StorageStatus) -> Bool {
-    if lhs.health != rhs.health {return false}
-    if lhs.indexerServer != rhs.indexerServer {return false}
-    if lhs.stateDb != rhs.stateDb {return false}
-    if lhs._diskSpace != rhs._diskSpace {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_DiskSpaceStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".DiskSpaceStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "forge_usage"),
-    2: .same(proto: "total"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.forgeUsage) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.total) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.forgeUsage.isEmpty {
-      try visitor.visitSingularStringField(value: self.forgeUsage, fieldNumber: 1)
-    }
-    if !self.total.isEmpty {
-      try visitor.visitSingularStringField(value: self.total, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_DiskSpaceStatus, rhs: Ocap_DiskSpaceStatus) -> Bool {
-    if lhs.forgeUsage != rhs.forgeUsage {return false}
-    if lhs.total != rhs.total {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ForgeStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ForgeStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "health"),
-    2: .standard(proto: "abi_server"),
-    3: .standard(proto: "forge_web"),
-    4: .standard(proto: "abci_server"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBoolField(value: &self.health) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.abiServer) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.forgeWeb) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._abciServer) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.health != false {
-      try visitor.visitSingularBoolField(value: self.health, fieldNumber: 1)
-    }
-    if !self.abiServer.isEmpty {
-      try visitor.visitSingularStringField(value: self.abiServer, fieldNumber: 2)
-    }
-    if !self.forgeWeb.isEmpty {
-      try visitor.visitSingularStringField(value: self.forgeWeb, fieldNumber: 3)
-    }
-    if let v = self._abciServer {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ForgeStatus, rhs: Ocap_ForgeStatus) -> Bool {
-    if lhs.health != rhs.health {return false}
-    if lhs.abiServer != rhs.abiServer {return false}
-    if lhs.forgeWeb != rhs.forgeWeb {return false}
-    if lhs._abciServer != rhs._abciServer {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_AbciServerStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".AbciServerStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "abci_consensus"),
-    2: .standard(proto: "abci_info"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.abciConsensus) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.abciInfo) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.abciConsensus.isEmpty {
-      try visitor.visitSingularStringField(value: self.abciConsensus, fieldNumber: 1)
-    }
-    if !self.abciInfo.isEmpty {
-      try visitor.visitSingularStringField(value: self.abciInfo, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_AbciServerStatus, rhs: Ocap_AbciServerStatus) -> Bool {
-    if lhs.abciConsensus != rhs.abciConsensus {return false}
-    if lhs.abciInfo != rhs.abciInfo {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2739,85 +2370,163 @@ extension Ocap_IndexedAssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     9: .same(proto: "parent"),
     10: .same(proto: "transferrable"),
     11: .same(proto: "ttl"),
+    12: .same(proto: "display"),
+    13: .same(proto: "endpoint"),
+    14: .same(proto: "tags"),
     50: .same(proto: "data"),
   ]
 
+  fileprivate class _StorageClass {
+    var _address: String = String()
+    var _owner: String = String()
+    var _genesisTime: String = String()
+    var _renaissanceTime: String = String()
+    var _moniker: String = String()
+    var _readonly: Bool = false
+    var _consumedTime: String = String()
+    var _issuer: String = String()
+    var _parent: String = String()
+    var _transferrable: Bool = false
+    var _ttl: String = String()
+    var _display: Ocap_NFTDisplay? = nil
+    var _endpoint: Ocap_NFTEndpoint? = nil
+    var _tags: [String] = []
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _owner = source._owner
+      _genesisTime = source._genesisTime
+      _renaissanceTime = source._renaissanceTime
+      _moniker = source._moniker
+      _readonly = source._readonly
+      _consumedTime = source._consumedTime
+      _issuer = source._issuer
+      _parent = source._parent
+      _transferrable = source._transferrable
+      _ttl = source._ttl
+      _display = source._display
+      _endpoint = source._endpoint
+      _tags = source._tags
+      _data = source._data
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.owner) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.moniker) }()
-      case 6: try { try decoder.decodeSingularBoolField(value: &self.readonly) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.consumedTime) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.issuer) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.parent) }()
-      case 10: try { try decoder.decodeSingularBoolField(value: &self.transferrable) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.ttl) }()
-      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._owner) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._genesisTime) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._renaissanceTime) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._moniker) }()
+        case 6: try { try decoder.decodeSingularBoolField(value: &_storage._readonly) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._consumedTime) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._issuer) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._parent) }()
+        case 10: try { try decoder.decodeSingularBoolField(value: &_storage._transferrable) }()
+        case 11: try { try decoder.decodeSingularStringField(value: &_storage._ttl) }()
+        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._display) }()
+        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._endpoint) }()
+        case 14: try { try decoder.decodeRepeatedStringField(value: &_storage._tags) }()
+        case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    if !self.owner.isEmpty {
-      try visitor.visitSingularStringField(value: self.owner, fieldNumber: 2)
-    }
-    if !self.genesisTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 3)
-    }
-    if !self.renaissanceTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 4)
-    }
-    if !self.moniker.isEmpty {
-      try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 5)
-    }
-    if self.readonly != false {
-      try visitor.visitSingularBoolField(value: self.readonly, fieldNumber: 6)
-    }
-    if !self.consumedTime.isEmpty {
-      try visitor.visitSingularStringField(value: self.consumedTime, fieldNumber: 7)
-    }
-    if !self.issuer.isEmpty {
-      try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 8)
-    }
-    if !self.parent.isEmpty {
-      try visitor.visitSingularStringField(value: self.parent, fieldNumber: 9)
-    }
-    if self.transferrable != false {
-      try visitor.visitSingularBoolField(value: self.transferrable, fieldNumber: 10)
-    }
-    if !self.ttl.isEmpty {
-      try visitor.visitSingularStringField(value: self.ttl, fieldNumber: 11)
-    }
-    if let v = self._data {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._address.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
+      }
+      if !_storage._owner.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._owner, fieldNumber: 2)
+      }
+      if !_storage._genesisTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._genesisTime, fieldNumber: 3)
+      }
+      if !_storage._renaissanceTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._renaissanceTime, fieldNumber: 4)
+      }
+      if !_storage._moniker.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._moniker, fieldNumber: 5)
+      }
+      if _storage._readonly != false {
+        try visitor.visitSingularBoolField(value: _storage._readonly, fieldNumber: 6)
+      }
+      if !_storage._consumedTime.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._consumedTime, fieldNumber: 7)
+      }
+      if !_storage._issuer.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._issuer, fieldNumber: 8)
+      }
+      if !_storage._parent.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._parent, fieldNumber: 9)
+      }
+      if _storage._transferrable != false {
+        try visitor.visitSingularBoolField(value: _storage._transferrable, fieldNumber: 10)
+      }
+      if !_storage._ttl.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._ttl, fieldNumber: 11)
+      }
+      if let v = _storage._display {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      }
+      if let v = _storage._endpoint {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      }
+      if !_storage._tags.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._tags, fieldNumber: 14)
+      }
+      if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Ocap_IndexedAssetState, rhs: Ocap_IndexedAssetState) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs.owner != rhs.owner {return false}
-    if lhs.genesisTime != rhs.genesisTime {return false}
-    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
-    if lhs.moniker != rhs.moniker {return false}
-    if lhs.readonly != rhs.readonly {return false}
-    if lhs.consumedTime != rhs.consumedTime {return false}
-    if lhs.issuer != rhs.issuer {return false}
-    if lhs.parent != rhs.parent {return false}
-    if lhs.transferrable != rhs.transferrable {return false}
-    if lhs.ttl != rhs.ttl {return false}
-    if lhs._data != rhs._data {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._owner != rhs_storage._owner {return false}
+        if _storage._genesisTime != rhs_storage._genesisTime {return false}
+        if _storage._renaissanceTime != rhs_storage._renaissanceTime {return false}
+        if _storage._moniker != rhs_storage._moniker {return false}
+        if _storage._readonly != rhs_storage._readonly {return false}
+        if _storage._consumedTime != rhs_storage._consumedTime {return false}
+        if _storage._issuer != rhs_storage._issuer {return false}
+        if _storage._parent != rhs_storage._parent {return false}
+        if _storage._transferrable != rhs_storage._transferrable {return false}
+        if _storage._ttl != rhs_storage._ttl {return false}
+        if _storage._display != rhs_storage._display {return false}
+        if _storage._endpoint != rhs_storage._endpoint {return false}
+        if _storage._tags != rhs_storage._tags {return false}
+        if _storage._data != rhs_storage._data {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3080,7 +2789,7 @@ extension Ocap_IndexedFactoryState: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _lastSettlement: String = String()
     var _genesisTime: String = String()
     var _renaissanceTime: String = String()
-    var _display: Ocap_AssetDisplay? = nil
+    var _display: Ocap_NFTDisplay? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -3254,6 +2963,7 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     10: .standard(proto: "revoke_waiting_period"),
     11: .standard(proto: "revoked_tokens"),
     12: .standard(proto: "revoked_assets"),
+    13: .same(proto: "slashers"),
     50: .same(proto: "data"),
   ]
 
@@ -3275,6 +2985,7 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 10: try { try decoder.decodeSingularUInt32Field(value: &self.revokeWaitingPeriod) }()
       case 11: try { try decoder.decodeRepeatedMessageField(value: &self.revokedTokens) }()
       case 12: try { try decoder.decodeRepeatedStringField(value: &self.revokedAssets) }()
+      case 13: try { try decoder.decodeRepeatedStringField(value: &self.slashers) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -3318,6 +3029,9 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.revokedAssets.isEmpty {
       try visitor.visitRepeatedStringField(value: self.revokedAssets, fieldNumber: 12)
     }
+    if !self.slashers.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.slashers, fieldNumber: 13)
+    }
     if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     }
@@ -3337,6 +3051,7 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.revokeWaitingPeriod != rhs.revokeWaitingPeriod {return false}
     if lhs.revokedTokens != rhs.revokedTokens {return false}
     if lhs.revokedAssets != rhs.revokedAssets {return false}
+    if lhs.slashers != rhs.slashers {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
