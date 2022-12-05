@@ -17,24 +17,19 @@ service Query {
   rpc getNetInfo(RequestEmpty) returns (ResponseGetNetInfo);
   rpc getValidatorsInfo(RequestEmpty) returns (ResponseGetValidatorsInfo);
   rpc getConfig(RequestGetConfig) returns (ResponseGetConfig);
-  rpc getHealthStatus(RequestEmpty) returns (ResponseGetHealthStatus);
+  rpc getForgeStats(RequestEmpty) returns (ResponseGetForgeStats);
 
   // state related
   rpc getAccountState(stream RequestGetState) returns (stream ResponseGetAccountState);
   rpc getAssetState(stream RequestGetState) returns (stream ResponseGetAssetState);
   rpc getFactoryState(stream RequestGetState) returns (stream ResponseGetFactoryState);
   rpc getForgeState(RequestGetState) returns (ResponseGetForgeState);
-  rpc getSwapState(stream RequestGetState) returns (stream ResponseGetSwapState);
   rpc getDelegateState(stream RequestGetState) returns (stream ResponseGetDelegateState);
   rpc getTokenState(stream RequestGetState) returns (stream ResponseGetTokenState);
   rpc getEvidenceState(stream RequestGetEvidenceState) returns (stream ResponseGetEvidenceState);
 
   // For client side
   rpc getAccountTokens(stream RequestGetAccountTokens) returns (stream ResponseGetAccountTokens);
-
-  // stats
-  rpc getForgeStats(RequestGetForgeStats) returns (ResponseGetForgeStats);
-  rpc getSwapStatistics(RequestGetSwapStatistics) returns (ResponseGetSwapStatistics);
 
   // indexdb
   rpc listTransactions(RequestListTransactions) returns (ResponseListTransactions);
@@ -44,7 +39,6 @@ service Query {
   rpc listAssetTransactions(RequestListAssetTransactions) returns (ResponseListAssetTransactions);
   rpc listBlocks(RequestListBlocks) returns (ResponseListBlocks);
   rpc listTokens(RequestListTokens) returns (ResponseListTokens);
-  rpc listSwap(RequestListSwap) returns (ResponseListSwap);
 
   // Do not worry about this, it will be removed during build phase
   rpc itxSub(RequestGetConfig) returns (ItxStub);
@@ -62,6 +56,8 @@ service Query {
 
   // search
   rpc search(RequestSearch) returns (ResponseSearch);
+
+  rpc estimateGas(RequestEstimateGas) returns (ResponseEstimateGas);
 }
 
 service Mutation {

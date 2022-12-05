@@ -303,29 +303,6 @@ public struct Ocap_ResponseGetForgeState {
   fileprivate var _state: Ocap_ForgeState? = nil
 }
 
-public struct Ocap_ResponseGetSwapState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: Ocap_StatusCode = .ok
-
-  public var state: Ocap_SwapState {
-    get {return _state ?? Ocap_SwapState()}
-    set {_state = newValue}
-  }
-  /// Returns true if `state` has been explicitly set.
-  public var hasState: Bool {return self._state != nil}
-  /// Clears the value of `state`. Subsequent reads from it will return its default value.
-  public mutating func clearState() {self._state = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _state: Ocap_SwapState? = nil
-}
-
 public struct Ocap_ResponseGetDelegateState {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -506,81 +483,6 @@ public struct Ocap_ResponseGetConfig {
   public init() {}
 }
 
-public struct Ocap_RequestGetForgeStats {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var value: Ocap_RequestGetForgeStats.OneOf_Value? = nil
-
-  public var dayInfo: Ocap_ByDay {
-    get {
-      if case .dayInfo(let v)? = value {return v}
-      return Ocap_ByDay()
-    }
-    set {value = .dayInfo(newValue)}
-  }
-
-  public var date: Ocap_ByHour {
-    get {
-      if case .date(let v)? = value {return v}
-      return Ocap_ByHour()
-    }
-    set {value = .date(newValue)}
-  }
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public enum OneOf_Value: Equatable {
-    case dayInfo(Ocap_ByDay)
-    case date(Ocap_ByHour)
-
-  #if !swift(>=4.1)
-    public static func ==(lhs: Ocap_RequestGetForgeStats.OneOf_Value, rhs: Ocap_RequestGetForgeStats.OneOf_Value) -> Bool {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch (lhs, rhs) {
-      case (.dayInfo, .dayInfo): return {
-        guard case .dayInfo(let l) = lhs, case .dayInfo(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.date, .date): return {
-        guard case .date(let l) = lhs, case .date(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      default: return false
-      }
-    }
-  #endif
-  }
-
-  public init() {}
-}
-
-public struct Ocap_ResponseGetForgeStats {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: Ocap_StatusCode = .ok
-
-  public var forgeStats: Ocap_ForgeStats {
-    get {return _forgeStats ?? Ocap_ForgeStats()}
-    set {_forgeStats = newValue}
-  }
-  /// Returns true if `forgeStats` has been explicitly set.
-  public var hasForgeStats: Bool {return self._forgeStats != nil}
-  /// Clears the value of `forgeStats`. Subsequent reads from it will return its default value.
-  public mutating func clearForgeStats() {self._forgeStats = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _forgeStats: Ocap_ForgeStats? = nil
-}
-
 public struct Ocap_RequestListTransactions {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -684,6 +586,15 @@ public struct Ocap_RequestListTransactions {
   public var hasRollupFilter: Bool {return _storage._rollupFilter != nil}
   /// Clears the value of `rollupFilter`. Subsequent reads from it will return its default value.
   public mutating func clearRollupFilter() {_uniqueStorage()._rollupFilter = nil}
+
+  public var stakeFilter: Ocap_StakeFilter {
+    get {return _storage._stakeFilter ?? Ocap_StakeFilter()}
+    set {_uniqueStorage()._stakeFilter = newValue}
+  }
+  /// Returns true if `stakeFilter` has been explicitly set.
+  public var hasStakeFilter: Bool {return _storage._stakeFilter != nil}
+  /// Clears the value of `stakeFilter`. Subsequent reads from it will return its default value.
+  public mutating func clearStakeFilter() {_uniqueStorage()._stakeFilter = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -959,116 +870,6 @@ public struct Ocap_ResponseListBlocks {
   public init() {}
 
   fileprivate var _page: Ocap_PageInfo? = nil
-}
-
-public struct Ocap_RequestListSwap {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var paging: Ocap_Page {
-    get {return _paging ?? Ocap_Page()}
-    set {_paging = newValue}
-  }
-  /// Returns true if `paging` has been explicitly set.
-  public var hasPaging: Bool {return self._paging != nil}
-  /// Clears the value of `paging`. Subsequent reads from it will return its default value.
-  public mutating func clearPaging() {self._paging = nil}
-
-  public var sender: String = String()
-
-  public var receiver: String = String()
-
-  public var available: Bool = false
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _paging: Ocap_Page? = nil
-}
-
-public struct Ocap_ResponseListSwap {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: Ocap_StatusCode = .ok
-
-  public var page: Ocap_PageInfo {
-    get {return _page ?? Ocap_PageInfo()}
-    set {_page = newValue}
-  }
-  /// Returns true if `page` has been explicitly set.
-  public var hasPage: Bool {return self._page != nil}
-  /// Clears the value of `page`. Subsequent reads from it will return its default value.
-  public mutating func clearPage() {self._page = nil}
-
-  public var swap: [Ocap_SwapState] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _page: Ocap_PageInfo? = nil
-}
-
-public struct Ocap_RequestGetSwapStatistics {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var address: String = String()
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Ocap_ResponseGetSwapStatistics {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: Ocap_StatusCode = .ok
-
-  public var statistics: Ocap_SwapStatistics {
-    get {return _statistics ?? Ocap_SwapStatistics()}
-    set {_statistics = newValue}
-  }
-  /// Returns true if `statistics` has been explicitly set.
-  public var hasStatistics: Bool {return self._statistics != nil}
-  /// Clears the value of `statistics`. Subsequent reads from it will return its default value.
-  public mutating func clearStatistics() {self._statistics = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _statistics: Ocap_SwapStatistics? = nil
-}
-
-public struct Ocap_ResponseGetHealthStatus {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var code: Ocap_StatusCode = .ok
-
-  public var healthStatus: Ocap_HealthStatus {
-    get {return _healthStatus ?? Ocap_HealthStatus()}
-    set {_healthStatus = newValue}
-  }
-  /// Returns true if `healthStatus` has been explicitly set.
-  public var hasHealthStatus: Bool {return self._healthStatus != nil}
-  /// Clears the value of `healthStatus`. Subsequent reads from it will return its default value.
-  public mutating func clearHealthStatus() {self._healthStatus = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _healthStatus: Ocap_HealthStatus? = nil
 }
 
 /// token related
@@ -1674,6 +1475,66 @@ public struct Ocap_ResponseGetEvidenceState {
   fileprivate var _state: Ocap_EvidenceState? = nil
 }
 
+public struct Ocap_ResponseGetForgeStats {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var forgeStats: Ocap_ForgeStats {
+    get {return _forgeStats ?? Ocap_ForgeStats()}
+    set {_forgeStats = newValue}
+  }
+  /// Returns true if `forgeStats` has been explicitly set.
+  public var hasForgeStats: Bool {return self._forgeStats != nil}
+  /// Clears the value of `forgeStats`. Subsequent reads from it will return its default value.
+  public mutating func clearForgeStats() {self._forgeStats = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _forgeStats: Ocap_ForgeStats? = nil
+}
+
+public struct Ocap_RequestEstimateGas {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var typeURL: String = String()
+
+  public var tx: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_ResponseEstimateGas {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var estimate: Ocap_GasEstimate {
+    get {return _estimate ?? Ocap_GasEstimate()}
+    set {_estimate = newValue}
+  }
+  /// Returns true if `estimate` has been explicitly set.
+  public var hasEstimate: Bool {return self._estimate != nil}
+  /// Clears the value of `estimate`. Subsequent reads from it will return its default value.
+  public mutating func clearEstimate() {self._estimate = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _estimate: Ocap_GasEstimate? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "ocap"
@@ -2190,44 +2051,6 @@ extension Ocap_ResponseGetForgeState: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Ocap_ResponseGetSwapState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseGetSwapState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    2: .same(proto: "state"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._state) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != .ok {
-      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
-    }
-    if let v = self._state {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ResponseGetSwapState, rhs: Ocap_ResponseGetSwapState) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs._state != rhs._state {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Ocap_ResponseGetDelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResponseGetDelegateState"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -2566,105 +2389,6 @@ extension Ocap_ResponseGetConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
-extension Ocap_RequestGetForgeStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".RequestGetForgeStats"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "day_info"),
-    2: .same(proto: "date"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try {
-        var v: Ocap_ByDay?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .dayInfo(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .dayInfo(v)}
-      }()
-      case 2: try {
-        var v: Ocap_ByHour?
-        if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .date(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .date(v)}
-      }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
-    switch self.value {
-    case .dayInfo?: try {
-      guard case .dayInfo(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }()
-    case .date?: try {
-      guard case .date(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }()
-    case nil: break
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_RequestGetForgeStats, rhs: Ocap_RequestGetForgeStats) -> Bool {
-    if lhs.value != rhs.value {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ResponseGetForgeStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseGetForgeStats"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    2: .standard(proto: "forge_stats"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._forgeStats) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != .ok {
-      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
-    }
-    if let v = self._forgeStats {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ResponseGetForgeStats, rhs: Ocap_ResponseGetForgeStats) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs._forgeStats != rhs._forgeStats {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RequestListTransactions"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -2679,6 +2403,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
     9: .standard(proto: "account_filter"),
     10: .standard(proto: "tx_filter"),
     11: .standard(proto: "rollup_filter"),
+    12: .standard(proto: "stake_filter"),
   ]
 
   fileprivate class _StorageClass {
@@ -2693,6 +2418,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
     var _accountFilter: Ocap_AccountFilter? = nil
     var _txFilter: Ocap_TxFilter? = nil
     var _rollupFilter: Ocap_RollupFilter? = nil
+    var _stakeFilter: Ocap_StakeFilter? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -2710,6 +2436,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
       _accountFilter = source._accountFilter
       _txFilter = source._txFilter
       _rollupFilter = source._rollupFilter
+      _stakeFilter = source._stakeFilter
     }
   }
 
@@ -2739,6 +2466,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._accountFilter) }()
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._txFilter) }()
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._rollupFilter) }()
+        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._stakeFilter) }()
         default: break
         }
       }
@@ -2780,6 +2508,9 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
       if let v = _storage._rollupFilter {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
       }
+      if let v = _storage._stakeFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2800,6 +2531,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
         if _storage._accountFilter != rhs_storage._accountFilter {return false}
         if _storage._txFilter != rhs_storage._txFilter {return false}
         if _storage._rollupFilter != rhs_storage._rollupFilter {return false}
+        if _storage._stakeFilter != rhs_storage._stakeFilter {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -3212,208 +2944,6 @@ extension Ocap_ResponseListBlocks: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.code != rhs.code {return false}
     if lhs._page != rhs._page {return false}
     if lhs.blocks != rhs.blocks {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_RequestListSwap: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".RequestListSwap"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "paging"),
-    2: .same(proto: "sender"),
-    3: .same(proto: "receiver"),
-    4: .same(proto: "available"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.sender) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
-      case 4: try { try decoder.decodeSingularBoolField(value: &self.available) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._paging {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
-    if !self.sender.isEmpty {
-      try visitor.visitSingularStringField(value: self.sender, fieldNumber: 2)
-    }
-    if !self.receiver.isEmpty {
-      try visitor.visitSingularStringField(value: self.receiver, fieldNumber: 3)
-    }
-    if self.available != false {
-      try visitor.visitSingularBoolField(value: self.available, fieldNumber: 4)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_RequestListSwap, rhs: Ocap_RequestListSwap) -> Bool {
-    if lhs._paging != rhs._paging {return false}
-    if lhs.sender != rhs.sender {return false}
-    if lhs.receiver != rhs.receiver {return false}
-    if lhs.available != rhs.available {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ResponseListSwap: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseListSwap"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    2: .same(proto: "page"),
-    3: .same(proto: "swap"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._page) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.swap) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != .ok {
-      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
-    }
-    if let v = self._page {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if !self.swap.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.swap, fieldNumber: 3)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ResponseListSwap, rhs: Ocap_ResponseListSwap) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs._page != rhs._page {return false}
-    if lhs.swap != rhs.swap {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_RequestGetSwapStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".RequestGetSwapStatistics"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_RequestGetSwapStatistics, rhs: Ocap_RequestGetSwapStatistics) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ResponseGetSwapStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseGetSwapStatistics"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    2: .same(proto: "statistics"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._statistics) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != .ok {
-      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
-    }
-    if let v = self._statistics {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ResponseGetSwapStatistics, rhs: Ocap_ResponseGetSwapStatistics) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs._statistics != rhs._statistics {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_ResponseGetHealthStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ResponseGetHealthStatus"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    2: .standard(proto: "health_status"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._healthStatus) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.code != .ok {
-      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
-    }
-    if let v = self._healthStatus {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_ResponseGetHealthStatus, rhs: Ocap_ResponseGetHealthStatus) -> Bool {
-    if lhs.code != rhs.code {return false}
-    if lhs._healthStatus != rhs._healthStatus {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4422,6 +3952,120 @@ extension Ocap_ResponseGetEvidenceState: SwiftProtobuf.Message, SwiftProtobuf._M
   public static func ==(lhs: Ocap_ResponseGetEvidenceState, rhs: Ocap_ResponseGetEvidenceState) -> Bool {
     if lhs.code != rhs.code {return false}
     if lhs._state != rhs._state {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseGetForgeStats: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseGetForgeStats"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .standard(proto: "forge_stats"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._forgeStats) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    if let v = self._forgeStats {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseGetForgeStats, rhs: Ocap_ResponseGetForgeStats) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._forgeStats != rhs._forgeStats {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestEstimateGas: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestEstimateGas"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "type_url"),
+    2: .same(proto: "tx"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.typeURL) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.tx) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.typeURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.typeURL, fieldNumber: 1)
+    }
+    if !self.tx.isEmpty {
+      try visitor.visitSingularStringField(value: self.tx, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestEstimateGas, rhs: Ocap_RequestEstimateGas) -> Bool {
+    if lhs.typeURL != rhs.typeURL {return false}
+    if lhs.tx != rhs.tx {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseEstimateGas: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseEstimateGas"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "estimate"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._estimate) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    if let v = self._estimate {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseEstimateGas, rhs: Ocap_ResponseEstimateGas) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._estimate != rhs._estimate {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
