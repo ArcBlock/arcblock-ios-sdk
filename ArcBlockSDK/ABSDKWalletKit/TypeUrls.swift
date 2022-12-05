@@ -139,8 +139,6 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_ForgeState(serializedData: value)
         case .stakeState:
             return try? Ocap_StakeState(serializedData: value)
-        case .statisticsState:
-            return try? Ocap_StatisticsState(serializedData: value)
         default:
             return nil
         }
