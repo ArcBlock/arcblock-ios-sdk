@@ -559,9 +559,8 @@ public struct Ocap_AcquireAssetV2Tx {
   public var variables: [Ocap_VariableInput] = []
 
   /// issuer info to mint the asset
-  /// TODO: enforce issuer in acquire/mint asset protocol
-  public var issuer: Ocap_AssetIssuer {
-    get {return _issuer ?? Ocap_AssetIssuer()}
+  public var issuer: Ocap_NFTIssuer {
+    get {return _issuer ?? Ocap_NFTIssuer()}
     set {_issuer = newValue}
   }
   /// Returns true if `issuer` has been explicitly set.
@@ -583,7 +582,7 @@ public struct Ocap_AcquireAssetV2Tx {
 
   public init() {}
 
-  fileprivate var _issuer: Ocap_AssetIssuer? = nil
+  fileprivate var _issuer: Ocap_NFTIssuer? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
@@ -610,9 +609,8 @@ public struct Ocap_AcquireAssetV3Tx {
   public var variables: [Ocap_VariableInput] = []
 
   /// issuer info to mint the asset
-  /// TODO: enforce issuer in acquire/mint asset protocol
-  public var issuer: Ocap_AssetIssuer {
-    get {return _issuer ?? Ocap_AssetIssuer()}
+  public var issuer: Ocap_NFTIssuer {
+    get {return _issuer ?? Ocap_NFTIssuer()}
     set {_issuer = newValue}
   }
   /// Returns true if `issuer` has been explicitly set.
@@ -634,11 +632,11 @@ public struct Ocap_AcquireAssetV3Tx {
 
   public init() {}
 
-  fileprivate var _issuer: Ocap_AssetIssuer? = nil
+  fileprivate var _issuer: Ocap_NFTIssuer? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
-/// The factory owner can mint new assets without any cost
+/// The factory owner and trusted issuers can mint new assets without paying acquire cost
 public struct Ocap_MintAssetTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -710,11 +708,34 @@ public struct Ocap_CreateAssetTx {
 
   public var issuer: String = String()
 
+  /// nft related
+  public var endpoint: Ocap_NFTEndpoint {
+    get {return _endpoint ?? Ocap_NFTEndpoint()}
+    set {_endpoint = newValue}
+  }
+  /// Returns true if `endpoint` has been explicitly set.
+  public var hasEndpoint: Bool {return self._endpoint != nil}
+  /// Clears the value of `endpoint`. Subsequent reads from it will return its default value.
+  public mutating func clearEndpoint() {self._endpoint = nil}
+
+  public var display: Ocap_NFTDisplay {
+    get {return _display ?? Ocap_NFTDisplay()}
+    set {_display = newValue}
+  }
+  /// Returns true if `display` has been explicitly set.
+  public var hasDisplay: Bool {return self._display != nil}
+  /// Clears the value of `display`. Subsequent reads from it will return its default value.
+  public mutating func clearDisplay() {self._display = nil}
+
+  public var tags: [String] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+  fileprivate var _endpoint: Ocap_NFTEndpoint? = nil
+  fileprivate var _display: Ocap_NFTDisplay? = nil
 }
 
 public struct Ocap_UpdateAssetTx {
@@ -776,7 +797,6 @@ public struct Ocap_CreateFactoryTx {
 
   /// who can mint assets from this factory
   /// default to empty, which only the factory owner can mint assets from
-  /// If set to ["*"], then anyone can mint from this factory
   public var trustedIssuers: [String] {
     get {return _storage._trustedIssuers}
     set {_uniqueStorage()._trustedIssuers = newValue}
@@ -818,8 +838,8 @@ public struct Ocap_CreateFactoryTx {
   }
 
   /// how the nft factory will look like
-  public var display: Ocap_AssetDisplay {
-    get {return _storage._display ?? Ocap_AssetDisplay()}
+  public var display: Ocap_NFTDisplay {
+    get {return _storage._display ?? Ocap_NFTDisplay()}
     set {_uniqueStorage()._display = newValue}
   }
   /// Returns true if `display` has been explicitly set.
@@ -862,11 +882,14 @@ public struct Ocap_StakeTx {
   /// Lock the stake on creation, does not have any effect when append to existing stake
   public var locked: Bool = false
 
-  /// Human readable messge help to identify the purpose of the stake
+  /// Human readable message help to identify the purpose of the stake
   public var message: String = String()
 
   /// Period to wait before revoked stake can be claimed, in seconds
   public var revokeWaitingPeriod: UInt32 = 0
+
+  /// Who can slash assets from this stake
+  public var slashers: [String] = []
 
   /// ocap won't touch this field. Only app shall handle it.
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -948,6 +971,40 @@ public struct Ocap_ClaimStakeTx {
   public init() {}
 
   fileprivate var _evidence: Ocap_Evidence? = nil
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+/// Slash assets from the stake
+/// Only accounts from stake slasher can do this
+/// The slash takes assets(staked or revoked) away from the stake immediately
+public struct Ocap_SlashStakeTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  /// Can slash any combination of tokens + assets
+  /// Can slash part of it or all of it
+  public var outputs: [Ocap_TransactionInput] = []
+
+  /// Human readable message help to identify the reason of the slash
+  public var message: String = String()
+
+  /// ocap won't touch this field. Only app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
@@ -1856,6 +1913,14 @@ public struct Ocap_ItxStub {
     set {value = .claimStake(newValue)}
   }
 
+  public var slashStake: Ocap_SlashStakeTx {
+    get {
+      if case .slashStake(let v)? = value {return v}
+      return Ocap_SlashStakeTx()
+    }
+    set {value = .slashStake(newValue)}
+  }
+
   public var upgradeNode: Ocap_UpgradeNodeTx {
     get {
       if case .upgradeNode(let v)? = value {return v}
@@ -1975,6 +2040,7 @@ public struct Ocap_ItxStub {
     case stake(Ocap_StakeTx)
     case revokeStake(Ocap_RevokeStakeTx)
     case claimStake(Ocap_ClaimStakeTx)
+    case slashStake(Ocap_SlashStakeTx)
     case upgradeNode(Ocap_UpgradeNodeTx)
     /// Rollup
     case createRollup(Ocap_CreateRollupTx)
@@ -2076,6 +2142,10 @@ public struct Ocap_ItxStub {
       }()
       case (.claimStake, .claimStake): return {
         guard case .claimStake(let l) = lhs, case .claimStake(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.slashStake, .slashStake): return {
+        guard case .slashStake(let l) = lhs, case .slashStake(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.upgradeNode, .upgradeNode): return {
@@ -3100,6 +3170,9 @@ extension Ocap_CreateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     6: .same(proto: "parent"),
     7: .same(proto: "address"),
     8: .same(proto: "issuer"),
+    9: .same(proto: "endpoint"),
+    10: .same(proto: "display"),
+    11: .same(proto: "tags"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3116,6 +3189,9 @@ extension Ocap_CreateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 6: try { try decoder.decodeSingularStringField(value: &self.parent) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.address) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.issuer) }()
+      case 9: try { try decoder.decodeSingularMessageField(value: &self._endpoint) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._display) }()
+      case 11: try { try decoder.decodeRepeatedStringField(value: &self.tags) }()
       default: break
       }
     }
@@ -3146,6 +3222,15 @@ extension Ocap_CreateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.issuer.isEmpty {
       try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 8)
     }
+    if let v = self._endpoint {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    }
+    if let v = self._display {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }
+    if !self.tags.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.tags, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3158,6 +3243,9 @@ extension Ocap_CreateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.parent != rhs.parent {return false}
     if lhs.address != rhs.address {return false}
     if lhs.issuer != rhs.issuer {return false}
+    if lhs._endpoint != rhs._endpoint {return false}
+    if lhs._display != rhs._display {return false}
+    if lhs.tags != rhs.tags {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3233,7 +3321,7 @@ extension Ocap_CreateFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     var _output: Ocap_CreateAssetTx? = nil
     var _hooks: [Ocap_AssetFactoryHook] = []
     var _address: String = String()
-    var _display: Ocap_AssetDisplay? = nil
+    var _display: Ocap_NFTDisplay? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -3360,6 +3448,7 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     4: .same(proto: "locked"),
     5: .same(proto: "message"),
     6: .standard(proto: "revoke_waiting_period"),
+    7: .same(proto: "slashers"),
     50: .same(proto: "data"),
   ]
 
@@ -3375,6 +3464,7 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 4: try { try decoder.decodeSingularBoolField(value: &self.locked) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.message) }()
       case 6: try { try decoder.decodeSingularUInt32Field(value: &self.revokeWaitingPeriod) }()
+      case 7: try { try decoder.decodeRepeatedStringField(value: &self.slashers) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -3400,6 +3490,9 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if self.revokeWaitingPeriod != 0 {
       try visitor.visitSingularUInt32Field(value: self.revokeWaitingPeriod, fieldNumber: 6)
     }
+    if !self.slashers.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.slashers, fieldNumber: 7)
+    }
     if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     }
@@ -3413,6 +3506,7 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.locked != rhs.locked {return false}
     if lhs.message != rhs.message {return false}
     if lhs.revokeWaitingPeriod != rhs.revokeWaitingPeriod {return false}
+    if lhs.slashers != rhs.slashers {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3501,6 +3595,56 @@ extension Ocap_ClaimStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   public static func ==(lhs: Ocap_ClaimStakeTx, rhs: Ocap_ClaimStakeTx) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs._evidence != rhs._evidence {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_SlashStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".SlashStakeTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "outputs"),
+    3: .same(proto: "message"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.outputs) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.message) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.outputs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.outputs, fieldNumber: 2)
+    }
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 3)
+    }
+    if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_SlashStakeTx, rhs: Ocap_SlashStakeTx) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.outputs != rhs.outputs {return false}
+    if lhs.message != rhs.message {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -4663,6 +4807,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     40: .same(proto: "stake"),
     41: .standard(proto: "revoke_stake"),
     42: .standard(proto: "claim_stake"),
+    43: .standard(proto: "slash_stake"),
     49: .standard(proto: "upgrade_node"),
     50: .standard(proto: "create_rollup"),
     51: .standard(proto: "update_rollup"),
@@ -4871,6 +5016,15 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {self.value = .claimStake(v)}
       }()
+      case 43: try {
+        var v: Ocap_SlashStakeTx?
+        if let current = self.value {
+          try decoder.handleConflictingOneOf()
+          if case .slashStake(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {self.value = .slashStake(v)}
+      }()
       case 49: try {
         var v: Ocap_UpgradeNodeTx?
         if let current = self.value {
@@ -5063,6 +5217,10 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     case .claimStake?: try {
       guard case .claimStake(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 42)
+    }()
+    case .slashStake?: try {
+      guard case .slashStake(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 43)
     }()
     case .upgradeNode?: try {
       guard case .upgradeNode(let v)? = self.value else { preconditionFailure() }

@@ -183,8 +183,7 @@ message AcquireAssetV2Tx {
   repeated VariableInput variables = 4;
 
   // issuer info to mint the asset
-  // TODO: enforce issuer in acquire/mint asset protocol
-  AssetIssuer issuer = 5;
+  NFTIssuer issuer = 5;
 
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 15;
@@ -208,13 +207,12 @@ message AcquireAssetV3Tx {
   repeated VariableInput variables = 5;
 
   // issuer info to mint the asset
-  // TODO: enforce issuer in acquire/mint asset protocol
-  AssetIssuer issuer = 6;
+  NFTIssuer issuer = 6;
 
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 15;
 }
-// The factory owner can mint new assets without any cost
+// The factory owner and trusted issuers can mint new assets without paying acquire cost
 message MintAssetTx {
   // the address of the asset factory
   string factory = 1;
@@ -249,6 +247,10 @@ message CreateAssetTx {
   string parent = 6;
   string address = 7;
   string issuer = 8;
+  // nft related
+  NFTEndpoint endpoint = 9;
+  NFTDisplay display = 10;
+  repeated string tags = 11;
 }
 message UpdateAssetTx {
   string address = 1;
@@ -273,7 +275,6 @@ message CreateFactoryTx {
 
   // who can mint assets from this factory
   // default to empty, which only the factory owner can mint assets from
-  // If set to ["*"], then anyone can mint from this factory
   repeated string trusted_issuers = 5;
 
   // input params to mint new asset, can be any combination of tokens + assets
@@ -292,7 +293,7 @@ message CreateFactoryTx {
   string address = 9;
 
   // how the nft factory will look like
-  AssetDisplay display = 10;
+  NFTDisplay display = 10;
 
   // extra content that can populate into the output object when minting
   google.protobuf.Any data = 15;
@@ -312,11 +313,14 @@ message StakeTx {
   // Lock the stake on creation, does not have any effect when append to existing stake
   bool locked = 4;
 
-  // Human readable messge help to identify the purpose of the stake
+  // Human readable message help to identify the purpose of the stake
   string message = 5;
 
   // Period to wait before revoked stake can be claimed, in seconds
   uint32 revoke_waiting_period = 6;
+
+  // Who can slash assets from this stake
+  repeated string slashers = 7;
 
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 50;
@@ -339,6 +343,22 @@ message ClaimStakeTx {
 
   // Revoke transaction
   Evidence evidence = 2;
+
+  // ocap won't touch this field. Only app shall handle it.
+  google.protobuf.Any data = 50;
+}
+// Slash assets from the stake
+// Only accounts from stake slasher can do this
+// The slash takes assets(staked or revoked) away from the stake immediately
+message SlashStakeTx {
+  string address = 1;
+
+  // Can slash any combination of tokens + assets
+  // Can slash part of it or all of it
+  repeated TransactionInput outputs = 2;
+
+  // Human readable message help to identify the reason of the slash
+  string message = 3;
 
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 50;
@@ -606,6 +626,7 @@ message ItxStub {
     StakeTx stake = 40;
     RevokeStakeTx revoke_stake = 41;
     ClaimStakeTx claim_stake = 42;
+    SlashStakeTx slash_stake = 43;
     UpgradeNodeTx upgrade_node = 49;
 
     // Rollup

@@ -523,10 +523,11 @@ public enum Ocap_RoleType: SwiftProtobuf.Enum {
   case roleDelegation // = 13
   case roleVc // = 14
   case roleBlocklet // = 15
-  case roleRegistry // = 16
+  case roleStore // = 16
   case roleToken // = 17
   case roleFactory // = 18
   case roleRollup // = 19
+  case roleStorage // = 20
   case roleAny // = 63
   case UNRECOGNIZED(Int)
 
@@ -552,10 +553,11 @@ public enum Ocap_RoleType: SwiftProtobuf.Enum {
     case 13: self = .roleDelegation
     case 14: self = .roleVc
     case 15: self = .roleBlocklet
-    case 16: self = .roleRegistry
+    case 16: self = .roleStore
     case 17: self = .roleToken
     case 18: self = .roleFactory
     case 19: self = .roleRollup
+    case 20: self = .roleStorage
     case 63: self = .roleAny
     default: self = .UNRECOGNIZED(rawValue)
     }
@@ -579,10 +581,11 @@ public enum Ocap_RoleType: SwiftProtobuf.Enum {
     case .roleDelegation: return 13
     case .roleVc: return 14
     case .roleBlocklet: return 15
-    case .roleRegistry: return 16
+    case .roleStore: return 16
     case .roleToken: return 17
     case .roleFactory: return 18
     case .roleRollup: return 19
+    case .roleStorage: return 20
     case .roleAny: return 63
     case .UNRECOGNIZED(let i): return i
     }
@@ -611,10 +614,11 @@ extension Ocap_RoleType: CaseIterable {
     .roleDelegation,
     .roleVc,
     .roleBlocklet,
-    .roleRegistry,
+    .roleStore,
     .roleToken,
     .roleFactory,
     .roleRollup,
+    .roleStorage,
     .roleAny,
   ]
 }
@@ -1057,10 +1061,11 @@ extension Ocap_RoleType: SwiftProtobuf._ProtoNameProviding {
     13: .same(proto: "ROLE_DELEGATION"),
     14: .same(proto: "ROLE_VC"),
     15: .same(proto: "ROLE_BLOCKLET"),
-    16: .same(proto: "ROLE_REGISTRY"),
+    16: .same(proto: "ROLE_STORE"),
     17: .same(proto: "ROLE_TOKEN"),
     18: .same(proto: "ROLE_FACTORY"),
     19: .same(proto: "ROLE_ROLLUP"),
+    20: .same(proto: "ROLE_STORAGE"),
     63: .same(proto: "ROLE_ANY"),
   ]
 }
