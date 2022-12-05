@@ -1,3 +1,6 @@
+## 0.11.33 (December 05, 2022)
+  - update proto
+
 ## 0.11.32 (November 18, 2022)
   - add role type
 
