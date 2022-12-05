@@ -112,45 +112,6 @@ public struct Ocap_AccountState {
     set {_uniqueStorage()._numAssets = newValue}
   }
 
-  public var stake: Ocap_StakeContext {
-    get {return _storage._stake ?? Ocap_StakeContext()}
-    set {_uniqueStorage()._stake = newValue}
-  }
-  /// Returns true if `stake` has been explicitly set.
-  public var hasStake: Bool {return _storage._stake != nil}
-  /// Clears the value of `stake`. Subsequent reads from it will return its default value.
-  public mutating func clearStake() {_uniqueStorage()._stake = nil}
-
-  public var pinnedFiles: Ocap_CircularQueue {
-    get {return _storage._pinnedFiles ?? Ocap_CircularQueue()}
-    set {_uniqueStorage()._pinnedFiles = newValue}
-  }
-  /// Returns true if `pinnedFiles` has been explicitly set.
-  public var hasPinnedFiles: Bool {return _storage._pinnedFiles != nil}
-  /// Clears the value of `pinnedFiles`. Subsequent reads from it will return its default value.
-  public mutating func clearPinnedFiles() {_uniqueStorage()._pinnedFiles = nil}
-
-  /// PokeInfo poke = 18; // deprecated
-  /// The current deposit this account has received. It cannot exceed the deposit cap.
-  public var depositReceived: Ocap_BigUint {
-    get {return _storage._depositReceived ?? Ocap_BigUint()}
-    set {_uniqueStorage()._depositReceived = newValue}
-  }
-  /// Returns true if `depositReceived` has been explicitly set.
-  public var hasDepositReceived: Bool {return _storage._depositReceived != nil}
-  /// Clears the value of `depositReceived`. Subsequent reads from it will return its default value.
-  public mutating func clearDepositReceived() {_uniqueStorage()._depositReceived = nil}
-
-  /// 20-49 reserve for future
-  public var withdrawItems: Ocap_CircularQueue {
-    get {return _storage._withdrawItems ?? Ocap_CircularQueue()}
-    set {_uniqueStorage()._withdrawItems = newValue}
-  }
-  /// Returns true if `withdrawItems` has been explicitly set.
-  public var hasWithdrawItems: Bool {return _storage._withdrawItems != nil}
-  /// Clears the value of `withdrawItems`. Subsequent reads from it will return its default value.
-  public mutating func clearWithdrawItems() {_uniqueStorage()._withdrawItems = nil}
-
   public var tokens: [Ocap_IndexedTokenInput] {
     get {return _storage._tokens}
     set {_uniqueStorage()._tokens = newValue}
@@ -207,7 +168,7 @@ public struct Ocap_AssetState {
     set {_uniqueStorage()._ttl = newValue}
   }
 
-  /// once it is consumed, it is untransferrable
+  /// once it is consumed, it is not transferrable
   public var consumedTime: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _storage._consumedTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._consumedTime = newValue}
@@ -217,27 +178,42 @@ public struct Ocap_AssetState {
   /// Clears the value of `consumedTime`. Subsequent reads from it will return its default value.
   public mutating func clearConsumedTime() {_uniqueStorage()._consumedTime = nil}
 
-  /// who issued the asset
+  /// who issued the nft
   public var issuer: String {
     get {return _storage._issuer}
     set {_uniqueStorage()._issuer = newValue}
   }
 
-  /// parent address for the asset state, e.g. a ticket is inherited from an
-  /// event
+  /// parent address for the nft state, e.g. a ticket is inherited from an event
   public var parent: String {
     get {return _storage._parent}
     set {_uniqueStorage()._parent = newValue}
   }
 
-  public var stake: Ocap_StakeContext {
-    get {return _storage._stake ?? Ocap_StakeContext()}
-    set {_uniqueStorage()._stake = newValue}
+  /// endpoint to fetch nft status and actions
+  public var endpoint: Ocap_NFTEndpoint {
+    get {return _storage._endpoint ?? Ocap_NFTEndpoint()}
+    set {_uniqueStorage()._endpoint = newValue}
   }
-  /// Returns true if `stake` has been explicitly set.
-  public var hasStake: Bool {return _storage._stake != nil}
-  /// Clears the value of `stake`. Subsequent reads from it will return its default value.
-  public mutating func clearStake() {_uniqueStorage()._stake = nil}
+  /// Returns true if `endpoint` has been explicitly set.
+  public var hasEndpoint: Bool {return _storage._endpoint != nil}
+  /// Clears the value of `endpoint`. Subsequent reads from it will return its default value.
+  public mutating func clearEndpoint() {_uniqueStorage()._endpoint = nil}
+
+  /// display for the nft
+  public var display: Ocap_NFTDisplay {
+    get {return _storage._display ?? Ocap_NFTDisplay()}
+    set {_uniqueStorage()._display = newValue}
+  }
+  /// Returns true if `display` has been explicitly set.
+  public var hasDisplay: Bool {return _storage._display != nil}
+  /// Clears the value of `display`. Subsequent reads from it will return its default value.
+  public mutating func clearDisplay() {_uniqueStorage()._display = nil}
+
+  public var tags: [String] {
+    get {return _storage._tags}
+    set {_uniqueStorage()._tags = newValue}
+  }
 
   public var context: Ocap_StateContext {
     get {return _storage._context ?? Ocap_StateContext()}
@@ -326,6 +302,15 @@ public struct Ocap_ForgeState {
     set {_uniqueStorage()._accountConfig = newValue}
   }
 
+  public var vaults: Ocap_VaultConfig {
+    get {return _storage._vaults ?? Ocap_VaultConfig()}
+    set {_uniqueStorage()._vaults = newValue}
+  }
+  /// Returns true if `vaults` has been explicitly set.
+  public var hasVaults: Bool {return _storage._vaults != nil}
+  /// Clears the value of `vaults`. Subsequent reads from it will return its default value.
+  public mutating func clearVaults() {_uniqueStorage()._vaults = nil}
+
   /// app can define their own app state
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -369,135 +354,6 @@ public struct Ocap_RootState {
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
-}
-
-public struct Ocap_StatisticsState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var address: String = String()
-
-  public var numBlocks: UInt64 = 0
-
-  public var numTxs: UInt64 = 0
-
-  public var numStakes: Ocap_BigUint {
-    get {return _numStakes ?? Ocap_BigUint()}
-    set {_numStakes = newValue}
-  }
-  /// Returns true if `numStakes` has been explicitly set.
-  public var hasNumStakes: Bool {return self._numStakes != nil}
-  /// Clears the value of `numStakes`. Subsequent reads from it will return its default value.
-  public mutating func clearNumStakes() {self._numStakes = nil}
-
-  public var numValidators: UInt32 = 0
-
-  public var txStatistics: Ocap_TxStatistics {
-    get {return _txStatistics ?? Ocap_TxStatistics()}
-    set {_txStatistics = newValue}
-  }
-  /// Returns true if `txStatistics` has been explicitly set.
-  public var hasTxStatistics: Bool {return self._txStatistics != nil}
-  /// Clears the value of `txStatistics`. Subsequent reads from it will return its default value.
-  public mutating func clearTxStatistics() {self._txStatistics = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _numStakes: Ocap_BigUint? = nil
-  fileprivate var _txStatistics: Ocap_TxStatistics? = nil
-}
-
-/// TODO: [peiling] We have already defined this state in core protocols repo.
-/// The only reason we define this state here again is because the protobuf
-/// definition ResponseGetSwapState needs to reference to this SwapState.
-public struct Ocap_SwapState {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var hash: String = String()
-
-  public var address: String = String()
-
-  public var hashkey: Data = Data()
-
-  public var sender: String = String()
-
-  public var receiver: String = String()
-
-  public var value: Ocap_BigUint {
-    get {return _value ?? Ocap_BigUint()}
-    set {_value = newValue}
-  }
-  /// Returns true if `value` has been explicitly set.
-  public var hasValue: Bool {return self._value != nil}
-  /// Clears the value of `value`. Subsequent reads from it will return its default value.
-  public mutating func clearValue() {self._value = nil}
-
-  public var assets: [String] = []
-
-  public var locktime: UInt32 = 0
-
-  public var hashlock: Data = Data()
-
-  public var context: Ocap_StateContext {
-    get {return _context ?? Ocap_StateContext()}
-    set {_context = newValue}
-  }
-  /// Returns true if `context` has been explicitly set.
-  public var hasContext: Bool {return self._context != nil}
-  /// Clears the value of `context`. Subsequent reads from it will return its default value.
-  public mutating func clearContext() {self._context = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _value: Ocap_BigUint? = nil
-  fileprivate var _context: Ocap_StateContext? = nil
-}
-
-/// TODO: [peiling] We have already defined this state in core protocols repo.
-/// The only reason we define this state here again is because the protobuf
-/// definition ResponseGetSwapStatistics needs to reference to this.
-public struct Ocap_SwapStatistics {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var address: String = String()
-
-  public var lockedValueOut: Ocap_BigUint {
-    get {return _lockedValueOut ?? Ocap_BigUint()}
-    set {_lockedValueOut = newValue}
-  }
-  /// Returns true if `lockedValueOut` has been explicitly set.
-  public var hasLockedValueOut: Bool {return self._lockedValueOut != nil}
-  /// Clears the value of `lockedValueOut`. Subsequent reads from it will return its default value.
-  public mutating func clearLockedValueOut() {self._lockedValueOut = nil}
-
-  public var lockedValueIn: Ocap_BigUint {
-    get {return _lockedValueIn ?? Ocap_BigUint()}
-    set {_lockedValueIn = newValue}
-  }
-  /// Returns true if `lockedValueIn` has been explicitly set.
-  public var hasLockedValueIn: Bool {return self._lockedValueIn != nil}
-  /// Clears the value of `lockedValueIn`. Subsequent reads from it will return its default value.
-  public mutating func clearLockedValueIn() {self._lockedValueIn = nil}
-
-  public var lockedAssetsOut: UInt32 = 0
-
-  public var lockedAssetsIn: UInt32 = 0
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _lockedValueOut: Ocap_BigUint? = nil
-  fileprivate var _lockedValueIn: Ocap_BigUint? = nil
 }
 
 /// a rule can check against the statistics values, e.g. state.num_txs < 10000,
@@ -765,8 +621,8 @@ public struct Ocap_AssetFactoryState {
     set {_uniqueStorage()._numMinted = newValue}
   }
 
-  public var display: Ocap_AssetDisplay {
-    get {return _storage._display ?? Ocap_AssetDisplay()}
+  public var display: Ocap_NFTDisplay {
+    get {return _storage._display ?? Ocap_NFTDisplay()}
     set {_uniqueStorage()._display = newValue}
   }
   /// Returns true if `display` has been explicitly set.
@@ -855,6 +711,12 @@ public struct Ocap_StakeState {
   public var revokedAssets: [String] {
     get {return _storage._revokedAssets}
     set {_uniqueStorage()._revokedAssets = newValue}
+  }
+
+  /// Who can slash assets from this stake
+  public var slashers: [String] {
+    get {return _storage._slashers}
+    set {_uniqueStorage()._slashers = newValue}
   }
 
   public var context: Ocap_StateContext {
@@ -1298,10 +1160,6 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     13: .standard(proto: "migrated_to"),
     14: .standard(proto: "migrated_from"),
     15: .standard(proto: "num_assets"),
-    16: .same(proto: "stake"),
-    17: .standard(proto: "pinned_files"),
-    19: .standard(proto: "deposit_received"),
-    20: .standard(proto: "withdraw_items"),
     21: .same(proto: "tokens"),
     50: .same(proto: "data"),
   ]
@@ -1320,10 +1178,6 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     var _migratedTo: [String] = []
     var _migratedFrom: [String] = []
     var _numAssets: String = String()
-    var _stake: Ocap_StakeContext? = nil
-    var _pinnedFiles: Ocap_CircularQueue? = nil
-    var _depositReceived: Ocap_BigUint? = nil
-    var _withdrawItems: Ocap_CircularQueue? = nil
     var _tokens: [Ocap_IndexedTokenInput] = []
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -1345,10 +1199,6 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       _migratedTo = source._migratedTo
       _migratedFrom = source._migratedFrom
       _numAssets = source._numAssets
-      _stake = source._stake
-      _pinnedFiles = source._pinnedFiles
-      _depositReceived = source._depositReceived
-      _withdrawItems = source._withdrawItems
       _tokens = source._tokens
       _data = source._data
     }
@@ -1382,10 +1232,6 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
         case 13: try { try decoder.decodeRepeatedStringField(value: &_storage._migratedTo) }()
         case 14: try { try decoder.decodeRepeatedStringField(value: &_storage._migratedFrom) }()
         case 15: try { try decoder.decodeSingularStringField(value: &_storage._numAssets) }()
-        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._stake) }()
-        case 17: try { try decoder.decodeSingularMessageField(value: &_storage._pinnedFiles) }()
-        case 19: try { try decoder.decodeSingularMessageField(value: &_storage._depositReceived) }()
-        case 20: try { try decoder.decodeSingularMessageField(value: &_storage._withdrawItems) }()
         case 21: try { try decoder.decodeRepeatedMessageField(value: &_storage._tokens) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -1435,18 +1281,6 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       if !_storage._numAssets.isEmpty {
         try visitor.visitSingularStringField(value: _storage._numAssets, fieldNumber: 15)
       }
-      if let v = _storage._stake {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-      }
-      if let v = _storage._pinnedFiles {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
-      }
-      if let v = _storage._depositReceived {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
-      }
-      if let v = _storage._withdrawItems {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-      }
       if !_storage._tokens.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._tokens, fieldNumber: 21)
       }
@@ -1475,10 +1309,6 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
         if _storage._migratedTo != rhs_storage._migratedTo {return false}
         if _storage._migratedFrom != rhs_storage._migratedFrom {return false}
         if _storage._numAssets != rhs_storage._numAssets {return false}
-        if _storage._stake != rhs_storage._stake {return false}
-        if _storage._pinnedFiles != rhs_storage._pinnedFiles {return false}
-        if _storage._depositReceived != rhs_storage._depositReceived {return false}
-        if _storage._withdrawItems != rhs_storage._withdrawItems {return false}
         if _storage._tokens != rhs_storage._tokens {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
@@ -1502,7 +1332,9 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     7: .standard(proto: "consumed_time"),
     8: .same(proto: "issuer"),
     9: .same(proto: "parent"),
-    13: .same(proto: "stake"),
+    10: .same(proto: "endpoint"),
+    11: .same(proto: "display"),
+    12: .same(proto: "tags"),
     14: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
@@ -1517,7 +1349,9 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _consumedTime: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _issuer: String = String()
     var _parent: String = String()
-    var _stake: Ocap_StakeContext? = nil
+    var _endpoint: Ocap_NFTEndpoint? = nil
+    var _display: Ocap_NFTDisplay? = nil
+    var _tags: [String] = []
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -1535,7 +1369,9 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _consumedTime = source._consumedTime
       _issuer = source._issuer
       _parent = source._parent
-      _stake = source._stake
+      _endpoint = source._endpoint
+      _display = source._display
+      _tags = source._tags
       _context = source._context
       _data = source._data
     }
@@ -1565,7 +1401,9 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._consumedTime) }()
         case 8: try { try decoder.decodeSingularStringField(value: &_storage._issuer) }()
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._parent) }()
-        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._stake) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._endpoint) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._display) }()
+        case 12: try { try decoder.decodeRepeatedStringField(value: &_storage._tags) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -1603,8 +1441,14 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._parent.isEmpty {
         try visitor.visitSingularStringField(value: _storage._parent, fieldNumber: 9)
       }
-      if let v = _storage._stake {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      if let v = _storage._endpoint {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      }
+      if let v = _storage._display {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      }
+      if !_storage._tags.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._tags, fieldNumber: 12)
       }
       if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
@@ -1630,7 +1474,9 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._consumedTime != rhs_storage._consumedTime {return false}
         if _storage._issuer != rhs_storage._issuer {return false}
         if _storage._parent != rhs_storage._parent {return false}
-        if _storage._stake != rhs_storage._stake {return false}
+        if _storage._endpoint != rhs_storage._endpoint {return false}
+        if _storage._display != rhs_storage._display {return false}
+        if _storage._tags != rhs_storage._tags {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
@@ -1653,6 +1499,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     6: .standard(proto: "tx_config"),
     7: .standard(proto: "upgrade_info"),
     8: .standard(proto: "account_config"),
+    9: .same(proto: "vaults"),
     2047: .same(proto: "data"),
   ]
 
@@ -1665,6 +1512,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _txConfig: Ocap_TransactionConfig? = nil
     var _upgradeInfo: Ocap_UpgradeInfo? = nil
     var _accountConfig: [Ocap_AccountConfig] = []
+    var _vaults: Ocap_VaultConfig? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -1680,6 +1528,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _txConfig = source._txConfig
       _upgradeInfo = source._upgradeInfo
       _accountConfig = source._accountConfig
+      _vaults = source._vaults
       _data = source._data
     }
   }
@@ -1707,6 +1556,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 6: try { try decoder.decodeSingularMessageField(value: &_storage._txConfig) }()
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._upgradeInfo) }()
         case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._accountConfig) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._vaults) }()
         case 2047: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -1740,6 +1590,9 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._accountConfig.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._accountConfig, fieldNumber: 8)
       }
+      if let v = _storage._vaults {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      }
       if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 2047)
       }
@@ -1760,6 +1613,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._txConfig != rhs_storage._txConfig {return false}
         if _storage._upgradeInfo != rhs_storage._upgradeInfo {return false}
         if _storage._accountConfig != rhs_storage._accountConfig {return false}
+        if _storage._vaults != rhs_storage._vaults {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -1833,210 +1687,6 @@ extension Ocap_RootState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if lhs.`protocol` != rhs.`protocol` {return false}
     if lhs.governance != rhs.governance {return false}
     if lhs.custom != rhs.custom {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_StatisticsState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".StatisticsState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-    2: .standard(proto: "num_blocks"),
-    3: .standard(proto: "num_txs"),
-    4: .standard(proto: "num_stakes"),
-    5: .standard(proto: "num_validators"),
-    6: .standard(proto: "tx_statistics"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.numBlocks) }()
-      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.numTxs) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._numStakes) }()
-      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.numValidators) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._txStatistics) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    if self.numBlocks != 0 {
-      try visitor.visitSingularUInt64Field(value: self.numBlocks, fieldNumber: 2)
-    }
-    if self.numTxs != 0 {
-      try visitor.visitSingularUInt64Field(value: self.numTxs, fieldNumber: 3)
-    }
-    if let v = self._numStakes {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    if self.numValidators != 0 {
-      try visitor.visitSingularUInt32Field(value: self.numValidators, fieldNumber: 5)
-    }
-    if let v = self._txStatistics {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_StatisticsState, rhs: Ocap_StatisticsState) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs.numBlocks != rhs.numBlocks {return false}
-    if lhs.numTxs != rhs.numTxs {return false}
-    if lhs._numStakes != rhs._numStakes {return false}
-    if lhs.numValidators != rhs.numValidators {return false}
-    if lhs._txStatistics != rhs._txStatistics {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_SwapState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".SwapState"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "hash"),
-    2: .same(proto: "address"),
-    3: .same(proto: "hashkey"),
-    4: .same(proto: "sender"),
-    5: .same(proto: "receiver"),
-    6: .same(proto: "value"),
-    7: .same(proto: "assets"),
-    8: .same(proto: "locktime"),
-    9: .same(proto: "hashlock"),
-    10: .same(proto: "context"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.hash) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 3: try { try decoder.decodeSingularBytesField(value: &self.hashkey) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.sender) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._value) }()
-      case 7: try { try decoder.decodeRepeatedStringField(value: &self.assets) }()
-      case 8: try { try decoder.decodeSingularUInt32Field(value: &self.locktime) }()
-      case 9: try { try decoder.decodeSingularBytesField(value: &self.hashlock) }()
-      case 10: try { try decoder.decodeSingularMessageField(value: &self._context) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.hash.isEmpty {
-      try visitor.visitSingularStringField(value: self.hash, fieldNumber: 1)
-    }
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 2)
-    }
-    if !self.hashkey.isEmpty {
-      try visitor.visitSingularBytesField(value: self.hashkey, fieldNumber: 3)
-    }
-    if !self.sender.isEmpty {
-      try visitor.visitSingularStringField(value: self.sender, fieldNumber: 4)
-    }
-    if !self.receiver.isEmpty {
-      try visitor.visitSingularStringField(value: self.receiver, fieldNumber: 5)
-    }
-    if let v = self._value {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    }
-    if !self.assets.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 7)
-    }
-    if self.locktime != 0 {
-      try visitor.visitSingularUInt32Field(value: self.locktime, fieldNumber: 8)
-    }
-    if !self.hashlock.isEmpty {
-      try visitor.visitSingularBytesField(value: self.hashlock, fieldNumber: 9)
-    }
-    if let v = self._context {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_SwapState, rhs: Ocap_SwapState) -> Bool {
-    if lhs.hash != rhs.hash {return false}
-    if lhs.address != rhs.address {return false}
-    if lhs.hashkey != rhs.hashkey {return false}
-    if lhs.sender != rhs.sender {return false}
-    if lhs.receiver != rhs.receiver {return false}
-    if lhs._value != rhs._value {return false}
-    if lhs.assets != rhs.assets {return false}
-    if lhs.locktime != rhs.locktime {return false}
-    if lhs.hashlock != rhs.hashlock {return false}
-    if lhs._context != rhs._context {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_SwapStatistics: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".SwapStatistics"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-    2: .standard(proto: "locked_value_out"),
-    3: .standard(proto: "locked_value_in"),
-    4: .standard(proto: "locked_assets_out"),
-    5: .standard(proto: "locked_assets_in"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._lockedValueOut) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._lockedValueIn) }()
-      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.lockedAssetsOut) }()
-      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.lockedAssetsIn) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.address.isEmpty {
-      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
-    }
-    if let v = self._lockedValueOut {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if let v = self._lockedValueIn {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }
-    if self.lockedAssetsOut != 0 {
-      try visitor.visitSingularUInt32Field(value: self.lockedAssetsOut, fieldNumber: 4)
-    }
-    if self.lockedAssetsIn != 0 {
-      try visitor.visitSingularUInt32Field(value: self.lockedAssetsIn, fieldNumber: 5)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_SwapStatistics, rhs: Ocap_SwapStatistics) -> Bool {
-    if lhs.address != rhs.address {return false}
-    if lhs._lockedValueOut != rhs._lockedValueOut {return false}
-    if lhs._lockedValueIn != rhs._lockedValueIn {return false}
-    if lhs.lockedAssetsOut != rhs.lockedAssetsOut {return false}
-    if lhs.lockedAssetsIn != rhs.lockedAssetsIn {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2338,7 +1988,7 @@ extension Ocap_AssetFactoryState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     var _balance: Ocap_BigUint? = nil
     var _tokens: [Ocap_IndexedTokenInput] = []
     var _numMinted: UInt32 = 0
-    var _display: Ocap_AssetDisplay? = nil
+    var _display: Ocap_NFTDisplay? = nil
     var _lastSettlement: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
     static let defaultInstance = _StorageClass()
@@ -2505,6 +2155,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     8: .standard(proto: "revoke_waiting_period"),
     9: .standard(proto: "revoked_tokens"),
     10: .standard(proto: "revoked_assets"),
+    11: .same(proto: "slashers"),
     30: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
@@ -2520,6 +2171,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _revokeWaitingPeriod: UInt32 = 0
     var _revokedTokens: [Ocap_IndexedTokenInput] = []
     var _revokedAssets: [String] = []
+    var _slashers: [String] = []
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -2538,6 +2190,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _revokeWaitingPeriod = source._revokeWaitingPeriod
       _revokedTokens = source._revokedTokens
       _revokedAssets = source._revokedAssets
+      _slashers = source._slashers
       _context = source._context
       _data = source._data
     }
@@ -2568,6 +2221,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 8: try { try decoder.decodeSingularUInt32Field(value: &_storage._revokeWaitingPeriod) }()
         case 9: try { try decoder.decodeRepeatedMessageField(value: &_storage._revokedTokens) }()
         case 10: try { try decoder.decodeRepeatedStringField(value: &_storage._revokedAssets) }()
+        case 11: try { try decoder.decodeRepeatedStringField(value: &_storage._slashers) }()
         case 30: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -2608,6 +2262,9 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._revokedAssets.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._revokedAssets, fieldNumber: 10)
       }
+      if !_storage._slashers.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._slashers, fieldNumber: 11)
+      }
       if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
       }
@@ -2633,6 +2290,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._revokeWaitingPeriod != rhs_storage._revokeWaitingPeriod {return false}
         if _storage._revokedTokens != rhs_storage._revokedTokens {return false}
         if _storage._revokedAssets != rhs_storage._revokedAssets {return false}
+        if _storage._slashers != rhs_storage._slashers {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true

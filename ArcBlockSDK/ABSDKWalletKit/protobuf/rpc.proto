@@ -72,11 +72,6 @@ message ResponseGetForgeState {
   ForgeState state = 2;
 }
 
-message ResponseGetSwapState {
-  StatusCode code = 1;
-  SwapState state = 2;
-}
-
 message ResponseGetDelegateState {
   StatusCode code = 1;
   DelegateState state = 2;
@@ -117,17 +112,6 @@ message ResponseGetConfig {
   string config = 2;
 }
 
-message RequestGetForgeStats {
-  oneof value {
-    ByDay day_info = 1;
-    ByHour date = 2;
-  }
-}
-message ResponseGetForgeStats {
-  StatusCode code = 1;
-  ForgeStats forge_stats = 2;
-}
-
 message RequestListTransactions {
   Page paging = 1;
   TimeFilter time_filter = 2;
@@ -140,6 +124,7 @@ message RequestListTransactions {
   AccountFilter account_filter = 9;
   TxFilter tx_filter = 10;
   RollupFilter rollup_filter = 11;
+  StakeFilter stake_filter = 12;
 }
 message ResponseListTransactions {
   StatusCode code = 1;
@@ -191,29 +176,6 @@ message ResponseListBlocks {
   StatusCode code = 1;
   PageInfo page = 2;
   repeated IndexedBlock blocks = 3;
-}
-
-message RequestListSwap {
-  Page paging = 1;
-  string sender = 2;
-  string receiver = 3;
-  bool available = 4;
-}
-message ResponseListSwap {
-  StatusCode code = 1;
-  PageInfo page = 2;
-  repeated SwapState swap = 3;
-}
-
-message RequestGetSwapStatistics { string address = 1; }
-message ResponseGetSwapStatistics {
-  StatusCode code = 1;
-  SwapStatistics statistics = 2;
-}
-
-message ResponseGetHealthStatus {
-  StatusCode code = 1;
-  HealthStatus health_status = 2;
 }
 
 // token related
@@ -343,4 +305,18 @@ message RequestGetEvidenceState {
 message ResponseGetEvidenceState {
   StatusCode code = 1;
   EvidenceState state = 2;
+}
+
+message ResponseGetForgeStats {
+  StatusCode code = 1;
+  ForgeStats forge_stats = 2;
+}
+
+message RequestEstimateGas {
+  string type_url = 1;
+  string tx = 2;
+}
+message ResponseEstimateGas {
+  StatusCode code = 1;
+  GasEstimate estimate = 2;
 }

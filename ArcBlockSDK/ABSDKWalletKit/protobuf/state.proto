@@ -34,15 +34,6 @@ message AccountState {
   // DEPRECATED: will not be updated in future
   string num_assets = 15 [ deprecated = true ];
 
-  StakeContext stake = 16 [ deprecated = true ];
-  CircularQueue pinned_files = 17 [ deprecated = true ];
-  // PokeInfo poke = 18; // deprecated
-  // The current deposit this account has received. It cannot exceed the deposit cap.
-  BigUint deposit_received = 19 [ deprecated = true ];
-
-  CircularQueue withdraw_items = 20 [ deprecated = true ];
-  // 20-49 reserve for future
-
   repeated IndexedTokenInput tokens = 21;
 
   google.protobuf.Any data = 50;
@@ -52,18 +43,28 @@ message AssetState {
   string address = 1;
   string owner = 2;
   string moniker = 3;
+
   bool readonly = 4;
   bool transferrable = 5;
   uint32 ttl = 6;
-  // once it is consumed, it is untransferrable
+
+  // once it is consumed, it is not transferrable
   google.protobuf.Timestamp consumed_time = 7;
-  // who issued the asset
+
+  // who issued the nft
   string issuer = 8;
-  // parent address for the asset state, e.g. a ticket is inherited from an
-  // event
+
+  // parent address for the nft state, e.g. a ticket is inherited from an event
   string parent = 9;
 
-  StakeContext stake = 13 [ deprecated = true ];
+  // endpoint to fetch nft status and actions
+  NFTEndpoint endpoint = 10;
+
+  // display for the nft
+  NFTDisplay display = 11;
+
+  repeated string tags = 12;
+
   StateContext context = 14;
 
   google.protobuf.Any data = 50;
@@ -83,6 +84,8 @@ message ForgeState {
 
   repeated AccountConfig account_config = 8;
 
+  VaultConfig vaults = 9;
+
   google.protobuf.Any data = 2047; // app can define their own app state
 }
 
@@ -98,42 +101,6 @@ message RootState {
   bytes protocol = 5;
   bytes governance = 6;
   bytes custom = 7;
-}
-
-message StatisticsState {
-  string address = 1;
-  uint64 num_blocks = 2;
-  uint64 num_txs = 3;
-  BigUint num_stakes = 4;
-  uint32 num_validators = 5;
-  TxStatistics tx_statistics = 6;
-}
-
-// TODO: [peiling] We have already defined this state in core protocols repo.
-// The only reason we define this state here again is because the protobuf
-// definition ResponseGetSwapState needs to reference to this SwapState.
-message SwapState {
-  string hash = 1;
-  string address = 2;
-  bytes hashkey = 3;
-  string sender = 4;
-  string receiver = 5;
-  BigUint value = 6;
-  repeated string assets = 7;
-  uint32 locktime = 8;
-  bytes hashlock = 9;
-  StateContext context = 10;
-}
-
-// TODO: [peiling] We have already defined this state in core protocols repo.
-// The only reason we define this state here again is because the protobuf
-// definition ResponseGetSwapStatistics needs to reference to this.
-message SwapStatistics {
-  string address = 1;
-  BigUint locked_value_out = 2;
-  BigUint locked_value_in = 3;
-  uint32 locked_assets_out = 4;
-  uint32 locked_assets_in = 5;
 }
 
 // a rule can check against the statistics values, e.g. state.num_txs < 10000,
@@ -203,7 +170,7 @@ message AssetFactoryState {
   BigUint balance = 13;
   repeated IndexedTokenInput tokens = 14;
   uint32 num_minted = 15;
-  AssetDisplay display = 16;
+  NFTDisplay display = 16;
 
   // mutable
   google.protobuf.Timestamp last_settlement = 17;
@@ -239,6 +206,9 @@ message StakeState {
   // Revoked stake that are pending for claim
   repeated IndexedTokenInput revoked_tokens = 9;
   repeated string revoked_assets = 10;
+
+  // Who can slash assets from this stake
+  repeated string slashers = 11;
 
   StateContext context = 30;
   google.protobuf.Any data = 50;

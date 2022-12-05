@@ -35,6 +35,10 @@ message TokenFilter {
   repeated string tokens = 1;
 }
 
+message StakeFilter {
+  repeated string stakes = 1;
+}
+
 message AccountFilter {
   repeated string accounts = 1;
 }
@@ -81,48 +85,6 @@ message TokenInfo {
   int32 decimal = 3;
   string unit = 4;
   string symbol = 5;
-}
-
-message HealthStatus {
-  ConsensusStatus consensus = 1;
-  NetworkStatus network = 2;
-  StorageStatus storage = 3;
-  ForgeStatus forge = 4;
-}
-
-message ConsensusStatus {
-  bool health = 1;
-  bool synced = 2;
-  string block_height = 3;
-}
-
-message NetworkStatus {
-  bool health = 1;
-  uint32 num_peers = 2;
-}
-
-message StorageStatus {
-  bool health = 1;
-  string indexer_server = 2;
-  string state_db = 3;
-  DiskSpaceStatus disk_space = 4;
-}
-
-message DiskSpaceStatus {
-  string forge_usage = 1;
-  string total = 2;
-}
-
-message ForgeStatus{
-  bool health = 1;
-  string abi_server = 2;
-  string forge_web = 3;
-  AbciServerStatus abci_server = 4;
-}
-
-message AbciServerStatus{
-  string abci_consensus = 1;
-  string abci_info = 2;
 }
 
 enum Validity {
@@ -197,6 +159,9 @@ message IndexedAssetState {
   string parent = 9;
   bool transferrable = 10;
   string ttl = 11;
+  NFTDisplay display = 12;
+  NFTEndpoint endpoint = 13;
+  repeated string tags = 14;
   google.protobuf.Any data = 50;
 }
 
@@ -242,7 +207,7 @@ message IndexedFactoryState {
   string last_settlement = 16;
   string genesis_time = 17;
   string renaissance_time = 18;
-  AssetDisplay display = 19;
+  NFTDisplay display = 19;
 }
 
 message IndexedStakeState {
@@ -258,6 +223,7 @@ message IndexedStakeState {
   uint32 revoke_waiting_period = 10;
   repeated TokenInfo revoked_tokens = 11;
   repeated string revoked_assets = 12;
+  repeated string slashers = 13;
   google.protobuf.Any data = 50;
 }
 

@@ -206,9 +206,25 @@ message DelegateConfig {
   repeated string type_urls = 2;
 }
 
+message VaultConfig {
+  string slashed_stake = 1;
+  string tx_fee = 2;
+  repeated string tx_gas = 3;
+}
+
 message TxFeeConfig {
   string type_url = 1;
   string fee = 2;
+}
+
+message TxGasConfig {
+  uint64 price = 1;
+  uint64 create_state = 2;
+  uint64 update_state = 3;
+  uint64 data_storage = 4;
+  string min_stake = 5;
+  string max_stake = 6;
+  uint64 stake_lock_period = 7;
 }
 
 message TransactionConfig {
@@ -217,6 +233,7 @@ message TransactionConfig {
   uint32 max_multisig = 3;
   DelegateConfig delegate = 4;
   repeated TxFeeConfig tx_fee = 5;
+  TxGasConfig tx_gas = 6;
 }
 
 message BlockInfo {
@@ -261,46 +278,11 @@ message BlockInfoSimple {
   vendor.BlockID last_block_id = 17;
 }
 
-message TxStatus {
-  StatusCode code = 1;
-  string hash = 2;
-}
-
-message CircularQueue {
-  // each item is the value of the Any
-  repeated bytes items = 1;
-  // data inserted into the queue shall have same type_url
-  string type_url = 2;
-  // if max_items is 0, meaning the queue has no size limit (use it cautious).
-  // Otherwise when queue is full, we either will not be able to add item
-  // (circular = false), or (circlar = true) replace an item (based on fifo).
-  uint32 max_items = 3;
-  bool circular = 4;
-  // default is false, meaning LIFO (last in first out). new items are prepend
-  // to the queue and when we drop items we drop the tail item. When it is true,
-  // new items are append to the tail, and when we drop items we drop the head.
-  bool fifo = 5;
-}
-
 message StateContext {
   string genesis_tx = 1;
   string renaissance_tx = 2;
   google.protobuf.Timestamp genesis_time = 3;
   google.protobuf.Timestamp renaissance_time = 4;
-}
-
-message StakeContext {
-  // total tokens staked for others
-  BigUint total_stakes = 1;
-  BigUint total_unstakes = 2;
-  // total tokens being staked
-  BigUint total_received_stakes = 3;
-  // keep a list of stake address. Only store recent N (e.g. 128) stakes.
-  CircularQueue recent_stakes = 4;
-
-  // keep a list of received stake address. Only store recent N (e.g. 128)
-  // stakes.
-  CircularQueue recent_received_stakes = 15;
 }
 
 message StakeSummary {
@@ -351,50 +333,6 @@ message ValidatorInfo {
   GeoInfo geo_info = 6; // validator geo info
 }
 
-message GenesisInfo {
-  string genesis_time = 1;
-  string chain_id = 2;
-  vendor.ConsensusParams consensus_params = 3;
-  repeated ValidatorInfo validators = 4;
-  string app_hash = 5;
-}
-
-message ForgeStats {
-  repeated string num_blocks = 1;
-  repeated string num_txs = 2;
-  repeated BigUint num_stakes = 3;
-  repeated uint32 num_validators = 4;
-  repeated string num_account_migrate_txs = 5;
-  repeated string num_create_asset_txs = 6;
-  repeated uint32 num_consensus_upgrade_txs = 7;
-  repeated string num_declare_txs = 8;
-  repeated string num_declare_file_txs = 9;
-  repeated string num_exchange_txs = 10;
-  repeated string num_stake_txs = 11;
-  repeated uint32 num_sys_upgrade_txs = 12;
-  repeated string num_transfer_txs = 13;
-  repeated string num_update_asset_txs = 14;
-  repeated string num_consume_asset_txs = 15;
-  repeated uint32 tps = 16;
-  uint32 max_tps = 17;       // maximum tps in given time range
-  uint32 avg_tps = 18;       // average tps in given time range
-  float avg_block_time = 19; // average blocks in given time range
-}
-
-message TxStatistics {
-  string num_account_migrate_txs = 1;
-  string num_create_asset_txs = 2;
-  uint32 num_consensus_upgrade_txs = 3;
-  string num_declare_txs = 4;
-  string num_declare_file_txs = 5;
-  string num_exchange_txs = 6;
-  string num_stake_txs = 7;
-  uint32 num_sys_upgrade_txs = 8;
-  string num_transfer_txs = 9;
-  string num_update_asset_txs = 10;
-  string num_consume_asset_txs = 11;
-}
-
 message ForgeToken {
   string name = 1;           // token name
   string symbol = 2;         // token symbol
@@ -428,12 +366,26 @@ message Evidence {
   string hash = 1;       // tx hash from a foreign chain
 }
 
-message AssetDisplay {
-  string type = 1; // can be svg_gzipped, base64, url
+// @link https://github.com/ArcBlock/asset-chain/issues/112#issuecomment-814487646
+message NFTEndpoint {
+  // the url of the endpoint, must be a permanent url
+  string id = 1;
+
+  // for private endpoints, client must request with owner signature
+  string scope = 2;
+}
+
+message NFTDisplay {
+  // Can be svg|url|svg_gzipped|uri
+  string type = 1;
+
+  // Varies according to the type
+  // For svg type, content should be the svg itsself
+  // For url type, content should be the url to fetch the display content
   string content = 2;
 }
 
-message AssetIssuer {
+message NFTIssuer {
   string id = 1;
   string pk = 2;
   string name = 3;
@@ -483,4 +435,30 @@ message ForeignToken {
 message RevokedStake {
   repeated TokenInput tokens = 1;
   repeated string assets = 2;
+}
+
+message ForgeStats {
+  repeated string num_blocks = 1;
+  repeated string num_txs = 2;
+  repeated BigUint num_stakes = 3;
+  repeated uint32 num_validators = 4;
+  repeated string num_account_migrate_txs = 5;
+  repeated string num_create_asset_txs = 6;
+  repeated uint32 num_consensus_upgrade_txs = 7;
+  repeated string num_declare_txs = 8;
+  repeated string num_declare_file_txs = 9;
+  repeated string num_exchange_txs = 10;
+  repeated string num_stake_txs = 11;
+  repeated uint32 num_sys_upgrade_txs = 12;
+  repeated string num_transfer_txs = 13;
+  repeated string num_update_asset_txs = 14;
+  repeated string num_consume_asset_txs = 15;
+  repeated uint32 tps = 16;
+  uint32 max_tps = 17;       // maximum tps in given time range
+  uint32 avg_tps = 18;       // average tps in given time range
+  float avg_block_time = 19; // average blocks in given time range
+}
+
+message GasEstimate {
+  string max = 1; // max gas for this tx
 }

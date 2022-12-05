@@ -22,6 +22,8 @@ type Transaction {
   sender: String
   receiver: String
   serviceFee: String
+  gasFee: String
+  gasPaid: String
 }
 type StateContext {
   genesisTx: TransactionInfo
@@ -41,7 +43,6 @@ type RootQueryType {
   getDelegateState(address: String, height: String, keys: [String]): ResponseGetDelegateState
   getTokenState(address: String): ResponseGetTokenState
   getEvidenceState(hash: String): ResponseGetEvidenceState
-  getSwapState(address: String, height: String, keys: [String]): ResponseGetSwapState
   getForgeState(height: String, keys: [String]): ResponseGetForgeState
 
   getTx(hash: String): ResponseGetTx
@@ -51,15 +52,10 @@ type RootQueryType {
 
   getChainInfo: ResponseGetChainInfo
   getConfig(parsed: Boolean): ResponseGetConfig
-  getHealthStatus: ResponseGetHealthStatus
   getNetInfo: ResponseGetNetInfo
   getNodeInfo: ResponseGetNodeInfo
   getValidatorsInfo: ResponseGetValidatorsInfo
-
   getForgeStats: ResponseGetForgeStats
-  getForgeStatsByDay(endDate: String, startDate: String): ResponseGetForgeStats
-  getForgeStatsByHour(date: String): ResponseGetForgeStats
-  getSwapStatistics(address: String): ResponseGetSwapStatistics
 
   listAssetTransactions(address: String, paging: PageInput): ResponseListAssetTransactions
   listAssets(
@@ -76,7 +72,6 @@ type RootQueryType {
     proposer: String
     timeFilter: TimeFilterInput
   ): ResponseListBlocks
-  listSwap(available: Boolean, paging: String, receiver: String, sender: String): ResponseListSwap
   listTopAccounts(paging: PageInput, tokenAddress: String): ResponseListTopAccounts
   listTransactions(
     addressFilter: AddressFilterInput
@@ -90,6 +85,7 @@ type RootQueryType {
     accountFilter: AccountFilterInput
     txFilter: TxFilterInput
     rollupFilter: RollupFilterInput
+    stakeFilter: StakeFilterInput
   ): ResponseListTransactions
 
   # since 1.7.0
@@ -128,4 +124,7 @@ type RootQueryType {
 
   # since v1.13.17
   search(paging: PageInput, keyword: String): ResponseSearch
+
+  # since v1.18.9
+  estimateGas(typeUrl: String, tx: String): ResponseEstimateGas
 }
