@@ -1,3 +1,6 @@
+## 0.11.35 (February 07, 2023)
+  - update role type
+
 ## 0.11.34 (December 05, 2022)
 
 
