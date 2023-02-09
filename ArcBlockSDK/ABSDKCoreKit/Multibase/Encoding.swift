@@ -24,6 +24,7 @@
 //
 
 import Foundation
+import BigInt
 
 private protocol Encoding {
     static var zeroAlphabet: Character { get }
@@ -120,39 +121,24 @@ extension Encoding {
     }
 
     static func decode(_ string: String, _ baseAlphabets: String) -> Data? {
-        var zerosCount = 0
-        var length = 0
-        for c in string {
-            if c != zeroAlphabet { break }
-            zerosCount += 1
-        }
-        let size = sizeFromBase(size: string.lengthOfBytes(using: .utf8) - zerosCount)
-        var decodedBytes: [UInt8] = Array(repeating: 0, count: size)
-        for c in string {
-            guard let baseIndex = baseAlphabets.index(of: c) else { return nil }
+        var answer = BigUInt(0)
+        var j = BigUInt(1)
+        let alphabet = [UInt8](baseAlphabets.utf8)
+        let radix = BigUInt(alphabet.count)
+        let byteString = [UInt8](string.utf8)
 
-            var carry = baseIndex.encodedOffset
-            var i = 0
-            for j in (0...decodedBytes.count - 1).reversed() where carry != 0 || i < length {
-                carry += base * Int(decodedBytes[j])
-                decodedBytes[j] = UInt8(carry % 256)
-                carry /= 256
-                i += 1
+        for ch in byteString.reversed() {
+            if let index = alphabet.firstIndex(of: ch) {
+                answer = answer + (j * BigUInt(index))
+                j *= radix
+            } else {
+                return nil
             }
-
-            assert(carry == 0)
-            length = i
         }
 
-        // skip leading zeros
-        var zerosToRemove = 0
-
-        for b in decodedBytes {
-            if b != 0 { break }
-            zerosToRemove += 1
-        }
-        decodedBytes.removeFirst(zerosToRemove)
-
-        return Data(repeating: 0, count: zerosCount) + Data(decodedBytes)
+        let bytes = answer.serialize()
+        let leadingOnes = byteString.prefix(while: { value in value == alphabet[0] })
+        let leadingZeros: [UInt8] = Array(repeating: 0, count: leadingOnes.count)
+        return leadingZeros + bytes
     }
 }
