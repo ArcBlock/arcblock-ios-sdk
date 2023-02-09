@@ -1,3 +1,6 @@
+## 0.11.36 (February 09, 2023)
+  - fix base58
+
 ## 0.11.35 (February 07, 2023)
   - update role type
 
