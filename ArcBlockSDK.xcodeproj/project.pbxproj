@@ -61,6 +61,13 @@
 		27044802231E01F4007BA477 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
 		5637BDE5274CA63A0076143F /* AmountSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5637BDE4274CA63A0076143F /* AmountSpec.swift */; };
 		5637BDE9274CD49E0076143F /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5637BDE8274CD49E0076143F /* Double+Extension.swift */; };
+		56712D8729962D2D00690043 /* AESUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8629962D2D00690043 /* AESUtils.swift */; };
+		56712D8929962EF300690043 /* AESUtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8829962EF300690043 /* AESUtilsSpec.swift */; };
+		56712D8B2999D56B00690043 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8A2999D56B00690043 /* RSAUtils.swift */; };
+		56712D8D2999E30A00690043 /* RSAUtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8C2999E30A00690043 /* RSAUtilsSpec.swift */; };
+		56FC2D89299B96E0001665E6 /* SimpleASN1Writer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FC2D88299B96E0001665E6 /* SimpleASN1Writer.swift */; };
+		56FC2D95299BA17E001665E6 /* RSAPublicKeyExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FC2D94299BA17E001665E6 /* RSAPublicKeyExporter.swift */; };
+		56FC2D9A299BB50A001665E6 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FC2D99299BB50A001665E6 /* Asn1Parser.swift */; };
 		7F6C849E17C35B9149440791 /* Pods_ArcBlockSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -165,6 +172,13 @@
 		301F076836FA04A49FE48ED0 /* Pods-ArcBlockSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.release.xcconfig"; sourceTree = "<group>"; };
 		5637BDE4274CA63A0076143F /* AmountSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountSpec.swift; sourceTree = "<group>"; };
 		5637BDE8274CD49E0076143F /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		56712D8629962D2D00690043 /* AESUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AESUtils.swift; sourceTree = "<group>"; };
+		56712D8829962EF300690043 /* AESUtilsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AESUtilsSpec.swift; sourceTree = "<group>"; };
+		56712D8A2999D56B00690043 /* RSAUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAUtils.swift; sourceTree = "<group>"; };
+		56712D8C2999E30A00690043 /* RSAUtilsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAUtilsSpec.swift; sourceTree = "<group>"; };
+		56FC2D88299B96E0001665E6 /* SimpleASN1Writer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleASN1Writer.swift; sourceTree = "<group>"; };
+		56FC2D94299BA17E001665E6 /* RSAPublicKeyExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAPublicKeyExporter.swift; sourceTree = "<group>"; };
+		56FC2D99299BB50A001665E6 /* Asn1Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asn1Parser.swift; sourceTree = "<group>"; };
 		814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3BBE505C0D8A3D5E1BD935 /* Pods-ArcBlockSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.release.xcconfig"; sourceTree = "<group>"; };
@@ -225,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				27044726231E0052007BA477 /* ABSDKCoreKit */,
-				27044749231E0052007BA477 /* ABSDKWalletKit */,
 				27044712231DFF98007BA477 /* Info.plist */,
 			);
 			path = ArcBlockSDK;
@@ -235,6 +248,8 @@
 			isa = PBXGroup;
 			children = (
 				270447E5231E0060007BA477 /* BIP44UtilsSpec.swift */,
+				56712D8829962EF300690043 /* AESUtilsSpec.swift */,
+				56712D8C2999E30A00690043 /* RSAUtilsSpec.swift */,
 				270447E8231E0061007BA477 /* DidHelperSpec.swift */,
 				270447E4231E0060007BA477 /* MCryptoSpec.swift */,
 				270447E2231E0060007BA477 /* TxHelperSpec.swift */,
@@ -250,10 +265,14 @@
 		27044726231E0052007BA477 /* ABSDKCoreKit */ = {
 			isa = PBXGroup;
 			children = (
+				56FC2D90299B9F32001665E6 /* ASN1 */,
 				27044727231E0052007BA477 /* BIP44Utils.swift */,
-				27044728231E0052007BA477 /* ed25519swift */,
 				2704472F231E0052007BA477 /* MCrypto.swift */,
 				27044730231E0052007BA477 /* DidHelper.swift */,
+				56712D8629962D2D00690043 /* AESUtils.swift */,
+				56712D8A2999D56B00690043 /* RSAUtils.swift */,
+				27044749231E0052007BA477 /* ABSDKWalletKit */,
+				27044728231E0052007BA477 /* ed25519swift */,
 				2704473C231E0052007BA477 /* Multibase */,
 				1AA3D925273A304A00BA3CA0 /* Extensions */,
 				1AA3D92E273A58CA00BA3CA0 /* Localizable.string.strings */,
@@ -371,6 +390,16 @@
 				814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		56FC2D90299B9F32001665E6 /* ASN1 */ = {
+			isa = PBXGroup;
+			children = (
+				56FC2D99299BB50A001665E6 /* Asn1Parser.swift */,
+				56FC2D88299B96E0001665E6 /* SimpleASN1Writer.swift */,
+				56FC2D94299BA17E001665E6 /* RSAPublicKeyExporter.swift */,
+			);
+			path = ASN1;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -569,7 +598,9 @@
 				1A76D28A273CD96B00C4B25B /* service.proto in Sources */,
 				5637BDE9274CD49E0076143F /* Double+Extension.swift in Sources */,
 				1A89D11D28263F1B00BF8313 /* ed25519_sign.swift in Sources */,
+				56FC2D9A299BB50A001665E6 /* Asn1Parser.swift in Sources */,
 				1A76D287273CD96B00C4B25B /* trace-type.pb.swift in Sources */,
+				56FC2D89299B96E0001665E6 /* SimpleASN1Writer.swift in Sources */,
 				1A76D28D273CD96B00C4B25B /* tx.pb.swift in Sources */,
 				1A76D282273CD96B00C4B25B /* tx.proto in Sources */,
 				1A76D281273CD96B00C4B25B /* rpc.pb.swift in Sources */,
@@ -579,7 +610,9 @@
 				1A76D289273CD96B00C4B25B /* vendor.proto in Sources */,
 				1A76D28F273CD96B00C4B25B /* type.pb.swift in Sources */,
 				1A89D11E28263F1B00BF8313 /* ed25519_sc.swift in Sources */,
+				56FC2D95299BA17E001665E6 /* RSAPublicKeyExporter.swift in Sources */,
 				2704479B231E0052007BA477 /* Encoding.swift in Sources */,
+				56712D8729962D2D00690043 /* AESUtils.swift in Sources */,
 				1A76D291273CD96B00C4B25B /* state.pb.swift in Sources */,
 				1AA3D929273A572C00BA3CA0 /* String+Extension.swift in Sources */,
 				1A89D11B28263F1B00BF8313 /* ed25519_ge.swift in Sources */,
@@ -589,6 +622,7 @@
 				27044788231E0052007BA477 /* BIP44Utils.swift in Sources */,
 				1A76D290273CD96B00C4B25B /* type.proto in Sources */,
 				1A89D11F28263F1B00BF8313 /* ed25519_fe.swift in Sources */,
+				56712D8B2999D56B00690043 /* RSAUtils.swift in Sources */,
 				270447A6231E0052007BA477 /* TypeUrls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -599,9 +633,11 @@
 			files = (
 				1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */,
 				270447E9231E0061007BA477 /* TxHelperSpec.swift in Sources */,
+				56712D8929962EF300690043 /* AESUtilsSpec.swift in Sources */,
 				270447EB231E0061007BA477 /* MCryptoSpec.swift in Sources */,
 				1AA3D931273A6A7F00BA3CA0 /* InputSpec.swift in Sources */,
 				5637BDE5274CA63A0076143F /* AmountSpec.swift in Sources */,
+				56712D8D2999E30A00690043 /* RSAUtilsSpec.swift in Sources */,
 				270447EC231E0061007BA477 /* BIP44UtilsSpec.swift in Sources */,
 				270447EF231E0061007BA477 /* DidHelperSpec.swift in Sources */,
 			);
