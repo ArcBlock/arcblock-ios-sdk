@@ -1,3 +1,7 @@
+## 0.11.37 (February 15, 2023)
+  - support aes & rsa
+  - Merge pull request #112 from ArcBlock/base58-fix
+
 ## 0.11.36 (February 09, 2023)
   - fix base58
 
