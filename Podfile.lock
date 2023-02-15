@@ -1,7 +1,7 @@
 PODS:
   - Apollo (0.9.4)
   - BigInt (5.2.0)
-  - CryptoSwift (1.4.1)
+  - CryptoSwift (1.6.0)
   - Nimble (9.2.1)
   - PromiseKit (6.15.3):
     - PromiseKit/CorePromise (= 6.15.3)
@@ -14,14 +14,14 @@ PODS:
     - PromiseKit/CorePromise
   - Quick (4.0.0)
   - ReachabilitySwift (5.0.0)
-  - secp256k1.c (0.1.2)
+  - secp256k1.swift (0.1.4)
   - Starscream (4.0.4)
   - SwiftProtobuf (1.17.0)
   - web3swift (2.3.0):
     - BigInt (~> 5.2)
-    - CryptoSwift (~> 1.4.0)
+    - CryptoSwift (~> 1.6.0)
     - PromiseKit (~> 6.15.3)
-    - secp256k1.c (~> 0.1)
+    - secp256k1.swift
     - Starscream (~> 4.0.4)
 
 DEPENDENCIES:
@@ -40,7 +40,7 @@ SPEC REPOS:
     - PromiseKit
     - Quick
     - ReachabilitySwift
-    - secp256k1.c
+    - secp256k1.swift
     - Starscream
     - SwiftProtobuf
 
@@ -55,21 +55,21 @@ CHECKOUT OPTIONS:
     :commit: 57df3cdf1f5f071a3fcdea5eb6834f08f280eff2
     :git: https://github.com/ArcBlock/apollo-ios.git
   web3swift:
-    :commit: 2e4740ebf4cdfc90b1b4b0e044ba7ba9b9a14f7a
+    :commit: 32a64efa2edfffab647d8cb503206d8889f8f4df
     :git: https://github.com/ArcBlock/web3swift.git
 
 SPEC CHECKSUMS:
   Apollo: 62d6b51db171203eee046596c7097cf3015e48e1
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
-  CryptoSwift: 0bc800a7e6a24c4fc9ebeab97d44b0d5f73a78bd
+  CryptoSwift: 562f8eceb40e80796fffc668b0cad9313284cfa6
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  secp256k1.c: db47b726585d80f027423682eb369729e61b3b20
+  secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
-  web3swift: a47f8f9cffae54d87dae7bc7359816fa3b485bc5
+  web3swift: 0e004984752645a0ed24736dcd5817a213f489bc
 
 PODFILE CHECKSUM: 2653e2d1665cd8bb24092b4926c12a97706ac7e6
 
