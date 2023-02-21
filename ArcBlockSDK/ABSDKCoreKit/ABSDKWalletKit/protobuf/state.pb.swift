@@ -760,6 +760,11 @@ public struct Ocap_RollupState {
     set {_uniqueStorage()._tokenAddress = newValue}
   }
 
+  public var vaultAddress: String {
+    get {return _storage._vaultAddress}
+    set {_uniqueStorage()._vaultAddress = newValue}
+  }
+
   /// FUTURE: how to support main token on foreign chain: such as ETH and BNB
   public var contractAddress: String {
     get {return _storage._contractAddress}
@@ -978,6 +983,17 @@ public struct Ocap_RollupState {
     set {_uniqueStorage()._migrateHistory = newValue}
   }
 
+  /// Added since v1.18.32
+  public var closed: Bool {
+    get {return _storage._closed}
+    set {_uniqueStorage()._closed = newValue}
+  }
+
+  public var vaultHistory: [String] {
+    get {return _storage._vaultHistory}
+    set {_uniqueStorage()._vaultHistory = newValue}
+  }
+
   public var context: Ocap_StateContext {
     get {return _storage._context ?? Ocap_StateContext()}
     set {_uniqueStorage()._context = newValue}
@@ -1088,6 +1104,12 @@ public struct Ocap_RollupBlock {
   public var minReward: String {
     get {return _storage._minReward}
     set {_uniqueStorage()._minReward = newValue}
+  }
+
+  /// Added since v1.18.32
+  public var governance: Bool {
+    get {return _storage._governance}
+    set {_uniqueStorage()._governance = newValue}
   }
 
   public var context: Ocap_StateContext {
@@ -1242,9 +1264,13 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      if let v = _storage._balance {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._balance {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-      }
+      } }()
       if !_storage._nonce.isEmpty {
         try visitor.visitSingularStringField(value: _storage._nonce, fieldNumber: 2)
       }
@@ -1257,21 +1283,21 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       if !_storage._pk.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._pk, fieldNumber: 5)
       }
-      if let v = _storage._type {
+      try { if let v = _storage._type {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-      }
+      } }()
       if !_storage._moniker.isEmpty {
         try visitor.visitSingularStringField(value: _storage._moniker, fieldNumber: 7)
       }
-      if let v = _storage._context {
+      try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-      }
+      } }()
       if !_storage._issuer.isEmpty {
         try visitor.visitSingularStringField(value: _storage._issuer, fieldNumber: 9)
       }
-      if let v = _storage._gasBalance {
+      try { if let v = _storage._gasBalance {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-      }
+      } }()
       if !_storage._migratedTo.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._migratedTo, fieldNumber: 13)
       }
@@ -1284,9 +1310,9 @@ extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       if !_storage._tokens.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._tokens, fieldNumber: 21)
       }
-      if let v = _storage._data {
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1414,6 +1440,10 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
       }
@@ -1432,30 +1462,30 @@ extension Ocap_AssetState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if _storage._ttl != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._ttl, fieldNumber: 6)
       }
-      if let v = _storage._consumedTime {
+      try { if let v = _storage._consumedTime {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-      }
+      } }()
       if !_storage._issuer.isEmpty {
         try visitor.visitSingularStringField(value: _storage._issuer, fieldNumber: 8)
       }
       if !_storage._parent.isEmpty {
         try visitor.visitSingularStringField(value: _storage._parent, fieldNumber: 9)
       }
-      if let v = _storage._endpoint {
+      try { if let v = _storage._endpoint {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-      }
-      if let v = _storage._display {
+      } }()
+      try { if let v = _storage._display {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-      }
+      } }()
       if !_storage._tags.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._tags, fieldNumber: 12)
       }
-      if let v = _storage._context {
+      try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
-      }
-      if let v = _storage._data {
+      } }()
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1566,36 +1596,40 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
       }
-      if let v = _storage._consensus {
+      try { if let v = _storage._consensus {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-      }
+      } }()
       if !_storage._tasks.isEmpty {
         try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt64,Ocap_UpgradeTasks>.self, value: _storage._tasks, fieldNumber: 3)
       }
       if !_storage._version.isEmpty {
         try visitor.visitSingularStringField(value: _storage._version, fieldNumber: 4)
       }
-      if let v = _storage._token {
+      try { if let v = _storage._token {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-      }
-      if let v = _storage._txConfig {
+      } }()
+      try { if let v = _storage._txConfig {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-      }
-      if let v = _storage._upgradeInfo {
+      } }()
+      try { if let v = _storage._upgradeInfo {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-      }
+      } }()
       if !_storage._accountConfig.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._accountConfig, fieldNumber: 8)
       }
-      if let v = _storage._vaults {
+      try { if let v = _storage._vaults {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-      }
-      if let v = _storage._data {
+      } }()
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 2047)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1719,6 +1753,10 @@ extension Ocap_DelegateOpState: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.rule.isEmpty {
       try visitor.visitSingularStringField(value: self.rule, fieldNumber: 1)
     }
@@ -1728,12 +1766,12 @@ extension Ocap_DelegateOpState: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if self.numTxsDelta != 0 {
       try visitor.visitSingularUInt64Field(value: self.numTxsDelta, fieldNumber: 3)
     }
-    if let v = self._balance {
+    try { if let v = self._balance {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    if let v = self._balanceDelta {
+    } }()
+    try { if let v = self._balanceDelta {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1773,18 +1811,22 @@ extension Ocap_DelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
     if !self.ops.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Ocap_DelegateOpState>.self, value: self.ops, fieldNumber: 2)
     }
-    if let v = self._context {
+    try { if let v = self._context {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
-    }
-    if let v = self._data {
+    } }()
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1884,6 +1926,10 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
       }
@@ -1911,15 +1957,15 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._totalSupply.isEmpty {
         try visitor.visitSingularStringField(value: _storage._totalSupply, fieldNumber: 9)
       }
-      if let v = _storage._foreignToken {
+      try { if let v = _storage._foreignToken {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-      }
-      if let v = _storage._context {
+      } }()
+      try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-      }
-      if let v = _storage._data {
+      } }()
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2056,6 +2102,10 @@ extension Ocap_AssetFactoryState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
       }
@@ -2077,36 +2127,36 @@ extension Ocap_AssetFactoryState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       if !_storage._trustedIssuers.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._trustedIssuers, fieldNumber: 7)
       }
-      if let v = _storage._input {
+      try { if let v = _storage._input {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-      }
-      if let v = _storage._output {
+      } }()
+      try { if let v = _storage._output {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-      }
+      } }()
       if !_storage._hooks.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._hooks, fieldNumber: 10)
       }
-      if let v = _storage._data {
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-      }
-      if let v = _storage._context {
+      } }()
+      try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
-      }
-      if let v = _storage._balance {
+      } }()
+      try { if let v = _storage._balance {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-      }
+      } }()
       if !_storage._tokens.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._tokens, fieldNumber: 14)
       }
       if _storage._numMinted != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._numMinted, fieldNumber: 15)
       }
-      if let v = _storage._display {
+      try { if let v = _storage._display {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-      }
-      if let v = _storage._lastSettlement {
+      } }()
+      try { if let v = _storage._lastSettlement {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2232,6 +2282,10 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
       }
@@ -2265,12 +2319,12 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._slashers.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._slashers, fieldNumber: 11)
       }
-      if let v = _storage._context {
+      try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
-      }
-      if let v = _storage._data {
+      } }()
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2307,6 +2361,7 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .standard(proto: "token_address"),
+    3: .standard(proto: "vault_address"),
     4: .standard(proto: "contract_address"),
     5: .standard(proto: "seed_validators"),
     6: .same(proto: "validators"),
@@ -2342,13 +2397,16 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     38: .standard(proto: "publish_waiting_period"),
     39: .standard(proto: "publish_slash_rate"),
     40: .standard(proto: "migrate_history"),
-    42: .same(proto: "context"),
+    41: .same(proto: "closed"),
+    42: .standard(proto: "vault_history"),
+    43: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
 
   fileprivate class _StorageClass {
     var _address: String = String()
     var _tokenAddress: String = String()
+    var _vaultAddress: String = String()
     var _contractAddress: String = String()
     var _seedValidators: [Ocap_RollupValidator] = []
     var _validators: [Ocap_RollupValidator] = []
@@ -2384,6 +2442,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     var _publishWaitingPeriod: UInt32 = 0
     var _publishSlashRate: UInt32 = 0
     var _migrateHistory: [String] = []
+    var _closed: Bool = false
+    var _vaultHistory: [String] = []
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -2394,6 +2454,7 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     init(copying source: _StorageClass) {
       _address = source._address
       _tokenAddress = source._tokenAddress
+      _vaultAddress = source._vaultAddress
       _contractAddress = source._contractAddress
       _seedValidators = source._seedValidators
       _validators = source._validators
@@ -2429,6 +2490,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       _publishWaitingPeriod = source._publishWaitingPeriod
       _publishSlashRate = source._publishSlashRate
       _migrateHistory = source._migrateHistory
+      _closed = source._closed
+      _vaultHistory = source._vaultHistory
       _context = source._context
       _data = source._data
     }
@@ -2451,6 +2514,7 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         switch fieldNumber {
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._tokenAddress) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._vaultAddress) }()
         case 4: try { try decoder.decodeSingularStringField(value: &_storage._contractAddress) }()
         case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._seedValidators) }()
         case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._validators) }()
@@ -2486,7 +2550,9 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         case 38: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishWaitingPeriod) }()
         case 39: try { try decoder.decodeSingularUInt32Field(value: &_storage._publishSlashRate) }()
         case 40: try { try decoder.decodeRepeatedStringField(value: &_storage._migrateHistory) }()
-        case 42: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
+        case 41: try { try decoder.decodeSingularBoolField(value: &_storage._closed) }()
+        case 42: try { try decoder.decodeRepeatedStringField(value: &_storage._vaultHistory) }()
+        case 43: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -2496,11 +2562,18 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
       }
       if !_storage._tokenAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._tokenAddress, fieldNumber: 2)
+      }
+      if !_storage._vaultAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._vaultAddress, fieldNumber: 3)
       }
       if !_storage._contractAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._contractAddress, fieldNumber: 4)
@@ -2562,9 +2635,9 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if !_storage._blockHash.isEmpty {
         try visitor.visitSingularStringField(value: _storage._blockHash, fieldNumber: 25)
       }
-      if let v = _storage._tokenInfo {
+      try { if let v = _storage._tokenInfo {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 26)
-      }
+      } }()
       if !_storage._totalDepositAmount.isEmpty {
         try visitor.visitSingularStringField(value: _storage._totalDepositAmount, fieldNumber: 27)
       }
@@ -2592,9 +2665,9 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if _storage._paused != false {
         try visitor.visitSingularBoolField(value: _storage._paused, fieldNumber: 35)
       }
-      if let v = _storage._foreignToken {
+      try { if let v = _storage._foreignToken {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 36)
-      }
+      } }()
       if _storage._leaveWaitingPeriod != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._leaveWaitingPeriod, fieldNumber: 37)
       }
@@ -2607,12 +2680,18 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if !_storage._migrateHistory.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._migrateHistory, fieldNumber: 40)
       }
-      if let v = _storage._context {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 42)
+      if _storage._closed != false {
+        try visitor.visitSingularBoolField(value: _storage._closed, fieldNumber: 41)
       }
-      if let v = _storage._data {
+      if !_storage._vaultHistory.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._vaultHistory, fieldNumber: 42)
+      }
+      try { if let v = _storage._context {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 43)
+      } }()
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2624,6 +2703,7 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         let rhs_storage = _args.1
         if _storage._address != rhs_storage._address {return false}
         if _storage._tokenAddress != rhs_storage._tokenAddress {return false}
+        if _storage._vaultAddress != rhs_storage._vaultAddress {return false}
         if _storage._contractAddress != rhs_storage._contractAddress {return false}
         if _storage._seedValidators != rhs_storage._seedValidators {return false}
         if _storage._validators != rhs_storage._validators {return false}
@@ -2659,6 +2739,8 @@ extension Ocap_RollupState: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         if _storage._publishWaitingPeriod != rhs_storage._publishWaitingPeriod {return false}
         if _storage._publishSlashRate != rhs_storage._publishSlashRate {return false}
         if _storage._migrateHistory != rhs_storage._migrateHistory {return false}
+        if _storage._closed != rhs_storage._closed {return false}
+        if _storage._vaultHistory != rhs_storage._vaultHistory {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
@@ -2686,6 +2768,7 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     12: .standard(proto: "burned_amount"),
     13: .standard(proto: "reward_amount"),
     14: .standard(proto: "min_reward"),
+    15: .same(proto: "governance"),
     30: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
@@ -2704,6 +2787,7 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     var _burnedAmount: String = String()
     var _rewardAmount: String = String()
     var _minReward: String = String()
+    var _governance: Bool = false
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -2725,6 +2809,7 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       _burnedAmount = source._burnedAmount
       _rewardAmount = source._rewardAmount
       _minReward = source._minReward
+      _governance = source._governance
       _context = source._context
       _data = source._data
     }
@@ -2758,6 +2843,7 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         case 12: try { try decoder.decodeSingularStringField(value: &_storage._burnedAmount) }()
         case 13: try { try decoder.decodeSingularStringField(value: &_storage._rewardAmount) }()
         case 14: try { try decoder.decodeSingularStringField(value: &_storage._minReward) }()
+        case 15: try { try decoder.decodeSingularBoolField(value: &_storage._governance) }()
         case 30: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -2768,6 +2854,10 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._hash.isEmpty {
         try visitor.visitSingularStringField(value: _storage._hash, fieldNumber: 1)
       }
@@ -2807,12 +2897,15 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if !_storage._minReward.isEmpty {
         try visitor.visitSingularStringField(value: _storage._minReward, fieldNumber: 14)
       }
-      if let v = _storage._context {
+      if _storage._governance != false {
+        try visitor.visitSingularBoolField(value: _storage._governance, fieldNumber: 15)
+      }
+      try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
-      }
-      if let v = _storage._data {
+      } }()
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2835,6 +2928,7 @@ extension Ocap_RollupBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         if _storage._burnedAmount != rhs_storage._burnedAmount {return false}
         if _storage._rewardAmount != rhs_storage._rewardAmount {return false}
         if _storage._minReward != rhs_storage._minReward {return false}
+        if _storage._governance != rhs_storage._governance {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
@@ -2869,15 +2963,19 @@ extension Ocap_EvidenceState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.hash.isEmpty {
       try visitor.visitSingularStringField(value: self.hash, fieldNumber: 1)
     }
     if !self.data.isEmpty {
       try visitor.visitSingularStringField(value: self.data, fieldNumber: 2)
     }
-    if let v = self._context {
+    try { if let v = self._context {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 

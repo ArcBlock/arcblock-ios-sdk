@@ -147,6 +147,7 @@ message ResponseListAssets {
 message RequestListTopAccounts {
   Page paging = 1;
   string tokenAddress = 2;
+  TimeFilter time_filter = 3;
 }
 message ResponseListTopAccounts {
   StatusCode code = 1;
@@ -187,6 +188,7 @@ message ResponseGetTokenState {
 message RequestListTokens {
   Page paging = 1;
   string issuer_address = 2;
+  TimeFilter time_filter = 3;
 }
 message ResponseListTokens {
   StatusCode code = 1;
@@ -203,6 +205,7 @@ message RequestListFactories {
   Page paging = 1;
   string owner_address = 2;
   repeated string address_list = 3;
+  TimeFilter time_filter = 4;
 }
 message ResponseListFactories {
   StatusCode code = 1;
@@ -247,6 +250,7 @@ message RequestListRollups {
   Page paging = 1;
   string token_address = 2;
   string foreign_token_address = 3; // same as erc20_token_address
+  TimeFilter time_filter = 4;
 }
 message ResponseListRollups {
   StatusCode code = 1;
