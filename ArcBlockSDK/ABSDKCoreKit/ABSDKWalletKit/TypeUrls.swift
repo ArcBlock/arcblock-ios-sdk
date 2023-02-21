@@ -124,6 +124,8 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_RevokeStakeTx(serializedData: value)
         case .claimStake:
             return try? Ocap_ClaimStakeTx(serializedData: value)
+        case .consumeAsset:
+            return try? Ocap_ConsumeAssetTx(serializedData: value)
         default:
             return nil
         }
