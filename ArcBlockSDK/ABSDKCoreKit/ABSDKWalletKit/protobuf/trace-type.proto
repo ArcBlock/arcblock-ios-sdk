@@ -230,6 +230,7 @@ message IndexedStakeState {
 message IndexedRollupState {
   string address = 1;
   string token_address = 2;
+  string vault_address = 3;
   string contract_address = 4;
   repeated RollupValidator seed_validators = 5;
   repeated RollupValidator validators = 6;
@@ -280,6 +281,10 @@ message IndexedRollupState {
   // Added since v1.13.71
   repeated string migrate_history = 42;
 
+  // Added since v1.18.32
+  bool closed = 43;
+  repeated string vault_history = 44;
+
   google.protobuf.Any data = 50;
 }
 
@@ -304,6 +309,9 @@ message IndexedRollupBlock {
   string minted_amount = 13;
   string burned_amount = 14;
   string reward_amount = 15;
+
+  // Added since v1.18.32
+  bool governance = 16;
 
   IndexedTokenInput token_info = 18;
 
