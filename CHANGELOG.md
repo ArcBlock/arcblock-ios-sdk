@@ -1,3 +1,10 @@
+## 0.11.40 (February 21, 2023)
+  - fix pem keypair
+  - Merge pull request #115 from ArcBlock/update-protobuf
+  - Merge pull request #114 from ArcBlock/update-protobuf
+  - Merge pull request #113 from ArcBlock/base58-fix
+  - Merge pull request #112 from ArcBlock/base58-fix
+
 ## 0.11.39 (February 21, 2023)
 
 
