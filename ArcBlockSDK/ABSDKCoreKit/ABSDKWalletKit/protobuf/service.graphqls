@@ -72,7 +72,7 @@ type RootQueryType {
     proposer: String
     timeFilter: TimeFilterInput
   ): ResponseListBlocks
-  listTopAccounts(paging: PageInput, tokenAddress: String): ResponseListTopAccounts
+  listTopAccounts(paging: PageInput, tokenAddress: String, timeFilter: TimeFilterInput): ResponseListTopAccounts
   listTransactions(
     addressFilter: AddressFilterInput
     paging: PageInput
@@ -89,8 +89,13 @@ type RootQueryType {
   ): ResponseListTransactions
 
   # since 1.7.0
-  listTokens(issuerAddress: String, paging: PageInput): ResponseListTokens
-  listFactories(ownerAddress: String, addressList: [String], paging: PageInput): ResponseListFactories
+  listTokens(issuerAddress: String, paging: PageInput, timeFilter: TimeFilterInput): ResponseListTokens
+  listFactories(
+    ownerAddress: String
+    addressList: [String]
+    paging: PageInput
+    timeFilter: TimeFilterInput
+  ): ResponseListFactories
 
   # since v1.8.3
   getAccountTokens(address: String, token: String): ResponseGetAccountTokens
@@ -110,6 +115,7 @@ type RootQueryType {
     tokenAddress: String
     erc20TokenAddress: String
     foreignTokenAddress: String
+    timeFilter: TimeFilterInput
   ): ResponseListRollups
   getRollupBlock(hash: String, height: String, rollupAddress: String): ResponseGetRollupBlock
   listRollupBlocks(
@@ -119,6 +125,7 @@ type RootQueryType {
     proposer: String
     validatorFilter: ValidatorFilterInput
     txFilter: TxFilterInput
+    timeFilter: TimeFilterInput
   ): ResponseListRollupBlocks
   listRollupValidators(paging: PageInput, rollupAddress: String): ResponseListRollupValidators
 

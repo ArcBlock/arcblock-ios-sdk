@@ -218,6 +218,7 @@ message RollupState {
   // FUTURE: how to handle 1 ocap token mapping to multiple foreign chains
   string address = 1;
   string token_address = 2;
+  string vault_address = 3;
 
   // FUTURE: how to support main token on foreign chain: such as ETH and BNB
   string contract_address = 4;
@@ -305,7 +306,11 @@ message RollupState {
   // contract history from earliest to latest
   repeated string migrate_history = 40;
 
-  StateContext context = 42;
+  // Added since v1.18.32
+  bool closed = 41;
+  repeated string vault_history = 42;
+
+  StateContext context = 43;
   google.protobuf.Any data = 50;
 }
 
@@ -359,6 +364,9 @@ message RollupBlock {
   // The total reward from all txs should not be less than the min reward
   // And the publisher share of total reward should cover the block sync cost
   string min_reward = 14;
+
+  // Added since v1.18.32
+  bool governance = 15;
 
   StateContext context = 30;
   google.protobuf.Any data = 50;
