@@ -71,21 +71,10 @@ class RSAUtilsSpec: QuickSpec {
         describe("RSAUtilsSpec") {
             it("works", closure: {
                 
-//                if let keyPair = RSAUtils.generateKeyPair(1024) {
-//                    print(keyPair.sk.base64EncodedString())
-//                    print(RSAUtils.exportASN1Pk(data: keyPair.pk))
-//
-//                    let encryted = RSAUtils.encryptString2B58Btc(abcdOriginString, publicKey: keyPair.pk.base64EncodedString())
-//                    let decrypted = RSAUtils.decryptB58Btc2String(encryted!, privateKey: keyPair.sk.base64EncodedString())
-//                    print(encryted)
-//                    print(decrypted)
-//
-//                    let emptyEncryted = RSAUtils.encryptString2B58Btc(emptyOriginString, publicKey: keyPair.pk.base64EncodedString())
-//                    let emptyDecrypted = RSAUtils.decryptB58Btc2String(emptyEncryted!, privateKey: keyPair.sk.base64EncodedString())
-//                    print(emptyEncryted)
-//                    print(emptyDecrypted)
-//
-//                }
+                if let keyPair = RSAUtils.generateKeyPair() {
+                    print(RSAUtils.exportPemB58BtcASN1Pk(data: keyPair.pk))
+                    print(RSAUtils.exportPemB58BtcSk(data: keyPair.sk))
+                }
                 
                 let encryted = RSAUtils.encryptString2B58Btc(abcdOriginString, publicKey: androidPKPEM)
                 let decrypted = RSAUtils.decryptB58Btc2String(encryted!, privateKey: androidSKPEM)

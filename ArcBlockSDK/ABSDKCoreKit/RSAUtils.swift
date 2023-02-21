@@ -25,7 +25,7 @@ import Foundation
 import Security
 
 public class RSAUtils {
-    public static func generateKeyPair(_ length: Int) -> (pk: Data, sk: Data)? {
+    public static func generateKeyPair() -> (pk: Data, sk: Data)? {
         let attributes: [CFString: Any] = [
            kSecAttrType: kSecAttrKeyTypeRSA,
            kSecAttrKeySizeInBits: 1024,
@@ -53,8 +53,26 @@ public class RSAUtils {
         return (cfPKData as Data , cfSKData as Data)
     }
     /// ASN1处理过的Pk,可以导出给其他平台使用
-    public static func exportASN1Pk(data: Data) -> String {
-        return RSAPublicKeyExporter().toSubjectPublicKeyInfo(data).base64EncodedString()
+    public static func exportASN1Pk(data: Data) -> Data {
+        return RSAPublicKeyExporter().toSubjectPublicKeyInfo(data)
+    }
+    
+    public static func exportPemB58BtcASN1Pk(data: Data) -> String? {
+        let base64Pk = RSAPublicKeyExporter().toSubjectPublicKeyInfo(data).base64EncodedString(options: .lineLength64Characters)
+        let pemBase64Pk = "-----BEGIN PUBLIC KEY-----" + "\n" + base64Pk + "\n" + "-----END PUBLIC KEY-----"
+        guard let pemData = pemBase64Pk.data(using: .utf8) else {
+            return nil
+        }
+        return pemData.multibaseEncodedString(inBase: .base58BTC)
+    }
+    
+    public static func exportPemB58BtcSk(data: Data) -> String? {
+        let base64Sk = data.base64EncodedString(options: .lineLength64Characters)
+        let pemBase64Pk = "-----BEGIN PRIVATE KEY-----" + "\n" + base64Sk + "\n" + "-----END PRIVATE KEY-----"
+        guard let pemData = pemBase64Pk.data(using: .utf8) else {
+            return nil
+        }
+        return pemData.multibaseEncodedString(inBase: .base58BTC)
     }
     
     public static func decodeSecKeyFromBase64(encodedKey: String, isPrivate: Bool = false, keySzie: Int = 1024) -> SecKey? {
