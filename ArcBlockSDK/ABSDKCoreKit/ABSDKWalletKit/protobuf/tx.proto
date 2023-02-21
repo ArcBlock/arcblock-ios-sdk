@@ -259,6 +259,11 @@ message UpdateAssetTx {
   // ocap won't update data into state if app is interested in this tx.
   google.protobuf.Any data = 15;
 }
+message ConsumeAssetTx {
+  string address = 1;
+  // ocap won't update data into state if app is interested in this tx.
+  google.protobuf.Any data = 15;
+}
 // An asset factory is readonly by default
 // Thus any change to the factory result a new factory
 message CreateFactoryTx {
@@ -368,8 +373,11 @@ message SlashStakeTx {
 message CreateRollupTx {
   string address = 1;
 
-  // can be token or factory adddress
+  // can be token or factory address
   string token_address = 2;
+
+  // vault to store locked token
+  string vault_address = 3;
 
   // string erc20_token_address = 3; // deprecated
 
@@ -526,6 +534,9 @@ message CreateRollupBlockTx {
   // Added since v1.13.61
   string min_reward = 11;
 
+  // Added since v1.18.32
+  bool governance = 12;
+
   google.protobuf.Any data = 50;
 }
 message ClaimBlockRewardTx {
@@ -551,21 +562,21 @@ message ResumeRollupTx {
   string rollup = 1;
   google.protobuf.Any data = 10;
 }
-message MigrateRollupContractTx {
+message CloseRollupTx {
   string rollup = 1;
-  string to = 2;
+  string message = 2;
   google.protobuf.Any data = 10;
 }
-message MigrateRollupTokenTx {
+message MigrateRollupTx {
   string rollup = 1;
-  string from = 2;       // from which contract
-  string to = 3;         // to which contract, must points to latest contract address
-  TokenInput token = 4;           // token address and amount to migrate
+  string to = 2;
+  string type = 3;
+  string message = 4;
   google.protobuf.Any data = 10;
 }
 message DepositTokenV2Tx {
   // Should be a multi-signed transaction
-  // Submited by user, signed by rollup validators
+  // Submitted by user, signed by rollup validators
   TokenInput token = 1;           // token address and amount to deposit
   string to = 2;                  // address to deposit token to, should be same as tx.from
   string proposer = 3;            // the rollup validator that pays for this deposit, other validators exists in tx.signatures
@@ -603,6 +614,7 @@ message ItxStub {
     // Assets
     CreateAssetTx create_asset = 5;
     UpdateAssetTx update_asset = 6;
+    ConsumeAssetTx consume_asset = 7;
 
     // Trade
     ExchangeTx exchange = 10;
@@ -638,7 +650,7 @@ message ItxStub {
     ClaimBlockRewardTx claim_block_reward = 55;
     PauseRollupTx pause_rollup = 56;
     ResumeRollupTx resume_rollup = 57;
-    MigrateRollupContractTx migrate_rollup_contract = 58;
-    MigrateRollupTokenTx migrate_rollup_token = 59;
+    MigrateRollupTx migrate_rollup = 58;
+    CloseRollupTx close_rollup = 60;
   }
 }

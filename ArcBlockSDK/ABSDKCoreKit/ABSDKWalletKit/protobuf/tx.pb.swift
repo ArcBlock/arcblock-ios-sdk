@@ -764,6 +764,30 @@ public struct Ocap_UpdateAssetTx {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
+public struct Ocap_ConsumeAssetTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  /// ocap won't update data into state if app is interested in this tx.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
 /// An asset factory is readonly by default
 /// Thus any change to the factory result a new factory
 public struct Ocap_CreateFactoryTx {
@@ -1019,10 +1043,16 @@ public struct Ocap_CreateRollupTx {
     set {_uniqueStorage()._address = newValue}
   }
 
-  /// can be token or factory adddress
+  /// can be token or factory address
   public var tokenAddress: String {
     get {return _storage._tokenAddress}
     set {_uniqueStorage()._tokenAddress = newValue}
+  }
+
+  /// vault to store locked token
+  public var vaultAddress: String {
+    get {return _storage._vaultAddress}
+    set {_uniqueStorage()._vaultAddress = newValue}
   }
 
   public var contractAddress: String {
@@ -1457,6 +1487,9 @@ public struct Ocap_CreateRollupBlockTx {
   /// Added since v1.13.61
   public var minReward: String = String()
 
+  /// Added since v1.18.32
+  public var governance: Bool = false
+
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_data = newValue}
@@ -1562,14 +1595,14 @@ public struct Ocap_ResumeRollupTx {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
-public struct Ocap_MigrateRollupContractTx {
+public struct Ocap_CloseRollupTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var rollup: String = String()
 
-  public var to: String = String()
+  public var message: String = String()
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -1587,28 +1620,18 @@ public struct Ocap_MigrateRollupContractTx {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
-public struct Ocap_MigrateRollupTokenTx {
+public struct Ocap_MigrateRollupTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var rollup: String = String()
 
-  /// from which contract
-  public var from: String = String()
-
-  /// to which contract, must points to latest contract address
   public var to: String = String()
 
-  /// token address and amount to migrate
-  public var token: Ocap_TokenInput {
-    get {return _token ?? Ocap_TokenInput()}
-    set {_token = newValue}
-  }
-  /// Returns true if `token` has been explicitly set.
-  public var hasToken: Bool {return self._token != nil}
-  /// Clears the value of `token`. Subsequent reads from it will return its default value.
-  public mutating func clearToken() {self._token = nil}
+  public var type: String = String()
+
+  public var message: String = String()
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -1623,7 +1646,6 @@ public struct Ocap_MigrateRollupTokenTx {
 
   public init() {}
 
-  fileprivate var _token: Ocap_TokenInput? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
@@ -1633,7 +1655,7 @@ public struct Ocap_DepositTokenV2Tx {
   // methods supported on all messages.
 
   /// Should be a multi-signed transaction
-  /// Submited by user, signed by rollup validators
+  /// Submitted by user, signed by rollup validators
   public var token: Ocap_TokenInput {
     get {return _token ?? Ocap_TokenInput()}
     set {_token = newValue}
@@ -1787,6 +1809,14 @@ public struct Ocap_ItxStub {
       return Ocap_UpdateAssetTx()
     }
     set {value = .updateAsset(newValue)}
+  }
+
+  public var consumeAsset: Ocap_ConsumeAssetTx {
+    get {
+      if case .consumeAsset(let v)? = value {return v}
+      return Ocap_ConsumeAssetTx()
+    }
+    set {value = .consumeAsset(newValue)}
   }
 
   /// Trade
@@ -1994,20 +2024,20 @@ public struct Ocap_ItxStub {
     set {value = .resumeRollup(newValue)}
   }
 
-  public var migrateRollupContract: Ocap_MigrateRollupContractTx {
+  public var migrateRollup: Ocap_MigrateRollupTx {
     get {
-      if case .migrateRollupContract(let v)? = value {return v}
-      return Ocap_MigrateRollupContractTx()
+      if case .migrateRollup(let v)? = value {return v}
+      return Ocap_MigrateRollupTx()
     }
-    set {value = .migrateRollupContract(newValue)}
+    set {value = .migrateRollup(newValue)}
   }
 
-  public var migrateRollupToken: Ocap_MigrateRollupTokenTx {
+  public var closeRollup: Ocap_CloseRollupTx {
     get {
-      if case .migrateRollupToken(let v)? = value {return v}
-      return Ocap_MigrateRollupTokenTx()
+      if case .closeRollup(let v)? = value {return v}
+      return Ocap_CloseRollupTx()
     }
-    set {value = .migrateRollupToken(newValue)}
+    set {value = .closeRollup(newValue)}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -2021,6 +2051,7 @@ public struct Ocap_ItxStub {
     /// Assets
     case createAsset(Ocap_CreateAssetTx)
     case updateAsset(Ocap_UpdateAssetTx)
+    case consumeAsset(Ocap_ConsumeAssetTx)
     /// Trade
     case exchange(Ocap_ExchangeTx)
     case exchangeV2(Ocap_ExchangeV2Tx)
@@ -2051,8 +2082,8 @@ public struct Ocap_ItxStub {
     case claimBlockReward(Ocap_ClaimBlockRewardTx)
     case pauseRollup(Ocap_PauseRollupTx)
     case resumeRollup(Ocap_ResumeRollupTx)
-    case migrateRollupContract(Ocap_MigrateRollupContractTx)
-    case migrateRollupToken(Ocap_MigrateRollupTokenTx)
+    case migrateRollup(Ocap_MigrateRollupTx)
+    case closeRollup(Ocap_CloseRollupTx)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Ocap_ItxStub.OneOf_Value, rhs: Ocap_ItxStub.OneOf_Value) -> Bool {
@@ -2082,6 +2113,10 @@ public struct Ocap_ItxStub {
       }()
       case (.updateAsset, .updateAsset): return {
         guard case .updateAsset(let l) = lhs, case .updateAsset(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.consumeAsset, .consumeAsset): return {
+        guard case .consumeAsset(let l) = lhs, case .consumeAsset(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.exchange, .exchange): return {
@@ -2184,12 +2219,12 @@ public struct Ocap_ItxStub {
         guard case .resumeRollup(let l) = lhs, case .resumeRollup(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.migrateRollupContract, .migrateRollupContract): return {
-        guard case .migrateRollupContract(let l) = lhs, case .migrateRollupContract(let r) = rhs else { preconditionFailure() }
+      case (.migrateRollup, .migrateRollup): return {
+        guard case .migrateRollup(let l) = lhs, case .migrateRollup(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.migrateRollupToken, .migrateRollupToken): return {
-        guard case .migrateRollupToken(let l) = lhs, case .migrateRollupToken(let r) = rhs else { preconditionFailure() }
+      case (.closeRollup, .closeRollup): return {
+        guard case .closeRollup(let l) = lhs, case .closeRollup(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -2230,18 +2265,22 @@ extension Ocap_AccountMigrateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.pk.isEmpty {
       try visitor.visitSingularBytesField(value: self.pk, fieldNumber: 1)
     }
-    if let v = self._type {
+    try { if let v = self._type {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 3)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2278,15 +2317,19 @@ extension Ocap_DeclareTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.moniker.isEmpty {
       try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 1)
     }
     if !self.issuer.isEmpty {
       try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 2)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2324,6 +2367,10 @@ extension Ocap_DelegateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
@@ -2333,9 +2380,9 @@ extension Ocap_DelegateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if !self.ops.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.ops, fieldNumber: 3)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2412,6 +2459,10 @@ extension Ocap_RevokeDelegateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
@@ -2421,9 +2472,9 @@ extension Ocap_RevokeDelegateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.typeUrls.isEmpty {
       try visitor.visitRepeatedStringField(value: self.typeUrls, fieldNumber: 3)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2502,9 +2553,13 @@ extension Ocap_ExchangeInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._value {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._value {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.assets.isEmpty {
       try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 2)
     }
@@ -2542,9 +2597,13 @@ extension Ocap_ExchangeInfoV2: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._value {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._value {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.assets.isEmpty {
       try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 2)
     }
@@ -2590,21 +2649,25 @@ extension Ocap_ExchangeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.to.isEmpty {
       try visitor.visitSingularStringField(value: self.to, fieldNumber: 1)
     }
-    if let v = self._sender {
+    try { if let v = self._sender {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if let v = self._receiver {
+    } }()
+    try { if let v = self._receiver {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }
-    if let v = self._expiredAt {
+    } }()
+    try { if let v = self._expiredAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    if let v = self._data {
+    } }()
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2646,21 +2709,25 @@ extension Ocap_ExchangeV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.to.isEmpty {
       try visitor.visitSingularStringField(value: self.to, fieldNumber: 1)
     }
-    if let v = self._sender {
+    try { if let v = self._sender {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if let v = self._receiver {
+    } }()
+    try { if let v = self._receiver {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }
-    if let v = self._expiredAt {
+    } }()
+    try { if let v = self._expiredAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    if let v = self._data {
+    } }()
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2700,18 +2767,22 @@ extension Ocap_TransferTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.to.isEmpty {
       try visitor.visitSingularStringField(value: self.to, fieldNumber: 1)
     }
-    if let v = self._value {
+    try { if let v = self._value {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     if !self.assets.isEmpty {
       try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 3)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2752,21 +2823,25 @@ extension Ocap_TransferV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.to.isEmpty {
       try visitor.visitSingularStringField(value: self.to, fieldNumber: 1)
     }
-    if let v = self._value {
+    try { if let v = self._value {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     if !self.assets.isEmpty {
       try visitor.visitRepeatedStringField(value: self.assets, fieldNumber: 3)
     }
     if !self.tokens.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.tokens, fieldNumber: 4)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2804,15 +2879,19 @@ extension Ocap_TransferV3Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.inputs.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.inputs, fieldNumber: 1)
     }
     if !self.outputs.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.outputs, fieldNumber: 2)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2864,6 +2943,10 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.name.isEmpty {
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
     }
@@ -2891,12 +2974,12 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.initialSupply.isEmpty {
       try visitor.visitSingularStringField(value: self.initialSupply, fieldNumber: 9)
     }
-    if let v = self._foreignToken {
+    try { if let v = self._foreignToken {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-    }
-    if let v = self._data {
+    } }()
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2996,6 +3079,10 @@ extension Ocap_AcquireAssetV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.factory.isEmpty {
       try visitor.visitSingularStringField(value: self.factory, fieldNumber: 1)
     }
@@ -3008,12 +3095,12 @@ extension Ocap_AcquireAssetV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.variables.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.variables, fieldNumber: 4)
     }
-    if let v = self._issuer {
+    try { if let v = self._issuer {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }
-    if let v = self._data {
+    } }()
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3060,6 +3147,10 @@ extension Ocap_AcquireAssetV3Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.factory.isEmpty {
       try visitor.visitSingularStringField(value: self.factory, fieldNumber: 1)
     }
@@ -3075,12 +3166,12 @@ extension Ocap_AcquireAssetV3Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.variables.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.variables, fieldNumber: 5)
     }
-    if let v = self._issuer {
+    try { if let v = self._issuer {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    }
-    if let v = self._data {
+    } }()
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3126,6 +3217,10 @@ extension Ocap_MintAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.factory.isEmpty {
       try visitor.visitSingularStringField(value: self.factory, fieldNumber: 1)
     }
@@ -3141,9 +3236,9 @@ extension Ocap_MintAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.owner.isEmpty {
       try visitor.visitSingularStringField(value: self.owner, fieldNumber: 5)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3198,12 +3293,16 @@ extension Ocap_CreateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.moniker.isEmpty {
       try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 1)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     if self.readonly != false {
       try visitor.visitSingularBoolField(value: self.readonly, fieldNumber: 3)
     }
@@ -3222,12 +3321,12 @@ extension Ocap_CreateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.issuer.isEmpty {
       try visitor.visitSingularStringField(value: self.issuer, fieldNumber: 8)
     }
-    if let v = self._endpoint {
+    try { if let v = self._endpoint {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-    }
-    if let v = self._display {
+    } }()
+    try { if let v = self._display {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    }
+    } }()
     if !self.tags.isEmpty {
       try visitor.visitRepeatedStringField(value: self.tags, fieldNumber: 11)
     }
@@ -3274,21 +3373,67 @@ extension Ocap_UpdateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
     if !self.moniker.isEmpty {
       try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 2)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Ocap_UpdateAssetTx, rhs: Ocap_UpdateAssetTx) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs.moniker != rhs.moniker {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ConsumeAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ConsumeAssetTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    15: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ConsumeAssetTx, rhs: Ocap_ConsumeAssetTx) -> Bool {
+    if lhs.address != rhs.address {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3377,6 +3522,10 @@ extension Ocap_CreateFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._name.isEmpty {
         try visitor.visitSingularStringField(value: _storage._name, fieldNumber: 1)
       }
@@ -3392,24 +3541,24 @@ extension Ocap_CreateFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       if !_storage._trustedIssuers.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._trustedIssuers, fieldNumber: 5)
       }
-      if let v = _storage._input {
+      try { if let v = _storage._input {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-      }
-      if let v = _storage._output {
+      } }()
+      try { if let v = _storage._output {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-      }
+      } }()
       if !_storage._hooks.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._hooks, fieldNumber: 8)
       }
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 9)
       }
-      if let v = _storage._display {
+      try { if let v = _storage._display {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-      }
-      if let v = _storage._data {
+      } }()
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3472,6 +3621,10 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
@@ -3493,9 +3646,9 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.slashers.isEmpty {
       try visitor.visitRepeatedStringField(value: self.slashers, fieldNumber: 7)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3536,15 +3689,19 @@ extension Ocap_RevokeStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
     if !self.outputs.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.outputs, fieldNumber: 2)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3580,15 +3737,19 @@ extension Ocap_ClaimStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
-    if let v = self._evidence {
+    try { if let v = self._evidence {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
-    if let v = self._data {
+    } }()
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3626,6 +3787,10 @@ extension Ocap_SlashStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
@@ -3635,9 +3800,9 @@ extension Ocap_SlashStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if !self.message.isEmpty {
       try visitor.visitSingularStringField(value: self.message, fieldNumber: 3)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3656,6 +3821,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .standard(proto: "token_address"),
+    3: .standard(proto: "vault_address"),
     4: .standard(proto: "contract_address"),
     5: .standard(proto: "seed_validators"),
     6: .standard(proto: "min_stake_amount"),
@@ -3690,6 +3856,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   fileprivate class _StorageClass {
     var _address: String = String()
     var _tokenAddress: String = String()
+    var _vaultAddress: String = String()
     var _contractAddress: String = String()
     var _seedValidators: [Ocap_RollupValidator] = []
     var _minStakeAmount: String = String()
@@ -3727,6 +3894,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     init(copying source: _StorageClass) {
       _address = source._address
       _tokenAddress = source._tokenAddress
+      _vaultAddress = source._vaultAddress
       _contractAddress = source._contractAddress
       _seedValidators = source._seedValidators
       _minStakeAmount = source._minStakeAmount
@@ -3776,6 +3944,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         switch fieldNumber {
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._tokenAddress) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._vaultAddress) }()
         case 4: try { try decoder.decodeSingularStringField(value: &_storage._contractAddress) }()
         case 5: try { try decoder.decodeRepeatedMessageField(value: &_storage._seedValidators) }()
         case 6: try { try decoder.decodeSingularStringField(value: &_storage._minStakeAmount) }()
@@ -3813,11 +3982,18 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._address.isEmpty {
         try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
       }
       if !_storage._tokenAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._tokenAddress, fieldNumber: 2)
+      }
+      if !_storage._vaultAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._vaultAddress, fieldNumber: 3)
       }
       if !_storage._contractAddress.isEmpty {
         try visitor.visitSingularStringField(value: _storage._contractAddress, fieldNumber: 4)
@@ -3903,9 +4079,9 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if _storage._publishSlashRate != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._publishSlashRate, fieldNumber: 31)
       }
-      if let v = _storage._data {
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3917,6 +4093,7 @@ extension Ocap_CreateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         let rhs_storage = _args.1
         if _storage._address != rhs_storage._address {return false}
         if _storage._tokenAddress != rhs_storage._tokenAddress {return false}
+        if _storage._vaultAddress != rhs_storage._vaultAddress {return false}
         if _storage._contractAddress != rhs_storage._contractAddress {return false}
         if _storage._seedValidators != rhs_storage._seedValidators {return false}
         if _storage._minStakeAmount != rhs_storage._minStakeAmount {return false}
@@ -4093,6 +4270,10 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._minStakeAmount.isEmpty {
         try visitor.visitSingularStringField(value: _storage._minStakeAmount, fieldNumber: 1)
       }
@@ -4165,9 +4346,9 @@ extension Ocap_UpdateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       if !_storage._rollup.isEmpty {
         try visitor.visitSingularStringField(value: _storage._rollup, fieldNumber: 40)
       }
-      if let v = _storage._data {
+      try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -4238,21 +4419,25 @@ extension Ocap_JoinRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
     }
     if !self.endpoint.isEmpty {
       try visitor.visitSingularStringField(value: self.endpoint, fieldNumber: 2)
     }
-    if let v = self._evidence {
+    try { if let v = self._evidence {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }
+    } }()
     if !self.signatures.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.signatures, fieldNumber: 4)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4292,18 +4477,22 @@ extension Ocap_LeaveRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
     }
-    if let v = self._evidence {
+    try { if let v = self._evidence {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     if !self.signatures.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.signatures, fieldNumber: 3)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4330,6 +4519,7 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
     8: .same(proto: "signatures"),
     10: .same(proto: "rollup"),
     11: .standard(proto: "min_reward"),
+    12: .same(proto: "governance"),
     50: .same(proto: "data"),
   ]
 
@@ -4349,6 +4539,7 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 8: try { try decoder.decodeRepeatedMessageField(value: &self.signatures) }()
       case 10: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
       case 11: try { try decoder.decodeSingularStringField(value: &self.minReward) }()
+      case 12: try { try decoder.decodeSingularBoolField(value: &self.governance) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -4356,6 +4547,10 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.hash.isEmpty {
       try visitor.visitSingularStringField(value: self.hash, fieldNumber: 1)
     }
@@ -4386,9 +4581,12 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if !self.minReward.isEmpty {
       try visitor.visitSingularStringField(value: self.minReward, fieldNumber: 11)
     }
-    if let v = self._data {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    if self.governance != false {
+      try visitor.visitSingularBoolField(value: self.governance, fieldNumber: 12)
     }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4403,6 +4601,7 @@ extension Ocap_CreateRollupBlockTx: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.signatures != rhs.signatures {return false}
     if lhs.rollup != rhs.rollup {return false}
     if lhs.minReward != rhs.minReward {return false}
+    if lhs.governance != rhs.governance {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -4438,6 +4637,10 @@ extension Ocap_ClaimBlockRewardTx: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
     }
@@ -4447,15 +4650,15 @@ extension Ocap_ClaimBlockRewardTx: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.blockHash.isEmpty {
       try visitor.visitSingularStringField(value: self.blockHash, fieldNumber: 3)
     }
-    if let v = self._evidence {
+    try { if let v = self._evidence {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
+    } }()
     if !self.publisher.isEmpty {
       try visitor.visitSingularStringField(value: self.publisher, fieldNumber: 5)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4492,12 +4695,16 @@ extension Ocap_PauseRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4530,12 +4737,16 @@ extension Ocap_ResumeRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4547,11 +4758,61 @@ extension Ocap_ResumeRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Ocap_MigrateRollupContractTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".MigrateRollupContractTx"
+extension Ocap_CloseRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CloseRollupTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "rollup"),
+    2: .same(proto: "message"),
+    10: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.message) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.rollup.isEmpty {
+      try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
+    }
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 2)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_CloseRollupTx, rhs: Ocap_CloseRollupTx) -> Bool {
+    if lhs.rollup != rhs.rollup {return false}
+    if lhs.message != rhs.message {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_MigrateRollupTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MigrateRollupTx"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "rollup"),
     2: .same(proto: "to"),
+    3: .same(proto: "type"),
+    4: .same(proto: "message"),
     10: .same(proto: "data"),
   ]
 
@@ -4563,6 +4824,8 @@ extension Ocap_MigrateRollupContractTx: SwiftProtobuf.Message, SwiftProtobuf._Me
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.to) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.message) }()
       case 10: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -4570,77 +4833,33 @@ extension Ocap_MigrateRollupContractTx: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
     }
     if !self.to.isEmpty {
       try visitor.visitSingularStringField(value: self.to, fieldNumber: 2)
     }
-    if let v = self._data {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 3)
     }
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 4)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Ocap_MigrateRollupContractTx, rhs: Ocap_MigrateRollupContractTx) -> Bool {
+  public static func ==(lhs: Ocap_MigrateRollupTx, rhs: Ocap_MigrateRollupTx) -> Bool {
     if lhs.rollup != rhs.rollup {return false}
     if lhs.to != rhs.to {return false}
-    if lhs._data != rhs._data {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_MigrateRollupTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".MigrateRollupTokenTx"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "rollup"),
-    2: .same(proto: "from"),
-    3: .same(proto: "to"),
-    4: .same(proto: "token"),
-    10: .same(proto: "data"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.rollup) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.from) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.to) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._token) }()
-      case 10: try { try decoder.decodeSingularMessageField(value: &self._data) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.rollup.isEmpty {
-      try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 1)
-    }
-    if !self.from.isEmpty {
-      try visitor.visitSingularStringField(value: self.from, fieldNumber: 2)
-    }
-    if !self.to.isEmpty {
-      try visitor.visitSingularStringField(value: self.to, fieldNumber: 3)
-    }
-    if let v = self._token {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
-    if let v = self._data {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_MigrateRollupTokenTx, rhs: Ocap_MigrateRollupTokenTx) -> Bool {
-    if lhs.rollup != rhs.rollup {return false}
-    if lhs.from != rhs.from {return false}
-    if lhs.to != rhs.to {return false}
-    if lhs._token != rhs._token {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs.message != rhs.message {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -4678,27 +4897,31 @@ extension Ocap_DepositTokenV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._token {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._token {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.to.isEmpty {
       try visitor.visitSingularStringField(value: self.to, fieldNumber: 2)
     }
     if !self.proposer.isEmpty {
       try visitor.visitSingularStringField(value: self.proposer, fieldNumber: 3)
     }
-    if let v = self._evidence {
+    try { if let v = self._evidence {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }
+    } }()
     if !self.rollup.isEmpty {
       try visitor.visitSingularStringField(value: self.rollup, fieldNumber: 5)
     }
     if !self.actualFee.isEmpty {
       try visitor.visitSingularStringField(value: self.actualFee, fieldNumber: 7)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4746,9 +4969,13 @@ extension Ocap_WithdrawTokenV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._token {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._token {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.to.isEmpty {
       try visitor.visitSingularStringField(value: self.to, fieldNumber: 2)
     }
@@ -4764,9 +4991,9 @@ extension Ocap_WithdrawTokenV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.actualFee.isEmpty {
       try visitor.visitSingularStringField(value: self.actualFee, fieldNumber: 7)
     }
-    if let v = self._data {
+    try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4792,6 +5019,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     4: .standard(proto: "account_migrate"),
     5: .standard(proto: "create_asset"),
     6: .standard(proto: "update_asset"),
+    7: .standard(proto: "consume_asset"),
     10: .same(proto: "exchange"),
     12: .standard(proto: "exchange_v2"),
     13: .same(proto: "transfer"),
@@ -4817,8 +5045,8 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     55: .standard(proto: "claim_block_reward"),
     56: .standard(proto: "pause_rollup"),
     57: .standard(proto: "resume_rollup"),
-    58: .standard(proto: "migrate_rollup_contract"),
-    59: .standard(proto: "migrate_rollup_token"),
+    58: .standard(proto: "migrate_rollup"),
+    60: .standard(proto: "close_rollup"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4829,300 +5057,445 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       switch fieldNumber {
       case 1: try {
         var v: Ocap_DeclareTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .declare(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .declare(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .declare(v)
+        }
       }()
       case 2: try {
         var v: Ocap_DelegateTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .delegate(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .delegate(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .delegate(v)
+        }
       }()
       case 3: try {
         var v: Ocap_RevokeDelegateTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .revokeDelegate(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .revokeDelegate(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .revokeDelegate(v)
+        }
       }()
       case 4: try {
         var v: Ocap_AccountMigrateTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .accountMigrate(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .accountMigrate(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .accountMigrate(v)
+        }
       }()
       case 5: try {
         var v: Ocap_CreateAssetTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .createAsset(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createAsset(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .createAsset(v)
+        }
       }()
       case 6: try {
         var v: Ocap_UpdateAssetTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .updateAsset(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .updateAsset(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .updateAsset(v)
+        }
+      }()
+      case 7: try {
+        var v: Ocap_ConsumeAssetTx?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .consumeAsset(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .consumeAsset(v)
+        }
       }()
       case 10: try {
         var v: Ocap_ExchangeTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .exchange(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .exchange(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .exchange(v)
+        }
       }()
       case 12: try {
         var v: Ocap_ExchangeV2Tx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .exchangeV2(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .exchangeV2(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .exchangeV2(v)
+        }
       }()
       case 13: try {
         var v: Ocap_TransferTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .transfer(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .transfer(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .transfer(v)
+        }
       }()
       case 14: try {
         var v: Ocap_TransferV2Tx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .transferV2(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .transferV2(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .transferV2(v)
+        }
       }()
       case 15: try {
         var v: Ocap_TransferV3Tx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .transferV3(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .transferV3(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .transferV3(v)
+        }
       }()
       case 20: try {
         var v: Ocap_CreateTokenTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .createToken(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createToken(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .createToken(v)
+        }
       }()
       case 21: try {
         var v: Ocap_DepositTokenV2Tx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .depositToken(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .depositToken(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .depositToken(v)
+        }
       }()
       case 22: try {
         var v: Ocap_WithdrawTokenV2Tx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .withdrawToken(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .withdrawToken(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .withdrawToken(v)
+        }
       }()
       case 30: try {
         var v: Ocap_CreateFactoryTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .createFactory(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createFactory(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .createFactory(v)
+        }
       }()
       case 31: try {
         var v: Ocap_AcquireAssetV2Tx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .acquireAssetV2(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .acquireAssetV2(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .acquireAssetV2(v)
+        }
       }()
       case 32: try {
         var v: Ocap_AcquireAssetV3Tx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .acquireAssetV3(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .acquireAssetV3(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .acquireAssetV3(v)
+        }
       }()
       case 33: try {
         var v: Ocap_MintAssetTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .mintAsset(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .mintAsset(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .mintAsset(v)
+        }
       }()
       case 40: try {
         var v: Ocap_StakeTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .stake(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .stake(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .stake(v)
+        }
       }()
       case 41: try {
         var v: Ocap_RevokeStakeTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .revokeStake(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .revokeStake(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .revokeStake(v)
+        }
       }()
       case 42: try {
         var v: Ocap_ClaimStakeTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .claimStake(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .claimStake(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .claimStake(v)
+        }
       }()
       case 43: try {
         var v: Ocap_SlashStakeTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .slashStake(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .slashStake(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .slashStake(v)
+        }
       }()
       case 49: try {
         var v: Ocap_UpgradeNodeTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .upgradeNode(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .upgradeNode(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .upgradeNode(v)
+        }
       }()
       case 50: try {
         var v: Ocap_CreateRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .createRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createRollup(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .createRollup(v)
+        }
       }()
       case 51: try {
         var v: Ocap_UpdateRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .updateRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .updateRollup(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .updateRollup(v)
+        }
       }()
       case 52: try {
         var v: Ocap_JoinRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .joinRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .joinRollup(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .joinRollup(v)
+        }
       }()
       case 53: try {
         var v: Ocap_LeaveRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .leaveRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .leaveRollup(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .leaveRollup(v)
+        }
       }()
       case 54: try {
         var v: Ocap_CreateRollupBlockTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .createRollupBlock(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .createRollupBlock(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .createRollupBlock(v)
+        }
       }()
       case 55: try {
         var v: Ocap_ClaimBlockRewardTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .claimBlockReward(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .claimBlockReward(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .claimBlockReward(v)
+        }
       }()
       case 56: try {
         var v: Ocap_PauseRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .pauseRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .pauseRollup(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .pauseRollup(v)
+        }
       }()
       case 57: try {
         var v: Ocap_ResumeRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
+          hadOneofValue = true
           if case .resumeRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .resumeRollup(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .resumeRollup(v)
+        }
       }()
       case 58: try {
-        var v: Ocap_MigrateRollupContractTx?
+        var v: Ocap_MigrateRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .migrateRollupContract(let m) = current {v = m}
+          hadOneofValue = true
+          if case .migrateRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .migrateRollupContract(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .migrateRollup(v)
+        }
       }()
-      case 59: try {
-        var v: Ocap_MigrateRollupTokenTx?
+      case 60: try {
+        var v: Ocap_CloseRollupTx?
+        var hadOneofValue = false
         if let current = self.value {
-          try decoder.handleConflictingOneOf()
-          if case .migrateRollupToken(let m) = current {v = m}
+          hadOneofValue = true
+          if case .closeRollup(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {self.value = .migrateRollupToken(v)}
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .closeRollup(v)
+        }
       }()
       default: break
       }
@@ -5131,8 +5504,9 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     switch self.value {
     case .declare?: try {
       guard case .declare(let v)? = self.value else { preconditionFailure() }
@@ -5157,6 +5531,10 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     case .updateAsset?: try {
       guard case .updateAsset(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
+    case .consumeAsset?: try {
+      guard case .consumeAsset(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
     case .exchange?: try {
       guard case .exchange(let v)? = self.value else { preconditionFailure() }
@@ -5258,13 +5636,13 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       guard case .resumeRollup(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 57)
     }()
-    case .migrateRollupContract?: try {
-      guard case .migrateRollupContract(let v)? = self.value else { preconditionFailure() }
+    case .migrateRollup?: try {
+      guard case .migrateRollup(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 58)
     }()
-    case .migrateRollupToken?: try {
-      guard case .migrateRollupToken(let v)? = self.value else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 59)
+    case .closeRollup?: try {
+      guard case .closeRollup(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 60)
     }()
     case nil: break
     }
