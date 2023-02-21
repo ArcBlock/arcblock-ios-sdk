@@ -1,3 +1,8 @@
+## 0.11.38 (February 21, 2023)
+  - update protobuf
+  - Merge pull request #113 from ArcBlock/base58-fix
+  - Merge pull request #112 from ArcBlock/base58-fix
+
 ## 0.11.37 (February 15, 2023)
   - support aes & rsa
   - Merge pull request #112 from ArcBlock/base58-fix
