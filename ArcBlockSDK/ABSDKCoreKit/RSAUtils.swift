@@ -75,8 +75,8 @@ public class RSAUtils {
         return pemData.multibaseEncodedString(inBase: .base58BTC)
     }
     
-    public static func decodeSecKeyFromBase64(encodedKey: String, isPrivate: Bool = false, keySzie: Int = 1024) -> SecKey? {
-        var keyString = encodedKey
+    public static func decodeSecKeyFromBase64(base64EncodedKey: String, isPrivate: Bool = false, keySzie: Int = 1024) -> SecKey? {
+        var keyString = base64EncodedKey
         keyString = keyString.replacingOccurrences(of:"-----BEGIN PUBLIC KEY-----", with: "")
         keyString = keyString.replacingOccurrences(of:"-----END PUBLIC KEY-----", with: "")
         keyString = keyString.replacingOccurrences(of:"-----BEGIN PRIVATE KEY-----", with: "")
@@ -158,8 +158,8 @@ public class RSAUtils {
     }
     
     /// 加密Data到Data
-    public static func encryptData2Data(_ data: Data, publicKey: String) -> Data? {
-        guard let pk = decodeSecKeyFromBase64(encodedKey: publicKey) else {
+    public static func encryptData2Data(_ data: Data, base64PK: String) -> Data? {
+        guard let pk = decodeSecKeyFromBase64(base64EncodedKey: base64PK) else {
             return nil
         }
 
@@ -168,22 +168,45 @@ public class RSAUtils {
         return encrypted as? Data
     }
     /// 加密String到Data
-    public static func encryptString2Data(_ string: String, publicKey: String) -> Data? {
+    public static func encryptString2Data(_ string: String, base64PK: String) -> Data? {
         guard let data = string.data(using: .utf8) else {
             return nil
         }
-        return encryptData2Data(data, publicKey: publicKey)
+        return encryptData2Data(data, base64PK: base64PK)
     }
     /// 加密String到Base58Btc
-    public static func encryptString2B58Btc(_ string: String, publicKey: String) -> String? {
-        guard let encrypted = encryptString2Data(string, publicKey: publicKey) else {
+    public static func encryptString2B58Btc(_ string: String, base64PK: String) -> String? {
+        guard let encrypted = encryptString2Data(string, base64PK: base64PK) else {
             return nil
         }
         return encrypted.multibaseEncodedString(inBase: .base58BTC)
     }
     /// 解密Data到Data
-    public static func decryptData2Data(_ data: Data, privateKey: String) -> Data? {
-        guard let sk = decodeSecKeyFromBase64(encodedKey: privateKey, isPrivate: true) else {
+    public static func decryptData2Data(_ data: Data, base64SK: String) -> Data? {
+        guard let sk = decodeSecKeyFromBase64(base64EncodedKey: base64SK, isPrivate: true) else {
+            return nil
+        }
+        
+        var error: Unmanaged<CFError>?
+        let encrypted = SecKeyCreateDecryptedData(sk, .rsaEncryptionOAEPSHA1, data as CFData, &error)
+        return encrypted as? Data
+    }
+    /// 解密Data到Data
+    public static func decryptData2Data(_ data: Data, skData: Data) -> Data? {
+        var keyData = skData
+        if let stripedData = stripKeyHeader(keyData: skData) {
+            keyData = stripedData
+        }
+        
+        let attributes: [CFString: Any] = [
+            kSecAttrKeyClass: kSecAttrKeyClassPrivate,
+            kSecAttrKeyType: kSecAttrKeyTypeRSA,
+            kSecAttrKeySizeInBits: 1024,
+            kSecReturnPersistentRef: true
+        ]
+        var skError: Unmanaged<CFError>?
+        guard let sk = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, &skError) else {
+            print("Error: Problem in SecKeyCreateWithData()")
             return nil
         }
         
@@ -192,15 +215,15 @@ public class RSAUtils {
         return encrypted as? Data
     }
     /// 解密Base58Btc到Data
-    public static func decryptB58Btc2Data(_ string: String, privateKey: String) -> Data? {
-        guard let data = Data(multibaseEncoded: string) else {
+    public static func decryptB58Btc2Data(_ b58btcString: String, base64SK: String) -> Data? {
+        guard let data = Data(multibaseEncoded: b58btcString) else {
             return nil
         }
-        return decryptData2Data(data, privateKey: privateKey)
+        return decryptData2Data(data, base64SK: base64SK)
     }
     /// 解密Base58Btc到String
-    public static func decryptB58Btc2String(_ string: String, privateKey: String) -> String? {
-        guard let data = Data(multibaseEncoded: string), let decrypted = decryptData2Data(data, privateKey: privateKey) else {
+    public static func decryptB58Btc2String(_ b58btcString: String, base64SK: String) -> String? {
+        guard let data = Data(multibaseEncoded: b58btcString), let decrypted = decryptData2Data(data, base64SK: base64SK) else {
             return nil
         }
         return String(data: decrypted, encoding: .utf8)

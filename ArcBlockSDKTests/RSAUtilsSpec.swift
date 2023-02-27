@@ -76,34 +76,34 @@ class RSAUtilsSpec: QuickSpec {
                     print(RSAUtils.exportPemB58BtcSk(data: keyPair.sk))
                 }
                 
-                let encryted = RSAUtils.encryptString2B58Btc(abcdOriginString, publicKey: androidPKPEM)
-                let decrypted = RSAUtils.decryptB58Btc2String(encryted!, privateKey: androidSKPEM)
+                let encryted = RSAUtils.encryptString2B58Btc(abcdOriginString, base64PK: androidPKPEM)
+                let decrypted = RSAUtils.decryptB58Btc2String(encryted!, base64SK: androidSKPEM)
                 print(encryted)
                 print(decrypted)
                 
-                let emptyEncryted = RSAUtils.encryptString2B58Btc(emptyOriginString, publicKey: androidPKPEM)
-                let emptyDecrypted = RSAUtils.decryptB58Btc2String(emptyEncryted!, privateKey: androidSKPEM)
+                let emptyEncryted = RSAUtils.encryptString2B58Btc(emptyOriginString, base64PK: androidPKPEM)
+                let emptyDecrypted = RSAUtils.decryptB58Btc2String(emptyEncryted!, base64SK: androidSKPEM)
                 print(emptyEncryted)
                 print(emptyDecrypted)
-                guard let webPKABCDEncrypted = RSAUtils.encryptString2B58Btc(abcdOriginString, publicKey: webPKPEM) else {
+                guard let webPKABCDEncrypted = RSAUtils.encryptString2B58Btc(abcdOriginString, base64PK: webPKPEM) else {
                     XCTFail("WebPkEncrypt Failed!")
                     return
                 }
-                expect(RSAUtils.decryptB58Btc2String(webPKABCDEncrypted, privateKey: webSKPEM)).to(equal(abcdOriginString))
+                expect(RSAUtils.decryptB58Btc2String(webPKABCDEncrypted, base64SK: webSKPEM)).to(equal(abcdOriginString))
 
-                guard let webPKEmptyEncrypted = RSAUtils.encryptString2B58Btc(emptyOriginString, publicKey: webPKPEM) else {
+                guard let webPKEmptyEncrypted = RSAUtils.encryptString2B58Btc(emptyOriginString, base64PK: webPKPEM) else {
                     XCTFail("WebPkEmptyEncrypt Failed!")
                     return
                 }
-                expect(RSAUtils.decryptB58Btc2String(webPKEmptyEncrypted, privateKey: webSKPEM)).to(equal(emptyOriginString))
+                expect(RSAUtils.decryptB58Btc2String(webPKEmptyEncrypted, base64SK: webSKPEM)).to(equal(emptyOriginString))
 
-                guard let webSKABCDDecrypted = RSAUtils.decryptB58Btc2String(webABCDEncrypted, privateKey: webSKPEM) else {
+                guard let webSKABCDDecrypted = RSAUtils.decryptB58Btc2String(webABCDEncrypted, base64SK: webSKPEM) else {
                     XCTFail("WebSkDecrypt Failed!")
                     return
                 }
                 expect(webSKABCDDecrypted).to(equal(abcdOriginString))
 
-                guard let webSKEmptyDecrypted = RSAUtils.decryptB58Btc2String(webEmptyEncrypted, privateKey: webSKPEM) else {
+                guard let webSKEmptyDecrypted = RSAUtils.decryptB58Btc2String(webEmptyEncrypted, base64SK: webSKPEM) else {
                     XCTFail("WebSkDecrypt Failed!")
                     return
                 }
