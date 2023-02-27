@@ -215,15 +215,15 @@ public class RSAUtils {
         return encrypted as? Data
     }
     /// 解密Base58Btc到Data
-    public static func decryptB58Btc2Data(_ string: String, base64SK: String) -> Data? {
-        guard let data = Data(multibaseEncoded: string) else {
+    public static func decryptB58Btc2Data(_ b58btcString: String, base64SK: String) -> Data? {
+        guard let data = Data(multibaseEncoded: b58btcString) else {
             return nil
         }
         return decryptData2Data(data, base64SK: base64SK)
     }
     /// 解密Base58Btc到String
-    public static func decryptB58Btc2String(_ string: String, base64SK: String) -> String? {
-        guard let data = Data(multibaseEncoded: string), let decrypted = decryptData2Data(data, base64SK: base64SK) else {
+    public static func decryptB58Btc2String(_ b58btcString: String, base64SK: String) -> String? {
+        guard let data = Data(multibaseEncoded: b58btcString), let decrypted = decryptData2Data(data, base64SK: base64SK) else {
             return nil
         }
         return String(data: decrypted, encoding: .utf8)
