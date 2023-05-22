@@ -38,6 +38,7 @@
 		1AA3D931273A6A7F00BA3CA0 /* InputSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA3D930273A6A7F00BA3CA0 /* InputSpec.swift */; };
 		1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */; };
 		1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */; };
+		1AE19A902A1B414300DE22E3 /* JWTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE19A8F2A1B414300DE22E3 /* JWTHelper.swift */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
 		2704478F231E0052007BA477 /* MCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704472F231E0052007BA477 /* MCrypto.swift */; };
 		27044790231E0052007BA477 /* DidHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044730231E0052007BA477 /* DidHelper.swift */; };
@@ -135,6 +136,7 @@
 		1AB8FBAA26F0BF5C00557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AE19A8F2A1B414300DE22E3 /* JWTHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTHelper.swift; sourceTree = "<group>"; };
 		270446F9231DECD6007BA477 /* web3swift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = web3swift.framework; path = Carthage/Build/iOS/web3swift.framework; sourceTree = "<group>"; };
 		270446FB231DECF6007BA477 /* secp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = secp256k1.framework; path = Carthage/Build/iOS/secp256k1.framework; sourceTree = "<group>"; };
 		270446FD231DED19007BA477 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				27044730231E0052007BA477 /* DidHelper.swift */,
 				56712D8629962D2D00690043 /* AESUtils.swift */,
 				56712D8A2999D56B00690043 /* RSAUtils.swift */,
+				1AE19A8F2A1B414300DE22E3 /* JWTHelper.swift */,
 				27044749231E0052007BA477 /* ABSDKWalletKit */,
 				27044728231E0052007BA477 /* ed25519swift */,
 				2704473C231E0052007BA477 /* Multibase */,
@@ -604,6 +607,7 @@
 				1A76D28D273CD96B00C4B25B /* tx.pb.swift in Sources */,
 				1A76D282273CD96B00C4B25B /* tx.proto in Sources */,
 				1A76D281273CD96B00C4B25B /* rpc.pb.swift in Sources */,
+				1AE19A902A1B414300DE22E3 /* JWTHelper.swift in Sources */,
 				2704479F231E0052007BA477 /* Base58String.swift in Sources */,
 				2704479E231E0052007BA477 /* Multibase.swift in Sources */,
 				1A89D11C28263F1B00BF8313 /* ed25519_open.swift in Sources */,

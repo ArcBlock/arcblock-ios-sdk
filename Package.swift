@@ -28,6 +28,10 @@ let package = Package(
             url: "https://github.com/ashleymills/Reachability.swift.git", 
             exact: "5.1.0"
             ),
+        .package(
+            url: "https://github.com/auth0/JWTDecode.swift.git",
+            from: "2.2.0"
+            ),                
         // .package(
         //     url: "https://github.com/Quick/Nimble.git", 
         //     from: "1.0.0"
@@ -41,7 +45,7 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "web3swift", package: "web3swift"),
-                .product(name: "web3swift", package: "web3swift"),
+                .product(name: "JWTDecode", package: "JWTDecode.swift"),
                 ],
             path: "ArcBlockSDK",
             linkerSettings: [
