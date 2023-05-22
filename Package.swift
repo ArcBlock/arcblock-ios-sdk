@@ -19,7 +19,7 @@ let package = Package(
         .package(url: "https://github.com/ArcBlock/apollo-ios.git", branch: "master"),
         .package(
             url: "https://github.com/apple/swift-protobuf.git",
-            "1.19.0" ..< "2.0.0"
+            exact: "1.17.0"
             ),            
         .package(
             url: "https://github.com/attaswift/BigInt.git",
@@ -43,6 +43,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ArcBlockSDK",
+            dependencies: [.product(name: "SwiftProtobuf", package: "swift-protobuf")],
             path: "ArcBlockSDK"
             // sources: ["ArcBlockSDK"]
             ),
