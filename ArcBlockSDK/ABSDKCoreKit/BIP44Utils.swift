@@ -22,6 +22,7 @@
 
 import CryptoSwift
 import web3swift
+import Foundation
 
 public class BIP44Utils {
     public static func generateRecoveryCode() -> String {

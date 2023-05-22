@@ -45,7 +45,9 @@ let package = Package(
                 ],
             path: "ArcBlockSDK",
             linkerSettings: [
-                .linkedFramework("UIKit", .when(platforms: [.iOS]))
+                .linkedFramework("Foundation"),
+                .linkedFramework("UIKit", .when(platforms: [.iOS, .tvOS])),
+                .linkedFramework("AppKit", .when(platforms: [.macOS]))
                 ]
             // sources: ["ArcBlockSDK"]
             ),
