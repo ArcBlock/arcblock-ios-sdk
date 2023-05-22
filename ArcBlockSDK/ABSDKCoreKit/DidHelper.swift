@@ -343,7 +343,7 @@ public class DidHelper {
 
     public static func pkToAddress(didType: DidType, publicKey: Data) -> String? {
         if didType.keyType == .ethereum {
-            let address = Utilities.publicToAddress(publicKey)            
+            let address = Utilities.publicToAddress(publicKey)
             return address?.address
         } else if let hash = didType.hashType.hash(data: publicKey) {
             return hashToAddress(didType: didType, hash: hash)

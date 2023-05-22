@@ -80,10 +80,10 @@ public enum JWTCheckError: Error, Equatable {
 }
 
 public class JWTHelper {
-    static let DEFAULT_JWT_VERSION = "1.0"
-    static let JWT_VERSION_REQUIRE_HASH_BEFORE_SIGN = "1.1.0"
+    public static let DEFAULT_JWT_VERSION = "1.0"
+    public static let JWT_VERSION_REQUIRE_HASH_BEFORE_SIGN = "1.1.0"
     
-    static func signUserInfo(body: [String: Any], did: String, userPrivateKey: Data, version: String?) -> String? {
+    public static func signUserInfo(body: [String: Any], did: String, userPrivateKey: Data, version: String?) -> String? {
         var jwtBody = body
         if let ver = version {
             jwtBody["version"] = ver
@@ -100,13 +100,13 @@ public class JWTHelper {
         return "\(header).\(body).\(signature)"
     }
 
-    static func jwtEncode(jsonObject: [String: Any]) -> String? {
+    public static func jwtEncode(jsonObject: [String: Any]) -> String? {
         let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [])
         let json = jsonData?.base64URLPadEncodedString()
         return json
     }
     
-    static func checkAuthInfo(authInfo: String, appPk: String, agentPk: String?) -> Result<[String: Any], JWTCheckError> {
+    public static func checkAuthInfo(authInfo: String, appPk: String, agentPk: String?) -> Result<[String: Any], JWTCheckError> {
         guard let jwt = try? decode(jwt: authInfo) else {
             return .failure(.invalidJson)
         }
@@ -156,7 +156,7 @@ public class JWTHelper {
         return .success(jwt.body)
     }
     
-    static func checkCert(jwt: JWT, appPk: String, appDid: String) -> Result<Void, JWTCheckError> {
+    public static func checkCert(jwt: JWT, appPk: String, appDid: String) -> Result<Void, JWTCheckError> {
         guard let verifiableClaims = jwt.claim(name: "verifiableClaims").rawValue as? [[String: Any]],
               let cert = verifiableClaims.first else {
             return .failure(.vcEmpty)
@@ -219,7 +219,7 @@ public class JWTHelper {
         return .success(())
     }
 
-    static func composeJWTBody(iss: String) -> [String: Any] {
+    public static func composeJWTBody(iss: String) -> [String: Any] {
         var body = [String: Any]()
         body["iss"] = iss
         let timestamp = Int(Date().timeIntervalSince1970)
