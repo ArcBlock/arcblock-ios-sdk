@@ -79,7 +79,7 @@ public enum JWTCheckError: Error, Equatable {
     }
 }
 
-class JWTHelper {
+public class JWTHelper {
     static let DEFAULT_JWT_VERSION = "1.0"
     static let JWT_VERSION_REQUIRE_HASH_BEFORE_SIGN = "1.1.0"
     
