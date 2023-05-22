@@ -26,6 +26,7 @@ import CryptoKit
 #endif
 import web3swift
 import secp256k1
+import Web3Core
 
 public struct MCrypto {
 
@@ -104,7 +105,7 @@ public struct MCrypto {
         public struct M_SECP256K1 {
             // 有04
             public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
-                return Web3.Utils.privateToPublic(privateKey)
+                return Utilities.privateToPublic(privateKey)
             }
             
             public static func keypair() -> (Data?, Data?) {
@@ -170,7 +171,7 @@ public struct MCrypto {
         public struct ETHEREUM {
             // 没有04 少0x
             public static func privateKeyToPublicKey(privateKey: Data) -> Data? {
-                guard let pkData = Web3.Utils.privateToPublic(privateKey) else {
+                guard let pkData = Utilities.privateToPublic(privateKey) else {
                     return nil
                 }
                 

@@ -24,6 +24,7 @@
 import Foundation
 import BigInt
 import web3swift
+import Web3Core
 
 public extension String {
     
@@ -45,7 +46,7 @@ public extension String {
     
     func isValidDigital(decimals: Int? = 18) -> Bool {
         let isMatch = isMatchRegex(decimals: decimals)
-        let canBeBigUInt = Web3.Utils.parseToBigUInt(self, decimals: decimals ?? 18) != nil
+        let canBeBigUInt = Utilities.parseToBigUInt(self, decimals: decimals ?? 18) != nil
         
         return isMatch && canBeBigUInt
     }
@@ -77,7 +78,7 @@ public extension String {
     }
     
     func toBigUInt(decimals: Int? = 18) -> BigUInt {
-        return Web3.Utils.parseToBigUInt(self, decimals: decimals ?? 18) ?? BigUInt(0)
+        return Utilities.parseToBigUInt(self, decimals: decimals ?? 18) ?? BigUInt(0)
     }
     
     /// 将字符串格式化成余额展示(这里的字符串非BigUInt格式) 如: "12.121234543546" -> 12.121234

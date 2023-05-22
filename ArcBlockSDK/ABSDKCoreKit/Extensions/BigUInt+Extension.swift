@@ -24,6 +24,7 @@
 import Foundation
 import web3swift
 import BigInt
+import Web3Core
 
 public extension BigUInt {
     static var MinFormattingDecimals: Int = 6
@@ -35,7 +36,7 @@ public extension BigUInt {
     func toAmountString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
         // 无法使用min(_,_) ???
         let realDecimals = formattingDecimals > BigUInt.MinFormattingDecimals ? formattingDecimals : BigUInt.MinFormattingDecimals
-        let amountStr = Web3.Utils.formatToPrecision(self, numberDecimals: decimals ?? 18, formattingDecimals: realDecimals, decimalSeparator: ".", fallbackToScientific: false) ?? "0"
+        let amountStr = Utilities.formatToPrecision(self, units: .custom(decimals ?? 18), formattingDecimals: realDecimals, decimalSeparator: ".", fallbackToScientific: false)
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = realDecimals
@@ -49,7 +50,7 @@ public extension BigUInt {
     ///   - formattingDecimals: 保留的小数位 最终取Min(6, formattingDecimals)
     func toSendString(decimals: Int? = 18, formattingDecimals: Int = BigUInt.MinFormattingDecimals) -> String {
         let realDecimals = formattingDecimals > BigUInt.MinFormattingDecimals ? formattingDecimals : BigUInt.MinFormattingDecimals
-        let amountStr = Web3.Utils.formatToPrecision(self, numberDecimals: decimals ?? 18, formattingDecimals: realDecimals, decimalSeparator: ".", fallbackToScientific: false) ?? "0"
+        let amountStr = Utilities.formatToPrecision(self, units: .custom(decimals ?? 18), formattingDecimals: realDecimals, decimalSeparator: ".", fallbackToScientific: false)
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
         formatter.maximumFractionDigits = realDecimals
@@ -65,9 +66,7 @@ public extension BigUInt {
     
     // 转化为展示用的x Gwei
     func toGasPriceInt() -> Int? {
-        if let value = Web3.Utils.formatToEthereumUnits(self, toUnits: .Gwei, decimals: 0) {
-            return Int(value)
-        }
-        return nil
+        let value = Utilities.formatToPrecision(self, units: .gwei, formattingDecimals: 0)
+        return Int(value)
     }
 }

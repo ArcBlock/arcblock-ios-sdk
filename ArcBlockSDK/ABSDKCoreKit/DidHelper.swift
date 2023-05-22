@@ -22,6 +22,7 @@
 
 import Foundation
 import web3swift
+import Web3Core
 
 public enum RoleType: Int8 {
     case account = 0
@@ -306,7 +307,7 @@ public class DidHelper {
         if didType.keyType == .ethereum {
             guard let address = pkToAddress(didType: didType, publicKey: publicKey) else {
                 return nil
-            }
+            }            
             return EthereumAddress.toChecksumAddress(address)
         } else {
             guard let address = pkToAddress(didType: didType, publicKey: publicKey) else {
@@ -342,7 +343,7 @@ public class DidHelper {
 
     public static func pkToAddress(didType: DidType, publicKey: Data) -> String? {
         if didType.keyType == .ethereum {
-            let address = Web3.Utils.publicToAddress(publicKey)
+            let address = Utilities.publicToAddress(publicKey)            
             return address?.address
         } else if let hash = didType.hashType.hash(data: publicKey) {
             return hashToAddress(didType: didType, hash: hash)
