@@ -6,6 +6,9 @@ import PackageDescription
 let package = Package(
     name: "ArcBlockSDK",
     defaultLocalization: "en-US",
+    platforms: [
+        .macOS(.v10_15), .iOS(.v13)
+    ],    
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -20,31 +23,29 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-protobuf.git",
             exact: "1.17.0"
-            ),            
-        .package(
-            url: "https://github.com/attaswift/BigInt.git",
-            "5.3.0" ..< "5.4.0"
-            ),
-        .package(
-            url: "https://github.com/krzyzanowskim/CryptoSwift.git",
-            "1.5.1" ..< "1.6.0"
-            ),            
+            ),                   
         .package(
             url: "https://github.com/ashleymills/Reachability.swift.git", 
             exact: "5.1.0"
             ),
-        .package(
-            url: "https://github.com/Quick/Nimble.git", 
-            from: "1.0.0"
-            ),            
+        // .package(
+        //     url: "https://github.com/Quick/Nimble.git", 
+        //     from: "1.0.0"
+        //     ),            
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ArcBlockSDK",
-            dependencies: [.product(name: "SwiftProtobuf", package: "swift-protobuf")],
-            path: "ArcBlockSDK"
+            dependencies: [
+                .product(name: "SwiftProtobuf", package: "swift-protobuf"),
+                .product(name: "web3swift", package: "web3swift"),
+                ],
+            path: "ArcBlockSDK",
+            linkerSettings: [
+                .linkedFramework("UIKit", .when(platforms: [.iOS]))
+                ]
             // sources: ["ArcBlockSDK"]
             ),
         // .testTarget(
