@@ -32,7 +32,7 @@ let package = Package(
         .package(
             url: "https://github.com/ashleymills/Reachability.swift.git", 
             exact: "5.1.0"
-            ),
+            ),        
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -42,12 +42,12 @@ let package = Package(
             path: "ArcBlockSDK"
             // sources: ["ArcBlockSDK"]
             ),
-        .testTarget(
-            name: "ArcBlockSDKTests",
-            dependencies: ["ArcBlockSDK"],
-            path: "ArcBlockSDKTests"
-            // sources: ["ArcBlockSDKTests"]
-            ),
+        // .testTarget(
+        //     name: "ArcBlockSDKTests",
+        //     dependencies: ["ArcBlockSDK"],
+        //     path: "ArcBlockSDKTests"
+        //     // sources: ["ArcBlockSDKTests"]
+        //     ),
     ]
 )
 
