@@ -22,7 +22,7 @@ let package = Package(
         .package(url: "https://github.com/ArcBlock/apollo-ios.git", branch: "master"),
         .package(
             url: "https://github.com/apple/swift-protobuf.git",
-            exact: "1.17.0"
+            from: "1.19.0"
             ),                   
         .package(
             url: "https://github.com/ashleymills/Reachability.swift.git", 
@@ -40,6 +40,7 @@ let package = Package(
             name: "ArcBlockSDK",
             dependencies: [
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
+                .product(name: "web3swift", package: "web3swift"),
                 .product(name: "web3swift", package: "web3swift"),
                 ],
             path: "ArcBlockSDK",
