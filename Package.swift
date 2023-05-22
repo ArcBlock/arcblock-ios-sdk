@@ -32,7 +32,11 @@ let package = Package(
         .package(
             url: "https://github.com/ashleymills/Reachability.swift.git", 
             exact: "5.1.0"
-            ),        
+            ),
+        .package(
+            url: "https://github.com/Quick/Nimble.git", 
+            from: "1.0.0"
+            ),            
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
