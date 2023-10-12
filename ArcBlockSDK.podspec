@@ -41,7 +41,6 @@ TODO: Add long description of the pod here.
     sc.dependency 'CryptoSwift', '~> 1.6.0'
     sc.dependency 'BigInt', '~> 5.2.0'
     sc.dependency 'SwiftPhoenixClient'
-    sc.dependency 'web3swift', '~> 2.3.0'
 
     # sc.weak_framework='CryptoKit'
   end
