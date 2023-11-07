@@ -1,3 +1,6 @@
+## 0.11.42 (November 07, 2023)
+  - fix depends
+
 ## 0.11.41 (February 27, 2023)
   - fix encrypt define
   - Merge pull request #116 from ArcBlock/update-protobuf
