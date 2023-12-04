@@ -89,6 +89,33 @@ public struct Ocap_DeclareTx {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
+/// if rules are empty, signature for this type_url is entirely delegated
+public struct Ocap_DelegateOp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var typeURL: String = String()
+
+  public var rules: [String] = []
+
+  /// since v1.18.96
+  public var limit: Ocap_DelegateLimit {
+    get {return _limit ?? Ocap_DelegateLimit()}
+    set {_limit = newValue}
+  }
+  /// Returns true if `limit` has been explicitly set.
+  public var hasLimit: Bool {return self._limit != nil}
+  /// Clears the value of `limit`. Subsequent reads from it will return its default value.
+  public mutating func clearLimit() {self._limit = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _limit: Ocap_DelegateLimit? = nil
+}
+
 public struct Ocap_DelegateTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -117,24 +144,6 @@ public struct Ocap_DelegateTx {
   public init() {}
 
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
-}
-
-/// if rules are empty, signature for this type_url is entirely delegated
-/// otherwise rules are checked one by one, relationship between rules is AND.
-/// a rule is an expression defined in rule_parser
-/// (github.com/arcblock/rule-parser) one can setup
-public struct Ocap_DelegateOp {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var typeURL: String = String()
-
-  public var rules: [String] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
 }
 
 public struct Ocap_RevokeDelegateTx {
@@ -746,6 +755,8 @@ public struct Ocap_UpdateAssetTx {
   public var address: String = String()
 
   public var moniker: String = String()
+
+  public var consumed: Bool = false
 
   /// ocap won't update data into state if app is interested in this tx.
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -2342,6 +2353,54 @@ extension Ocap_DeclareTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 }
 
+extension Ocap_DelegateOp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DelegateOp"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "type_url"),
+    2: .same(proto: "rules"),
+    3: .same(proto: "limit"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.typeURL) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.rules) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._limit) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.typeURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.typeURL, fieldNumber: 1)
+    }
+    if !self.rules.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.rules, fieldNumber: 2)
+    }
+    try { if let v = self._limit {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_DelegateOp, rhs: Ocap_DelegateOp) -> Bool {
+    if lhs.typeURL != rhs.typeURL {return false}
+    if lhs.rules != rhs.rules {return false}
+    if lhs._limit != rhs._limit {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_DelegateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DelegateTx"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -2391,44 +2450,6 @@ extension Ocap_DelegateTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if lhs.to != rhs.to {return false}
     if lhs.ops != rhs.ops {return false}
     if lhs._data != rhs._data {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Ocap_DelegateOp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".DelegateOp"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "type_url"),
-    2: .same(proto: "rules"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.typeURL) }()
-      case 2: try { try decoder.decodeRepeatedStringField(value: &self.rules) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.typeURL.isEmpty {
-      try visitor.visitSingularStringField(value: self.typeURL, fieldNumber: 1)
-    }
-    if !self.rules.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.rules, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Ocap_DelegateOp, rhs: Ocap_DelegateOp) -> Bool {
-    if lhs.typeURL != rhs.typeURL {return false}
-    if lhs.rules != rhs.rules {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3355,6 +3376,7 @@ extension Ocap_UpdateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .same(proto: "moniker"),
+    3: .same(proto: "consumed"),
     15: .same(proto: "data"),
   ]
 
@@ -3366,6 +3388,7 @@ extension Ocap_UpdateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.moniker) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.consumed) }()
       case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -3383,6 +3406,9 @@ extension Ocap_UpdateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.moniker.isEmpty {
       try visitor.visitSingularStringField(value: self.moniker, fieldNumber: 2)
     }
+    if self.consumed != false {
+      try visitor.visitSingularBoolField(value: self.consumed, fieldNumber: 3)
+    }
     try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
     } }()
@@ -3392,6 +3418,7 @@ extension Ocap_UpdateAssetTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   public static func ==(lhs: Ocap_UpdateAssetTx, rhs: Ocap_UpdateAssetTx) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs.moniker != rhs.moniker {return false}
+    if lhs.consumed != rhs.consumed {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

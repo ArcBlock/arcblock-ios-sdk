@@ -174,6 +174,18 @@ public struct Ocap_FactoryFilter {
   public init() {}
 }
 
+public struct Ocap_DelegationFilter {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var delegations: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Ocap_TokenFilter {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1358,6 +1370,39 @@ public struct Ocap_IndexedRollupValidator {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
+public struct Ocap_IndexedDelegationState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var from: String = String()
+
+  public var to: String = String()
+
+  public var genesisTime: String = String()
+
+  public var renaissanceTime: String = String()
+
+  public var ops: Dictionary<String,Ocap_DelegateOpState> = [:]
+
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "ocap"
@@ -1551,6 +1596,38 @@ extension Ocap_FactoryFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
   public static func ==(lhs: Ocap_FactoryFilter, rhs: Ocap_FactoryFilter) -> Bool {
     if lhs.factories != rhs.factories {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_DelegationFilter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DelegationFilter"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "delegations"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.delegations) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.delegations.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.delegations, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_DelegationFilter, rhs: Ocap_DelegationFilter) -> Bool {
+    if lhs.delegations != rhs.delegations {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3929,6 +4006,78 @@ extension Ocap_IndexedRollupValidator: SwiftProtobuf.Message, SwiftProtobuf._Mes
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_IndexedDelegationState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".IndexedDelegationState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "from"),
+    3: .same(proto: "to"),
+    4: .standard(proto: "genesis_time"),
+    5: .standard(proto: "renaissance_time"),
+    6: .same(proto: "ops"),
+    7: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.from) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.to) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.genesisTime) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.renaissanceTime) }()
+      case 6: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Ocap_DelegateOpState>.self, value: &self.ops) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.from.isEmpty {
+      try visitor.visitSingularStringField(value: self.from, fieldNumber: 2)
+    }
+    if !self.to.isEmpty {
+      try visitor.visitSingularStringField(value: self.to, fieldNumber: 3)
+    }
+    if !self.genesisTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.genesisTime, fieldNumber: 4)
+    }
+    if !self.renaissanceTime.isEmpty {
+      try visitor.visitSingularStringField(value: self.renaissanceTime, fieldNumber: 5)
+    }
+    if !self.ops.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Ocap_DelegateOpState>.self, value: self.ops, fieldNumber: 6)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_IndexedDelegationState, rhs: Ocap_IndexedDelegationState) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.from != rhs.from {return false}
+    if lhs.to != rhs.to {return false}
+    if lhs.genesisTime != rhs.genesisTime {return false}
+    if lhs.renaissanceTime != rhs.renaissanceTime {return false}
+    if lhs.ops != rhs.ops {return false}
+    if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

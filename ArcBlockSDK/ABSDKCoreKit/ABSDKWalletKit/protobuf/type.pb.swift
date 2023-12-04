@@ -1279,7 +1279,7 @@ public struct Ocap_Evidence {
   public init() {}
 }
 
-/// @link https://github.com/ArcBlock/asset-chain/issues/112#issuecomment-814487646
+/// @link https://github.com/ArcBlock/blockchain/issues/112#issuecomment-814487646
 public struct Ocap_NFTEndpoint {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1572,6 +1572,130 @@ public struct Ocap_GasEstimate {
 
   /// max gas for this tx
   public var max: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_RateLimit {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// interval in seconds
+  public var interval: UInt64 = 0
+
+  /// when to start the rate limit, default to current timestamp, can be future or past
+  public var anchor: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_TokenLimit {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// which token allowed to transfer
+  public var address: String = String()
+
+  /// which address allowed to transfer to, empty is unlimited
+  public var to: [String] = []
+
+  /// how many txs allowed to send, 0 is unlimited
+  public var txCount: UInt32 = 0
+
+  /// how much token allowed to transfer, 0 is unlimited
+  public var txAllowance: String = String()
+
+  /// how much token allowed to transfer, accumulated, 0 is unlimited
+  public var totalAllowance: String = String()
+
+  /// in seconds, empty for unlimited
+  public var validUntil: UInt64 = 0
+
+  /// limit frequency, empty for unlimited
+  public var rate: Ocap_RateLimit {
+    get {return _rate ?? Ocap_RateLimit()}
+    set {_rate = newValue}
+  }
+  /// Returns true if `rate` has been explicitly set.
+  public var hasRate: Bool {return self._rate != nil}
+  /// Clears the value of `rate`. Subsequent reads from it will return its default value.
+  public mutating func clearRate() {self._rate = nil}
+
+  /// stats fields maintained by chain
+  public var txSent: UInt32 = 0
+
+  /// how much token allowed to transfer, 0 is unlimited
+  public var spentAllowance: String = String()
+
+  /// last tx time
+  public var lastTx: UInt64 = 0
+
+  /// fields used for display purpose
+  public var decimal: UInt32 = 0
+
+  public var symbol: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _rate: Ocap_RateLimit? = nil
+}
+
+public struct Ocap_AssetLimit {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// which asset allowed to transfer, empty is unlimited
+  public var address: [String] = []
+
+  /// which address allowed to transfer to, empty is unlimited
+  public var to: [String] = []
+
+  /// how many txs allowed to send, 0 is unlimited
+  public var txCount: UInt32 = 0
+
+  /// in seconds, empty for unlimited
+  public var validUntil: UInt64 = 0
+
+  /// limit frequency, empty for unlimited
+  public var rate: Ocap_RateLimit {
+    get {return _rate ?? Ocap_RateLimit()}
+    set {_rate = newValue}
+  }
+  /// Returns true if `rate` has been explicitly set.
+  public var hasRate: Bool {return self._rate != nil}
+  /// Clears the value of `rate`. Subsequent reads from it will return its default value.
+  public mutating func clearRate() {self._rate = nil}
+
+  /// how much tx allowed to send, accumulated, 0 is unlimited
+  public var txSent: UInt32 = 0
+
+  /// last tx time
+  public var lastTx: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _rate: Ocap_RateLimit? = nil
+}
+
+public struct Ocap_DelegateLimit {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tokens: [Ocap_TokenLimit] = []
+
+  public var assets: [Ocap_AssetLimit] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -4835,6 +4959,256 @@ extension Ocap_GasEstimate: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
 
   public static func ==(lhs: Ocap_GasEstimate, rhs: Ocap_GasEstimate) -> Bool {
     if lhs.max != rhs.max {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RateLimit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RateLimit"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "interval"),
+    3: .same(proto: "anchor"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularUInt64Field(value: &self.interval) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.anchor) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.interval != 0 {
+      try visitor.visitSingularUInt64Field(value: self.interval, fieldNumber: 1)
+    }
+    if self.anchor != 0 {
+      try visitor.visitSingularUInt64Field(value: self.anchor, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RateLimit, rhs: Ocap_RateLimit) -> Bool {
+    if lhs.interval != rhs.interval {return false}
+    if lhs.anchor != rhs.anchor {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_TokenLimit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TokenLimit"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "to"),
+    3: .standard(proto: "tx_count"),
+    4: .standard(proto: "tx_allowance"),
+    5: .standard(proto: "total_allowance"),
+    6: .standard(proto: "valid_until"),
+    7: .same(proto: "rate"),
+    8: .standard(proto: "tx_sent"),
+    9: .standard(proto: "spent_allowance"),
+    10: .standard(proto: "last_tx"),
+    11: .same(proto: "decimal"),
+    12: .same(proto: "symbol"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.to) }()
+      case 3: try { try decoder.decodeSingularUInt32Field(value: &self.txCount) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.txAllowance) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.totalAllowance) }()
+      case 6: try { try decoder.decodeSingularUInt64Field(value: &self.validUntil) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._rate) }()
+      case 8: try { try decoder.decodeSingularUInt32Field(value: &self.txSent) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.spentAllowance) }()
+      case 10: try { try decoder.decodeSingularUInt64Field(value: &self.lastTx) }()
+      case 11: try { try decoder.decodeSingularUInt32Field(value: &self.decimal) }()
+      case 12: try { try decoder.decodeSingularStringField(value: &self.symbol) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.to.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.to, fieldNumber: 2)
+    }
+    if self.txCount != 0 {
+      try visitor.visitSingularUInt32Field(value: self.txCount, fieldNumber: 3)
+    }
+    if !self.txAllowance.isEmpty {
+      try visitor.visitSingularStringField(value: self.txAllowance, fieldNumber: 4)
+    }
+    if !self.totalAllowance.isEmpty {
+      try visitor.visitSingularStringField(value: self.totalAllowance, fieldNumber: 5)
+    }
+    if self.validUntil != 0 {
+      try visitor.visitSingularUInt64Field(value: self.validUntil, fieldNumber: 6)
+    }
+    try { if let v = self._rate {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
+    if self.txSent != 0 {
+      try visitor.visitSingularUInt32Field(value: self.txSent, fieldNumber: 8)
+    }
+    if !self.spentAllowance.isEmpty {
+      try visitor.visitSingularStringField(value: self.spentAllowance, fieldNumber: 9)
+    }
+    if self.lastTx != 0 {
+      try visitor.visitSingularUInt64Field(value: self.lastTx, fieldNumber: 10)
+    }
+    if self.decimal != 0 {
+      try visitor.visitSingularUInt32Field(value: self.decimal, fieldNumber: 11)
+    }
+    if !self.symbol.isEmpty {
+      try visitor.visitSingularStringField(value: self.symbol, fieldNumber: 12)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_TokenLimit, rhs: Ocap_TokenLimit) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.to != rhs.to {return false}
+    if lhs.txCount != rhs.txCount {return false}
+    if lhs.txAllowance != rhs.txAllowance {return false}
+    if lhs.totalAllowance != rhs.totalAllowance {return false}
+    if lhs.validUntil != rhs.validUntil {return false}
+    if lhs._rate != rhs._rate {return false}
+    if lhs.txSent != rhs.txSent {return false}
+    if lhs.spentAllowance != rhs.spentAllowance {return false}
+    if lhs.lastTx != rhs.lastTx {return false}
+    if lhs.decimal != rhs.decimal {return false}
+    if lhs.symbol != rhs.symbol {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_AssetLimit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AssetLimit"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "to"),
+    3: .standard(proto: "tx_count"),
+    4: .standard(proto: "valid_until"),
+    5: .same(proto: "rate"),
+    6: .standard(proto: "tx_sent"),
+    7: .standard(proto: "last_tx"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.to) }()
+      case 3: try { try decoder.decodeSingularUInt32Field(value: &self.txCount) }()
+      case 4: try { try decoder.decodeSingularUInt64Field(value: &self.validUntil) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._rate) }()
+      case 6: try { try decoder.decodeSingularUInt32Field(value: &self.txSent) }()
+      case 7: try { try decoder.decodeSingularUInt64Field(value: &self.lastTx) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.address.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.to.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.to, fieldNumber: 2)
+    }
+    if self.txCount != 0 {
+      try visitor.visitSingularUInt32Field(value: self.txCount, fieldNumber: 3)
+    }
+    if self.validUntil != 0 {
+      try visitor.visitSingularUInt64Field(value: self.validUntil, fieldNumber: 4)
+    }
+    try { if let v = self._rate {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    if self.txSent != 0 {
+      try visitor.visitSingularUInt32Field(value: self.txSent, fieldNumber: 6)
+    }
+    if self.lastTx != 0 {
+      try visitor.visitSingularUInt64Field(value: self.lastTx, fieldNumber: 7)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_AssetLimit, rhs: Ocap_AssetLimit) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.to != rhs.to {return false}
+    if lhs.txCount != rhs.txCount {return false}
+    if lhs.validUntil != rhs.validUntil {return false}
+    if lhs._rate != rhs._rate {return false}
+    if lhs.txSent != rhs.txSent {return false}
+    if lhs.lastTx != rhs.lastTx {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_DelegateLimit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DelegateLimit"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tokens"),
+    2: .same(proto: "assets"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.tokens) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.assets) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tokens.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.tokens, fieldNumber: 1)
+    }
+    if !self.assets.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.assets, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_DelegateLimit, rhs: Ocap_DelegateLimit) -> Bool {
+    if lhs.tokens != rhs.tokens {return false}
+    if lhs.assets != rhs.assets {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -356,16 +356,11 @@ public struct Ocap_RootState {
   public init() {}
 }
 
-/// a rule can check against the statistics values, e.g. state.num_txs < 10000,
-/// state.balance_delta < 50000, delta is calculated based on the
-/// configuration for interval.
 public struct Ocap_DelegateOpState {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// all the individual rules in DelegateTx will be concat into one per type_url
-  /// by "AND"
   public var rule: String = String()
 
   public var numTxs: UInt64 = 0
@@ -390,12 +385,23 @@ public struct Ocap_DelegateOpState {
   /// Clears the value of `balanceDelta`. Subsequent reads from it will return its default value.
   public mutating func clearBalanceDelta() {self._balanceDelta = nil}
 
+  /// since v1.18.96
+  public var limit: Ocap_DelegateLimit {
+    get {return _limit ?? Ocap_DelegateLimit()}
+    set {_limit = newValue}
+  }
+  /// Returns true if `limit` has been explicitly set.
+  public var hasLimit: Bool {return self._limit != nil}
+  /// Clears the value of `limit`. Subsequent reads from it will return its default value.
+  public mutating func clearLimit() {self._limit = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _balance: Ocap_BigUint? = nil
   fileprivate var _balanceDelta: Ocap_BigUint? = nil
+  fileprivate var _limit: Ocap_DelegateLimit? = nil
 }
 
 public struct Ocap_DelegateState {
@@ -406,6 +412,10 @@ public struct Ocap_DelegateState {
   public var address: String = String()
 
   public var ops: Dictionary<String,Ocap_DelegateOpState> = [:]
+
+  public var from: String = String()
+
+  public var to: String = String()
 
   /// state context, replace exiting fields
   public var context: Ocap_StateContext {
@@ -1734,6 +1744,7 @@ extension Ocap_DelegateOpState: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     3: .standard(proto: "num_txs_delta"),
     4: .same(proto: "balance"),
     5: .standard(proto: "balance_delta"),
+    6: .same(proto: "limit"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1747,6 +1758,7 @@ extension Ocap_DelegateOpState: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       case 3: try { try decoder.decodeSingularUInt64Field(value: &self.numTxsDelta) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._balance) }()
       case 5: try { try decoder.decodeSingularMessageField(value: &self._balanceDelta) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._limit) }()
       default: break
       }
     }
@@ -1772,6 +1784,9 @@ extension Ocap_DelegateOpState: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try { if let v = self._balanceDelta {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
+    try { if let v = self._limit {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1781,6 +1796,7 @@ extension Ocap_DelegateOpState: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if lhs.numTxsDelta != rhs.numTxsDelta {return false}
     if lhs._balance != rhs._balance {return false}
     if lhs._balanceDelta != rhs._balanceDelta {return false}
+    if lhs._limit != rhs._limit {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1791,6 +1807,8 @@ extension Ocap_DelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .same(proto: "ops"),
+    3: .same(proto: "from"),
+    4: .same(proto: "to"),
     14: .same(proto: "context"),
     15: .same(proto: "data"),
   ]
@@ -1803,6 +1821,8 @@ extension Ocap_DelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
       case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Ocap_DelegateOpState>.self, value: &self.ops) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.from) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.to) }()
       case 14: try { try decoder.decodeSingularMessageField(value: &self._context) }()
       case 15: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
@@ -1821,6 +1841,12 @@ extension Ocap_DelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.ops.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Ocap_DelegateOpState>.self, value: self.ops, fieldNumber: 2)
     }
+    if !self.from.isEmpty {
+      try visitor.visitSingularStringField(value: self.from, fieldNumber: 3)
+    }
+    if !self.to.isEmpty {
+      try visitor.visitSingularStringField(value: self.to, fieldNumber: 4)
+    }
     try { if let v = self._context {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
     } }()
@@ -1833,6 +1859,8 @@ extension Ocap_DelegateState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   public static func ==(lhs: Ocap_DelegateState, rhs: Ocap_DelegateState) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs.ops != rhs.ops {return false}
+    if lhs.from != rhs.from {return false}
+    if lhs.to != rhs.to {return false}
     if lhs._context != rhs._context {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

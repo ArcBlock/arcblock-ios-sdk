@@ -37,7 +37,7 @@ type RootMutationType {
 }
 
 type RootQueryType {
-  getAccountState(address: String, height: String, keys: [String]): ResponseGetAccountState
+  getAccountState(address: String, height: String, keys: [String], traceMigration: Boolean): ResponseGetAccountState
   getAssetState(address: String, height: String, keys: [String]): ResponseGetAssetState
   getFactoryState(address: String): ResponseGetFactoryState
   getDelegateState(address: String, height: String, keys: [String]): ResponseGetDelegateState
@@ -86,6 +86,7 @@ type RootQueryType {
     txFilter: TxFilterInput
     rollupFilter: RollupFilterInput
     stakeFilter: StakeFilterInput
+    delegationFilter: DelegationFilterInput
   ): ResponseListTransactions
 
   # since 1.7.0
@@ -128,6 +129,8 @@ type RootQueryType {
     timeFilter: TimeFilterInput
   ): ResponseListRollupBlocks
   listRollupValidators(paging: PageInput, rollupAddress: String): ResponseListRollupValidators
+
+  listDelegations(from: String, to: String, paging: PageInput, timeFilter: TimeFilterInput): ResponseListDelegations
 
   # since v1.13.17
   search(paging: PageInput, keyword: String): ResponseSearch

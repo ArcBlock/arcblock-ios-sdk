@@ -103,24 +103,23 @@ message RootState {
   bytes custom = 7;
 }
 
-// a rule can check against the statistics values, e.g. state.num_txs < 10000,
-// state.balance_delta < 50000, delta is calculated based on the
-// configuration for interval.
 message DelegateOpState {
-  // all the individual rules in DelegateTx will be concat into one per type_url
-  // by "AND"
-  string rule = 1;
+  string rule = 1 [ deprecated = true ];
+  uint64 num_txs = 2 [ deprecated = true ];
+  uint64 num_txs_delta = 3 [ deprecated = true ];
+  BigUint balance = 4 [ deprecated = true ];
+  BigUint balance_delta = 5 [ deprecated = true ];
 
-  uint64 num_txs = 2;
-  uint64 num_txs_delta = 3;
-
-  BigUint balance = 4;
-  BigUint balance_delta = 5;
+  // since v1.18.96
+  DelegateLimit limit = 6;
 }
 
 message DelegateState {
   string address = 1;
   map<string, DelegateOpState> ops = 2;
+
+  string from = 3;
+  string to = 4;
 
   // state context, replace exiting fields
   StateContext context = 14;

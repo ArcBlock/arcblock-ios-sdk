@@ -20,7 +20,7 @@ service Query {
   rpc getForgeStats(RequestEmpty) returns (ResponseGetForgeStats);
 
   // state related
-  rpc getAccountState(stream RequestGetState) returns (stream ResponseGetAccountState);
+  rpc getAccountState(stream RequestGetAccountState) returns (stream ResponseGetAccountState);
   rpc getAssetState(stream RequestGetState) returns (stream ResponseGetAssetState);
   rpc getFactoryState(stream RequestGetState) returns (stream ResponseGetFactoryState);
   rpc getForgeState(RequestGetState) returns (ResponseGetForgeState);
@@ -53,6 +53,9 @@ service Query {
   rpc getRollupBlock(stream RequestGetRollupBlock) returns (stream ResponseGetRollupBlock);
   rpc listRollupBlocks(RequestListRollupBlocks) returns (ResponseListRollupBlocks);
   rpc listRollupValidators(RequestListRollupValidators) returns (ResponseListRollupValidators);
+
+  // delegation
+  rpc listDelegations(RequestListDelegations) returns (ResponseListDelegations);
 
   // search
   rpc search(RequestSearch) returns (ResponseSearch);
