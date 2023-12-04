@@ -52,9 +52,12 @@ message ResponseGetBlocks {
   repeated BlockInfoSimple blocks = 3;
 }
 
-// get_account_state(address, key): retrieve the current state from a list of
-// wallet addresses, return the value of the key. If key is omitted, return
-// entire account states
+message RequestGetAccountState {
+  string address = 1;
+  repeated string keys = 2;
+  uint64 height = 3;
+  bool trace_migration = 4;
+}
 message ResponseGetAccountState {
   StatusCode code = 1;
   AccountState state = 2;
@@ -125,6 +128,7 @@ message RequestListTransactions {
   TxFilter tx_filter = 10;
   RollupFilter rollup_filter = 11;
   StakeFilter stake_filter = 12;
+  DelegationFilter delegation_filter = 13;
 }
 message ResponseListTransactions {
   StatusCode code = 1;
@@ -323,4 +327,16 @@ message RequestEstimateGas {
 message ResponseEstimateGas {
   StatusCode code = 1;
   GasEstimate estimate = 2;
+}
+
+message RequestListDelegations {
+  Page paging = 1;
+  string from = 2;
+  string to = 3;
+  TimeFilter time_filter = 4;
+}
+message ResponseListDelegations {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedDelegationState delegations = 3;
 }

@@ -229,9 +229,24 @@ public struct Ocap_ResponseGetBlocks {
   fileprivate var _page: Ocap_PageInfo? = nil
 }
 
-/// get_account_state(address, key): retrieve the current state from a list of
-/// wallet addresses, return the value of the key. If key is omitted, return
-/// entire account states
+public struct Ocap_RequestGetAccountState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var keys: [String] = []
+
+  public var height: UInt64 = 0
+
+  public var traceMigration: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Ocap_ResponseGetAccountState {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -595,6 +610,15 @@ public struct Ocap_RequestListTransactions {
   public var hasStakeFilter: Bool {return _storage._stakeFilter != nil}
   /// Clears the value of `stakeFilter`. Subsequent reads from it will return its default value.
   public mutating func clearStakeFilter() {_uniqueStorage()._stakeFilter = nil}
+
+  public var delegationFilter: Ocap_DelegationFilter {
+    get {return _storage._delegationFilter ?? Ocap_DelegationFilter()}
+    set {_uniqueStorage()._delegationFilter = newValue}
+  }
+  /// Returns true if `delegationFilter` has been explicitly set.
+  public var hasDelegationFilter: Bool {return _storage._delegationFilter != nil}
+  /// Clears the value of `delegationFilter`. Subsequent reads from it will return its default value.
+  public mutating func clearDelegationFilter() {_uniqueStorage()._delegationFilter = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1575,6 +1599,66 @@ public struct Ocap_ResponseEstimateGas {
   fileprivate var _estimate: Ocap_GasEstimate? = nil
 }
 
+public struct Ocap_RequestListDelegations {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var paging: Ocap_Page {
+    get {return _paging ?? Ocap_Page()}
+    set {_paging = newValue}
+  }
+  /// Returns true if `paging` has been explicitly set.
+  public var hasPaging: Bool {return self._paging != nil}
+  /// Clears the value of `paging`. Subsequent reads from it will return its default value.
+  public mutating func clearPaging() {self._paging = nil}
+
+  public var from: String = String()
+
+  public var to: String = String()
+
+  public var timeFilter: Ocap_TimeFilter {
+    get {return _timeFilter ?? Ocap_TimeFilter()}
+    set {_timeFilter = newValue}
+  }
+  /// Returns true if `timeFilter` has been explicitly set.
+  public var hasTimeFilter: Bool {return self._timeFilter != nil}
+  /// Clears the value of `timeFilter`. Subsequent reads from it will return its default value.
+  public mutating func clearTimeFilter() {self._timeFilter = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _paging: Ocap_Page? = nil
+  fileprivate var _timeFilter: Ocap_TimeFilter? = nil
+}
+
+public struct Ocap_ResponseListDelegations {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var page: Ocap_PageInfo {
+    get {return _page ?? Ocap_PageInfo()}
+    set {_page = newValue}
+  }
+  /// Returns true if `page` has been explicitly set.
+  public var hasPage: Bool {return self._page != nil}
+  /// Clears the value of `page`. Subsequent reads from it will return its default value.
+  public mutating func clearPage() {self._page = nil}
+
+  public var delegations: [Ocap_IndexedDelegationState] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _page: Ocap_PageInfo? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "ocap"
@@ -1992,6 +2076,56 @@ extension Ocap_ResponseGetBlocks: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.code != rhs.code {return false}
     if lhs._page != rhs._page {return false}
     if lhs.blocks != rhs.blocks {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestGetAccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestGetAccountState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "keys"),
+    3: .same(proto: "height"),
+    4: .standard(proto: "trace_migration"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.keys) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.height) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.traceMigration) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.keys.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.keys, fieldNumber: 2)
+    }
+    if self.height != 0 {
+      try visitor.visitSingularUInt64Field(value: self.height, fieldNumber: 3)
+    }
+    if self.traceMigration != false {
+      try visitor.visitSingularBoolField(value: self.traceMigration, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestGetAccountState, rhs: Ocap_RequestGetAccountState) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.keys != rhs.keys {return false}
+    if lhs.height != rhs.height {return false}
+    if lhs.traceMigration != rhs.traceMigration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2500,6 +2634,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
     10: .standard(proto: "tx_filter"),
     11: .standard(proto: "rollup_filter"),
     12: .standard(proto: "stake_filter"),
+    13: .standard(proto: "delegation_filter"),
   ]
 
   fileprivate class _StorageClass {
@@ -2515,6 +2650,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
     var _txFilter: Ocap_TxFilter? = nil
     var _rollupFilter: Ocap_RollupFilter? = nil
     var _stakeFilter: Ocap_StakeFilter? = nil
+    var _delegationFilter: Ocap_DelegationFilter? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -2533,6 +2669,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
       _txFilter = source._txFilter
       _rollupFilter = source._rollupFilter
       _stakeFilter = source._stakeFilter
+      _delegationFilter = source._delegationFilter
     }
   }
 
@@ -2563,6 +2700,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._txFilter) }()
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._rollupFilter) }()
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._stakeFilter) }()
+        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._delegationFilter) }()
         default: break
         }
       }
@@ -2611,6 +2749,9 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
       try { if let v = _storage._stakeFilter {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
       } }()
+      try { if let v = _storage._delegationFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2632,6 +2773,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
         if _storage._txFilter != rhs_storage._txFilter {return false}
         if _storage._rollupFilter != rhs_storage._rollupFilter {return false}
         if _storage._stakeFilter != rhs_storage._stakeFilter {return false}
+        if _storage._delegationFilter != rhs_storage._delegationFilter {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -4314,6 +4456,108 @@ extension Ocap_ResponseEstimateGas: SwiftProtobuf.Message, SwiftProtobuf._Messag
   public static func ==(lhs: Ocap_ResponseEstimateGas, rhs: Ocap_ResponseEstimateGas) -> Bool {
     if lhs.code != rhs.code {return false}
     if lhs._estimate != rhs._estimate {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestListDelegations: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestListDelegations"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "paging"),
+    2: .same(proto: "from"),
+    3: .same(proto: "to"),
+    4: .standard(proto: "time_filter"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.from) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.to) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._timeFilter) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._paging {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.from.isEmpty {
+      try visitor.visitSingularStringField(value: self.from, fieldNumber: 2)
+    }
+    if !self.to.isEmpty {
+      try visitor.visitSingularStringField(value: self.to, fieldNumber: 3)
+    }
+    try { if let v = self._timeFilter {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestListDelegations, rhs: Ocap_RequestListDelegations) -> Bool {
+    if lhs._paging != rhs._paging {return false}
+    if lhs.from != rhs.from {return false}
+    if lhs.to != rhs.to {return false}
+    if lhs._timeFilter != rhs._timeFilter {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseListDelegations: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseListDelegations"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "page"),
+    3: .same(proto: "delegations"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._page) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.delegations) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    try { if let v = self._page {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.delegations.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.delegations, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseListDelegations, rhs: Ocap_ResponseListDelegations) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._page != rhs._page {return false}
+    if lhs.delegations != rhs.delegations {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

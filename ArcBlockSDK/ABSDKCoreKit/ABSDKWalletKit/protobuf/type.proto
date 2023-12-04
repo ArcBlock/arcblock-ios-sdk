@@ -366,7 +366,7 @@ message Evidence {
   string hash = 1;       // tx hash from a foreign chain
 }
 
-// @link https://github.com/ArcBlock/asset-chain/issues/112#issuecomment-814487646
+// @link https://github.com/ArcBlock/blockchain/issues/112#issuecomment-814487646
 message NFTEndpoint {
   // the url of the endpoint, must be a permanent url
   string id = 1;
@@ -461,4 +461,41 @@ message ForgeStats {
 
 message GasEstimate {
   string max = 1; // max gas for this tx
+}
+
+message RateLimit {
+  uint64 interval = 1; // interval in seconds
+  uint64 anchor = 3; // when to start the rate limit, default to current timestamp, can be future or past
+}
+message TokenLimit {
+  string address = 1; // which token allowed to transfer
+  repeated string to = 2; // which address allowed to transfer to, empty is unlimited
+  uint32 tx_count = 3; // how many txs allowed to send, 0 is unlimited
+  string tx_allowance = 4; // how much token allowed to transfer, 0 is unlimited
+  string total_allowance = 5; // how much token allowed to transfer, accumulated, 0 is unlimited
+  uint64 valid_until = 6; // in seconds, empty for unlimited
+  RateLimit rate = 7; // limit frequency, empty for unlimited
+
+  // stats fields maintained by chain
+  uint32 tx_sent = 8; // how much tx allowed to send, accumulated, 0 is unlimited
+  string spent_allowance = 9; // how much token allowed to transfer, 0 is unlimited
+  uint64 last_tx = 10; // last tx time
+
+  // fields used for display purpose
+  uint32 decimal = 11;
+  string symbol = 12;
+}
+message AssetLimit {
+  repeated string address = 1; // which asset allowed to transfer, empty is unlimited
+  repeated string to = 2; // which address allowed to transfer to, empty is unlimited
+  uint32 tx_count = 3; // how many txs allowed to send, 0 is unlimited
+  uint64 valid_until = 4; // in seconds, empty for unlimited
+  RateLimit rate = 5; // limit frequency, empty for unlimited
+
+  uint32 tx_sent = 6; // how much tx allowed to send, accumulated, 0 is unlimited
+  uint64 last_tx = 7; // last tx time
+}
+message DelegateLimit {
+  repeated TokenLimit tokens = 1;
+  repeated AssetLimit assets = 2;
 }

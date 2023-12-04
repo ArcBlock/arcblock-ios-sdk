@@ -1,3 +1,6 @@
+## 0.11.43 (December 04, 2023)
+  - update prottobuf
+
 ## 0.11.42 (November 07, 2023)
   - fix depends
 

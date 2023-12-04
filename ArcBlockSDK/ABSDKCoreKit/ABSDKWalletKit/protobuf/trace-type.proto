@@ -3,6 +3,7 @@ package ocap;
 
 import "google/protobuf/any.proto";
 import "type.proto";
+import "state.proto";
 import "enum.proto";
 import "tx.proto";
 
@@ -29,6 +30,10 @@ message AssetFilter {
 
 message FactoryFilter {
   repeated string factories = 1;
+}
+
+message DelegationFilter {
+  repeated string delegations = 1;
 }
 
 message TokenFilter {
@@ -347,4 +352,14 @@ message IndexedRollupValidator {
   string latest_block_hash = 16;
 
   string rollup = 17;
+}
+
+message IndexedDelegationState {
+  string address = 1;
+  string from = 2;
+  string to = 3;
+  string genesis_time = 4;
+  string renaissance_time = 5;
+  map<string, DelegateOpState> ops = 6;
+  google.protobuf.Any data = 7;
 }
