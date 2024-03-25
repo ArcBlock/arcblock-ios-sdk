@@ -97,6 +97,55 @@ public enum RoleType: Int8 {
             return .any
         }
     }
+    
+    public func roleTypeString() -> String {
+        switch self {
+        case .account:
+            return "account"
+        case .node:
+            return "node"
+        case .device:
+            return "device"
+        case .application:
+            return "application"
+        case .smartContract:
+            return "smartContract"
+        case .bot:
+            return "bot"
+        case .asset:
+            return "asset"
+        case .stake:
+            return "stake"
+        case .validator:
+            return "validator"
+        case .group:
+            return "group"
+        case .tx:
+            return "tx"
+        case .tether:
+            return "tether"
+        case .swap:
+            return "swap"
+        case .delegate:
+            return "delegate"
+        case .vc:
+            return "vc"
+        case .blocklet:
+            return "blocklet"
+        case .store:
+            return "store"
+        case .token:
+            return "token"
+        case .factory:
+            return "factory"
+        case .rollup:
+            return "rollup"
+        case .storage:
+            return "storage"
+        case .any:
+            return "any"
+        }
+    }
 }
 
 public enum KeyType: Int8 {
