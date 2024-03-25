@@ -98,7 +98,7 @@ public enum RoleType: Int8 {
         }
     }
     
-    public func roleTypeString() -> String {
+    public func name() -> String {
         switch self {
         case .account:
             return "account"
