@@ -1,3 +1,7 @@
+## 0.11.44 (March 26, 2024)
+  - change func name
+  - add type to name function
+
 ## 0.11.43 (December 04, 2023)
   - update prottobuf
 
