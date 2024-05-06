@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ArcBlockSDK'
-  s.version          = '0.11.44'
+  s.version          = '0.11.45'
   s.summary          = 'Used to integrate iOS apps with ArcBlock Platform.'
 
 # This description is used to generate tags and improve search results.
@@ -38,7 +38,7 @@ TODO: Add long description of the pod here.
   s.subspec 'CoreKit' do |sc|
     sc.source_files = 'ArcBlockSDK/ABSDKCoreKit/**/*.{h,m,swift}'
     sc.dependency 'ReachabilitySwift'
-    sc.dependency 'CryptoSwift', '~> 1.4.0'
+    sc.dependency 'CryptoSwift', '~> 1.6.0'
     sc.dependency 'BigInt', '~> 5.2.0'
     sc.dependency 'web3swift', '~> 2.3.0'
 
