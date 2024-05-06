@@ -1,3 +1,6 @@
+## 0.11.45 (May 06, 2024)
+  - fix CryptoSwift version
+
 ## 0.11.44 (March 26, 2024)
   - change func name
   - add type to name function
