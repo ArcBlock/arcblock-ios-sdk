@@ -908,7 +908,7 @@ public struct Ocap_StakeTx {
 
   public var address: String = String()
 
-  /// used to create stake address = createDid(tx.sender, itx.to)
+  /// used to create stake address = createDid(tx.sender, itx.to, nonce)
   public var receiver: String = String()
 
   /// Can stake any combination of tokens + assets
@@ -925,6 +925,10 @@ public struct Ocap_StakeTx {
 
   /// Who can slash assets from this stake
   public var slashers: [String] = []
+
+  /// Added in v1.18.222
+  /// extra nonce used to calculate stake address
+  public var nonce: String = String()
 
   /// ocap won't touch this field. Only app shall handle it.
   public var data: SwiftProtobuf.Google_Protobuf_Any {
@@ -2246,6 +2250,49 @@ public struct Ocap_ItxStub {
 
   public init() {}
 }
+
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Ocap_AccountMigrateTx: @unchecked Sendable {}
+extension Ocap_DeclareTx: @unchecked Sendable {}
+extension Ocap_DelegateOp: @unchecked Sendable {}
+extension Ocap_DelegateTx: @unchecked Sendable {}
+extension Ocap_RevokeDelegateTx: @unchecked Sendable {}
+extension Ocap_UpgradeNodeTx: @unchecked Sendable {}
+extension Ocap_ExchangeInfo: @unchecked Sendable {}
+extension Ocap_ExchangeInfoV2: @unchecked Sendable {}
+extension Ocap_ExchangeTx: @unchecked Sendable {}
+extension Ocap_ExchangeV2Tx: @unchecked Sendable {}
+extension Ocap_TransferTx: @unchecked Sendable {}
+extension Ocap_TransferV2Tx: @unchecked Sendable {}
+extension Ocap_TransferV3Tx: @unchecked Sendable {}
+extension Ocap_CreateTokenTx: @unchecked Sendable {}
+extension Ocap_AssetFactoryInput: @unchecked Sendable {}
+extension Ocap_AcquireAssetV2Tx: @unchecked Sendable {}
+extension Ocap_AcquireAssetV3Tx: @unchecked Sendable {}
+extension Ocap_MintAssetTx: @unchecked Sendable {}
+extension Ocap_CreateAssetTx: @unchecked Sendable {}
+extension Ocap_UpdateAssetTx: @unchecked Sendable {}
+extension Ocap_ConsumeAssetTx: @unchecked Sendable {}
+extension Ocap_CreateFactoryTx: @unchecked Sendable {}
+extension Ocap_StakeTx: @unchecked Sendable {}
+extension Ocap_RevokeStakeTx: @unchecked Sendable {}
+extension Ocap_ClaimStakeTx: @unchecked Sendable {}
+extension Ocap_SlashStakeTx: @unchecked Sendable {}
+extension Ocap_CreateRollupTx: @unchecked Sendable {}
+extension Ocap_UpdateRollupTx: @unchecked Sendable {}
+extension Ocap_JoinRollupTx: @unchecked Sendable {}
+extension Ocap_LeaveRollupTx: @unchecked Sendable {}
+extension Ocap_CreateRollupBlockTx: @unchecked Sendable {}
+extension Ocap_ClaimBlockRewardTx: @unchecked Sendable {}
+extension Ocap_PauseRollupTx: @unchecked Sendable {}
+extension Ocap_ResumeRollupTx: @unchecked Sendable {}
+extension Ocap_CloseRollupTx: @unchecked Sendable {}
+extension Ocap_MigrateRollupTx: @unchecked Sendable {}
+extension Ocap_DepositTokenV2Tx: @unchecked Sendable {}
+extension Ocap_WithdrawTokenV2Tx: @unchecked Sendable {}
+extension Ocap_ItxStub: @unchecked Sendable {}
+extension Ocap_ItxStub.OneOf_Value: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
@@ -3625,6 +3672,7 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     5: .same(proto: "message"),
     6: .standard(proto: "revoke_waiting_period"),
     7: .same(proto: "slashers"),
+    8: .same(proto: "nonce"),
     50: .same(proto: "data"),
   ]
 
@@ -3641,6 +3689,7 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 5: try { try decoder.decodeSingularStringField(value: &self.message) }()
       case 6: try { try decoder.decodeSingularUInt32Field(value: &self.revokeWaitingPeriod) }()
       case 7: try { try decoder.decodeRepeatedStringField(value: &self.slashers) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.nonce) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -3673,6 +3722,9 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.slashers.isEmpty {
       try visitor.visitRepeatedStringField(value: self.slashers, fieldNumber: 7)
     }
+    if !self.nonce.isEmpty {
+      try visitor.visitSingularStringField(value: self.nonce, fieldNumber: 8)
+    }
     try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     } }()
@@ -3687,6 +3739,7 @@ extension Ocap_StakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.message != rhs.message {return false}
     if lhs.revokeWaitingPeriod != rhs.revokeWaitingPeriod {return false}
     if lhs.slashers != rhs.slashers {return false}
+    if lhs.nonce != rhs.nonce {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

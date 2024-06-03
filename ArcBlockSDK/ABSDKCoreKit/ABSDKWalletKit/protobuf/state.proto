@@ -209,6 +209,9 @@ message StakeState {
   // Who can slash assets from this stake
   repeated string slashers = 11;
 
+  // Added in v1.18.222
+  string nonce = 12;
+
   StateContext context = 30;
   google.protobuf.Any data = 50;
 }

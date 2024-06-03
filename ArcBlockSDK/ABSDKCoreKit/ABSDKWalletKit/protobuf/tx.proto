@@ -311,7 +311,7 @@ message CreateFactoryTx {
 message StakeTx {
   string address = 1;
 
-  // used to create stake address = createDid(tx.sender, itx.to)
+  // used to create stake address = createDid(tx.sender, itx.to, nonce)
   string receiver = 2;
 
   // Can stake any combination of tokens + assets
@@ -328,6 +328,10 @@ message StakeTx {
 
   // Who can slash assets from this stake
   repeated string slashers = 7;
+
+  // Added in v1.18.222
+  // extra nonce used to calculate stake address
+  string nonce = 8;
 
   // ocap won't touch this field. Only app shall handle it.
   google.protobuf.Any data = 50;
