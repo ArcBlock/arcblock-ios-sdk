@@ -1702,6 +1702,64 @@ public struct Ocap_DelegateLimit {
   public init() {}
 }
 
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Ocap_BigUint: @unchecked Sendable {}
+extension Ocap_BigSint: @unchecked Sendable {}
+extension Ocap_TokenSymbol: @unchecked Sendable {}
+extension Ocap_WalletType: @unchecked Sendable {}
+extension Ocap_WalletInfo: @unchecked Sendable {}
+extension Ocap_ChainInfo: @unchecked Sendable {}
+extension Ocap_NodeInfo: @unchecked Sendable {}
+extension Ocap_Validator: @unchecked Sendable {}
+extension Ocap_ConsensusParams: @unchecked Sendable {}
+extension Ocap_UpgradeTask: @unchecked Sendable {}
+extension Ocap_UpgradeTasks: @unchecked Sendable {}
+extension Ocap_Multisig: @unchecked Sendable {}
+extension Ocap_Transaction: @unchecked Sendable {}
+extension Ocap_TransactionInfo: @unchecked Sendable {}
+extension Ocap_TransactionReceipt: @unchecked Sendable {}
+extension Ocap_ReceiptChange: @unchecked Sendable {}
+extension Ocap_TokenInput: @unchecked Sendable {}
+extension Ocap_TransactionInput: @unchecked Sendable {}
+extension Ocap_VariableInput: @unchecked Sendable {}
+extension Ocap_DelegateConfig: @unchecked Sendable {}
+extension Ocap_VaultConfig: @unchecked Sendable {}
+extension Ocap_TxFeeConfig: @unchecked Sendable {}
+extension Ocap_TxGasConfig: @unchecked Sendable {}
+extension Ocap_TransactionConfig: @unchecked Sendable {}
+extension Ocap_BlockInfo: @unchecked Sendable {}
+extension Ocap_BlockInfoSimple: @unchecked Sendable {}
+extension Ocap_StateContext: @unchecked Sendable {}
+extension Ocap_StakeSummary: @unchecked Sendable {}
+extension Ocap_UnconfirmedTxs: @unchecked Sendable {}
+extension Ocap_NetInfo: @unchecked Sendable {}
+extension Ocap_GeoInfo: @unchecked Sendable {}
+extension Ocap_PeerInfo: @unchecked Sendable {}
+extension Ocap_ValidatorsInfo: @unchecked Sendable {}
+extension Ocap_ValidatorInfo: @unchecked Sendable {}
+extension Ocap_ForgeToken: @unchecked Sendable {}
+extension Ocap_UpgradeInfo: @unchecked Sendable {}
+extension Ocap_WithdrawItem: @unchecked Sendable {}
+extension Ocap_AccountConfig: @unchecked Sendable {}
+extension Ocap_Evidence: @unchecked Sendable {}
+extension Ocap_NFTEndpoint: @unchecked Sendable {}
+extension Ocap_NFTDisplay: @unchecked Sendable {}
+extension Ocap_NFTIssuer: @unchecked Sendable {}
+extension Ocap_AssetFactoryHook: @unchecked Sendable {}
+extension Ocap_IndexedTokenInput: @unchecked Sendable {}
+extension Ocap_IndexedFactoryInput: @unchecked Sendable {}
+extension Ocap_RollupValidator: @unchecked Sendable {}
+extension Ocap_RollupSignature: @unchecked Sendable {}
+extension Ocap_ForeignToken: @unchecked Sendable {}
+extension Ocap_RevokedStake: @unchecked Sendable {}
+extension Ocap_ForgeStats: @unchecked Sendable {}
+extension Ocap_GasEstimate: @unchecked Sendable {}
+extension Ocap_RateLimit: @unchecked Sendable {}
+extension Ocap_TokenLimit: @unchecked Sendable {}
+extension Ocap_AssetLimit: @unchecked Sendable {}
+extension Ocap_DelegateLimit: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "ocap"

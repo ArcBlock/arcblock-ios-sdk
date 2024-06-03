@@ -934,6 +934,19 @@ extension Ocap_ProtocolStatus: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Ocap_StatusCode: @unchecked Sendable {}
+extension Ocap_KeyType: @unchecked Sendable {}
+extension Ocap_HashType: @unchecked Sendable {}
+extension Ocap_EncodingType: @unchecked Sendable {}
+extension Ocap_RoleType: @unchecked Sendable {}
+extension Ocap_UpgradeType: @unchecked Sendable {}
+extension Ocap_UpgradeAction: @unchecked Sendable {}
+extension Ocap_StateType: @unchecked Sendable {}
+extension Ocap_StakeType: @unchecked Sendable {}
+extension Ocap_ProtocolStatus: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension Ocap_StatusCode: SwiftProtobuf._ProtoNameProviding {

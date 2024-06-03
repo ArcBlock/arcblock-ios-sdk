@@ -229,6 +229,7 @@ message IndexedStakeState {
   repeated TokenInfo revoked_tokens = 11;
   repeated string revoked_assets = 12;
   repeated string slashers = 13;
+  string nonce = 14;
   google.protobuf.Any data = 50;
 }
 

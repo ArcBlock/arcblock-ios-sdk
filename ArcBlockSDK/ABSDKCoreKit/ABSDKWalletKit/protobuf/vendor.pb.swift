@@ -466,6 +466,26 @@ public struct Vendor_RequestEndBlock {
   public init() {}
 }
 
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Vendor_KVPair: @unchecked Sendable {}
+extension Vendor_BlockParams: @unchecked Sendable {}
+extension Vendor_EvidenceParams: @unchecked Sendable {}
+extension Vendor_ValidatorParams: @unchecked Sendable {}
+extension Vendor_ConsensusParams: @unchecked Sendable {}
+extension Vendor_LastCommitInfo: @unchecked Sendable {}
+extension Vendor_Version: @unchecked Sendable {}
+extension Vendor_BlockID: @unchecked Sendable {}
+extension Vendor_PartSetHeader: @unchecked Sendable {}
+extension Vendor_Validator: @unchecked Sendable {}
+extension Vendor_ValidatorUpdate: @unchecked Sendable {}
+extension Vendor_VoteInfo: @unchecked Sendable {}
+extension Vendor_PubKey: @unchecked Sendable {}
+extension Vendor_Evidence: @unchecked Sendable {}
+extension Vendor_Header: @unchecked Sendable {}
+extension Vendor_RequestBeginBlock: @unchecked Sendable {}
+extension Vendor_RequestEndBlock: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "vendor"

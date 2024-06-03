@@ -1659,6 +1659,71 @@ public struct Ocap_ResponseListDelegations {
   fileprivate var _page: Ocap_PageInfo? = nil
 }
 
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Ocap_RequestEmpty: @unchecked Sendable {}
+extension Ocap_RequestPaginated: @unchecked Sendable {}
+extension Ocap_RequestGetState: @unchecked Sendable {}
+extension Ocap_RequestSendTx: @unchecked Sendable {}
+extension Ocap_ResponseSendTx: @unchecked Sendable {}
+extension Ocap_RequestGetTx: @unchecked Sendable {}
+extension Ocap_ResponseGetTx: @unchecked Sendable {}
+extension Ocap_RequestGetBlock: @unchecked Sendable {}
+extension Ocap_ResponseGetBlock: @unchecked Sendable {}
+extension Ocap_RequestGetBlocks: @unchecked Sendable {}
+extension Ocap_ResponseGetBlocks: @unchecked Sendable {}
+extension Ocap_RequestGetAccountState: @unchecked Sendable {}
+extension Ocap_ResponseGetAccountState: @unchecked Sendable {}
+extension Ocap_ResponseGetAssetState: @unchecked Sendable {}
+extension Ocap_ResponseGetForgeState: @unchecked Sendable {}
+extension Ocap_ResponseGetDelegateState: @unchecked Sendable {}
+extension Ocap_ResponseGetChainInfo: @unchecked Sendable {}
+extension Ocap_ResponseGetNodeInfo: @unchecked Sendable {}
+extension Ocap_ResponseGetUnconfirmedTxs: @unchecked Sendable {}
+extension Ocap_ResponseGetNetInfo: @unchecked Sendable {}
+extension Ocap_ResponseGetValidatorsInfo: @unchecked Sendable {}
+extension Ocap_RequestGetConfig: @unchecked Sendable {}
+extension Ocap_ResponseGetConfig: @unchecked Sendable {}
+extension Ocap_RequestListTransactions: @unchecked Sendable {}
+extension Ocap_ResponseListTransactions: @unchecked Sendable {}
+extension Ocap_RequestListAssets: @unchecked Sendable {}
+extension Ocap_ResponseListAssets: @unchecked Sendable {}
+extension Ocap_RequestListTopAccounts: @unchecked Sendable {}
+extension Ocap_ResponseListTopAccounts: @unchecked Sendable {}
+extension Ocap_RequestListAssetTransactions: @unchecked Sendable {}
+extension Ocap_ResponseListAssetTransactions: @unchecked Sendable {}
+extension Ocap_RequestListBlocks: @unchecked Sendable {}
+extension Ocap_ResponseListBlocks: @unchecked Sendable {}
+extension Ocap_ResponseGetTokenState: @unchecked Sendable {}
+extension Ocap_RequestListTokens: @unchecked Sendable {}
+extension Ocap_ResponseListTokens: @unchecked Sendable {}
+extension Ocap_ResponseGetFactoryState: @unchecked Sendable {}
+extension Ocap_RequestListFactories: @unchecked Sendable {}
+extension Ocap_ResponseListFactories: @unchecked Sendable {}
+extension Ocap_RequestGetAccountTokens: @unchecked Sendable {}
+extension Ocap_ResponseGetAccountTokens: @unchecked Sendable {}
+extension Ocap_ResponseGetStakeState: @unchecked Sendable {}
+extension Ocap_RequestListStakes: @unchecked Sendable {}
+extension Ocap_ResponseListStakes: @unchecked Sendable {}
+extension Ocap_ResponseGetRollupState: @unchecked Sendable {}
+extension Ocap_RequestListRollups: @unchecked Sendable {}
+extension Ocap_ResponseListRollups: @unchecked Sendable {}
+extension Ocap_RequestGetRollupBlock: @unchecked Sendable {}
+extension Ocap_ResponseGetRollupBlock: @unchecked Sendable {}
+extension Ocap_RequestListRollupBlocks: @unchecked Sendable {}
+extension Ocap_ResponseListRollupBlocks: @unchecked Sendable {}
+extension Ocap_RequestListRollupValidators: @unchecked Sendable {}
+extension Ocap_ResponseListRollupValidators: @unchecked Sendable {}
+extension Ocap_RequestSearch: @unchecked Sendable {}
+extension Ocap_ResponseSearch: @unchecked Sendable {}
+extension Ocap_RequestGetEvidenceState: @unchecked Sendable {}
+extension Ocap_ResponseGetEvidenceState: @unchecked Sendable {}
+extension Ocap_ResponseGetForgeStats: @unchecked Sendable {}
+extension Ocap_RequestEstimateGas: @unchecked Sendable {}
+extension Ocap_ResponseEstimateGas: @unchecked Sendable {}
+extension Ocap_RequestListDelegations: @unchecked Sendable {}
+extension Ocap_ResponseListDelegations: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "ocap"

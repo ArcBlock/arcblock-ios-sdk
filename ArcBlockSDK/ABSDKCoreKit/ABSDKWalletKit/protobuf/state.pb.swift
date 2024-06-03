@@ -729,6 +729,12 @@ public struct Ocap_StakeState {
     set {_uniqueStorage()._slashers = newValue}
   }
 
+  /// Added in v1.18.222
+  public var nonce: String {
+    get {return _storage._nonce}
+    set {_uniqueStorage()._nonce = newValue}
+  }
+
   public var context: Ocap_StateContext {
     get {return _storage._context ?? Ocap_StateContext()}
     set {_uniqueStorage()._context = newValue}
@@ -1171,6 +1177,21 @@ public struct Ocap_EvidenceState {
 
   fileprivate var _context: Ocap_StateContext? = nil
 }
+
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Ocap_AccountState: @unchecked Sendable {}
+extension Ocap_AssetState: @unchecked Sendable {}
+extension Ocap_ForgeState: @unchecked Sendable {}
+extension Ocap_RootState: @unchecked Sendable {}
+extension Ocap_DelegateOpState: @unchecked Sendable {}
+extension Ocap_DelegateState: @unchecked Sendable {}
+extension Ocap_TokenState: @unchecked Sendable {}
+extension Ocap_AssetFactoryState: @unchecked Sendable {}
+extension Ocap_StakeState: @unchecked Sendable {}
+extension Ocap_RollupState: @unchecked Sendable {}
+extension Ocap_RollupBlock: @unchecked Sendable {}
+extension Ocap_EvidenceState: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
@@ -2234,6 +2255,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     9: .standard(proto: "revoked_tokens"),
     10: .standard(proto: "revoked_assets"),
     11: .same(proto: "slashers"),
+    12: .same(proto: "nonce"),
     30: .same(proto: "context"),
     50: .same(proto: "data"),
   ]
@@ -2250,6 +2272,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _revokedTokens: [Ocap_IndexedTokenInput] = []
     var _revokedAssets: [String] = []
     var _slashers: [String] = []
+    var _nonce: String = String()
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -2269,6 +2292,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _revokedTokens = source._revokedTokens
       _revokedAssets = source._revokedAssets
       _slashers = source._slashers
+      _nonce = source._nonce
       _context = source._context
       _data = source._data
     }
@@ -2300,6 +2324,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 9: try { try decoder.decodeRepeatedMessageField(value: &_storage._revokedTokens) }()
         case 10: try { try decoder.decodeRepeatedStringField(value: &_storage._revokedAssets) }()
         case 11: try { try decoder.decodeRepeatedStringField(value: &_storage._slashers) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._nonce) }()
         case 30: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -2347,6 +2372,9 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._slashers.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._slashers, fieldNumber: 11)
       }
+      if !_storage._nonce.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._nonce, fieldNumber: 12)
+      }
       try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
       } }()
@@ -2373,6 +2401,7 @@ extension Ocap_StakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._revokedTokens != rhs_storage._revokedTokens {return false}
         if _storage._revokedAssets != rhs_storage._revokedAssets {return false}
         if _storage._slashers != rhs_storage._slashers {return false}
+        if _storage._nonce != rhs_storage._nonce {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true

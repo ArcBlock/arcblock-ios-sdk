@@ -888,6 +888,8 @@ public struct Ocap_IndexedStakeState {
 
   public var slashers: [String] = []
 
+  public var nonce: String = String()
+
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_data = newValue}
@@ -1402,6 +1404,44 @@ public struct Ocap_IndexedDelegationState {
 
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
+
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Ocap_Direction: @unchecked Sendable {}
+extension Ocap_Validity: @unchecked Sendable {}
+extension Ocap_PageOrder: @unchecked Sendable {}
+extension Ocap_Page: @unchecked Sendable {}
+extension Ocap_TypeFilter: @unchecked Sendable {}
+extension Ocap_AssetFilter: @unchecked Sendable {}
+extension Ocap_FactoryFilter: @unchecked Sendable {}
+extension Ocap_DelegationFilter: @unchecked Sendable {}
+extension Ocap_TokenFilter: @unchecked Sendable {}
+extension Ocap_StakeFilter: @unchecked Sendable {}
+extension Ocap_AccountFilter: @unchecked Sendable {}
+extension Ocap_TxFilter: @unchecked Sendable {}
+extension Ocap_RollupFilter: @unchecked Sendable {}
+extension Ocap_ValidatorFilter: @unchecked Sendable {}
+extension Ocap_TimeFilter: @unchecked Sendable {}
+extension Ocap_AddressFilter: @unchecked Sendable {}
+extension Ocap_PageInfo: @unchecked Sendable {}
+extension Ocap_TokenInfo: @unchecked Sendable {}
+extension Ocap_ValidityFilter: @unchecked Sendable {}
+extension Ocap_RangeFilter: @unchecked Sendable {}
+extension Ocap_AccountToken: @unchecked Sendable {}
+extension Ocap_ByDay: @unchecked Sendable {}
+extension Ocap_ByHour: @unchecked Sendable {}
+extension Ocap_IndexedTransaction: @unchecked Sendable {}
+extension Ocap_IndexedAccountState: @unchecked Sendable {}
+extension Ocap_IndexedAssetState: @unchecked Sendable {}
+extension Ocap_IndexedBlock: @unchecked Sendable {}
+extension Ocap_IndexedTokenState: @unchecked Sendable {}
+extension Ocap_IndexedFactoryState: @unchecked Sendable {}
+extension Ocap_IndexedStakeState: @unchecked Sendable {}
+extension Ocap_IndexedRollupState: @unchecked Sendable {}
+extension Ocap_IndexedRollupBlock: @unchecked Sendable {}
+extension Ocap_SearchResult: @unchecked Sendable {}
+extension Ocap_IndexedRollupValidator: @unchecked Sendable {}
+extension Ocap_IndexedDelegationState: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
@@ -3083,6 +3123,7 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     11: .standard(proto: "revoked_tokens"),
     12: .standard(proto: "revoked_assets"),
     13: .same(proto: "slashers"),
+    14: .same(proto: "nonce"),
     50: .same(proto: "data"),
   ]
 
@@ -3105,6 +3146,7 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 11: try { try decoder.decodeRepeatedMessageField(value: &self.revokedTokens) }()
       case 12: try { try decoder.decodeRepeatedStringField(value: &self.revokedAssets) }()
       case 13: try { try decoder.decodeRepeatedStringField(value: &self.slashers) }()
+      case 14: try { try decoder.decodeSingularStringField(value: &self.nonce) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -3155,6 +3197,9 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.slashers.isEmpty {
       try visitor.visitRepeatedStringField(value: self.slashers, fieldNumber: 13)
     }
+    if !self.nonce.isEmpty {
+      try visitor.visitSingularStringField(value: self.nonce, fieldNumber: 14)
+    }
     try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     } }()
@@ -3175,6 +3220,7 @@ extension Ocap_IndexedStakeState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.revokedTokens != rhs.revokedTokens {return false}
     if lhs.revokedAssets != rhs.revokedAssets {return false}
     if lhs.slashers != rhs.slashers {return false}
+    if lhs.nonce != rhs.nonce {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
