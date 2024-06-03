@@ -1,3 +1,6 @@
+## 0.11.46 (June 03, 2024)
+  - update proto
+
 ## 0.11.45 (May 06, 2024)
   - fix CryptoSwift version
 
