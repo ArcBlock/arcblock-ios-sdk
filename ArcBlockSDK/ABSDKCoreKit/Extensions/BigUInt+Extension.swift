@@ -54,6 +54,7 @@ public extension BigUInt {
         formatter.numberStyle = .none
         formatter.maximumFractionDigits = realDecimals
         formatter.roundingMode = .floor
+        formatter.locale = Locale(identifier: "en_US") // 确定format后的字符串分割符号是.  德国和法国的分隔符号是,
         return formatter.string(from: NSDecimalNumber(string: amountStr)) ?? "0"
     }
     
