@@ -1,3 +1,6 @@
+## 0.11.47 (June 14, 2024)
+  - fix format
+
 ## 0.11.46 (June 03, 2024)
   - update proto
 
