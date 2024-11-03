@@ -1,0 +1,73 @@
+version: "Apple Swift version 5.8 (swiftlang-5.8.0.124.2 clang-1403.0.22.11.100)"
+options: "51716a6855d5d986c39094629abc04d871eeebf116df436c42f6de81c09a1beb"
+build_start_time: [1685951529, 233737000]
+build_end_time: [1685951532, 447213000]
+inputs:
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/DerivedSources/resource_bundle_accessor.swift"
+  : [1685951516, 519677762]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Browser/Bridge.swift": [1685951511, 286547140]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Ethereum/IEth+Defaults.swift"
+  : [1685951511, 313073468]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Ethereum/IEth.swift"
+  : [1685951511, 313233923]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Personal/Personal+CreateAccount.swift"
+  : [1685951511, 313375044]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Personal/Personal+Sign.swift"
+  : [1685951511, 313462833]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Personal/Personal+UnlockAccount.swift"
+  : [1685951511, 313539165]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/TxPool.swift": [1685951511, 313660412]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/HookedFunctions/Web3+BrowserFunctions.swift"
+  : [1685951511, 313819241]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/HookedFunctions/Web3+Wallet.swift": [1685951511, 313922155]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Operations/ReadOperation.swift": [1685951511, 314032569]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Operations/WriteOperation.swift": [1685951511, 314129983]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1155/Web3+ERC1155.swift": [1685951511, 314348561]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1376/Web3+ERC1376.swift": [1685951511, 314543931]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1400/Web3+ERC1400.swift": [1685951511, 314769384]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1410/Web3+ERC1410.swift": [1685951511, 314909838]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1594/Web3+ERC1594.swift": [1685951511, 315044460]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1633/Web3+ERC1633.swift": [1685951511, 315153916]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1643/Web3+ERC1643.swift": [1685951511, 315278204]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1644/Web3+ERC1644.swift": [1685951511, 315411076]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC165/Web3+ERC165.swift": [1685951511, 315580030]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC20/ERC20BaseProperties.swift"
+  : [1685951511, 315782108]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC20/ERC20BasePropertiesProvider.swift"
+  : [1685951511, 315872772]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC20/Web3+ERC20.swift": [1685951511, 316003769]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC721/Web3+ERC721.swift": [1685951511, 316135099]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC721x/Web3+ERC721x.swift": [1685951511, 316262846]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC777/Web3+ERC777.swift": [1685951511, 316393384]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC820/Web3+ERC820.swift": [1685951511, 316531506]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC888/Web3+ERC888.swift": [1685951511, 316659127]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ST20/Web3+ST20.swift": [1685951511, 316782708]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ST20/Web3+SecurityToken.swift"
+  : [1685951511, 316942412]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP4361.swift": [1685951511, 317173614]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP67Code.swift": [1685951511, 317274529]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP681.swift": [1685951511, 317412233]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP712.swift": [1685951511, 317535730]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENS.swift": [1685951511, 317715184]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSBaseRegistrar.swift": [1685951511, 317830431]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSRegistry.swift": [1685951511, 317964219]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSResolver.swift": [1685951511, 318076342]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSReverseRegistrar.swift"
+  : [1685951511, 318175797]
+  ? "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ETHRegistrarController.swift"
+  : [1685951511, 318297711]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/NameHash.swift": [1685951511, 318394625]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/PublicKey.swift": [1685951511, 318482623]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Constants.swift": [1685951511, 318609786]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Contract.swift": [1685951511, 318787407]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+EIP1559.swift": [1685951511, 318905737]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+EventParser.swift": [1685951511, 319018401]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Eventloop.swift": [1685951511, 319332685]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+HttpProvider.swift": [1685951511, 319482931]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+InfuraProviders.swift": [1685951511, 319599136]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Instance.swift": [1685951511, 319698384]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Personal.swift": [1685951511, 319792340]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Resolver.swift": [1685951511, 319865088]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Signing.swift": [1685951511, 319953419]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Utils.swift": [1685951511, 320327118]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3.swift": [1685951511, 320424074]

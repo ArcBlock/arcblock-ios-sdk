@@ -1,0 +1,12 @@
+version: "Apple Swift version 5.8 (swiftlang-5.8.0.124.2 clang-1403.0.22.11.100)"
+options: "fcab0d94cc6c5463b34f9127bea325116d4c8629104ada1d3994e8c704fbefc5"
+build_start_time: [1685951518, 277239000]
+build_end_time: [1685951524, 160288000]
+inputs:
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/A0JWT.swift": [1685951236, 538240434]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/Errors.swift": [1685951236, 538312807]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/JWT.swift": [1685951236, 538453304]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/JWTDecode.swift": [1685951236, 538601008]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/TokenValidators.swift": [1685951236, 538666090]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/ValidationError.swift": [1685951236, 538722172]
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/ValidatorJWT.swift": [1685951236, 538794879]

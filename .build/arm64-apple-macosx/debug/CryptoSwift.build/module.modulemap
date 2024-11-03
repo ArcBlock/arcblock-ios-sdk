@@ -1,0 +1,4 @@
+module CryptoSwift {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/CryptoSwift.build/CryptoSwift-Swift.h"
+    requires objc
+}

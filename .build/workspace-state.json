@@ -1,0 +1,129 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "apollo-ios",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/ArcBlock/apollo-ios.git",
+          "name" : "Apollo"
+        },
+        "state" : {
+          "checkoutState" : {
+            "branch" : "master",
+            "revision" : "57df3cdf1f5f071a3fcdea5eb6834f08f280eff2"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "apollo-ios"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "bigint",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/attaswift/BigInt.git",
+          "name" : "BigInt"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "0ed110f7555c34ff468e72e1686e59721f2b0da6",
+            "version" : "5.3.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "BigInt"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "cryptoswift",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+          "name" : "CryptoSwift"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "039f56c5d7960f277087a0be51f5eb04ed0ec073",
+            "version" : "1.5.1"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "CryptoSwift"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "jwtdecode.swift",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/auth0/JWTDecode.swift.git",
+          "name" : "JWTDecode"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "3cd207fb9e943b6168a117baa3936c823204c2dc",
+            "version" : "2.6.3"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "JWTDecode.swift"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "reachability.swift",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/ashleymills/Reachability.swift.git",
+          "name" : "Reachability"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "c01bbdf2d633cf049ae1ed1a68a2020a8bda32e2",
+            "version" : "5.1.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "Reachability.swift"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "swift-protobuf",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/apple/swift-protobuf.git",
+          "name" : "SwiftProtobuf"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "0af9125c4eae12a4973fb66574c53a54962a9e1e",
+            "version" : "1.21.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "swift-protobuf"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "web3swift",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/web3swift-team/web3swift",
+          "name" : "Web3swift"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "16a2915ebd1a0fd33bf0a0ed5a9874909a6e187d",
+            "version" : "3.1.2"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "web3swift"
+      }
+    ]
+  },
+  "version" : 6
+}

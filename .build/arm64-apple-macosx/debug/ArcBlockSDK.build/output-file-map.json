@@ -1,0 +1,209 @@
+{
+  "": {
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/master.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/TxHelper.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TxHelper.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TxHelper.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TxHelper~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TxHelper.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/TypeUrls.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TypeUrls.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TypeUrls.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TypeUrls~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/TypeUrls.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/enum.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/enum.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/enum.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/enum.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/enum.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/rpc.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/rpc.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/rpc.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/rpc.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/rpc.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/service.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/service.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/service.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/service.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/service.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/state.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/state.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/state.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/state.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/state.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/trace-type.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/trace-type.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/trace-type.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/trace-type.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/trace-type.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/tx.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/tx.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/tx.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/tx.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/tx.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/type.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/type.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/type.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/type.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/type.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ABSDKWalletKit/protobuf/vendor.pb.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/vendor.pb.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/vendor.pb.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/vendor.pb~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ABSDKWalletKit/protobuf/vendor.pb.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/AESUtils.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/AESUtils.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/AESUtils.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/AESUtils~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/AESUtils.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ASN1/Asn1Parser.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/Asn1Parser.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/Asn1Parser.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/Asn1Parser~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/Asn1Parser.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ASN1/RSAPublicKeyExporter.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/RSAPublicKeyExporter.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/RSAPublicKeyExporter.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/RSAPublicKeyExporter~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/RSAPublicKeyExporter.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ASN1/SimpleASN1Writer.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/SimpleASN1Writer.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/SimpleASN1Writer.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/SimpleASN1Writer~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ASN1/SimpleASN1Writer.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/BIP44Utils.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/BIP44Utils.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/BIP44Utils.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/BIP44Utils~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/BIP44Utils.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/DidHelper.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/DidHelper.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/DidHelper.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/DidHelper~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/DidHelper.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Extensions/BigUInt+Extension.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/BigUInt+Extension.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/BigUInt+Extension.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/BigUInt+Extension~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/BigUInt+Extension.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Extensions/Double+Extension.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/Double+Extension.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/Double+Extension.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/Double+Extension~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/Double+Extension.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Extensions/String+Extension.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/String+Extension.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/String+Extension.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/String+Extension~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Extensions/String+Extension.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/JWTHelper.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/JWTHelper.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/JWTHelper.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/JWTHelper~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/JWTHelper.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/MCrypto.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/MCrypto.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/MCrypto.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/MCrypto~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/MCrypto.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Multibase/Base16String.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base16String.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base16String.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base16String~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base16String.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Multibase/Base58String.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base58String.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base58String.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base58String~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base58String.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Multibase/Base64String.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base64String.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base64String.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base64String~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Base64String.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Multibase/Encoding.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Encoding.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Encoding.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Encoding~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Encoding.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/Multibase/Multibase.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Multibase.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Multibase.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Multibase~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/Multibase/Multibase.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/RSAUtils.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/RSAUtils.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/RSAUtils.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/RSAUtils~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/RSAUtils.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ed25519swift/ed25519_fe.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_fe.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_fe.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_fe~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_fe.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ed25519swift/ed25519_ge.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_ge.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_ge.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_ge~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_ge.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ed25519swift/ed25519_open.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_open.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_open.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_open~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_open.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ed25519swift/ed25519_sc.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sc.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sc.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sc~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sc.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ed25519swift/ed25519_sign.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sign.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sign.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sign~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_sign.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/ArcBlockSDK/ABSDKCoreKit/ed25519swift/ed25519_utility.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_utility.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_utility.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_utility~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/ABSDKCoreKit/ed25519swift/ed25519_utility.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/DerivedSources/resource_bundle_accessor.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/resource_bundle_accessor.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/resource_bundle_accessor.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/resource_bundle_accessor~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/ArcBlockSDK.build/resource_bundle_accessor.swiftdeps"
+  }
+}

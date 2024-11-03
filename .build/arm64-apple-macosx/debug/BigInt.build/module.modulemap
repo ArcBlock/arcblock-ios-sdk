@@ -1,0 +1,4 @@
+module BigInt {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/BigInt.build/BigInt-Swift.h"
+    requires objc
+}

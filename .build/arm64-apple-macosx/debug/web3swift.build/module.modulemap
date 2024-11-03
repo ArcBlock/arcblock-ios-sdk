@@ -1,0 +1,4 @@
+module web3swift {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/web3swift-Swift.h"
+    requires objc
+}

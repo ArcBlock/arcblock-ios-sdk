@@ -1,0 +1,47 @@
+{
+  "": {
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/master.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/A0JWT.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/A0JWT.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/A0JWT.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/A0JWT~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/A0JWT.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/Errors.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/Errors.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/Errors.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/Errors~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/Errors.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/JWT.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWT.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWT.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWT~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWT.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/JWTDecode.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWTDecode.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWTDecode.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWTDecode~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWTDecode.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/TokenValidators.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/TokenValidators.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/TokenValidators.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/TokenValidators~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/TokenValidators.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/ValidationError.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidationError.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidationError.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidationError~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidationError.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/JWTDecode.swift/JWTDecode/ValidatorJWT.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidatorJWT.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidatorJWT.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidatorJWT~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/ValidatorJWT.swiftdeps"
+  }
+}

@@ -1,0 +1,4 @@
+module JWTDecode {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/JWTDecode.build/JWTDecode-Swift.h"
+    requires objc
+}

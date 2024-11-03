@@ -1,0 +1,4 @@
+module secp256k1 {
+    umbrella header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/secp256k1/include/secp256k1.h"
+    export *
+}

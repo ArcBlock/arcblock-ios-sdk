@@ -1,0 +1,341 @@
+{
+  "": {
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/master.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Browser/Bridge.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Browser/Bridge.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Browser/Bridge.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Browser/Bridge~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Browser/Bridge.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Ethereum/IEth+Defaults.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth+Defaults.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth+Defaults.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth+Defaults~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth+Defaults.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Ethereum/IEth.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Ethereum/IEth.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Personal/Personal+CreateAccount.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+CreateAccount.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+CreateAccount.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+CreateAccount~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+CreateAccount.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Personal/Personal+Sign.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+Sign.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+Sign.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+Sign~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+Sign.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/Personal/Personal+UnlockAccount.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+UnlockAccount.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+UnlockAccount.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+UnlockAccount~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/Personal/Personal+UnlockAccount.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/EthereumAPICalls/TxPool.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/TxPool.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/TxPool.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/TxPool~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/EthereumAPICalls/TxPool.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/HookedFunctions/Web3+BrowserFunctions.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+BrowserFunctions.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+BrowserFunctions.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+BrowserFunctions~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+BrowserFunctions.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/HookedFunctions/Web3+Wallet.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+Wallet.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+Wallet.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+Wallet~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/HookedFunctions/Web3+Wallet.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Operations/ReadOperation.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/ReadOperation.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/ReadOperation.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/ReadOperation~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/ReadOperation.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Operations/WriteOperation.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/WriteOperation.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/WriteOperation.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/WriteOperation~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Operations/WriteOperation.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1155/Web3+ERC1155.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1155/Web3+ERC1155.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1155/Web3+ERC1155.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1155/Web3+ERC1155~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1155/Web3+ERC1155.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1376/Web3+ERC1376.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1376/Web3+ERC1376.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1376/Web3+ERC1376.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1376/Web3+ERC1376~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1376/Web3+ERC1376.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1400/Web3+ERC1400.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1400/Web3+ERC1400.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1400/Web3+ERC1400.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1400/Web3+ERC1400~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1400/Web3+ERC1400.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1410/Web3+ERC1410.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1410/Web3+ERC1410.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1410/Web3+ERC1410.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1410/Web3+ERC1410~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1410/Web3+ERC1410.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1594/Web3+ERC1594.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1594/Web3+ERC1594.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1594/Web3+ERC1594.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1594/Web3+ERC1594~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1594/Web3+ERC1594.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1633/Web3+ERC1633.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1633/Web3+ERC1633.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1633/Web3+ERC1633.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1633/Web3+ERC1633~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1633/Web3+ERC1633.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1643/Web3+ERC1643.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1643/Web3+ERC1643.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1643/Web3+ERC1643.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1643/Web3+ERC1643~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1643/Web3+ERC1643.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC1644/Web3+ERC1644.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1644/Web3+ERC1644.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1644/Web3+ERC1644.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1644/Web3+ERC1644~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC1644/Web3+ERC1644.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC165/Web3+ERC165.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC165/Web3+ERC165.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC165/Web3+ERC165.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC165/Web3+ERC165~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC165/Web3+ERC165.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC20/ERC20BaseProperties.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BaseProperties.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BaseProperties.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BaseProperties~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BaseProperties.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC20/ERC20BasePropertiesProvider.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BasePropertiesProvider.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BasePropertiesProvider.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BasePropertiesProvider~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/ERC20BasePropertiesProvider.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC20/Web3+ERC20.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/Web3+ERC20.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/Web3+ERC20.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/Web3+ERC20~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC20/Web3+ERC20.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC721/Web3+ERC721.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721/Web3+ERC721.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721/Web3+ERC721.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721/Web3+ERC721~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721/Web3+ERC721.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC721x/Web3+ERC721x.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721x/Web3+ERC721x.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721x/Web3+ERC721x.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721x/Web3+ERC721x~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC721x/Web3+ERC721x.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC777/Web3+ERC777.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC777/Web3+ERC777.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC777/Web3+ERC777.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC777/Web3+ERC777~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC777/Web3+ERC777.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC820/Web3+ERC820.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC820/Web3+ERC820.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC820/Web3+ERC820.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC820/Web3+ERC820~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC820/Web3+ERC820.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ERC888/Web3+ERC888.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC888/Web3+ERC888.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC888/Web3+ERC888.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC888/Web3+ERC888~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ERC888/Web3+ERC888.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ST20/Web3+ST20.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+ST20.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+ST20.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+ST20~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+ST20.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Tokens/ST20/Web3+SecurityToken.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+SecurityToken.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+SecurityToken.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+SecurityToken~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Tokens/ST20/Web3+SecurityToken.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP4361.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP4361.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP4361.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP4361~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP4361.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP67Code.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP67Code.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP67Code.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP67Code~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP67Code.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP681.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP681.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP681.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP681~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP681.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/EIP/EIP712.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP712.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP712.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP712~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/EIP/EIP712.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENS.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENS.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENS.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENS~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENS.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSBaseRegistrar.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSBaseRegistrar.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSBaseRegistrar.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSBaseRegistrar~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSBaseRegistrar.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSRegistry.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSRegistry.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSRegistry.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSRegistry~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSRegistry.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSResolver.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSResolver.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSResolver.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSResolver~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSResolver.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ENSReverseRegistrar.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSReverseRegistrar.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSReverseRegistrar.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSReverseRegistrar~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ENSReverseRegistrar.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/ETHRegistrarController.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ETHRegistrarController.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ETHRegistrarController.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ETHRegistrarController~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/ETHRegistrarController.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/NameHash.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/NameHash.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/NameHash.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/NameHash~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/NameHash.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Utils/ENS/PublicKey.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/PublicKey.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/PublicKey.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/PublicKey~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Utils/ENS/PublicKey.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Constants.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Constants.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Constants.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Constants~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Constants.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Contract.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Contract.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Contract.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Contract~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Contract.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+EIP1559.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EIP1559.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EIP1559.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EIP1559~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EIP1559.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+EventParser.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EventParser.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EventParser.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EventParser~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+EventParser.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Eventloop.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Eventloop.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Eventloop.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Eventloop~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Eventloop.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+HttpProvider.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+HttpProvider.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+HttpProvider.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+HttpProvider~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+HttpProvider.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+InfuraProviders.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+InfuraProviders.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+InfuraProviders.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+InfuraProviders~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+InfuraProviders.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Instance.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Instance.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Instance.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Instance~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Instance.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Personal.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Personal.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Personal.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Personal~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Personal.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Resolver.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Resolver.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Resolver.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Resolver~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Resolver.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Signing.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Signing.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Signing.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Signing~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Signing.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3+Utils.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Utils.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Utils.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Utils~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3+Utils.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/checkouts/web3swift/Sources/web3swift/Web3/Web3.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/Web3/Web3.swiftdeps"
+  },
+  "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/DerivedSources/resource_bundle_accessor.swift": {
+    "dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/resource_bundle_accessor.d",
+    "object": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/resource_bundle_accessor.swift.o",
+    "swiftmodule": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/resource_bundle_accessor~partial.swiftmodule",
+    "swift-dependencies": "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/web3swift.build/resource_bundle_accessor.swiftdeps"
+  }
+}

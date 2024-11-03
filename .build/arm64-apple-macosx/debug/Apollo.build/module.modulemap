@@ -1,0 +1,4 @@
+module Apollo {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/Apollo.build/Apollo-Swift.h"
+    requires objc
+}

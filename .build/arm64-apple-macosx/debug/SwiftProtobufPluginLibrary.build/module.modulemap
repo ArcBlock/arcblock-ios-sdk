@@ -1,0 +1,4 @@
+module SwiftProtobufPluginLibrary {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/SwiftProtobufPluginLibrary.build/SwiftProtobufPluginLibrary-Swift.h"
+    requires objc
+}

@@ -1,0 +1,4 @@
+module Reachability {
+    header "/Users/zy/Desktop/ArcBlock/Code/arcblock-ios-sdk/.build/arm64-apple-macosx/debug/Reachability.build/Reachability-Swift.h"
+    requires objc
+}
