@@ -1,3 +1,6 @@
+## 0.11.48 (January 21, 2025)
+  - support passkey type
+
 ## 0.11.47 (June 14, 2024)
   - fix format
 

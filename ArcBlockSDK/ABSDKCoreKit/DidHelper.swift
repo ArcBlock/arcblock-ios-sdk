@@ -45,6 +45,8 @@ public enum RoleType: Int8 {
     case factory = 18
     case rollup = 19
     case storage = 20
+    case profile = 21
+    case passkey = 22
     case any = 63
 
     public static func roleTypeWithName(_ name: String) -> RoleType {
@@ -93,6 +95,10 @@ public enum RoleType: Int8 {
             return .rollup
         case "storage":
             return .storage
+        case "profile":
+            return .profile
+        case "passkey":
+            return .passkey
         default:
             return .any
         }
@@ -142,6 +148,10 @@ public enum RoleType: Int8 {
             return "rollup"
         case .storage:
             return "storage"
+        case .profile:
+            return "profile"
+        case .passkey:
+            return "passkey"
         case .any:
             return "any"
         }
@@ -152,6 +162,7 @@ public enum KeyType: Int8 {
     case ed25519 = 0
     case secp256k1 = 1
     case ethereum = 2
+    case passkey = 3
 
     // childSeed to PublicKey
     public func privateKeyToPublicKey(privateKey: Data) -> Data? {
@@ -162,6 +173,8 @@ public enum KeyType: Int8 {
             return MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)
         case .ethereum:
             return MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)
+        case .passkey:
+            return nil
         }
     }
 
@@ -173,6 +186,8 @@ public enum KeyType: Int8 {
             return MCrypto.Signer.M_SECP256K1.keypair()
         case .ethereum:
             return MCrypto.Signer.ETHEREUM.keypair()
+        case .passkey:
+            return (nil, nil)
         }
     }
 
@@ -184,6 +199,8 @@ public enum KeyType: Int8 {
             return (MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
         case .ethereum:
             return (MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey) , privateKey)
+        case .passkey:
+            return (nil, nil)
         }
     }
 
@@ -196,6 +213,8 @@ public enum KeyType: Int8 {
             return .ed25519
         case "ethereum" :
             return .ethereum
+        case "passkey":
+            return .passkey
         default:
             return .ed25519
         }
@@ -209,6 +228,8 @@ public enum KeyType: Int8 {
             return "secp256k1"
         case .ethereum:
             return "ethereum"
+        case .passkey:
+            return "passkey"
         }
     }
 }
@@ -313,6 +334,8 @@ public struct DidType: Equatable {
             return MCrypto.Signer.M_SECP256K1.sign(message: message, privateKey: privateKey)
         case .ethereum:
             return MCrypto.Signer.ETHEREUM.sign(message: message, privateKey: privateKey)
+        case .passkey:
+            return nil
         }
     }
     
@@ -324,6 +347,8 @@ public struct DidType: Equatable {
             return MCrypto.Signer.M_SECP256K1.verify(message: message, signature: signature, publicKey: publicKey)
         case .ethereum:
             return MCrypto.Signer.ETHEREUM.verify(message: message, signature: signature, publicKey: publicKey)
+        case .passkey:
+            return false
         }
     }
     
@@ -335,6 +360,8 @@ public struct DidType: Equatable {
             return MCrypto.Signer.M_SECP256K1.privateKeyToPublicKey(privateKey: privateKey)
         case .ethereum:
             return MCrypto.Signer.ETHEREUM.privateKeyToPublicKey(privateKey: privateKey)
+        case .passkey:
+            return nil
         }
     }
 }
