@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1080,6 +1080,7 @@
 				DEFINES_MODULE = YES;
 				EXCLUDED_ARCHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 			};
 			name = Debug;
 		};
@@ -1089,6 +1090,7 @@
 				DEFINES_MODULE = YES;
 				EXCLUDED_ARCHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 			};
 			name = Release;
 		};
