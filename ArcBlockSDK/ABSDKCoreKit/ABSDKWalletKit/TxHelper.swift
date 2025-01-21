@@ -180,6 +180,8 @@ public class TxHelper {
             signature = MCrypto.Signer.M_SECP256K1.sign(message: message, privateKey: privateKey)
         case .ethereum:
             signature = MCrypto.Signer.ETHEREUM.sign(message: message, privateKey: privateKey)
+        case .passkey:
+            signature = nil
         }
 
         return signature
