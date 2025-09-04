@@ -1,3 +1,6 @@
+## 0.11.49 (September 04, 2025)
+
+
 ## 0.11.48 (January 21, 2025)
   - support passkey type
 
