@@ -20,6 +20,46 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+public enum Ocap_TokenFactoryStatus: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
+  case tokenFactoryActive // = 0
+  case tokenFactoryPaused // = 1
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .tokenFactoryActive
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .tokenFactoryActive
+    case 1: self = .tokenFactoryPaused
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .tokenFactoryActive: return 0
+    case .tokenFactoryPaused: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Ocap_TokenFactoryStatus: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static var allCases: [Ocap_TokenFactoryStatus] = [
+    .tokenFactoryActive,
+    .tokenFactoryPaused,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 public struct Ocap_AccountState {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -311,6 +351,11 @@ public struct Ocap_ForgeState {
   /// Clears the value of `vaults`. Subsequent reads from it will return its default value.
   public mutating func clearVaults() {_uniqueStorage()._vaults = nil}
 
+  public var reservedSymbols: [String] {
+    get {return _storage._reservedSymbols}
+    set {_uniqueStorage()._reservedSymbols = newValue}
+  }
+
   /// app can define their own app state
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -503,6 +548,21 @@ public struct Ocap_TokenState {
   public var hasForeignToken: Bool {return _storage._foreignToken != nil}
   /// Clears the value of `foreignToken`. Subsequent reads from it will return its default value.
   public mutating func clearForeignToken() {_uniqueStorage()._foreignToken = nil}
+
+  public var tokenFactoryAddress: String {
+    get {return _storage._tokenFactoryAddress}
+    set {_uniqueStorage()._tokenFactoryAddress = newValue}
+  }
+
+  public var initialSupply: String {
+    get {return _storage._initialSupply}
+    set {_uniqueStorage()._initialSupply = newValue}
+  }
+
+  public var maxTotalSupply: String {
+    get {return _storage._maxTotalSupply}
+    set {_uniqueStorage()._maxTotalSupply = newValue}
+  }
 
   public var context: Ocap_StateContext {
     get {return _storage._context ?? Ocap_StateContext()}
@@ -1178,24 +1238,112 @@ public struct Ocap_EvidenceState {
   fileprivate var _context: Ocap_StateContext? = nil
 }
 
-#if swift(>=5.5) && canImport(_Concurrency)
-extension Ocap_AccountState: @unchecked Sendable {}
-extension Ocap_AssetState: @unchecked Sendable {}
-extension Ocap_ForgeState: @unchecked Sendable {}
-extension Ocap_RootState: @unchecked Sendable {}
-extension Ocap_DelegateOpState: @unchecked Sendable {}
-extension Ocap_DelegateState: @unchecked Sendable {}
-extension Ocap_TokenState: @unchecked Sendable {}
-extension Ocap_AssetFactoryState: @unchecked Sendable {}
-extension Ocap_StakeState: @unchecked Sendable {}
-extension Ocap_RollupState: @unchecked Sendable {}
-extension Ocap_RollupBlock: @unchecked Sendable {}
-extension Ocap_EvidenceState: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+public struct Ocap_TokenFactoryState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String {
+    get {return _storage._address}
+    set {_uniqueStorage()._address = newValue}
+  }
+
+  /// Address of the user who created this market
+  public var ownerAddress: String {
+    get {return _storage._ownerAddress}
+    set {_uniqueStorage()._ownerAddress = newValue}
+  }
+
+  /// Target token address for trading
+  public var tokenAddress: String {
+    get {return _storage._tokenAddress}
+    set {_uniqueStorage()._tokenAddress = newValue}
+  }
+
+  /// Reserve token address
+  public var reserveAddress: String {
+    get {return _storage._reserveAddress}
+    set {_uniqueStorage()._reserveAddress = newValue}
+  }
+
+  /// Curve related parameter configuration
+  public var curve: Ocap_CurveConfig {
+    get {return _storage._curve ?? Ocap_CurveConfig()}
+    set {_uniqueStorage()._curve = newValue}
+  }
+  /// Returns true if `curve` has been explicitly set.
+  public var hasCurve: Bool {return _storage._curve != nil}
+  /// Clears the value of `curve`. Subsequent reads from it will return its default value.
+  public mutating func clearCurve() {_uniqueStorage()._curve = nil}
+
+  /// Current total supply of target tokens circulated through this bonding curve
+  public var currentSupply: String {
+    get {return _storage._currentSupply}
+    set {_uniqueStorage()._currentSupply = newValue}
+  }
+
+  /// Current total reserve tokens held in the bonding curve market
+  public var reserveBalance: String {
+    get {return _storage._reserveBalance}
+    set {_uniqueStorage()._reserveBalance = newValue}
+  }
+
+  /// Trading fee rate in basis points, 100 = 1%
+  public var feeRate: Int32 {
+    get {return _storage._feeRate}
+    set {_uniqueStorage()._feeRate = newValue}
+  }
+
+  /// Market status
+  public var status: Ocap_TokenFactoryStatus {
+    get {return _storage._status}
+    set {_uniqueStorage()._status = newValue}
+  }
+
+  public var token: Ocap_TokenState {
+    get {return _storage._token ?? Ocap_TokenState()}
+    set {_uniqueStorage()._token = newValue}
+  }
+  /// Returns true if `token` has been explicitly set.
+  public var hasToken: Bool {return _storage._token != nil}
+  /// Clears the value of `token`. Subsequent reads from it will return its default value.
+  public mutating func clearToken() {_uniqueStorage()._token = nil}
+
+  public var reserveToken: Ocap_TokenState {
+    get {return _storage._reserveToken ?? Ocap_TokenState()}
+    set {_uniqueStorage()._reserveToken = newValue}
+  }
+  /// Returns true if `reserveToken` has been explicitly set.
+  public var hasReserveToken: Bool {return _storage._reserveToken != nil}
+  /// Clears the value of `reserveToken`. Subsequent reads from it will return its default value.
+  public mutating func clearReserveToken() {_uniqueStorage()._reserveToken = nil}
+
+  public var context: Ocap_StateContext {
+    get {return _storage._context ?? Ocap_StateContext()}
+    set {_uniqueStorage()._context = newValue}
+  }
+  /// Returns true if `context` has been explicitly set.
+  public var hasContext: Bool {return _storage._context != nil}
+  /// Clears the value of `context`. Subsequent reads from it will return its default value.
+  public mutating func clearContext() {_uniqueStorage()._context = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "ocap"
+
+extension Ocap_TokenFactoryStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TOKEN_FACTORY_ACTIVE"),
+    1: .same(proto: "TOKEN_FACTORY_PAUSED"),
+  ]
+}
 
 extension Ocap_AccountState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".AccountState"
@@ -1561,6 +1709,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     7: .standard(proto: "upgrade_info"),
     8: .standard(proto: "account_config"),
     9: .same(proto: "vaults"),
+    10: .standard(proto: "reserved_symbols"),
     2047: .same(proto: "data"),
   ]
 
@@ -1574,6 +1723,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _upgradeInfo: Ocap_UpgradeInfo? = nil
     var _accountConfig: [Ocap_AccountConfig] = []
     var _vaults: Ocap_VaultConfig? = nil
+    var _reservedSymbols: [String] = []
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -1590,6 +1740,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _upgradeInfo = source._upgradeInfo
       _accountConfig = source._accountConfig
       _vaults = source._vaults
+      _reservedSymbols = source._reservedSymbols
       _data = source._data
     }
   }
@@ -1618,6 +1769,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._upgradeInfo) }()
         case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._accountConfig) }()
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._vaults) }()
+        case 10: try { try decoder.decodeRepeatedStringField(value: &_storage._reservedSymbols) }()
         case 2047: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -1658,6 +1810,9 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       try { if let v = _storage._vaults {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
       } }()
+      if !_storage._reservedSymbols.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._reservedSymbols, fieldNumber: 10)
+      }
       try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 2047)
       } }()
@@ -1679,6 +1834,7 @@ extension Ocap_ForgeState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._upgradeInfo != rhs_storage._upgradeInfo {return false}
         if _storage._accountConfig != rhs_storage._accountConfig {return false}
         if _storage._vaults != rhs_storage._vaults {return false}
+        if _storage._reservedSymbols != rhs_storage._reservedSymbols {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -1902,6 +2058,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     8: .same(proto: "icon"),
     9: .standard(proto: "total_supply"),
     10: .standard(proto: "foreign_token"),
+    11: .standard(proto: "token_factory_address"),
+    12: .standard(proto: "initial_supply"),
+    13: .standard(proto: "max_total_supply"),
     15: .same(proto: "context"),
     20: .same(proto: "data"),
   ]
@@ -1917,6 +2076,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _icon: String = String()
     var _totalSupply: String = String()
     var _foreignToken: Ocap_ForeignToken? = nil
+    var _tokenFactoryAddress: String = String()
+    var _initialSupply: String = String()
+    var _maxTotalSupply: String = String()
     var _context: Ocap_StateContext? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
@@ -1935,6 +2097,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _icon = source._icon
       _totalSupply = source._totalSupply
       _foreignToken = source._foreignToken
+      _tokenFactoryAddress = source._tokenFactoryAddress
+      _initialSupply = source._initialSupply
+      _maxTotalSupply = source._maxTotalSupply
       _context = source._context
       _data = source._data
     }
@@ -1965,6 +2130,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 8: try { try decoder.decodeSingularStringField(value: &_storage._icon) }()
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._totalSupply) }()
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._foreignToken) }()
+        case 11: try { try decoder.decodeSingularStringField(value: &_storage._tokenFactoryAddress) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._initialSupply) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._maxTotalSupply) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
         case 20: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
@@ -2009,6 +2177,15 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       try { if let v = _storage._foreignToken {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
       } }()
+      if !_storage._tokenFactoryAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._tokenFactoryAddress, fieldNumber: 11)
+      }
+      if !_storage._initialSupply.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._initialSupply, fieldNumber: 12)
+      }
+      if !_storage._maxTotalSupply.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._maxTotalSupply, fieldNumber: 13)
+      }
       try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
@@ -2034,6 +2211,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._icon != rhs_storage._icon {return false}
         if _storage._totalSupply != rhs_storage._totalSupply {return false}
         if _storage._foreignToken != rhs_storage._foreignToken {return false}
+        if _storage._tokenFactoryAddress != rhs_storage._tokenFactoryAddress {return false}
+        if _storage._initialSupply != rhs_storage._initialSupply {return false}
+        if _storage._maxTotalSupply != rhs_storage._maxTotalSupply {return false}
         if _storage._context != rhs_storage._context {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
@@ -3040,6 +3220,162 @@ extension Ocap_EvidenceState: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.hash != rhs.hash {return false}
     if lhs.data != rhs.data {return false}
     if lhs._context != rhs._context {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_TokenFactoryState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TokenFactoryState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .standard(proto: "owner_address"),
+    3: .standard(proto: "token_address"),
+    4: .standard(proto: "reserve_address"),
+    5: .same(proto: "curve"),
+    6: .standard(proto: "current_supply"),
+    7: .standard(proto: "reserve_balance"),
+    8: .standard(proto: "fee_rate"),
+    9: .same(proto: "status"),
+    10: .same(proto: "token"),
+    11: .standard(proto: "reserve_token"),
+    30: .same(proto: "context"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _address: String = String()
+    var _ownerAddress: String = String()
+    var _tokenAddress: String = String()
+    var _reserveAddress: String = String()
+    var _curve: Ocap_CurveConfig? = nil
+    var _currentSupply: String = String()
+    var _reserveBalance: String = String()
+    var _feeRate: Int32 = 0
+    var _status: Ocap_TokenFactoryStatus = .tokenFactoryActive
+    var _token: Ocap_TokenState? = nil
+    var _reserveToken: Ocap_TokenState? = nil
+    var _context: Ocap_StateContext? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _ownerAddress = source._ownerAddress
+      _tokenAddress = source._tokenAddress
+      _reserveAddress = source._reserveAddress
+      _curve = source._curve
+      _currentSupply = source._currentSupply
+      _reserveBalance = source._reserveBalance
+      _feeRate = source._feeRate
+      _status = source._status
+      _token = source._token
+      _reserveToken = source._reserveToken
+      _context = source._context
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._ownerAddress) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._tokenAddress) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._reserveAddress) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._curve) }()
+        case 6: try { try decoder.decodeSingularStringField(value: &_storage._currentSupply) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._reserveBalance) }()
+        case 8: try { try decoder.decodeSingularInt32Field(value: &_storage._feeRate) }()
+        case 9: try { try decoder.decodeSingularEnumField(value: &_storage._status) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._token) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._reserveToken) }()
+        case 30: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._address.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
+      }
+      if !_storage._ownerAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._ownerAddress, fieldNumber: 2)
+      }
+      if !_storage._tokenAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._tokenAddress, fieldNumber: 3)
+      }
+      if !_storage._reserveAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._reserveAddress, fieldNumber: 4)
+      }
+      try { if let v = _storage._curve {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
+      if !_storage._currentSupply.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._currentSupply, fieldNumber: 6)
+      }
+      if !_storage._reserveBalance.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._reserveBalance, fieldNumber: 7)
+      }
+      if _storage._feeRate != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._feeRate, fieldNumber: 8)
+      }
+      if _storage._status != .tokenFactoryActive {
+        try visitor.visitSingularEnumField(value: _storage._status, fieldNumber: 9)
+      }
+      try { if let v = _storage._token {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      } }()
+      try { if let v = _storage._reserveToken {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      } }()
+      try { if let v = _storage._context {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_TokenFactoryState, rhs: Ocap_TokenFactoryState) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._ownerAddress != rhs_storage._ownerAddress {return false}
+        if _storage._tokenAddress != rhs_storage._tokenAddress {return false}
+        if _storage._reserveAddress != rhs_storage._reserveAddress {return false}
+        if _storage._curve != rhs_storage._curve {return false}
+        if _storage._currentSupply != rhs_storage._currentSupply {return false}
+        if _storage._reserveBalance != rhs_storage._reserveBalance {return false}
+        if _storage._feeRate != rhs_storage._feeRate {return false}
+        if _storage._status != rhs_storage._status {return false}
+        if _storage._token != rhs_storage._token {return false}
+        if _storage._reserveToken != rhs_storage._reserveToken {return false}
+        if _storage._context != rhs_storage._context {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

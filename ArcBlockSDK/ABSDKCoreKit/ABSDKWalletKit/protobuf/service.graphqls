@@ -33,7 +33,7 @@ type StateContext {
 }
 
 type RootMutationType {
-  sendTx(commit: Boolean, token: String, tx: String, wallet: String): ResponseSendTx
+  sendTx(commit: Boolean, token: String, tx: String, wallet: String, extra: String): ResponseSendTx
 }
 
 type RootQueryType {
@@ -44,6 +44,7 @@ type RootQueryType {
   getTokenState(address: String): ResponseGetTokenState
   getEvidenceState(hash: String): ResponseGetEvidenceState
   getForgeState(height: String, keys: [String]): ResponseGetForgeState
+  getTokenFactoryState(address: String): ResponseGetTokenFactoryState
 
   getTx(hash: String): ResponseGetTx
   getBlock(height: String): ResponseGetBlock
@@ -87,6 +88,7 @@ type RootQueryType {
     rollupFilter: RollupFilterInput
     stakeFilter: StakeFilterInput
     delegationFilter: DelegationFilterInput
+    tokenFactoryFilter: TokenFactoryFilterInput
   ): ResponseListTransactions
 
   # since 1.7.0
@@ -137,4 +139,24 @@ type RootQueryType {
 
   # since v1.18.9
   estimateGas(typeUrl: String, tx: String): ResponseEstimateGas
+
+  listTokenFlows(
+    accountAddress: String
+    tokenAddress: String
+    paging: PageInput
+    depth: Int
+    direction: TokenFlowDirection
+  ): ResponseListTokenFlows
+
+  verifyAccountRisk(accountAddress: String, tokenAddress: String): ResponseVerifyAccountRisk
+
+  getTokenDistribution(tokenAddress: String): ResponseGetTokenDistribution
+
+  listTokenFactories(
+    tokenAddress: String
+    reserveAddress: String
+    owner: String
+    paging: PageInput
+    timeFilter: TimeFilterInput
+  ): ResponseListTokenFactories
 }

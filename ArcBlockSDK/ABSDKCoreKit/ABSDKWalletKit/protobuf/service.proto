@@ -27,6 +27,7 @@ service Query {
   rpc getDelegateState(stream RequestGetState) returns (stream ResponseGetDelegateState);
   rpc getTokenState(stream RequestGetState) returns (stream ResponseGetTokenState);
   rpc getEvidenceState(stream RequestGetEvidenceState) returns (stream ResponseGetEvidenceState);
+  rpc getTokenFactoryState(stream RequestGetState) returns (stream ResponseGetTokenFactoryState);
 
   // For client side
   rpc getAccountTokens(stream RequestGetAccountTokens) returns (stream ResponseGetAccountTokens);
@@ -39,6 +40,7 @@ service Query {
   rpc listAssetTransactions(RequestListAssetTransactions) returns (ResponseListAssetTransactions);
   rpc listBlocks(RequestListBlocks) returns (ResponseListBlocks);
   rpc listTokens(RequestListTokens) returns (ResponseListTokens);
+  rpc listTokenFactories(RequestListTokenFactories) returns (ResponseListTokenFactories);
 
   // Do not worry about this, it will be removed during build phase
   rpc itxSub(RequestGetConfig) returns (ItxStub);
@@ -61,6 +63,13 @@ service Query {
   rpc search(RequestSearch) returns (ResponseSearch);
 
   rpc estimateGas(RequestEstimateGas) returns (ResponseEstimateGas);
+
+  // token flows
+  rpc listTokenFlows(RequestListTokenFlows) returns (ResponseListTokenFlows);
+  rpc verifyAccountRisk(RequestVerifyAccountRisk) returns (ResponseVerifyAccountRisk);
+
+  // token distribution
+  rpc getTokenDistribution(RequestGetTokenDistribution) returns (ResponseGetTokenDistribution);
 }
 
 service Mutation {

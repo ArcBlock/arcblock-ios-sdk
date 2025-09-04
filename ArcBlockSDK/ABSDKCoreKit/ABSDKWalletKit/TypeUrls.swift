@@ -52,6 +52,10 @@ public enum TypeUrl: String, CaseIterable {
     case revokeWithdraw = "fg:t:revoke_withdraw"
     case revokeStake = "fg:t:revoke_stake"
     case claimStake = "fg:t:claim_stake"
+    case mintToken = "fg:t:mint_token"
+    case createTokenFactory = "fg:t:create_token_factory"
+    case burnToken = "fg:t:burn_token"
+    case updateTokenFactory = "fg:t:update_token_factory"
 
     // v3
     case acquireAsset_v3 = "fg:t:acquire_asset_v3"
@@ -126,6 +130,14 @@ public enum TypeUrl: String, CaseIterable {
             return try? Ocap_ClaimStakeTx(serializedData: value)
         case .consumeAsset:
             return try? Ocap_ConsumeAssetTx(serializedData: value)
+        case .mintToken:
+            return try? Ocap_MintTokenTx(serializedData: value)
+        case .createTokenFactory:
+            return try? Ocap_CreateTokenFactoryTx(serializedData: value)
+        case .burnToken:
+            return try? Ocap_BurnTokenTx(serializedData: value)
+        case .updateTokenFactory:
+            return try? Ocap_UpdateTokenFactoryTx(serializedData: value)
         default:
             return nil
         }

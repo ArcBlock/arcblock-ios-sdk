@@ -483,6 +483,10 @@ public struct Ocap_CreateTokenTx {
   /// Initial supply should be less than total supply
   public var initialSupply: String = String()
 
+  /// 1.24.0
+  /// Max supply should be less than total supply
+  public var maxTotalSupply: String = String()
+
   /// It's recommended that you set this, so your token will possibly have a price in fiat currency.
   /// string erc20_contract_address = 15; // deprecated
   public var foreignToken: Ocap_ForeignToken {
@@ -1017,6 +1021,40 @@ public struct Ocap_ClaimStakeTx {
 /// Only accounts from stake slasher can do this
 /// The slash takes assets(staked or revoked) away from the stake immediately
 public struct Ocap_SlashStakeTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  /// Can slash any combination of tokens + assets
+  /// Can slash part of it or all of it
+  public var outputs: [Ocap_TransactionInput] = []
+
+  /// Human readable message help to identify the reason of the slash
+  public var message: String = String()
+
+  /// ocap won't touch this field. Only app shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+/// Return assets from the stake
+/// Only stake receiver can do this
+/// The return takes assets(staked) away from the stake immediately
+public struct Ocap_ReturnStakeTx {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1768,6 +1806,151 @@ public struct Ocap_WithdrawTokenV2Tx {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
+/// --------------------- Token Factory Related -------------------------------------
+public struct Ocap_CreateTokenFactoryTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String {
+    get {return _storage._address}
+    set {_uniqueStorage()._address = newValue}
+  }
+
+  /// Fee rate in basis points, 100 = 1%
+  public var feeRate: UInt32 {
+    get {return _storage._feeRate}
+    set {_uniqueStorage()._feeRate = newValue}
+  }
+
+  public var token: Ocap_TokenSymbol {
+    get {return _storage._token ?? Ocap_TokenSymbol()}
+    set {_uniqueStorage()._token = newValue}
+  }
+  /// Returns true if `token` has been explicitly set.
+  public var hasToken: Bool {return _storage._token != nil}
+  /// Clears the value of `token`. Subsequent reads from it will return its default value.
+  public mutating func clearToken() {_uniqueStorage()._token = nil}
+
+  public var reserveAddress: String {
+    get {return _storage._reserveAddress}
+    set {_uniqueStorage()._reserveAddress = newValue}
+  }
+
+  public var curve: Ocap_CurveConfig {
+    get {return _storage._curve ?? Ocap_CurveConfig()}
+    set {_uniqueStorage()._curve = newValue}
+  }
+  /// Returns true if `curve` has been explicitly set.
+  public var hasCurve: Bool {return _storage._curve != nil}
+  /// Clears the value of `curve`. Subsequent reads from it will return its default value.
+  public mutating func clearCurve() {_uniqueStorage()._curve = nil}
+
+  /// the chain won't touch this field. Only the dapp shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return _storage._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {_uniqueStorage()._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Ocap_UpdateTokenFactoryTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var feeRate: UInt32 = 0
+
+  /// the chain won't touch this field. Only the dapp shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_MintTokenTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tokenFactory: String = String()
+
+  public var amount: String = String()
+
+  /// Who pays reserve tokens for this 
+  public var inputs: [Ocap_TransactionInput] = []
+
+  public var receiver: String = String()
+
+  /// the chain won't touch this field. Only the dapp shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
+public struct Ocap_BurnTokenTx {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tokenFactory: String = String()
+
+  /// Who pays token for this 
+  public var inputs: [Ocap_TransactionInput] = []
+
+  public var minReserve: String = String()
+
+  public var receiver: String = String()
+
+  /// the chain won't touch this field. Only the dapp shall handle it.
+  public var data: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+}
+
 /// All valid tx protocols should be listed here
 public struct Ocap_ItxStub {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -1900,6 +2083,38 @@ public struct Ocap_ItxStub {
     set {value = .withdrawToken(newValue)}
   }
 
+  public var createTokenFactory: Ocap_CreateTokenFactoryTx {
+    get {
+      if case .createTokenFactory(let v)? = value {return v}
+      return Ocap_CreateTokenFactoryTx()
+    }
+    set {value = .createTokenFactory(newValue)}
+  }
+
+  public var updateTokenFactory: Ocap_UpdateTokenFactoryTx {
+    get {
+      if case .updateTokenFactory(let v)? = value {return v}
+      return Ocap_UpdateTokenFactoryTx()
+    }
+    set {value = .updateTokenFactory(newValue)}
+  }
+
+  public var mintToken: Ocap_MintTokenTx {
+    get {
+      if case .mintToken(let v)? = value {return v}
+      return Ocap_MintTokenTx()
+    }
+    set {value = .mintToken(newValue)}
+  }
+
+  public var burnToken: Ocap_BurnTokenTx {
+    get {
+      if case .burnToken(let v)? = value {return v}
+      return Ocap_BurnTokenTx()
+    }
+    set {value = .burnToken(newValue)}
+  }
+
   /// NFTs
   public var createFactory: Ocap_CreateFactoryTx {
     get {
@@ -1964,6 +2179,14 @@ public struct Ocap_ItxStub {
       return Ocap_SlashStakeTx()
     }
     set {value = .slashStake(newValue)}
+  }
+
+  public var returnStake: Ocap_ReturnStakeTx {
+    get {
+      if case .returnStake(let v)? = value {return v}
+      return Ocap_ReturnStakeTx()
+    }
+    set {value = .returnStake(newValue)}
   }
 
   public var upgradeNode: Ocap_UpgradeNodeTx {
@@ -2077,6 +2300,10 @@ public struct Ocap_ItxStub {
     case createToken(Ocap_CreateTokenTx)
     case depositToken(Ocap_DepositTokenV2Tx)
     case withdrawToken(Ocap_WithdrawTokenV2Tx)
+    case createTokenFactory(Ocap_CreateTokenFactoryTx)
+    case updateTokenFactory(Ocap_UpdateTokenFactoryTx)
+    case mintToken(Ocap_MintTokenTx)
+    case burnToken(Ocap_BurnTokenTx)
     /// NFTs
     case createFactory(Ocap_CreateFactoryTx)
     case acquireAssetV2(Ocap_AcquireAssetV2Tx)
@@ -2087,6 +2314,7 @@ public struct Ocap_ItxStub {
     case revokeStake(Ocap_RevokeStakeTx)
     case claimStake(Ocap_ClaimStakeTx)
     case slashStake(Ocap_SlashStakeTx)
+    case returnStake(Ocap_ReturnStakeTx)
     case upgradeNode(Ocap_UpgradeNodeTx)
     /// Rollup
     case createRollup(Ocap_CreateRollupTx)
@@ -2166,6 +2394,22 @@ public struct Ocap_ItxStub {
         guard case .withdrawToken(let l) = lhs, case .withdrawToken(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
+      case (.createTokenFactory, .createTokenFactory): return {
+        guard case .createTokenFactory(let l) = lhs, case .createTokenFactory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.updateTokenFactory, .updateTokenFactory): return {
+        guard case .updateTokenFactory(let l) = lhs, case .updateTokenFactory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.mintToken, .mintToken): return {
+        guard case .mintToken(let l) = lhs, case .mintToken(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.burnToken, .burnToken): return {
+        guard case .burnToken(let l) = lhs, case .burnToken(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
       case (.createFactory, .createFactory): return {
         guard case .createFactory(let l) = lhs, case .createFactory(let r) = rhs else { preconditionFailure() }
         return l == r
@@ -2196,6 +2440,10 @@ public struct Ocap_ItxStub {
       }()
       case (.slashStake, .slashStake): return {
         guard case .slashStake(let l) = lhs, case .slashStake(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.returnStake, .returnStake): return {
+        guard case .returnStake(let l) = lhs, case .returnStake(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.upgradeNode, .upgradeNode): return {
@@ -2250,49 +2498,6 @@ public struct Ocap_ItxStub {
 
   public init() {}
 }
-
-#if swift(>=5.5) && canImport(_Concurrency)
-extension Ocap_AccountMigrateTx: @unchecked Sendable {}
-extension Ocap_DeclareTx: @unchecked Sendable {}
-extension Ocap_DelegateOp: @unchecked Sendable {}
-extension Ocap_DelegateTx: @unchecked Sendable {}
-extension Ocap_RevokeDelegateTx: @unchecked Sendable {}
-extension Ocap_UpgradeNodeTx: @unchecked Sendable {}
-extension Ocap_ExchangeInfo: @unchecked Sendable {}
-extension Ocap_ExchangeInfoV2: @unchecked Sendable {}
-extension Ocap_ExchangeTx: @unchecked Sendable {}
-extension Ocap_ExchangeV2Tx: @unchecked Sendable {}
-extension Ocap_TransferTx: @unchecked Sendable {}
-extension Ocap_TransferV2Tx: @unchecked Sendable {}
-extension Ocap_TransferV3Tx: @unchecked Sendable {}
-extension Ocap_CreateTokenTx: @unchecked Sendable {}
-extension Ocap_AssetFactoryInput: @unchecked Sendable {}
-extension Ocap_AcquireAssetV2Tx: @unchecked Sendable {}
-extension Ocap_AcquireAssetV3Tx: @unchecked Sendable {}
-extension Ocap_MintAssetTx: @unchecked Sendable {}
-extension Ocap_CreateAssetTx: @unchecked Sendable {}
-extension Ocap_UpdateAssetTx: @unchecked Sendable {}
-extension Ocap_ConsumeAssetTx: @unchecked Sendable {}
-extension Ocap_CreateFactoryTx: @unchecked Sendable {}
-extension Ocap_StakeTx: @unchecked Sendable {}
-extension Ocap_RevokeStakeTx: @unchecked Sendable {}
-extension Ocap_ClaimStakeTx: @unchecked Sendable {}
-extension Ocap_SlashStakeTx: @unchecked Sendable {}
-extension Ocap_CreateRollupTx: @unchecked Sendable {}
-extension Ocap_UpdateRollupTx: @unchecked Sendable {}
-extension Ocap_JoinRollupTx: @unchecked Sendable {}
-extension Ocap_LeaveRollupTx: @unchecked Sendable {}
-extension Ocap_CreateRollupBlockTx: @unchecked Sendable {}
-extension Ocap_ClaimBlockRewardTx: @unchecked Sendable {}
-extension Ocap_PauseRollupTx: @unchecked Sendable {}
-extension Ocap_ResumeRollupTx: @unchecked Sendable {}
-extension Ocap_CloseRollupTx: @unchecked Sendable {}
-extension Ocap_MigrateRollupTx: @unchecked Sendable {}
-extension Ocap_DepositTokenV2Tx: @unchecked Sendable {}
-extension Ocap_WithdrawTokenV2Tx: @unchecked Sendable {}
-extension Ocap_ItxStub: @unchecked Sendable {}
-extension Ocap_ItxStub.OneOf_Value: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
@@ -2984,6 +3189,7 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     7: .standard(proto: "total_supply"),
     8: .same(proto: "address"),
     9: .standard(proto: "initial_supply"),
+    10: .standard(proto: "max_total_supply"),
     16: .standard(proto: "foreign_token"),
     20: .same(proto: "data"),
   ]
@@ -3003,6 +3209,7 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 7: try { try decoder.decodeSingularStringField(value: &self.totalSupply) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.address) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.initialSupply) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.maxTotalSupply) }()
       case 16: try { try decoder.decodeSingularMessageField(value: &self._foreignToken) }()
       case 20: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
@@ -3042,6 +3249,9 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.initialSupply.isEmpty {
       try visitor.visitSingularStringField(value: self.initialSupply, fieldNumber: 9)
     }
+    if !self.maxTotalSupply.isEmpty {
+      try visitor.visitSingularStringField(value: self.maxTotalSupply, fieldNumber: 10)
+    }
     try { if let v = self._foreignToken {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
     } }()
@@ -3061,6 +3271,7 @@ extension Ocap_CreateTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.totalSupply != rhs.totalSupply {return false}
     if lhs.address != rhs.address {return false}
     if lhs.initialSupply != rhs.initialSupply {return false}
+    if lhs.maxTotalSupply != rhs.maxTotalSupply {return false}
     if lhs._foreignToken != rhs._foreignToken {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -3887,6 +4098,60 @@ extension Ocap_SlashStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   public static func ==(lhs: Ocap_SlashStakeTx, rhs: Ocap_SlashStakeTx) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.outputs != rhs.outputs {return false}
+    if lhs.message != rhs.message {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ReturnStakeTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ReturnStakeTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "outputs"),
+    3: .same(proto: "message"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.outputs) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.message) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.outputs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.outputs, fieldNumber: 2)
+    }
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 3)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ReturnStakeTx, rhs: Ocap_ReturnStakeTx) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs.outputs != rhs.outputs {return false}
     if lhs.message != rhs.message {return false}
@@ -5090,6 +5355,282 @@ extension Ocap_WithdrawTokenV2Tx: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
+extension Ocap_CreateTokenFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CreateTokenFactoryTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .standard(proto: "fee_rate"),
+    3: .same(proto: "token"),
+    4: .standard(proto: "reserve_address"),
+    5: .same(proto: "curve"),
+    50: .same(proto: "data"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _address: String = String()
+    var _feeRate: UInt32 = 0
+    var _token: Ocap_TokenSymbol? = nil
+    var _reserveAddress: String = String()
+    var _curve: Ocap_CurveConfig? = nil
+    var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _feeRate = source._feeRate
+      _token = source._token
+      _reserveAddress = source._reserveAddress
+      _curve = source._curve
+      _data = source._data
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._address) }()
+        case 2: try { try decoder.decodeSingularUInt32Field(value: &_storage._feeRate) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._token) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._reserveAddress) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._curve) }()
+        case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._address.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._address, fieldNumber: 1)
+      }
+      if _storage._feeRate != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._feeRate, fieldNumber: 2)
+      }
+      try { if let v = _storage._token {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      if !_storage._reserveAddress.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._reserveAddress, fieldNumber: 4)
+      }
+      try { if let v = _storage._curve {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
+      try { if let v = _storage._data {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_CreateTokenFactoryTx, rhs: Ocap_CreateTokenFactoryTx) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._feeRate != rhs_storage._feeRate {return false}
+        if _storage._token != rhs_storage._token {return false}
+        if _storage._reserveAddress != rhs_storage._reserveAddress {return false}
+        if _storage._curve != rhs_storage._curve {return false}
+        if _storage._data != rhs_storage._data {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_UpdateTokenFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UpdateTokenFactoryTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .standard(proto: "fee_rate"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.feeRate) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if self.feeRate != 0 {
+      try visitor.visitSingularUInt32Field(value: self.feeRate, fieldNumber: 2)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_UpdateTokenFactoryTx, rhs: Ocap_UpdateTokenFactoryTx) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.feeRate != rhs.feeRate {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_MintTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".MintTokenTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "token_factory"),
+    2: .same(proto: "amount"),
+    3: .same(proto: "inputs"),
+    4: .same(proto: "receiver"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tokenFactory) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.amount) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.inputs) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.tokenFactory.isEmpty {
+      try visitor.visitSingularStringField(value: self.tokenFactory, fieldNumber: 1)
+    }
+    if !self.amount.isEmpty {
+      try visitor.visitSingularStringField(value: self.amount, fieldNumber: 2)
+    }
+    if !self.inputs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.inputs, fieldNumber: 3)
+    }
+    if !self.receiver.isEmpty {
+      try visitor.visitSingularStringField(value: self.receiver, fieldNumber: 4)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_MintTokenTx, rhs: Ocap_MintTokenTx) -> Bool {
+    if lhs.tokenFactory != rhs.tokenFactory {return false}
+    if lhs.amount != rhs.amount {return false}
+    if lhs.inputs != rhs.inputs {return false}
+    if lhs.receiver != rhs.receiver {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_BurnTokenTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".BurnTokenTx"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "token_factory"),
+    2: .same(proto: "inputs"),
+    3: .standard(proto: "min_reserve"),
+    4: .same(proto: "receiver"),
+    50: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tokenFactory) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.inputs) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.minReserve) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.receiver) }()
+      case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.tokenFactory.isEmpty {
+      try visitor.visitSingularStringField(value: self.tokenFactory, fieldNumber: 1)
+    }
+    if !self.inputs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.inputs, fieldNumber: 2)
+    }
+    if !self.minReserve.isEmpty {
+      try visitor.visitSingularStringField(value: self.minReserve, fieldNumber: 3)
+    }
+    if !self.receiver.isEmpty {
+      try visitor.visitSingularStringField(value: self.receiver, fieldNumber: 4)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_BurnTokenTx, rhs: Ocap_BurnTokenTx) -> Bool {
+    if lhs.tokenFactory != rhs.tokenFactory {return false}
+    if lhs.inputs != rhs.inputs {return false}
+    if lhs.minReserve != rhs.minReserve {return false}
+    if lhs.receiver != rhs.receiver {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ItxStub"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -5108,6 +5649,10 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     20: .standard(proto: "create_token"),
     21: .standard(proto: "deposit_token"),
     22: .standard(proto: "withdraw_token"),
+    23: .standard(proto: "create_token_factory"),
+    24: .standard(proto: "update_token_factory"),
+    25: .standard(proto: "mint_token"),
+    26: .standard(proto: "burn_token"),
     30: .standard(proto: "create_factory"),
     31: .standard(proto: "acquire_asset_v2"),
     32: .standard(proto: "acquire_asset_v3"),
@@ -5116,6 +5661,7 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     41: .standard(proto: "revoke_stake"),
     42: .standard(proto: "claim_stake"),
     43: .standard(proto: "slash_stake"),
+    44: .standard(proto: "return_stake"),
     49: .standard(proto: "upgrade_node"),
     50: .standard(proto: "create_rollup"),
     51: .standard(proto: "update_rollup"),
@@ -5330,6 +5876,58 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
           self.value = .withdrawToken(v)
         }
       }()
+      case 23: try {
+        var v: Ocap_CreateTokenFactoryTx?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .createTokenFactory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .createTokenFactory(v)
+        }
+      }()
+      case 24: try {
+        var v: Ocap_UpdateTokenFactoryTx?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .updateTokenFactory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .updateTokenFactory(v)
+        }
+      }()
+      case 25: try {
+        var v: Ocap_MintTokenTx?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .mintToken(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .mintToken(v)
+        }
+      }()
+      case 26: try {
+        var v: Ocap_BurnTokenTx?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .burnToken(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .burnToken(v)
+        }
+      }()
       case 30: try {
         var v: Ocap_CreateFactoryTx?
         var hadOneofValue = false
@@ -5432,6 +6030,19 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
           self.value = .slashStake(v)
+        }
+      }()
+      case 44: try {
+        var v: Ocap_ReturnStakeTx?
+        var hadOneofValue = false
+        if let current = self.value {
+          hadOneofValue = true
+          if case .returnStake(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.value = .returnStake(v)
         }
       }()
       case 49: try {
@@ -5648,6 +6259,22 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       guard case .withdrawToken(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 22)
     }()
+    case .createTokenFactory?: try {
+      guard case .createTokenFactory(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 23)
+    }()
+    case .updateTokenFactory?: try {
+      guard case .updateTokenFactory(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 24)
+    }()
+    case .mintToken?: try {
+      guard case .mintToken(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 25)
+    }()
+    case .burnToken?: try {
+      guard case .burnToken(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 26)
+    }()
     case .createFactory?: try {
       guard case .createFactory(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
@@ -5679,6 +6306,10 @@ extension Ocap_ItxStub: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     case .slashStake?: try {
       guard case .slashStake(let v)? = self.value else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 43)
+    }()
+    case .returnStake?: try {
+      guard case .returnStake(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 44)
     }()
     case .upgradeNode?: try {
       guard case .upgradeNode(let v)? = self.value else { preconditionFailure() }

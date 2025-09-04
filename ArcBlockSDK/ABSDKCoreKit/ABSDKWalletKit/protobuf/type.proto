@@ -19,6 +19,10 @@ message TokenSymbol {
   string symbol = 2;
   int32 decimal = 3;
   string unit = 4;
+  string name = 5;
+  string description = 6;
+  string icon = 7;
+  string max_total_supply = 8;
 }
 
 message WalletType {
@@ -498,4 +502,22 @@ message AssetLimit {
 message DelegateLimit {
   repeated TokenLimit tokens = 1;
   repeated AssetLimit assets = 2;
+}
+
+
+// --------------------- Token Factory Related -------------------------------------
+
+message CurveConfig {
+  string type = 1; // "linear", "constant", "quadratic"
+
+  string base_price = 2;
+
+  // linear
+  string slope = 3;
+
+  // constant
+  string fixed_price = 4;
+
+  // quadratic
+  uint32 constant = 5;
 }
