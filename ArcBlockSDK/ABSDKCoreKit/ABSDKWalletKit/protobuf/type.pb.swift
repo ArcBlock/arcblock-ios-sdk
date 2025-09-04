@@ -59,6 +59,14 @@ public struct Ocap_TokenSymbol {
 
   public var unit: String = String()
 
+  public var name: String = String()
+
+  public var description_p: String = String()
+
+  public var icon: String = String()
+
+  public var maxTotalSupply: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1702,63 +1710,29 @@ public struct Ocap_DelegateLimit {
   public init() {}
 }
 
-#if swift(>=5.5) && canImport(_Concurrency)
-extension Ocap_BigUint: @unchecked Sendable {}
-extension Ocap_BigSint: @unchecked Sendable {}
-extension Ocap_TokenSymbol: @unchecked Sendable {}
-extension Ocap_WalletType: @unchecked Sendable {}
-extension Ocap_WalletInfo: @unchecked Sendable {}
-extension Ocap_ChainInfo: @unchecked Sendable {}
-extension Ocap_NodeInfo: @unchecked Sendable {}
-extension Ocap_Validator: @unchecked Sendable {}
-extension Ocap_ConsensusParams: @unchecked Sendable {}
-extension Ocap_UpgradeTask: @unchecked Sendable {}
-extension Ocap_UpgradeTasks: @unchecked Sendable {}
-extension Ocap_Multisig: @unchecked Sendable {}
-extension Ocap_Transaction: @unchecked Sendable {}
-extension Ocap_TransactionInfo: @unchecked Sendable {}
-extension Ocap_TransactionReceipt: @unchecked Sendable {}
-extension Ocap_ReceiptChange: @unchecked Sendable {}
-extension Ocap_TokenInput: @unchecked Sendable {}
-extension Ocap_TransactionInput: @unchecked Sendable {}
-extension Ocap_VariableInput: @unchecked Sendable {}
-extension Ocap_DelegateConfig: @unchecked Sendable {}
-extension Ocap_VaultConfig: @unchecked Sendable {}
-extension Ocap_TxFeeConfig: @unchecked Sendable {}
-extension Ocap_TxGasConfig: @unchecked Sendable {}
-extension Ocap_TransactionConfig: @unchecked Sendable {}
-extension Ocap_BlockInfo: @unchecked Sendable {}
-extension Ocap_BlockInfoSimple: @unchecked Sendable {}
-extension Ocap_StateContext: @unchecked Sendable {}
-extension Ocap_StakeSummary: @unchecked Sendable {}
-extension Ocap_UnconfirmedTxs: @unchecked Sendable {}
-extension Ocap_NetInfo: @unchecked Sendable {}
-extension Ocap_GeoInfo: @unchecked Sendable {}
-extension Ocap_PeerInfo: @unchecked Sendable {}
-extension Ocap_ValidatorsInfo: @unchecked Sendable {}
-extension Ocap_ValidatorInfo: @unchecked Sendable {}
-extension Ocap_ForgeToken: @unchecked Sendable {}
-extension Ocap_UpgradeInfo: @unchecked Sendable {}
-extension Ocap_WithdrawItem: @unchecked Sendable {}
-extension Ocap_AccountConfig: @unchecked Sendable {}
-extension Ocap_Evidence: @unchecked Sendable {}
-extension Ocap_NFTEndpoint: @unchecked Sendable {}
-extension Ocap_NFTDisplay: @unchecked Sendable {}
-extension Ocap_NFTIssuer: @unchecked Sendable {}
-extension Ocap_AssetFactoryHook: @unchecked Sendable {}
-extension Ocap_IndexedTokenInput: @unchecked Sendable {}
-extension Ocap_IndexedFactoryInput: @unchecked Sendable {}
-extension Ocap_RollupValidator: @unchecked Sendable {}
-extension Ocap_RollupSignature: @unchecked Sendable {}
-extension Ocap_ForeignToken: @unchecked Sendable {}
-extension Ocap_RevokedStake: @unchecked Sendable {}
-extension Ocap_ForgeStats: @unchecked Sendable {}
-extension Ocap_GasEstimate: @unchecked Sendable {}
-extension Ocap_RateLimit: @unchecked Sendable {}
-extension Ocap_TokenLimit: @unchecked Sendable {}
-extension Ocap_AssetLimit: @unchecked Sendable {}
-extension Ocap_DelegateLimit: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+public struct Ocap_CurveConfig {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// "linear", "constant", "quadratic"
+  public var type: String = String()
+
+  public var basePrice: String = String()
+
+  /// linear
+  public var slope: String = String()
+
+  /// constant
+  public var fixedPrice: String = String()
+
+  /// quadratic
+  public var constant: UInt32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
@@ -1841,6 +1815,10 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     2: .same(proto: "symbol"),
     3: .same(proto: "decimal"),
     4: .same(proto: "unit"),
+    5: .same(proto: "name"),
+    6: .same(proto: "description"),
+    7: .same(proto: "icon"),
+    8: .standard(proto: "max_total_supply"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1853,6 +1831,10 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       case 2: try { try decoder.decodeSingularStringField(value: &self.symbol) }()
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.decimal) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.unit) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.icon) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.maxTotalSupply) }()
       default: break
       }
     }
@@ -1871,6 +1853,18 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.unit.isEmpty {
       try visitor.visitSingularStringField(value: self.unit, fieldNumber: 4)
     }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 5)
+    }
+    if !self.description_p.isEmpty {
+      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 6)
+    }
+    if !self.icon.isEmpty {
+      try visitor.visitSingularStringField(value: self.icon, fieldNumber: 7)
+    }
+    if !self.maxTotalSupply.isEmpty {
+      try visitor.visitSingularStringField(value: self.maxTotalSupply, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1879,6 +1873,10 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs.symbol != rhs.symbol {return false}
     if lhs.decimal != rhs.decimal {return false}
     if lhs.unit != rhs.unit {return false}
+    if lhs.name != rhs.name {return false}
+    if lhs.description_p != rhs.description_p {return false}
+    if lhs.icon != rhs.icon {return false}
+    if lhs.maxTotalSupply != rhs.maxTotalSupply {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5267,6 +5265,62 @@ extension Ocap_DelegateLimit: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   public static func ==(lhs: Ocap_DelegateLimit, rhs: Ocap_DelegateLimit) -> Bool {
     if lhs.tokens != rhs.tokens {return false}
     if lhs.assets != rhs.assets {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_CurveConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CurveConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .standard(proto: "base_price"),
+    3: .same(proto: "slope"),
+    4: .standard(proto: "fixed_price"),
+    5: .same(proto: "constant"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.basePrice) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.slope) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.fixedPrice) }()
+      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.constant) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 1)
+    }
+    if !self.basePrice.isEmpty {
+      try visitor.visitSingularStringField(value: self.basePrice, fieldNumber: 2)
+    }
+    if !self.slope.isEmpty {
+      try visitor.visitSingularStringField(value: self.slope, fieldNumber: 3)
+    }
+    if !self.fixedPrice.isEmpty {
+      try visitor.visitSingularStringField(value: self.fixedPrice, fieldNumber: 4)
+    }
+    if self.constant != 0 {
+      try visitor.visitSingularUInt32Field(value: self.constant, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_CurveConfig, rhs: Ocap_CurveConfig) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.basePrice != rhs.basePrice {return false}
+    if lhs.slope != rhs.slope {return false}
+    if lhs.fixedPrice != rhs.fixedPrice {return false}
+    if lhs.constant != rhs.constant {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

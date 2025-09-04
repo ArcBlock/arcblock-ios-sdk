@@ -85,6 +85,8 @@ message ForgeState {
   repeated AccountConfig account_config = 8;
 
   VaultConfig vaults = 9;
+  
+  repeated string reserved_symbols = 10;
 
   google.protobuf.Any data = 2047; // app can define their own app state
 }
@@ -139,6 +141,9 @@ message TokenState {
   string icon = 8;
   string total_supply = 9;
   ForeignToken foreign_token = 10;
+  string token_factory_address = 11;
+  string initial_supply = 12;
+  string max_total_supply = 13;
 
   StateContext context = 15;
 
@@ -377,6 +382,45 @@ message RollupBlock {
 message EvidenceState {
   string hash = 1;
   string data = 2;
+
+  StateContext context = 30;
+}
+
+
+enum TokenFactoryStatus {
+  TOKEN_FACTORY_ACTIVE = 0;
+  TOKEN_FACTORY_PAUSED = 1;
+}
+
+message TokenFactoryState {
+  string address = 1; 
+
+  // Address of the user who created this market
+  string owner_address = 2;
+
+  // Target token address for trading
+  string token_address = 3;
+
+  // Reserve token address
+  string reserve_address = 4;
+
+  // Curve related parameter configuration
+  CurveConfig curve = 5;
+
+  // Current total supply of target tokens circulated through this bonding curve
+  string current_supply = 6;
+
+  // Current total reserve tokens held in the bonding curve market
+  string reserve_balance = 7;
+
+  // Trading fee rate in basis points, 100 = 1%
+  int32 fee_rate = 8;
+
+  // Market status
+  TokenFactoryStatus status = 9;
+
+  TokenState token = 10;
+  TokenState reserve_token = 11;
 
   StateContext context = 30;
 }

@@ -78,6 +78,8 @@ public struct Ocap_RequestSendTx {
 
   public var commit: Bool = false
 
+  public var extra: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -619,6 +621,15 @@ public struct Ocap_RequestListTransactions {
   public var hasDelegationFilter: Bool {return _storage._delegationFilter != nil}
   /// Clears the value of `delegationFilter`. Subsequent reads from it will return its default value.
   public mutating func clearDelegationFilter() {_uniqueStorage()._delegationFilter = nil}
+
+  public var tokenFactoryFilter: Ocap_TokenFactoryFilter {
+    get {return _storage._tokenFactoryFilter ?? Ocap_TokenFactoryFilter()}
+    set {_uniqueStorage()._tokenFactoryFilter = newValue}
+  }
+  /// Returns true if `tokenFactoryFilter` has been explicitly set.
+  public var hasTokenFactoryFilter: Bool {return _storage._tokenFactoryFilter != nil}
+  /// Clears the value of `tokenFactoryFilter`. Subsequent reads from it will return its default value.
+  public mutating func clearTokenFactoryFilter() {_uniqueStorage()._tokenFactoryFilter = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1659,70 +1670,217 @@ public struct Ocap_ResponseListDelegations {
   fileprivate var _page: Ocap_PageInfo? = nil
 }
 
-#if swift(>=5.5) && canImport(_Concurrency)
-extension Ocap_RequestEmpty: @unchecked Sendable {}
-extension Ocap_RequestPaginated: @unchecked Sendable {}
-extension Ocap_RequestGetState: @unchecked Sendable {}
-extension Ocap_RequestSendTx: @unchecked Sendable {}
-extension Ocap_ResponseSendTx: @unchecked Sendable {}
-extension Ocap_RequestGetTx: @unchecked Sendable {}
-extension Ocap_ResponseGetTx: @unchecked Sendable {}
-extension Ocap_RequestGetBlock: @unchecked Sendable {}
-extension Ocap_ResponseGetBlock: @unchecked Sendable {}
-extension Ocap_RequestGetBlocks: @unchecked Sendable {}
-extension Ocap_ResponseGetBlocks: @unchecked Sendable {}
-extension Ocap_RequestGetAccountState: @unchecked Sendable {}
-extension Ocap_ResponseGetAccountState: @unchecked Sendable {}
-extension Ocap_ResponseGetAssetState: @unchecked Sendable {}
-extension Ocap_ResponseGetForgeState: @unchecked Sendable {}
-extension Ocap_ResponseGetDelegateState: @unchecked Sendable {}
-extension Ocap_ResponseGetChainInfo: @unchecked Sendable {}
-extension Ocap_ResponseGetNodeInfo: @unchecked Sendable {}
-extension Ocap_ResponseGetUnconfirmedTxs: @unchecked Sendable {}
-extension Ocap_ResponseGetNetInfo: @unchecked Sendable {}
-extension Ocap_ResponseGetValidatorsInfo: @unchecked Sendable {}
-extension Ocap_RequestGetConfig: @unchecked Sendable {}
-extension Ocap_ResponseGetConfig: @unchecked Sendable {}
-extension Ocap_RequestListTransactions: @unchecked Sendable {}
-extension Ocap_ResponseListTransactions: @unchecked Sendable {}
-extension Ocap_RequestListAssets: @unchecked Sendable {}
-extension Ocap_ResponseListAssets: @unchecked Sendable {}
-extension Ocap_RequestListTopAccounts: @unchecked Sendable {}
-extension Ocap_ResponseListTopAccounts: @unchecked Sendable {}
-extension Ocap_RequestListAssetTransactions: @unchecked Sendable {}
-extension Ocap_ResponseListAssetTransactions: @unchecked Sendable {}
-extension Ocap_RequestListBlocks: @unchecked Sendable {}
-extension Ocap_ResponseListBlocks: @unchecked Sendable {}
-extension Ocap_ResponseGetTokenState: @unchecked Sendable {}
-extension Ocap_RequestListTokens: @unchecked Sendable {}
-extension Ocap_ResponseListTokens: @unchecked Sendable {}
-extension Ocap_ResponseGetFactoryState: @unchecked Sendable {}
-extension Ocap_RequestListFactories: @unchecked Sendable {}
-extension Ocap_ResponseListFactories: @unchecked Sendable {}
-extension Ocap_RequestGetAccountTokens: @unchecked Sendable {}
-extension Ocap_ResponseGetAccountTokens: @unchecked Sendable {}
-extension Ocap_ResponseGetStakeState: @unchecked Sendable {}
-extension Ocap_RequestListStakes: @unchecked Sendable {}
-extension Ocap_ResponseListStakes: @unchecked Sendable {}
-extension Ocap_ResponseGetRollupState: @unchecked Sendable {}
-extension Ocap_RequestListRollups: @unchecked Sendable {}
-extension Ocap_ResponseListRollups: @unchecked Sendable {}
-extension Ocap_RequestGetRollupBlock: @unchecked Sendable {}
-extension Ocap_ResponseGetRollupBlock: @unchecked Sendable {}
-extension Ocap_RequestListRollupBlocks: @unchecked Sendable {}
-extension Ocap_ResponseListRollupBlocks: @unchecked Sendable {}
-extension Ocap_RequestListRollupValidators: @unchecked Sendable {}
-extension Ocap_ResponseListRollupValidators: @unchecked Sendable {}
-extension Ocap_RequestSearch: @unchecked Sendable {}
-extension Ocap_ResponseSearch: @unchecked Sendable {}
-extension Ocap_RequestGetEvidenceState: @unchecked Sendable {}
-extension Ocap_ResponseGetEvidenceState: @unchecked Sendable {}
-extension Ocap_ResponseGetForgeStats: @unchecked Sendable {}
-extension Ocap_RequestEstimateGas: @unchecked Sendable {}
-extension Ocap_ResponseEstimateGas: @unchecked Sendable {}
-extension Ocap_RequestListDelegations: @unchecked Sendable {}
-extension Ocap_ResponseListDelegations: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+public struct Ocap_RequestListTokenFlows {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var paging: Ocap_Page {
+    get {return _paging ?? Ocap_Page()}
+    set {_paging = newValue}
+  }
+  /// Returns true if `paging` has been explicitly set.
+  public var hasPaging: Bool {return self._paging != nil}
+  /// Clears the value of `paging`. Subsequent reads from it will return its default value.
+  public mutating func clearPaging() {self._paging = nil}
+
+  public var accountAddress: String = String()
+
+  public var tokenAddress: String = String()
+
+  public var depth: UInt32 = 0
+
+  public var direction: Ocap_TokenFlowDirection = .in
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _paging: Ocap_Page? = nil
+}
+
+public struct Ocap_ResponseListTokenFlows {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var page: Ocap_PageInfo {
+    get {return _page ?? Ocap_PageInfo()}
+    set {_page = newValue}
+  }
+  /// Returns true if `page` has been explicitly set.
+  public var hasPage: Bool {return self._page != nil}
+  /// Clears the value of `page`. Subsequent reads from it will return its default value.
+  public mutating func clearPage() {self._page = nil}
+
+  public var data: [Ocap_IndexedTokenFlow] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _page: Ocap_PageInfo? = nil
+}
+
+public struct Ocap_RequestVerifyAccountRisk {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var accountAddress: String = String()
+
+  public var tokenAddress: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_ResponseVerifyAccountRisk {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var data: Ocap_VerifyAccountRiskResult {
+    get {return _data ?? Ocap_VerifyAccountRiskResult()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: Ocap_VerifyAccountRiskResult? = nil
+}
+
+public struct Ocap_RequestGetTokenDistribution {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tokenAddress: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_ResponseGetTokenDistribution {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var data: Ocap_TokenDistribution {
+    get {return _data ?? Ocap_TokenDistribution()}
+    set {_data = newValue}
+  }
+  /// Returns true if `data` has been explicitly set.
+  public var hasData: Bool {return self._data != nil}
+  /// Clears the value of `data`. Subsequent reads from it will return its default value.
+  public mutating func clearData() {self._data = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _data: Ocap_TokenDistribution? = nil
+}
+
+/// token factory
+public struct Ocap_ResponseGetTokenFactoryState {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var state: Ocap_TokenFactoryState {
+    get {return _state ?? Ocap_TokenFactoryState()}
+    set {_state = newValue}
+  }
+  /// Returns true if `state` has been explicitly set.
+  public var hasState: Bool {return self._state != nil}
+  /// Clears the value of `state`. Subsequent reads from it will return its default value.
+  public mutating func clearState() {self._state = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _state: Ocap_TokenFactoryState? = nil
+}
+
+public struct Ocap_RequestListTokenFactories {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var paging: Ocap_Page {
+    get {return _paging ?? Ocap_Page()}
+    set {_paging = newValue}
+  }
+  /// Returns true if `paging` has been explicitly set.
+  public var hasPaging: Bool {return self._paging != nil}
+  /// Clears the value of `paging`. Subsequent reads from it will return its default value.
+  public mutating func clearPaging() {self._paging = nil}
+
+  public var owner: String = String()
+
+  public var reserveAddress: String = String()
+
+  public var tokenAddress: String = String()
+
+  public var timeFilter: Ocap_TimeFilter {
+    get {return _timeFilter ?? Ocap_TimeFilter()}
+    set {_timeFilter = newValue}
+  }
+  /// Returns true if `timeFilter` has been explicitly set.
+  public var hasTimeFilter: Bool {return self._timeFilter != nil}
+  /// Clears the value of `timeFilter`. Subsequent reads from it will return its default value.
+  public mutating func clearTimeFilter() {self._timeFilter = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _paging: Ocap_Page? = nil
+  fileprivate var _timeFilter: Ocap_TimeFilter? = nil
+}
+
+public struct Ocap_ResponseListTokenFactories {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Ocap_StatusCode = .ok
+
+  public var page: Ocap_PageInfo {
+    get {return _page ?? Ocap_PageInfo()}
+    set {_page = newValue}
+  }
+  /// Returns true if `page` has been explicitly set.
+  public var hasPage: Bool {return self._page != nil}
+  /// Clears the value of `page`. Subsequent reads from it will return its default value.
+  public mutating func clearPage() {self._page = nil}
+
+  public var tokenFactories: [Ocap_IndexedTokenFactoryState] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _page: Ocap_PageInfo? = nil
+}
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
@@ -1817,6 +1975,7 @@ extension Ocap_RequestSendTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     2: .same(proto: "wallet"),
     3: .same(proto: "token"),
     4: .same(proto: "commit"),
+    5: .same(proto: "extra"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1829,6 +1988,7 @@ extension Ocap_RequestSendTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 2: try { try decoder.decodeSingularMessageField(value: &self._wallet) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.token) }()
       case 4: try { try decoder.decodeSingularBoolField(value: &self.commit) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.extra) }()
       default: break
       }
     }
@@ -1851,6 +2011,9 @@ extension Ocap_RequestSendTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if self.commit != false {
       try visitor.visitSingularBoolField(value: self.commit, fieldNumber: 4)
     }
+    if !self.extra.isEmpty {
+      try visitor.visitSingularStringField(value: self.extra, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1859,6 +2022,7 @@ extension Ocap_RequestSendTx: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs._wallet != rhs._wallet {return false}
     if lhs.token != rhs.token {return false}
     if lhs.commit != rhs.commit {return false}
+    if lhs.extra != rhs.extra {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2700,6 +2864,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
     11: .standard(proto: "rollup_filter"),
     12: .standard(proto: "stake_filter"),
     13: .standard(proto: "delegation_filter"),
+    14: .standard(proto: "token_factory_filter"),
   ]
 
   fileprivate class _StorageClass {
@@ -2716,6 +2881,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
     var _rollupFilter: Ocap_RollupFilter? = nil
     var _stakeFilter: Ocap_StakeFilter? = nil
     var _delegationFilter: Ocap_DelegationFilter? = nil
+    var _tokenFactoryFilter: Ocap_TokenFactoryFilter? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -2735,6 +2901,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
       _rollupFilter = source._rollupFilter
       _stakeFilter = source._stakeFilter
       _delegationFilter = source._delegationFilter
+      _tokenFactoryFilter = source._tokenFactoryFilter
     }
   }
 
@@ -2766,6 +2933,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._rollupFilter) }()
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._stakeFilter) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._delegationFilter) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._tokenFactoryFilter) }()
         default: break
         }
       }
@@ -2817,6 +2985,9 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
       try { if let v = _storage._delegationFilter {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
       } }()
+      try { if let v = _storage._tokenFactoryFilter {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2839,6 +3010,7 @@ extension Ocap_RequestListTransactions: SwiftProtobuf.Message, SwiftProtobuf._Me
         if _storage._rollupFilter != rhs_storage._rollupFilter {return false}
         if _storage._stakeFilter != rhs_storage._stakeFilter {return false}
         if _storage._delegationFilter != rhs_storage._delegationFilter {return false}
+        if _storage._tokenFactoryFilter != rhs_storage._tokenFactoryFilter {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -4623,6 +4795,418 @@ extension Ocap_ResponseListDelegations: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.code != rhs.code {return false}
     if lhs._page != rhs._page {return false}
     if lhs.delegations != rhs.delegations {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestListTokenFlows: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestListTokenFlows"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "paging"),
+    2: .standard(proto: "account_address"),
+    3: .standard(proto: "token_address"),
+    4: .same(proto: "depth"),
+    5: .same(proto: "direction"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.accountAddress) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.tokenAddress) }()
+      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.depth) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.direction) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._paging {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.accountAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.accountAddress, fieldNumber: 2)
+    }
+    if !self.tokenAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.tokenAddress, fieldNumber: 3)
+    }
+    if self.depth != 0 {
+      try visitor.visitSingularUInt32Field(value: self.depth, fieldNumber: 4)
+    }
+    if self.direction != .in {
+      try visitor.visitSingularEnumField(value: self.direction, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestListTokenFlows, rhs: Ocap_RequestListTokenFlows) -> Bool {
+    if lhs._paging != rhs._paging {return false}
+    if lhs.accountAddress != rhs.accountAddress {return false}
+    if lhs.tokenAddress != rhs.tokenAddress {return false}
+    if lhs.depth != rhs.depth {return false}
+    if lhs.direction != rhs.direction {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseListTokenFlows: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseListTokenFlows"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "page"),
+    3: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._page) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    try { if let v = self._page {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.data.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.data, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseListTokenFlows, rhs: Ocap_ResponseListTokenFlows) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._page != rhs._page {return false}
+    if lhs.data != rhs.data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestVerifyAccountRisk: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestVerifyAccountRisk"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "account_address"),
+    2: .standard(proto: "token_address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.accountAddress) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.tokenAddress) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.accountAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.accountAddress, fieldNumber: 1)
+    }
+    if !self.tokenAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.tokenAddress, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestVerifyAccountRisk, rhs: Ocap_RequestVerifyAccountRisk) -> Bool {
+    if lhs.accountAddress != rhs.accountAddress {return false}
+    if lhs.tokenAddress != rhs.tokenAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseVerifyAccountRisk: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseVerifyAccountRisk"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseVerifyAccountRisk, rhs: Ocap_ResponseVerifyAccountRisk) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestGetTokenDistribution: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestGetTokenDistribution"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "token_address"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tokenAddress) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tokenAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.tokenAddress, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestGetTokenDistribution, rhs: Ocap_RequestGetTokenDistribution) -> Bool {
+    if lhs.tokenAddress != rhs.tokenAddress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseGetTokenDistribution: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseGetTokenDistribution"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "data"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._data) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    try { if let v = self._data {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseGetTokenDistribution, rhs: Ocap_ResponseGetTokenDistribution) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._data != rhs._data {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseGetTokenFactoryState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseGetTokenFactoryState"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "state"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._state) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    try { if let v = self._state {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseGetTokenFactoryState, rhs: Ocap_ResponseGetTokenFactoryState) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._state != rhs._state {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_RequestListTokenFactories: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".RequestListTokenFactories"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "paging"),
+    2: .same(proto: "owner"),
+    3: .standard(proto: "reserve_address"),
+    4: .standard(proto: "token_address"),
+    5: .standard(proto: "time_filter"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._paging) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.owner) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.reserveAddress) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.tokenAddress) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._timeFilter) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._paging {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.owner.isEmpty {
+      try visitor.visitSingularStringField(value: self.owner, fieldNumber: 2)
+    }
+    if !self.reserveAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.reserveAddress, fieldNumber: 3)
+    }
+    if !self.tokenAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.tokenAddress, fieldNumber: 4)
+    }
+    try { if let v = self._timeFilter {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_RequestListTokenFactories, rhs: Ocap_RequestListTokenFactories) -> Bool {
+    if lhs._paging != rhs._paging {return false}
+    if lhs.owner != rhs.owner {return false}
+    if lhs.reserveAddress != rhs.reserveAddress {return false}
+    if lhs.tokenAddress != rhs.tokenAddress {return false}
+    if lhs._timeFilter != rhs._timeFilter {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_ResponseListTokenFactories: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResponseListTokenFactories"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "page"),
+    3: .standard(proto: "token_factories"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._page) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.tokenFactories) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    try { if let v = self._page {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.tokenFactories.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.tokenFactories, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_ResponseListTokenFactories, rhs: Ocap_ResponseListTokenFactories) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs._page != rhs._page {return false}
+    if lhs.tokenFactories != rhs.tokenFactories {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

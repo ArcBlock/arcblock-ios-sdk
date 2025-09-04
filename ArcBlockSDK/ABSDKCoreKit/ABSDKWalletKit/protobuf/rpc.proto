@@ -21,6 +21,7 @@ message RequestSendTx {
   WalletInfo wallet = 2 [ deprecated = true ];
   string token = 3 [ deprecated = true ];
   bool commit = 4;
+  string extra = 5;
 }
 message ResponseSendTx {
   StatusCode code = 1;
@@ -129,6 +130,7 @@ message RequestListTransactions {
   RollupFilter rollup_filter = 11;
   StakeFilter stake_filter = 12;
   DelegationFilter delegation_filter = 13;
+  TokenFactoryFilter token_factory_filter = 14;
 }
 message ResponseListTransactions {
   StatusCode code = 1;
@@ -339,4 +341,52 @@ message ResponseListDelegations {
   StatusCode code = 1;
   PageInfo page = 2;
   repeated IndexedDelegationState delegations = 3;
+}
+
+message RequestListTokenFlows {
+  Page paging = 1;
+  string account_address = 2;
+  string token_address = 3;
+  uint32 depth = 4;
+  TokenFlowDirection direction = 5;
+}
+message ResponseListTokenFlows {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedTokenFlow data = 3;
+}
+
+message RequestVerifyAccountRisk {
+  string account_address = 1;
+  string token_address = 2;
+}
+message ResponseVerifyAccountRisk {
+  StatusCode code = 1;
+  VerifyAccountRiskResult data = 2;
+}
+
+message RequestGetTokenDistribution {
+  string token_address = 1;
+}
+message ResponseGetTokenDistribution {
+  StatusCode code = 1;
+  TokenDistribution data = 2;
+}
+
+// token factory
+message ResponseGetTokenFactoryState {
+  StatusCode code = 1;
+  TokenFactoryState state = 2;
+}
+message RequestListTokenFactories {
+  Page paging = 1;
+  string owner = 2;
+  string reserve_address = 3;
+  string token_address = 4;
+  TimeFilter time_filter = 5;
+}
+message ResponseListTokenFactories {
+  StatusCode code = 1;
+  PageInfo page = 2;
+  repeated IndexedTokenFactoryState token_factories = 3;
 }

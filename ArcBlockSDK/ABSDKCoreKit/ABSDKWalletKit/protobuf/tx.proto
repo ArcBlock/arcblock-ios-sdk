@@ -132,6 +132,10 @@ message CreateTokenTx {
   // For tokens that supports rollup, the initial supply should be very small
   // Initial supply should be less than total supply
   string initial_supply = 9;
+  
+  // 1.24.0
+  // Max supply should be less than total supply
+  string max_total_supply = 10;
 
   // It's recommended that you set this, so your token will possibly have a price in fiat currency.
   // string erc20_contract_address = 15; // deprecated
@@ -362,6 +366,22 @@ message ClaimStakeTx {
 // Only accounts from stake slasher can do this
 // The slash takes assets(staked or revoked) away from the stake immediately
 message SlashStakeTx {
+  string address = 1;
+
+  // Can slash any combination of tokens + assets
+  // Can slash part of it or all of it
+  repeated TransactionInput outputs = 2;
+
+  // Human readable message help to identify the reason of the slash
+  string message = 3;
+
+  // ocap won't touch this field. Only app shall handle it.
+  google.protobuf.Any data = 50;
+}
+// Return assets from the stake
+// Only stake receiver can do this
+// The return takes assets(staked) away from the stake immediately
+message ReturnStakeTx {
   string address = 1;
 
   // Can slash any combination of tokens + assets
@@ -608,6 +628,49 @@ message WithdrawTokenV2Tx {
   google.protobuf.Any data = 15;
 }
 
+// --------------------- Token Factory Related -------------------------------------
+message CreateTokenFactoryTx {
+  string address = 1;
+  uint32 fee_rate = 2; // Fee rate in basis points, 100 = 1%
+  TokenSymbol token = 3;
+  string reserve_address = 4;
+  CurveConfig curve = 5;
+
+  // the chain won't touch this field. Only the dapp shall handle it.
+  google.protobuf.Any data = 50;
+}
+
+message UpdateTokenFactoryTx {
+  string address = 1;
+  uint32 fee_rate = 2;
+
+  // the chain won't touch this field. Only the dapp shall handle it.
+  google.protobuf.Any data = 50;
+}
+
+message MintTokenTx {
+  string token_factory = 1;
+  string amount = 2;
+  // Who pays reserve tokens for this 
+  repeated TransactionInput inputs = 3;
+  string receiver = 4;
+
+
+  // the chain won't touch this field. Only the dapp shall handle it.
+  google.protobuf.Any data = 50;
+}
+
+message BurnTokenTx {
+  string token_factory = 1;
+  // Who pays token for this 
+  repeated TransactionInput inputs = 2;
+  string min_reserve = 3;
+  string receiver = 4;
+
+  // the chain won't touch this field. Only the dapp shall handle it.
+  google.protobuf.Any data = 50;
+}
+
 // All valid tx protocols should be listed here
 message ItxStub {
   oneof value {
@@ -633,6 +696,10 @@ message ItxStub {
     CreateTokenTx create_token = 20;
     DepositTokenV2Tx deposit_token = 21;
     WithdrawTokenV2Tx withdraw_token = 22;
+    CreateTokenFactoryTx create_token_factory = 23;
+    UpdateTokenFactoryTx update_token_factory = 24;
+    MintTokenTx mint_token = 25;
+    BurnTokenTx burn_token = 26;
 
     // NFTs
     CreateFactoryTx create_factory = 30;
@@ -645,6 +712,7 @@ message ItxStub {
     RevokeStakeTx revoke_stake = 41;
     ClaimStakeTx claim_stake = 42;
     SlashStakeTx slash_stake = 43;
+    ReturnStakeTx return_stake = 44;
     UpgradeNodeTx upgrade_node = 49;
 
     // Rollup
