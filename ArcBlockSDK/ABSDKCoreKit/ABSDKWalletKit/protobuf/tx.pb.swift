@@ -1823,8 +1823,8 @@ public struct Ocap_CreateTokenFactoryTx {
     set {_uniqueStorage()._feeRate = newValue}
   }
 
-  public var token: Ocap_TokenSymbol {
-    get {return _storage._token ?? Ocap_TokenSymbol()}
+  public var token: Ocap_TokenInfo {
+    get {return _storage._token ?? Ocap_TokenInfo()}
     set {_uniqueStorage()._token = newValue}
   }
   /// Returns true if `token` has been explicitly set.
@@ -1872,6 +1872,15 @@ public struct Ocap_UpdateTokenFactoryTx {
 
   public var feeRate: UInt32 = 0
 
+  public var token: Ocap_TokenInfo {
+    get {return _token ?? Ocap_TokenInfo()}
+    set {_token = newValue}
+  }
+  /// Returns true if `token` has been explicitly set.
+  public var hasToken: Bool {return self._token != nil}
+  /// Clears the value of `token`. Subsequent reads from it will return its default value.
+  public mutating func clearToken() {self._token = nil}
+
   /// the chain won't touch this field. Only the dapp shall handle it.
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -1886,6 +1895,7 @@ public struct Ocap_UpdateTokenFactoryTx {
 
   public init() {}
 
+  fileprivate var _token: Ocap_TokenInfo? = nil
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
@@ -5369,7 +5379,7 @@ extension Ocap_CreateTokenFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._Messa
   fileprivate class _StorageClass {
     var _address: String = String()
     var _feeRate: UInt32 = 0
-    var _token: Ocap_TokenSymbol? = nil
+    var _token: Ocap_TokenInfo? = nil
     var _reserveAddress: String = String()
     var _curve: Ocap_CurveConfig? = nil
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
@@ -5468,6 +5478,7 @@ extension Ocap_UpdateTokenFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._Messa
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .standard(proto: "fee_rate"),
+    3: .same(proto: "token"),
     50: .same(proto: "data"),
   ]
 
@@ -5479,6 +5490,7 @@ extension Ocap_UpdateTokenFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._Messa
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
       case 2: try { try decoder.decodeSingularUInt32Field(value: &self.feeRate) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._token) }()
       case 50: try { try decoder.decodeSingularMessageField(value: &self._data) }()
       default: break
       }
@@ -5496,6 +5508,9 @@ extension Ocap_UpdateTokenFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if self.feeRate != 0 {
       try visitor.visitSingularUInt32Field(value: self.feeRate, fieldNumber: 2)
     }
+    try { if let v = self._token {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
     try { if let v = self._data {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
     } }()
@@ -5505,6 +5520,7 @@ extension Ocap_UpdateTokenFactoryTx: SwiftProtobuf.Message, SwiftProtobuf._Messa
   public static func ==(lhs: Ocap_UpdateTokenFactoryTx, rhs: Ocap_UpdateTokenFactoryTx) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs.feeRate != rhs.feeRate {return false}
+    if lhs._token != rhs._token {return false}
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

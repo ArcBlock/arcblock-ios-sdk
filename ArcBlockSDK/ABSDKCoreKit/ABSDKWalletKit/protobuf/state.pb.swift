@@ -564,6 +564,15 @@ public struct Ocap_TokenState {
     set {_uniqueStorage()._maxTotalSupply = newValue}
   }
 
+  public var metadata: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._metadata ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._metadata = newValue}
+  }
+  /// Returns true if `metadata` has been explicitly set.
+  public var hasMetadata: Bool {return _storage._metadata != nil}
+  /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
+  public mutating func clearMetadata() {_uniqueStorage()._metadata = nil}
+
   public var context: Ocap_StateContext {
     get {return _storage._context ?? Ocap_StateContext()}
     set {_uniqueStorage()._context = newValue}
@@ -572,6 +581,11 @@ public struct Ocap_TokenState {
   public var hasContext: Bool {return _storage._context != nil}
   /// Clears the value of `context`. Subsequent reads from it will return its default value.
   public mutating func clearContext() {_uniqueStorage()._context = nil}
+
+  public var website: String {
+    get {return _storage._website}
+    set {_uniqueStorage()._website = newValue}
+  }
 
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
@@ -2061,7 +2075,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     11: .standard(proto: "token_factory_address"),
     12: .standard(proto: "initial_supply"),
     13: .standard(proto: "max_total_supply"),
+    14: .same(proto: "metadata"),
     15: .same(proto: "context"),
+    16: .same(proto: "website"),
     20: .same(proto: "data"),
   ]
 
@@ -2079,7 +2095,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     var _tokenFactoryAddress: String = String()
     var _initialSupply: String = String()
     var _maxTotalSupply: String = String()
+    var _metadata: SwiftProtobuf.Google_Protobuf_Any? = nil
     var _context: Ocap_StateContext? = nil
+    var _website: String = String()
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -2100,7 +2118,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       _tokenFactoryAddress = source._tokenFactoryAddress
       _initialSupply = source._initialSupply
       _maxTotalSupply = source._maxTotalSupply
+      _metadata = source._metadata
       _context = source._context
+      _website = source._website
       _data = source._data
     }
   }
@@ -2133,7 +2153,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         case 11: try { try decoder.decodeSingularStringField(value: &_storage._tokenFactoryAddress) }()
         case 12: try { try decoder.decodeSingularStringField(value: &_storage._initialSupply) }()
         case 13: try { try decoder.decodeSingularStringField(value: &_storage._maxTotalSupply) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._metadata) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._context) }()
+        case 16: try { try decoder.decodeSingularStringField(value: &_storage._website) }()
         case 20: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -2186,9 +2208,15 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       if !_storage._maxTotalSupply.isEmpty {
         try visitor.visitSingularStringField(value: _storage._maxTotalSupply, fieldNumber: 13)
       }
+      try { if let v = _storage._metadata {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      } }()
       try { if let v = _storage._context {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
+      if !_storage._website.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._website, fieldNumber: 16)
+      }
       try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
       } }()
@@ -2214,7 +2242,9 @@ extension Ocap_TokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
         if _storage._tokenFactoryAddress != rhs_storage._tokenFactoryAddress {return false}
         if _storage._initialSupply != rhs_storage._initialSupply {return false}
         if _storage._maxTotalSupply != rhs_storage._maxTotalSupply {return false}
+        if _storage._metadata != rhs_storage._metadata {return false}
         if _storage._context != rhs_storage._context {return false}
+        if _storage._website != rhs_storage._website {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }

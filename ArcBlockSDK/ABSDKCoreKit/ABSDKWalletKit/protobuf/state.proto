@@ -144,8 +144,9 @@ message TokenState {
   string token_factory_address = 11;
   string initial_supply = 12;
   string max_total_supply = 13;
-
+  google.protobuf.Any metadata = 14;
   StateContext context = 15;
+  string website = 16;
 
   google.protobuf.Any data = 20;
 }

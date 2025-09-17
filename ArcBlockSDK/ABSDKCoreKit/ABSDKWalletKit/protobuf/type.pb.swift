@@ -59,6 +59,24 @@ public struct Ocap_TokenSymbol {
 
   public var unit: String = String()
 
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Ocap_TokenInfo {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var address: String = String()
+
+  public var symbol: String = String()
+
+  public var decimal: Int32 = 0
+
+  public var unit: String = String()
+
   public var name: String = String()
 
   public var description_p: String = String()
@@ -67,9 +85,22 @@ public struct Ocap_TokenSymbol {
 
   public var maxTotalSupply: String = String()
 
+  public var metadata: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _metadata ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_metadata = newValue}
+  }
+  /// Returns true if `metadata` has been explicitly set.
+  public var hasMetadata: Bool {return self._metadata != nil}
+  /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
+  public mutating func clearMetadata() {self._metadata = nil}
+
+  public var website: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _metadata: SwiftProtobuf.Google_Protobuf_Any? = nil
 }
 
 public struct Ocap_WalletType {
@@ -695,6 +726,20 @@ public struct Ocap_TxGasConfig {
   public init() {}
 }
 
+public struct Ocap_TxStakeConfig {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var createToken: UInt64 = 0
+
+  public var createTokenLockPeriod: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Ocap_TransactionConfig {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -726,12 +771,22 @@ public struct Ocap_TransactionConfig {
   /// Clears the value of `txGas`. Subsequent reads from it will return its default value.
   public mutating func clearTxGas() {self._txGas = nil}
 
+  public var txStake: Ocap_TxStakeConfig {
+    get {return _txStake ?? Ocap_TxStakeConfig()}
+    set {_txStake = newValue}
+  }
+  /// Returns true if `txStake` has been explicitly set.
+  public var hasTxStake: Bool {return self._txStake != nil}
+  /// Clears the value of `txStake`. Subsequent reads from it will return its default value.
+  public mutating func clearTxStake() {self._txStake = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _delegate: Ocap_DelegateConfig? = nil
   fileprivate var _txGas: Ocap_TxGasConfig? = nil
+  fileprivate var _txStake: Ocap_TxStakeConfig? = nil
 }
 
 public struct Ocap_BlockInfo {
@@ -1815,10 +1870,62 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     2: .same(proto: "symbol"),
     3: .same(proto: "decimal"),
     4: .same(proto: "unit"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.address) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.symbol) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.decimal) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.unit) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
+    }
+    if !self.symbol.isEmpty {
+      try visitor.visitSingularStringField(value: self.symbol, fieldNumber: 2)
+    }
+    if self.decimal != 0 {
+      try visitor.visitSingularInt32Field(value: self.decimal, fieldNumber: 3)
+    }
+    if !self.unit.isEmpty {
+      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_TokenSymbol, rhs: Ocap_TokenSymbol) -> Bool {
+    if lhs.address != rhs.address {return false}
+    if lhs.symbol != rhs.symbol {return false}
+    if lhs.decimal != rhs.decimal {return false}
+    if lhs.unit != rhs.unit {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Ocap_TokenInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TokenInfo"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "address"),
+    2: .same(proto: "symbol"),
+    3: .same(proto: "decimal"),
+    4: .same(proto: "unit"),
     5: .same(proto: "name"),
     6: .same(proto: "description"),
     7: .same(proto: "icon"),
     8: .standard(proto: "max_total_supply"),
+    9: .same(proto: "metadata"),
+    10: .same(proto: "website"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1835,12 +1942,18 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       case 6: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.icon) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.maxTotalSupply) }()
+      case 9: try { try decoder.decodeSingularMessageField(value: &self._metadata) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.website) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
@@ -1865,10 +1978,16 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.maxTotalSupply.isEmpty {
       try visitor.visitSingularStringField(value: self.maxTotalSupply, fieldNumber: 8)
     }
+    try { if let v = self._metadata {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    } }()
+    if !self.website.isEmpty {
+      try visitor.visitSingularStringField(value: self.website, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Ocap_TokenSymbol, rhs: Ocap_TokenSymbol) -> Bool {
+  public static func ==(lhs: Ocap_TokenInfo, rhs: Ocap_TokenInfo) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs.symbol != rhs.symbol {return false}
     if lhs.decimal != rhs.decimal {return false}
@@ -1877,6 +1996,8 @@ extension Ocap_TokenSymbol: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs.description_p != rhs.description_p {return false}
     if lhs.icon != rhs.icon {return false}
     if lhs.maxTotalSupply != rhs.maxTotalSupply {return false}
+    if lhs._metadata != rhs._metadata {return false}
+    if lhs.website != rhs.website {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3204,6 +3325,44 @@ extension Ocap_TxGasConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
+extension Ocap_TxStakeConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TxStakeConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "create_token"),
+    2: .standard(proto: "create_token_lock_period"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularUInt64Field(value: &self.createToken) }()
+      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.createTokenLockPeriod) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.createToken != 0 {
+      try visitor.visitSingularUInt64Field(value: self.createToken, fieldNumber: 1)
+    }
+    if self.createTokenLockPeriod != 0 {
+      try visitor.visitSingularUInt64Field(value: self.createTokenLockPeriod, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Ocap_TxStakeConfig, rhs: Ocap_TxStakeConfig) -> Bool {
+    if lhs.createToken != rhs.createToken {return false}
+    if lhs.createTokenLockPeriod != rhs.createTokenLockPeriod {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Ocap_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TransactionConfig"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -3213,6 +3372,7 @@ extension Ocap_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     4: .same(proto: "delegate"),
     5: .standard(proto: "tx_fee"),
     6: .standard(proto: "tx_gas"),
+    7: .standard(proto: "tx_stake"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3227,6 +3387,7 @@ extension Ocap_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 4: try { try decoder.decodeSingularMessageField(value: &self._delegate) }()
       case 5: try { try decoder.decodeRepeatedMessageField(value: &self.txFee) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._txGas) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._txStake) }()
       default: break
       }
     }
@@ -3255,6 +3416,9 @@ extension Ocap_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try { if let v = self._txGas {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     } }()
+    try { if let v = self._txStake {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3265,6 +3429,7 @@ extension Ocap_TransactionConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs._delegate != rhs._delegate {return false}
     if lhs.txFee != rhs.txFee {return false}
     if lhs._txGas != rhs._txGas {return false}
+    if lhs._txStake != rhs._txStake {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
