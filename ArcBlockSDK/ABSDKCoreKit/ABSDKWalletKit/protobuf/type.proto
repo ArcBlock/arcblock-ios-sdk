@@ -19,10 +19,19 @@ message TokenSymbol {
   string symbol = 2;
   int32 decimal = 3;
   string unit = 4;
+}
+
+message TokenInfo {
+  string address = 1;
+  string symbol = 2;
+  int32 decimal = 3;
+  string unit = 4;
   string name = 5;
   string description = 6;
   string icon = 7;
   string max_total_supply = 8;
+  google.protobuf.Any metadata = 9;
+  string website = 10;
 }
 
 message WalletType {
@@ -231,6 +240,11 @@ message TxGasConfig {
   uint64 stake_lock_period = 7;
 }
 
+message TxStakeConfig {
+  uint64 create_token = 1;
+  uint64 create_token_lock_period = 2;
+}
+
 message TransactionConfig {
   uint32 max_asset_size = 1;
   uint32 max_list_size = 2;
@@ -238,6 +252,7 @@ message TransactionConfig {
   DelegateConfig delegate = 4;
   repeated TxFeeConfig tx_fee = 5;
   TxGasConfig tx_gas = 6;
+  TxStakeConfig tx_stake = 7;
 }
 
 message BlockInfo {

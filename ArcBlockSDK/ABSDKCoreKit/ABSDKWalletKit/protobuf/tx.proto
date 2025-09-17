@@ -632,7 +632,7 @@ message WithdrawTokenV2Tx {
 message CreateTokenFactoryTx {
   string address = 1;
   uint32 fee_rate = 2; // Fee rate in basis points, 100 = 1%
-  TokenSymbol token = 3;
+  TokenInfo token = 3;
   string reserve_address = 4;
   CurveConfig curve = 5;
 
@@ -643,6 +643,7 @@ message CreateTokenFactoryTx {
 message UpdateTokenFactoryTx {
   string address = 1;
   uint32 fee_rate = 2;
+  TokenInfo token = 3;
 
   // the chain won't touch this field. Only the dapp shall handle it.
   google.protobuf.Any data = 50;
@@ -654,7 +655,6 @@ message MintTokenTx {
   // Who pays reserve tokens for this 
   repeated TransactionInput inputs = 3;
   string receiver = 4;
-
 
   // the chain won't touch this field. Only the dapp shall handle it.
   google.protobuf.Any data = 50;

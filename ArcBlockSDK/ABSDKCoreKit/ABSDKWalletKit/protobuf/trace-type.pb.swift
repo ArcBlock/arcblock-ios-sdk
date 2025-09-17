@@ -358,7 +358,7 @@ public struct Ocap_PageInfo {
   public init() {}
 }
 
-public struct Ocap_TokenInfo {
+public struct Ocap_TokenMeta {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -497,7 +497,7 @@ public struct Ocap_IndexedTransaction {
     set {_uniqueStorage()._code = newValue}
   }
 
-  public var tokenSymbols: [Ocap_TokenSymbol] {
+  public var tokenSymbols: [Ocap_TokenMeta] {
     get {return _storage._tokenSymbols}
     set {_uniqueStorage()._tokenSymbols = newValue}
   }
@@ -575,7 +575,7 @@ public struct Ocap_IndexedAccountState {
 
   public var recentNumTxs: [String] = []
 
-  public var tokens: [Ocap_TokenInfo] = []
+  public var tokens: [Ocap_TokenMeta] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -790,6 +790,20 @@ public struct Ocap_IndexedTokenState {
     set {_uniqueStorage()._initialSupply = newValue}
   }
 
+  public var metadata: SwiftProtobuf.Google_Protobuf_Any {
+    get {return _storage._metadata ?? SwiftProtobuf.Google_Protobuf_Any()}
+    set {_uniqueStorage()._metadata = newValue}
+  }
+  /// Returns true if `metadata` has been explicitly set.
+  public var hasMetadata: Bool {return _storage._metadata != nil}
+  /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
+  public mutating func clearMetadata() {_uniqueStorage()._metadata = nil}
+
+  public var website: String {
+    get {return _storage._website}
+    set {_uniqueStorage()._website = newValue}
+  }
+
   public var data: SwiftProtobuf.Google_Protobuf_Any {
     get {return _storage._data ?? SwiftProtobuf.Google_Protobuf_Any()}
     set {_uniqueStorage()._data = newValue}
@@ -981,7 +995,7 @@ public struct Ocap_IndexedFactoryState {
     set {_uniqueStorage()._balance = newValue}
   }
 
-  public var tokens: [Ocap_TokenInfo] {
+  public var tokens: [Ocap_TokenMeta] {
     get {return _storage._tokens}
     set {_uniqueStorage()._tokens = newValue}
   }
@@ -1033,7 +1047,7 @@ public struct Ocap_IndexedStakeState {
 
   public var receiver: String = String()
 
-  public var tokens: [Ocap_TokenInfo] = []
+  public var tokens: [Ocap_TokenMeta] = []
 
   public var assets: [String] = []
 
@@ -1047,7 +1061,7 @@ public struct Ocap_IndexedStakeState {
 
   public var revokeWaitingPeriod: UInt32 = 0
 
-  public var revokedTokens: [Ocap_TokenInfo] = []
+  public var revokedTokens: [Ocap_TokenMeta] = []
 
   public var revokedAssets: [String] = []
 
@@ -2260,8 +2274,8 @@ extension Ocap_PageInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   }
 }
 
-extension Ocap_TokenInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".TokenInfo"
+extension Ocap_TokenMeta: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TokenMeta"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .same(proto: "balance"),
@@ -2305,7 +2319,7 @@ extension Ocap_TokenInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Ocap_TokenInfo, rhs: Ocap_TokenInfo) -> Bool {
+  public static func ==(lhs: Ocap_TokenMeta, rhs: Ocap_TokenMeta) -> Bool {
     if lhs.address != rhs.address {return false}
     if lhs.balance != rhs.balance {return false}
     if lhs.decimal != rhs.decimal {return false}
@@ -2530,7 +2544,7 @@ extension Ocap_IndexedTransaction: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _tx: Ocap_Transaction? = nil
     var _valid: Bool = false
     var _code: Ocap_StatusCode = .ok
-    var _tokenSymbols: [Ocap_TokenSymbol] = []
+    var _tokenSymbols: [Ocap_TokenMeta] = []
     var _receipts: [Ocap_TransactionReceipt] = []
 
     static let defaultInstance = _StorageClass()
@@ -3020,6 +3034,8 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     14: .standard(proto: "token_factory_address"),
     15: .standard(proto: "max_total_supply"),
     16: .standard(proto: "initial_supply"),
+    17: .same(proto: "metadata"),
+    18: .same(proto: "website"),
     50: .same(proto: "data"),
   ]
 
@@ -3039,6 +3055,8 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     var _tokenFactoryAddress: String = String()
     var _maxTotalSupply: String = String()
     var _initialSupply: String = String()
+    var _metadata: SwiftProtobuf.Google_Protobuf_Any? = nil
+    var _website: String = String()
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
 
     static let defaultInstance = _StorageClass()
@@ -3061,6 +3079,8 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       _tokenFactoryAddress = source._tokenFactoryAddress
       _maxTotalSupply = source._maxTotalSupply
       _initialSupply = source._initialSupply
+      _metadata = source._metadata
+      _website = source._website
       _data = source._data
     }
   }
@@ -3095,6 +3115,8 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
         case 14: try { try decoder.decodeSingularStringField(value: &_storage._tokenFactoryAddress) }()
         case 15: try { try decoder.decodeSingularStringField(value: &_storage._maxTotalSupply) }()
         case 16: try { try decoder.decodeSingularStringField(value: &_storage._initialSupply) }()
+        case 17: try { try decoder.decodeSingularMessageField(value: &_storage._metadata) }()
+        case 18: try { try decoder.decodeSingularStringField(value: &_storage._website) }()
         case 50: try { try decoder.decodeSingularMessageField(value: &_storage._data) }()
         default: break
         }
@@ -3153,6 +3175,12 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       if !_storage._initialSupply.isEmpty {
         try visitor.visitSingularStringField(value: _storage._initialSupply, fieldNumber: 16)
       }
+      try { if let v = _storage._metadata {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+      } }()
+      if !_storage._website.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._website, fieldNumber: 18)
+      }
       try { if let v = _storage._data {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
       } }()
@@ -3180,6 +3208,8 @@ extension Ocap_IndexedTokenState: SwiftProtobuf.Message, SwiftProtobuf._MessageI
         if _storage._tokenFactoryAddress != rhs_storage._tokenFactoryAddress {return false}
         if _storage._maxTotalSupply != rhs_storage._maxTotalSupply {return false}
         if _storage._initialSupply != rhs_storage._initialSupply {return false}
+        if _storage._metadata != rhs_storage._metadata {return false}
+        if _storage._website != rhs_storage._website {return false}
         if _storage._data != rhs_storage._data {return false}
         return true
       }
@@ -3398,7 +3428,7 @@ extension Ocap_IndexedFactoryState: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _hooks: [Ocap_AssetFactoryHook] = []
     var _data: SwiftProtobuf.Google_Protobuf_Any? = nil
     var _balance: String = String()
-    var _tokens: [Ocap_TokenInfo] = []
+    var _tokens: [Ocap_TokenMeta] = []
     var _numMinted: UInt32 = 0
     var _lastSettlement: String = String()
     var _genesisTime: String = String()
