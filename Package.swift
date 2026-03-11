@@ -17,8 +17,8 @@ let package = Package(
     ],
      dependencies: [
         .package(url: "https://github.com/web3swift-team/web3swift",
-                 exact: "3.2.2"
-         ), 
+                 exact: "3.3.2"
+         ),
         .package(url: "https://github.com/ArcBlock/apollo-ios.git", branch: "master"),
         .package(
             url: "https://github.com/apple/swift-protobuf.git",

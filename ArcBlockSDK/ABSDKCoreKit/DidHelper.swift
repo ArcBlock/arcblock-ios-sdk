@@ -404,7 +404,7 @@ public class DidHelper {
             return nil
         }
 
-        let didTypeBytes = Array(encodedDidData.bytes.prefix(2))
+        let didTypeBytes = Array([UInt8](encodedDidData).prefix(2))
         guard didTypeBytes.count >= 2 else {
             return nil
         }
@@ -440,16 +440,20 @@ public class DidHelper {
         let didWithoutPrefix = DidHelper.removeDidPrefix(did)
         
         guard let hashType = DidHelper.calculateTypesFromDid(did: did)?.hashType,
-              let didBytes = Data.init(multibaseEncoded: didWithoutPrefix)?.bytes,
-              didBytes.count > 25 else {
+              let didData = Data.init(multibaseEncoded: didWithoutPrefix) else {
+            return false
+        }
+        let didBytes = [UInt8](didData)
+        guard didBytes.count > 25 else {
             return false
         }
         
         let hashContent = didBytes[0...21]
         let check = didBytes[22...25]
         let hashData = Data(hashContent)
-        if let bytes = hashType.hash(data: hashData)?.bytes[0...3] {
-           return check.elementsEqual(bytes)
+        if let hashResult = hashType.hash(data: hashData) {
+            let hashBytes = [UInt8](hashResult)
+            return check.elementsEqual(hashBytes[0...3])
         } else {
             return false
         }

@@ -163,7 +163,7 @@ extension BIP44Utils {
             return false
         }
                 
-        let hash = Digest.sha256(dataBytes.bytes)
+        let hash = Digest.sha256([UInt8](dataBytes))
         
         let hashBits = hash.toBitArray().joined(separator: "").prefix(checksumLength)
 
