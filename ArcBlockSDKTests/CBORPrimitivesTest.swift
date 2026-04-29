@@ -52,6 +52,18 @@ class CBORPrimitivesTest: XCTestCase {
         }
     }
 
+    func testNegativeInt64MinCanonicalBytes() throws {
+        // RFC 8949 §3.1: major type 1 encodes -1 - n. For Int64.min
+        // (-0x8000_0000_0000_0000) the magnitude is `-1 - Int64.min ==
+        // 0x7FFF_FFFF_FFFF_FFFF == Int64.max`. Cross-encoder byte equality
+        // (Kotlin/TS) must hold here, so pin the bytes explicitly.
+        let encoded = try CBOREncoder.encode(.negative(.min))
+        XCTAssertEqual(
+            encoded,
+            Data([0x3b, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff])
+        )
+    }
+
     func testRoundTripBytes() throws {
         let v = CBORValue.bytes(Data([0x00, 0x01, 0x7f, 0xff]))
         let bytes = try CBOREncoder.encode(v)

@@ -154,16 +154,13 @@ public enum CBORDecoder {
             case 0:
                 return .unsigned(arg)
             case 1:
-                // -1 - arg. If arg <= Int64.max, fits in Int64 negative;
-                // if arg == UInt64(Int64.max) + 1, fits as Int64.min;
-                // otherwise the value is below Int64.min and the canonical
-                // representation would be a tag-3 bignum. Per RFC 8949 a
-                // major-type-1 value can encode magnitudes up to 2^64;
-                // anything beyond Int64 range we surface as `.bigSigned`.
+                // -1 - arg. If arg <= Int64.max, fits in Int64 negative —
+                // and `arg == Int64.max` yields `-Int64.max - 1 == Int64.min`
+                // exactly. Anything above Int64.max is below Int64.min and
+                // surfaces as `.bigSigned`. Per RFC 8949 a major-type-1
+                // value can encode magnitudes up to 2^64.
                 if arg <= UInt64(Int64.max) {
                     return .negative(-Int64(arg) - 1)
-                } else if arg == UInt64(Int64.max) + 1 {
-                    return .negative(Int64.min)
                 } else {
                     let big = -BigInt(BigUInt(arg)) - 1
                     return .bigSigned(big)

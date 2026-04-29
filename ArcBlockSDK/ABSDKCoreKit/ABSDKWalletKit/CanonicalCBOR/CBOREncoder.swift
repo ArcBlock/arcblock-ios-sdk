@@ -65,13 +65,13 @@ public enum CBOREncoder {
                     "negative case must hold a strictly negative value"
                 )
             }
-            // -1 - n → n = -1 - (-x-1) = x where stored magnitude is (-n)-1.
-            // For n in Int64 range, `(-1 - n)` always fits in UInt64
-            // because `-Int64.min - 1 == Int64.max`, and that's
-            // `Int64.max == 0x7fff_ffff_ffff_ffff` < UInt64.max.
+            // For n < 0, the canonical encoding stores `-1 - n` (per RFC
+            // 8949 §3.1). The negation `-n` traps for `Int64.min`, so we
+            // special-case it: `-1 - Int64.min == Int64.max`, which is the
+            // largest non-negative Int64 and fits in UInt64 directly.
             let magnitude: UInt64
             if n == Int64.min {
-                magnitude = UInt64(Int64.max) + 1
+                magnitude = UInt64(Int64.max)
             } else {
                 magnitude = UInt64(-n - 1)
             }
