@@ -97,6 +97,21 @@ public enum CBORDecoder {
             return b
         }
 
+        /// Convert a CBOR head argument (UInt64) into an `Int` length, or
+        /// throw if the value exceeds `Int.max`. Untrusted dapp bytes can
+        /// carry adversarial 8-byte length headers (e.g. `UInt64.max`), and
+        /// `Int(arg)` *traps* on overflow — that would crash the wallet
+        /// before any IO check runs. Use this everywhere a head argument
+        /// becomes a Swift array / Data length.
+        func checkedLength(_ arg: UInt64) throws -> Int {
+            guard let length = Int(exactly: arg) else {
+                throw CanonicalCBORError.malformedCBOR(
+                    "length \(arg) exceeds Int.max"
+                )
+            }
+            return length
+        }
+
         mutating func readBytes(_ count: Int) throws -> Data {
             guard count >= 0 else {
                 throw CanonicalCBORError.malformedCBOR("negative byte count")
@@ -166,25 +181,44 @@ public enum CBORDecoder {
                     return .bigSigned(big)
                 }
             case 2:
-                let bytes = try readBytes(Int(arg))
+                let length = try checkedLength(arg)
+                let bytes = try readBytes(length)
                 return .bytes(bytes)
             case 3:
-                let bytes = try readBytes(Int(arg))
+                let length = try checkedLength(arg)
+                let bytes = try readBytes(length)
                 guard let s = String(data: bytes, encoding: .utf8) else {
                     throw CanonicalCBORError.malformedCBOR("invalid UTF-8 text string")
                 }
                 return .text(s)
             case 4:
+                let count = try checkedLength(arg)
+                // Each element is at least 1 byte; a count above the
+                // remaining input is provably malformed and avoids
+                // attacker-controlled `reserveCapacity` allocations.
+                guard count <= data.count - idx else {
+                    throw CanonicalCBORError.malformedCBOR(
+                        "array length \(count) exceeds remaining bytes"
+                    )
+                }
                 var items: [CBORValue] = []
-                items.reserveCapacity(Int(arg))
-                for _ in 0..<Int(arg) {
+                items.reserveCapacity(count)
+                for _ in 0..<count {
                     items.append(try readValue())
                 }
                 return .array(items)
             case 5:
+                let count = try checkedLength(arg)
+                // Each pair is at least 2 bytes; same provably-malformed
+                // bound as arrays, conservatively using 1 byte per element.
+                guard count <= data.count - idx else {
+                    throw CanonicalCBORError.malformedCBOR(
+                        "map length \(count) exceeds remaining bytes"
+                    )
+                }
                 var pairs: [CBORMapPair] = []
-                pairs.reserveCapacity(Int(arg))
-                for _ in 0..<Int(arg) {
+                pairs.reserveCapacity(count)
+                for _ in 0..<count {
                     let key = try readValue()
                     let value = try readValue()
                     pairs.append(CBORMapPair(key: key, value: value))

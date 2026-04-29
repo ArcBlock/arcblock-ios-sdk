@@ -277,4 +277,30 @@ class CBORPrimitivesTest: XCTestCase {
         bytes.append(0xff) // garbage
         XCTAssertThrowsError(try CBORDecoder.decode(bytes))
     }
+
+    // MARK: - Adversarial length headers
+
+    // These three guard the contract that untrusted bytes from a dapp must
+    // throw, never crash. Pre-fix, `Int(arg)` traps for `arg > Int.max`,
+    // and a 9-byte payload `0x{5b,9b,bb} ff ff ff ff ff ff ff ff` crashes
+    // the wallet before any IO check runs. The decoder must convert
+    // through `Int(exactly:)` and surface a thrown error instead.
+
+    func testDecoderRejectsHugeByteStringLength() {
+        // 0x5b = bytes (major 2), info=27 (8-byte length), then UInt64.max.
+        let bytes = Data([0x5b]) + Data(repeating: 0xff, count: 8)
+        XCTAssertThrowsError(try CBORDecoder.decode(bytes))
+    }
+
+    func testDecoderRejectsHugeArrayLength() {
+        // 0x9b = array (major 4), info=27, count=UInt64.max.
+        let bytes = Data([0x9b]) + Data(repeating: 0xff, count: 8)
+        XCTAssertThrowsError(try CBORDecoder.decode(bytes))
+    }
+
+    func testDecoderRejectsHugeMapLength() {
+        // 0xbb = map (major 5), info=27, count=UInt64.max.
+        let bytes = Data([0xbb]) + Data(repeating: 0xff, count: 8)
+        XCTAssertThrowsError(try CBORDecoder.decode(bytes))
+    }
 }
