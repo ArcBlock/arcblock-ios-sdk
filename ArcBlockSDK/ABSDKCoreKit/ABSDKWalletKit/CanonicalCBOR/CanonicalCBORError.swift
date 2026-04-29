@@ -46,6 +46,11 @@ public enum CanonicalCBORError: Error, CustomStringConvertible, Equatable {
     case valueOutOfRange(String)
     /// A decoded value's CBOR type did not match the expected shape.
     case typeMismatch(String)
+    /// An `Any` field carries a `typeUrl` whose inner-message schema is not
+    /// known to this decoder. Phase 3 supports only known typeUrls; OPAQUE
+    /// (`json` / `vc` / `fg:x:address`) and unknown-pass-through arrive in
+    /// phases 4/5.
+    case unknownTypeUrl(String)
 
     public var description: String {
         switch self {
@@ -58,6 +63,8 @@ public enum CanonicalCBORError: Error, CustomStringConvertible, Equatable {
         case .invalidMapKey(let s): return "canonical-cbor: invalid map key — \(s)"
         case .valueOutOfRange(let s): return "canonical-cbor: value out of range — \(s)"
         case .typeMismatch(let s): return "canonical-cbor: type mismatch — \(s)"
+        case .unknownTypeUrl(let s):
+            return "canonical-cbor: unknown typeUrl \"\(s)\" (phase 3 supports known OCAP typeUrls only)"
         }
     }
 }
