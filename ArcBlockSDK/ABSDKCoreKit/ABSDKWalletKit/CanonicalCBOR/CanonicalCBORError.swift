@@ -47,14 +47,23 @@ public enum CanonicalCBORError: Error, CustomStringConvertible, Equatable {
     /// A decoded value's CBOR type did not match the expected shape.
     case typeMismatch(String)
     /// An `Any` field carries a `typeUrl` whose inner-message schema is not
-    /// known to this decoder. Phase 3 supports only known typeUrls; OPAQUE
-    /// (`json` / `vc` / `fg:x:address`) and unknown-pass-through arrive in
-    /// phases 4/5.
+    /// known to this decoder AND is not in `CanonicalCBOR.OPAQUE_TYPE_URLS`.
+    /// OPAQUE typeUrls (`json` / `vc` / `fg:x:address`) bypass the schema
+    /// lookup and surface as `OpaqueAny` carriers; unknown pass-through
+    /// (phase 5) is still a hard error here.
     case unknownTypeUrl(String)
     /// The decode path nested deeper than the configured maximum (matches
     /// SwiftProtobuf's own default of 32). Guards against stack-blow attacks
     /// from maliciously crafted CBOR input.
     case recursionDepthExceeded(Int)
+    /// A `CBORDecodeOptions` cap was hit during decode. The associated
+    /// string names which cap (`"maxBytes"` / `"maxDepth"` /
+    /// `"maxKeyCount"` / `"maxArrayLength"`). Surfaces from
+    /// `CanonicalCBOR.decodeOpaque(_:options:)` and any other entry point
+    /// that takes a `CBORDecodeOptions`. Distinct from
+    /// `recursionDepthExceeded(_:)` so callers can distinguish a hard
+    /// codec invariant (32-deep recursion) from a tunable resource cap.
+    case decodeOptionsExceeded(String)
 
     public var description: String {
         switch self {
@@ -68,9 +77,11 @@ public enum CanonicalCBORError: Error, CustomStringConvertible, Equatable {
         case .valueOutOfRange(let s): return "canonical-cbor: value out of range — \(s)"
         case .typeMismatch(let s): return "canonical-cbor: type mismatch — \(s)"
         case .unknownTypeUrl(let s):
-            return "canonical-cbor: unknown typeUrl \"\(s)\" (phase 3 supports known OCAP typeUrls only)"
+            return "canonical-cbor: unknown typeUrl \"\(s)\" (must be a known OCAP type or in OPAQUE_TYPE_URLS)"
         case .recursionDepthExceeded(let max):
             return "canonical-cbor: recursion depth exceeded \(max)"
+        case .decodeOptionsExceeded(let cap):
+            return "canonical-cbor: decode options cap exceeded — \(cap)"
         }
     }
 }
