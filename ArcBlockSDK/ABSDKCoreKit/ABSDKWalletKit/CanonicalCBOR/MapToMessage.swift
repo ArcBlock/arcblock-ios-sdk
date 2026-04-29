@@ -527,9 +527,21 @@ public enum MapToMessage {
     // MARK: - Any
 
     /// Build wire bytes for `google.protobuf.Any` from the canonical-CBOR
-    /// flat shape `{0: typeUrl, ...innerFieldIds...}`. `depth` is the
-    /// caller's recursion frame count (an `Any` field counts as one frame
-    /// because it may contain another `Any`).
+    /// shape. Three branches, in order of precedence:
+    ///
+    ///  1. OPAQUE typeUrl (`json` / `vc` / `fg:x:address`) — the inner
+    ///     payload at key 1 is treated as raw CBOR. We encode it back to
+    ///     canonical CBOR bytes (with self-describe prefix) and stuff
+    ///     them into the wire-format Any using the wallet-internal
+    ///     `x-arcblock-opaque/<typeUrl>` prefix. The prefix is what makes
+    ///     `unpackTo(_:)` fail-loudly on a consumer that hasn't been
+    ///     OPAQUE-aware-ified — there is no protobuf descriptor for the
+    ///     prefixed name.
+    ///  2. Flat schema-known typeUrl — recurse via the bridge.
+    ///  3. Unknown typeUrl — hard error.
+    ///
+    /// `depth` is the caller's recursion frame count (an `Any` field counts
+    /// as one frame because it may contain another `Any`).
     static func buildAnyWire(value: CBORValue, depth: Int = 0) throws -> Data {
         guard case let .map(pairs) = value else {
             throw CanonicalCBORError.typeMismatch(
@@ -538,6 +550,7 @@ public enum MapToMessage {
         }
         var typeUrl = ""
         var innerPairs: [CBORMapPair] = []
+        var nestedValueAtKey1: CBORValue? = nil
         for pair in pairs {
             if case .unsigned(0) = pair.key {
                 guard case let .text(s) = pair.value else {
@@ -546,6 +559,13 @@ public enum MapToMessage {
                     )
                 }
                 typeUrl = s
+            } else if case .unsigned(1) = pair.key {
+                // For OPAQUE, key 1 nests the raw CBOR payload. For
+                // schema-known typeUrls the inner fields are flattened
+                // into the same map alongside key 0 — there is no key 1.
+                // We detect which shape applies AFTER reading typeUrl.
+                nestedValueAtKey1 = pair.value
+                innerPairs.append(pair)
             } else {
                 innerPairs.append(pair)
             }
@@ -555,12 +575,33 @@ public enum MapToMessage {
             return Data()
         }
 
-        // Look up the inner message name. Phase 3 supports KNOWN typeUrls
-        // only — explicit fail on unknown.
+        // Branch 1: OPAQUE — raw CBOR payload at key 1, NOT a nested
+        // protobuf message. Re-encode it to canonical bytes and emit a
+        // wallet-internal carrier Any.
+        if CanonicalCBOR.OPAQUE_TYPE_URLS.contains(typeUrl) {
+            // Empty `{0: typeUrl}` (no key 1) is legal — represents an
+            // OPAQUE Any with empty payload. The carrier records empty
+            // bytes; the round trip will reproduce the same shape.
+            let cborBytes: Data
+            if let inner = nestedValueAtKey1 {
+                cborBytes = try CBOREncoder.encodeTopLevel(inner)
+            } else {
+                cborBytes = Data()
+            }
+            return try buildWireOpaqueAny(canonicalTypeUrl: typeUrl, cborBytes: cborBytes)
+        }
+
+        // Branch 2: schema-known typeUrl. Phase 3 already required this for
+        // non-OPAQUE input, so the field-set lookup must succeed.
         let messageName = FieldResolver.fromTypeUrl(typeUrl)
         guard FieldResolver.fieldsForMessage(messageName) != nil else {
             throw CanonicalCBORError.unknownTypeUrl(typeUrl)
         }
+        // For schema-known, the FLAT shape is canonical: there is no key 1
+        // nesting. Hand the original innerPairs (still containing whatever
+        // happened to be at key 1, if anything) to the bridge — the
+        // `MapToMessage` wire builder skips fields with unknown ids, so a
+        // stray key 1 won't poison the encode.
         let innerWire = try buildWireBytes(
             messageName: messageName,
             pairs: innerPairs,
@@ -577,6 +618,27 @@ public enum MapToMessage {
         WireFormat.writeTag(fieldId: 2, wireType: WireType.lengthDelimited, into: &out)
         WireFormat.writeVarint(UInt64(innerWire.count), into: &out)
         out.append(innerWire)
+        return out
+    }
+
+    /// Build wire bytes for a `google.protobuf.Any` whose typeUrl is rewritten
+    /// to the wallet-internal `x-arcblock-opaque/<canonical>` carrier scheme
+    /// and whose value is the raw self-describe-tagged CBOR bytes verbatim.
+    /// Used by the OPAQUE Any decode branch above so the resulting protobuf
+    /// `Any` is unmistakable: no real descriptor matches the prefixed name,
+    /// so `unpackTo(_:)` is guaranteed to refuse the buffer.
+    static func buildWireOpaqueAny(canonicalTypeUrl: String, cborBytes: Data) throws -> Data {
+        let wireTypeUrl = OpaqueAny.wireTypeUrlPrefix + canonicalTypeUrl
+        var out = Data()
+        let urlBytes = Data(wireTypeUrl.utf8)
+        WireFormat.writeTag(fieldId: 1, wireType: WireType.lengthDelimited, into: &out)
+        WireFormat.writeVarint(UInt64(urlBytes.count), into: &out)
+        out.append(urlBytes)
+        if !cborBytes.isEmpty {
+            WireFormat.writeTag(fieldId: 2, wireType: WireType.lengthDelimited, into: &out)
+            WireFormat.writeVarint(UInt64(cborBytes.count), into: &out)
+            out.append(cborBytes)
+        }
         return out
     }
 

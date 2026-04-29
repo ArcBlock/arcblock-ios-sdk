@@ -92,9 +92,14 @@ public enum CanonicalCBOR {
     /// the self-describe tag 55799 prefix — input that omits the prefix
     /// throws `CanonicalCBORError.missingSelfDescribePrefix`. On any throw
     /// the diagnostic hook is fired with the first 16 bytes of `data`.
-    public static func decodeRaw(_ data: Data) throws -> CBORValue {
+    /// `options` defaults to a generous `.default`; pass a tighter
+    /// configuration when the caller is processing dapp-controlled bytes.
+    public static func decodeRaw(
+        _ data: Data,
+        options: CBORDecodeOptions = .default
+    ) throws -> CBORValue {
         do {
-            return try CBORDecoder.decodeTopLevel(data)
+            return try CBORDecoder.decodeTopLevel(data, options: options)
         } catch {
             emit(kind: .decodeFailure, source: data, error: error)
             throw error
@@ -165,6 +170,60 @@ public enum CanonicalCBOR {
             // `serializedBytes:`. The new initializer is generic over any
             // `ContiguousBytes` so `Data` slots in unchanged.
             return try M(serializedBytes: wireBytes)
+        } catch {
+            emit(kind: .decodeFailure, source: data, error: error)
+            throw error
+        }
+    }
+
+    // MARK: - OPAQUE payload entry points (phase 4)
+
+    /// Encode an `OpaqueAny` carrier as canonical CBOR bytes, using the
+    /// nested OPAQUE shape `{0: typeUrl, 1: <raw CBOR>}`. The inner
+    /// `cborBytes` are expected to be self-describe-tagged canonical CBOR
+    /// (i.e. produced by another `encodeRaw` / `encodeOpaque` call); they
+    /// are decoded once so the encoder can re-emit them in canonical key
+    /// order rather than blindly memcpy'ing.
+    public static func encodeOpaque(_ opaque: OpaqueAny) throws -> Data {
+        do {
+            let inner: CBORValue
+            if opaque.cborBytes.isEmpty {
+                // Empty payload is a degenerate but legal OPAQUE Any —
+                // emit `{0: typeUrl}` with no key 1.
+                let map: CBORValue = .map([
+                    CBORMapPair(key: .unsigned(0), value: .text(opaque.typeUrl))
+                ])
+                return try CBOREncoder.encodeTopLevel(map)
+            } else {
+                inner = try CBORDecoder.decodeTopLevel(opaque.cborBytes)
+            }
+            let map: CBORValue = .map([
+                CBORMapPair(key: .unsigned(0), value: .text(opaque.typeUrl)),
+                CBORMapPair(key: .unsigned(1), value: inner)
+            ])
+            return try CBOREncoder.encodeTopLevel(map)
+        } catch {
+            emit(kind: .encodeFailure, source: opaque.cborBytes, error: error)
+            throw error
+        }
+    }
+
+    /// Decode raw CBOR bytes (NOT a protobuf message) into a `CBORValue`
+    /// tree. Used when an OPAQUE Any payload needs to be rendered to the
+    /// user — the wallet typically converts the resulting tree to a
+    /// JSON-friendly Swift structure for display. Caller is required to
+    /// supply `CBORDecodeOptions` so dapp-controlled inputs can't pin the
+    /// main thread; the default is generous (256 KB, 32 deep).
+    ///
+    /// Input must be self-describe-tagged canonical CBOR; missing the
+    /// `0xd9 0xd9 0xf7` prefix throws
+    /// `CanonicalCBORError.missingSelfDescribePrefix`.
+    public static func decodeOpaque(
+        _ data: Data,
+        options: CBORDecodeOptions = .default
+    ) throws -> CBORValue {
+        do {
+            return try CBORDecoder.decodeTopLevel(data, options: options)
         } catch {
             emit(kind: .decodeFailure, source: data, error: error)
             throw error

@@ -412,10 +412,21 @@ public enum MessageToMap {
     // MARK: - Any
 
     /// Decode `google.protobuf.Any` wire bytes (`string type_url = 1;
-    /// bytes value = 2;`) and emit the canonical-CBOR shape:
-    /// `{0: typeUrl, 1: <inner-encoded-as-CBOR-map>}`.
+    /// bytes value = 2;`) and emit the canonical-CBOR shape.
     ///
-    /// Phase 3 supports KNOWN typeUrls only — throws on unknown.
+    /// Three branches, in order of precedence:
+    ///  1. Wallet-internal `OpaqueAny` carrier — the typeUrl carries the
+    ///     `x-arcblock-opaque/<canonical>` prefix, and `value` holds raw
+    ///     CBOR bytes. Strip the prefix, decode the bytes, and emit
+    ///     `{0: <canonical>, 1: <decoded>}` (NESTED shape).
+    ///  2. OPAQUE canonical typeUrl (`json` / `vc` / `fg:x:address`) — the
+    ///     `value` field carries raw CBOR bytes (NOT a nested protobuf
+    ///     message). Decode them and emit `{0: typeUrl, 1: <decoded>}`
+    ///     (NESTED shape, matching JS / Kotlin reference).
+    ///  3. Schema-known typeUrl — recurse via the bridge and emit the FLAT
+    ///     shape `{0: typeUrl, ...innerFieldIds}` per spec §7.
+    ///
+    /// Anything else is a hard error.
     static func decodeAnyWire(_ wireBytes: Data) throws -> CBORValue {
         var reader = WireReader(data: wireBytes)
         var typeUrl = ""
@@ -441,23 +452,56 @@ public enum MessageToMap {
             // No typeUrl, no value → empty map.
             return .map([])
         }
-        // Look up the message name for the typeUrl. If the typeUrl maps to
-        // a schema entry, treat it as known. The phase 3 plan also mandates
-        // that "known" includes the hardcoded swift-side registry (used for
-        // forward decode in MapToMessage), but since we already have the
-        // raw inner bytes, we just need the message NAME for schema fields.
-        let messageName = FieldResolver.fromTypeUrl(typeUrl)
+
+        // Branch 1: wallet-internal OpaqueAny carrier (`x-arcblock-opaque/`
+        // prefix). Strip the prefix to recover the canonical typeUrl, then
+        // fall through to the OPAQUE branch.
+        let canonicalTypeUrl: String
+        if typeUrl.hasPrefix(OpaqueAny.wireTypeUrlPrefix) {
+            canonicalTypeUrl = String(typeUrl.dropFirst(OpaqueAny.wireTypeUrlPrefix.count))
+        } else {
+            canonicalTypeUrl = typeUrl
+        }
+
+        // Branch 2: OPAQUE — value bytes are raw CBOR (with self-describe
+        // prefix), not protobuf. Decode them and nest under key 1.
+        if CanonicalCBOR.OPAQUE_TYPE_URLS.contains(canonicalTypeUrl) {
+            // Empty value is legal — emit `{0: typeUrl}` only.
+            if valueBytes.isEmpty {
+                return .map([
+                    CBORMapPair(key: .unsigned(0), value: .text(canonicalTypeUrl))
+                ])
+            }
+            let inner: CBORValue
+            do {
+                // The carrier always stores self-describe-tagged bytes — that
+                // matches what `CanonicalCBOR.encodeOpaque` produces. We use
+                // `decodeTopLevel` so a missing prefix surfaces as a
+                // typed error rather than silent garbage.
+                inner = try CBORDecoder.decodeTopLevel(valueBytes)
+            } catch {
+                throw CanonicalCBORError.malformedCBOR(
+                    "OPAQUE Any payload is not valid canonical CBOR"
+                )
+            }
+            return .map([
+                CBORMapPair(key: .unsigned(0), value: .text(canonicalTypeUrl)),
+                CBORMapPair(key: .unsigned(1), value: inner)
+            ])
+        }
+
+        // Branch 3: schema-known typeUrl. Recurse via the bridge.
+        let messageName = FieldResolver.fromTypeUrl(canonicalTypeUrl)
         guard FieldResolver.fieldsForMessage(messageName) != nil else {
-            // OPAQUE typeUrls are explicitly out of scope for phase 3.
-            // Any other unknown is a hard error.
-            throw CanonicalCBORError.unknownTypeUrl(typeUrl)
+            // Not OPAQUE, not in schema — hard error.
+            throw CanonicalCBORError.unknownTypeUrl(canonicalTypeUrl)
         }
         // Build the inner map. Use the FLAT shape per the canonical-cbor
         // spec: `{0: typeUrl, ...innerFieldIds...}`. Inner fields are
         // promoted into the same map as the typeUrl, NOT nested under key 1.
         let innerPairs = try buildMap(messageName: messageName, wireBytes: valueBytes)
         var pairs: [CBORMapPair] = [
-            CBORMapPair(key: .unsigned(0), value: .text(typeUrl))
+            CBORMapPair(key: .unsigned(0), value: .text(canonicalTypeUrl))
         ]
         // Drop any inner key 0 (defensive — shouldn't happen for proto types).
         for p in innerPairs where !(p.key == .unsigned(0)) {

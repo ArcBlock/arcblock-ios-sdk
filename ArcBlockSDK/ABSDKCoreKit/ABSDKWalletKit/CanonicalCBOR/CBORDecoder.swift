@@ -41,7 +41,12 @@ public enum CBORDecoder {
 
     /// Decode top-level canonical bytes. Requires the self-describe tag
     /// 55799 prefix and unwraps it before returning the inner value.
-    public static func decodeTopLevel(_ data: Data) throws -> CBORValue {
+    /// `options` defaults to a generous `.default` — the bundled OCAP
+    /// fixtures all clear the cap with headroom.
+    public static func decodeTopLevel(
+        _ data: Data,
+        options: CBORDecodeOptions = .default
+    ) throws -> CBORValue {
         guard data.count >= 3 else {
             throw CanonicalCBORError.missingSelfDescribePrefix
         }
@@ -52,7 +57,7 @@ public enum CBORDecoder {
               data[start + 2] == p[2] else {
             throw CanonicalCBORError.missingSelfDescribePrefix
         }
-        let value = try decode(data)
+        let value = try decode(data, options: options)
         guard case let .tagged(tag, inner) = value,
               tag == CanonicalCBORConstants.tagSelfDescribe else {
             // Should be impossible given the prefix check, but keep an
@@ -64,8 +69,18 @@ public enum CBORDecoder {
 
     /// Decode arbitrary CBOR bytes (with or without self-describe tag).
     /// Throws if there are trailing bytes after the top-level value.
-    public static func decode(_ data: Data) throws -> CBORValue {
-        var reader = Reader(data: data)
+    /// `options` defaults to a generous `.default`.
+    public static func decode(
+        _ data: Data,
+        options: CBORDecodeOptions = .default
+    ) throws -> CBORValue {
+        // `maxBytes` is checked once before we touch a single byte — this
+        // cheap guard short-circuits adversarial 256-MB blobs before any
+        // allocations.
+        if data.count > options.maxBytes {
+            throw CanonicalCBORError.decodeOptionsExceeded("maxBytes")
+        }
+        var reader = Reader(data: data, options: options)
         let value = try reader.readValue()
         if !reader.isAtEnd {
             throw CanonicalCBORError.malformedCBOR("trailing bytes after top-level value")
@@ -76,14 +91,20 @@ public enum CBORDecoder {
     // MARK: - Reader
 
     /// Single-pass byte reader. Holds an index into the source `Data`; all
-    /// reads bump the index forward.
+    /// reads bump the index forward. Carries the `CBORDecodeOptions` caps
+    /// and current nesting depth so per-map / per-array / per-recursion
+    /// limits can be checked inline rather than by a post-hoc walk.
     fileprivate struct Reader {
         let data: Data
         var idx: Data.Index
+        let options: CBORDecodeOptions
+        var depth: Int
 
-        init(data: Data) {
+        init(data: Data, options: CBORDecodeOptions) {
             self.data = data
             self.idx = data.startIndex
+            self.options = options
+            self.depth = 0
         }
 
         var isAtEnd: Bool { idx >= data.endIndex }
@@ -205,11 +226,19 @@ public enum CBORDecoder {
                         "array length \(count) exceeds remaining bytes"
                     )
                 }
+                if count > options.maxArrayLength {
+                    throw CanonicalCBORError.decodeOptionsExceeded("maxArrayLength")
+                }
+                if depth >= options.maxDepth {
+                    throw CanonicalCBORError.decodeOptionsExceeded("maxDepth")
+                }
                 var items: [CBORValue] = []
                 items.reserveCapacity(count)
+                depth += 1
                 for _ in 0..<count {
                     items.append(try readValue())
                 }
+                depth -= 1
                 return .array(items)
             case 5:
                 let count = try checkedLength(arg)
@@ -220,13 +249,21 @@ public enum CBORDecoder {
                         "map length \(count) exceeds remaining bytes"
                     )
                 }
+                if count > options.maxKeyCount {
+                    throw CanonicalCBORError.decodeOptionsExceeded("maxKeyCount")
+                }
+                if depth >= options.maxDepth {
+                    throw CanonicalCBORError.decodeOptionsExceeded("maxDepth")
+                }
                 var pairs: [CBORMapPair] = []
                 pairs.reserveCapacity(count)
+                depth += 1
                 for _ in 0..<count {
                     let key = try readValue()
                     let value = try readValue()
                     pairs.append(CBORMapPair(key: key, value: value))
                 }
+                depth -= 1
                 return .map(pairs)
             case 6:
                 let inner = try readValue()
