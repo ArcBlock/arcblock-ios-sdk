@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 import Foundation
+import SwiftProtobuf
 
 /// Schema-driven field lookup for canonical CBOR encoding.
 ///
@@ -155,6 +156,45 @@ public enum FieldResolver {
         ensureLoaded()
         if loadError != nil { return url }
         return nameByTypeUrl[url] ?? url
+    }
+
+    // MARK: - typeUrl → SwiftProtobuf.Message.Type registry (phase 3)
+
+    /// Hardcoded mapping from OCAP typeUrl to the generated SwiftProtobuf
+    /// `Message.Type`. Used by `CanonicalCBOR.decode` when the wallet wants
+    /// to land the inner `Any` payload as a typed value rather than raw
+    /// bytes. Phase 3 covers the OCAP itx types that appear in the
+    /// vendored fixtures; phase 5 widens this via codegen.
+    ///
+    /// The bridge in `MapToMessage.swift` reaches the inner schema purely
+    /// through `fieldsForMessage(_:)` — this registry is for the (small)
+    /// set of call sites that want concrete typed access to the inner
+    /// message after decoding.
+    private static let typeUrlToMessageType: [String: SwiftProtobuf.Message.Type] = [
+        "fg:t:transfer_v2":      Ocap_TransferV2Tx.self,
+        "fg:t:transfer_v3":      Ocap_TransferV3Tx.self,
+        "fg:t:exchange_v2":      Ocap_ExchangeV2Tx.self,
+        "fg:t:delegate":         Ocap_DelegateTx.self,
+        "fg:t:revoke_delegate":  Ocap_RevokeDelegateTx.self,
+        "fg:t:stake":            Ocap_StakeTx.self,
+        "fg:t:account_migrate":  Ocap_AccountMigrateTx.self,
+        "fg:t:acquire_asset_v3": Ocap_AcquireAssetV3Tx.self,
+        "fg:t:acquire_asset_v2": Ocap_AcquireAssetV2Tx.self,
+        "fg:t:consume_asset":    Ocap_ConsumeAssetTx.self,
+        "fg:t:declare":          Ocap_DeclareTx.self,
+    ]
+
+    /// Look up the `SwiftProtobuf.Message.Type` registered for a typeUrl.
+    /// Returns `nil` for unrecognized typeUrls; callers that require a
+    /// hit should throw `CanonicalCBORError.unknownTypeUrl`.
+    public static func messageType(forTypeUrl url: String) -> SwiftProtobuf.Message.Type? {
+        return typeUrlToMessageType[url]
+    }
+
+    /// Set of OCAP typeUrls registered for known-typed Any decoding. Phase
+    /// 3 callers can use this to pre-validate before invoking `decode`.
+    public static var knownAnyTypeUrls: Set<String> {
+        return Set(typeUrlToMessageType.keys)
     }
 
     // MARK: - Schema loading

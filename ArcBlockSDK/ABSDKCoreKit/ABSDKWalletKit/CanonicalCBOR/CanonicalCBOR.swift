@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 import Foundation
+import SwiftProtobuf
 
 /// Public namespace for canonical CBOR encoding/decoding.
 ///
@@ -94,6 +95,67 @@ public enum CanonicalCBOR {
     public static func decodeRaw(_ data: Data) throws -> CBORValue {
         do {
             return try CBORDecoder.decodeTopLevel(data)
+        } catch {
+            emit(kind: .decodeFailure, source: data, error: error)
+            throw error
+        }
+    }
+
+    // MARK: - Schema-driven Message <-> CBOR (phase 3)
+
+    /// Encode a `SwiftProtobuf.Message` to canonical CBOR bytes (with the
+    /// self-describe tag 55799 prefix). The message's `protoMessageName`
+    /// is used to look up the schema descriptor — only types declared in
+    /// the bundled OCAP schema (`ocap-spec.core.json`) are supported.
+    ///
+    /// **Phase 3 scope:** known typeUrls only. An `Any` field carrying an
+    /// unrecognized typeUrl throws `CanonicalCBORError.unknownTypeUrl`.
+    public static func encode<M: SwiftProtobuf.Message>(_ message: M) throws -> Data {
+        do {
+            let cborValue = try MessageToMap.encode(message)
+            return try CBOREncoder.encodeTopLevel(cborValue)
+        } catch {
+            emit(kind: .encodeFailure, source: Data(), error: error)
+            throw error
+        }
+    }
+
+    /// Decode canonical CBOR bytes into a `SwiftProtobuf.Message` of type
+    /// `M`. The bytes must include the self-describe tag 55799 prefix.
+    ///
+    /// Special-cases mirror `MessageToMap.encode`: top-level `Timestamp` /
+    /// `Any` / `BigUint` / `BigSint` are accepted as their CBOR primitives
+    /// (text / map / tagged-bignum) without an OCAP message-schema lookup.
+    public static func decode<M: SwiftProtobuf.Message>(_ data: Data, as type: M.Type) throws -> M {
+        do {
+            let cborValue = try CBORDecoder.decodeTopLevel(data)
+            let messageName = MessageToMap.ocapName(of: type)
+            let wireBytes: Data
+            switch messageName {
+            case "google.protobuf.Timestamp", "Timestamp":
+                guard case let .text(iso) = cborValue else {
+                    throw CanonicalCBORError.typeMismatch(
+                        "Timestamp top-level expected ISO-8601 text"
+                    )
+                }
+                wireBytes = try MapToMessage.buildTimestampWire(iso: iso)
+            case "google.protobuf.Any", "Any":
+                wireBytes = try MapToMessage.buildAnyWire(value: cborValue)
+            case "BigUint", "BigSint":
+                wireBytes = try MapToMessage.buildBigIntWrapperWire(
+                    typeName: messageName,
+                    value: cborValue
+                )
+            default:
+                wireBytes = try MapToMessage.encodeToWireBytes(
+                    messageName: messageName,
+                    cborMap: cborValue
+                )
+            }
+            // SwiftProtobuf 1.27+ deprecates `serializedData:` in favor of
+            // `serializedBytes:`. The new initializer is generic over any
+            // `ContiguousBytes` so `Data` slots in unchanged.
+            return try M(serializedBytes: wireBytes)
         } catch {
             emit(kind: .decodeFailure, source: data, error: error)
             throw error
