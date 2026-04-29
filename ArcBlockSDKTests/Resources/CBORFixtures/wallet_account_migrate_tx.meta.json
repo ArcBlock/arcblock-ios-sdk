@@ -1,0 +1,38 @@
+{
+  "name": "wallet_account_migrate_tx",
+  "type": "Transaction",
+  "notes": "AccountMigrateTx — regression for Any-unwrap false-positive: AccountMigrateTx has a legitimate `type` field (WalletType) that must NOT be stripped as an Any wrapper. See spec §7.1.",
+  "input": {
+    "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+    "nonce": 1717171717171,
+    "chainId": "beta",
+    "pk": {
+      "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+    },
+    "itx": {
+      "typeUrl": "fg:t:account_migrate",
+      "address": "z1NewAddressAfterMigration000000000000",
+      "pk": {
+        "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+      },
+      "type": {
+        "pk": 0,
+        "hash": 0,
+        "address": 0,
+        "role": 0
+      }
+    }
+  },
+  "cbor": {
+    "hex": "d9d9f7a50178237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c021b0000018fcf6904330364626574610458201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff10fa4007466673a743a6163636f756e745f6d6967726174650158201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff102a00378267a314e65774164647265737341667465724d6967726174696f6e303030303030303030303030",
+    "base58": "z3vAEG1xBVZ21jAttqqMvn4LGLcpBh4SjHGBjz3iE9JSZ2MyCW8rCB8VugLHZgQme7VoH6zH8AwCdSMYjSh6Gkhcazh8WRzw5XJuZcAFotzWFcyfN6UKSXnueiLgqP1JZm8xmi7w3EetMSAPBM17A6Sos2qepjTWWDirnta4a2kDwdcnQuEobS3b7FGsAt8MAe7qfYHRuWyDXMQSegZHX7KwUEXBfuR6TTNKXityvqYuy9D25f4jSSAUFiP777p3uditXwjHrxPH",
+    "length": 195,
+    "txHash": "09CB3EAD78EBAEF762FF3019196EA21D7EEC6FAF172F1D6BFD143080F2E540FE"
+  },
+  "protobuf": {
+    "hex": "0a237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c10b388a4fbfc311a046265746122201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff17a640a1466673a743a6163636f756e745f6d696772617465124c0a201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff112001a267a314e65774164647265737341667465724d6967726174696f6e303030303030303030303030",
+    "base58": "z3R8GRbfEL9oZdbnCpJrYVgsXqLRLSVPg4TjBFXgbzGeAR1Ni7aiaz8js5JCSwPuSvjspJ82XaK6mErQU2yyj7DfTnmeUrZKUrg2DJBpdFY2nuQahgjghqmaytgPSsqZQdZQcoY7LQ8ZrdE1spJwW72D876DMG4WoAfbaVacGMhzRojHmvWne7LrJc4Ldzts8ktvoQqJtnysEEj7KXujs8qK4YaLrmGz5GYPhHvgErBeB7VBpo7o5PCJeDyB4GF",
+    "length": 186,
+    "txHash": "7F2D5683EE6E4F52EBA33A3CC332B4EAA020B191534134B643ECF04B389A3881"
+  }
+}

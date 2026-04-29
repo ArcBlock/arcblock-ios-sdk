@@ -1,0 +1,7 @@
+{
+  "type": "TransferV2Tx",
+  "data": {
+    "to": "z1def",
+    "value": { "$bigint": "1000000000000000000" }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "Transaction",
+  "data": {
+    "from": "z1abc",
+    "nonce": { "$bigint": "1713100000000" },
+    "chainId": "arcblock",
+    "pk": { "$bytes": "f2d072cb" },
+    "itx": {
+      "typeUrl": "fg:t:transfer_v2",
+      "to": "z1def",
+      "value": { "$bigint": "1000000000000000000" }
+    }
+  }
+}

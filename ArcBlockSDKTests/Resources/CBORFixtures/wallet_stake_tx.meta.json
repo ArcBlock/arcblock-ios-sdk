@@ -1,0 +1,35 @@
+{
+  "name": "wallet_stake_tx",
+  "type": "Transaction",
+  "notes": "StakeTx — stake-gas-discount path. Simple shape.",
+  "input": {
+    "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+    "nonce": 1717171717171,
+    "chainId": "beta",
+    "pk": {
+      "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+    },
+    "itx": {
+      "typeUrl": "fg:t:stake",
+      "to": "z1djzQ7tYaSC2E183dxFMFScriZgvsrhQD1",
+      "value": {
+        "value": {
+          "$bytes": "3b9aca00"
+        }
+      },
+      "message": "stake"
+    }
+  },
+  "cbor": {
+    "hex": "d9d9f7a50178237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c021b0000018fcf6904330364626574610458201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff10fa2006a66673a743a7374616b6505657374616b65",
+    "base58": "zEjq81XSNhdtJRQ9apsdDApXtrbbRBvCdn1Etn7cbqSbetGcFzdYFfQLpmedgmtixp64WsaAgQEG6H6qAi4AMdwoMuDPVWZ7sjN3AdraCPGR1ErHRz2v6VXAL1saq6CHdtPUuswUTgPgmERX69ydzWeBrNinQ",
+    "length": 114,
+    "txHash": "305F0560A21142D80FBE97CE7358597EBD0A4572B81C723202E786A43A6BA899"
+  },
+  "protobuf": {
+    "hex": "0a237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c10b388a4fbfc311a046265746122201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff17a150a0a66673a743a7374616b6512072a057374616b65",
+    "base58": "z4pi6hdSQUxqS3TFLdskCdGFg8XxnrB2HvvcfCS2bhUu54gBkeSgSY6Ze5ZxLGvXjCQE9WJZGwNqSPTPhJ2QeAywwi4cEGnVGqykeroeA3KUX1n3gmKjHgYTuZgCUCNgHEZ9W3VcR4V6d4MJcPv",
+    "length": 107,
+    "txHash": "146A5F43501BC591864E713D2BC562FE2184B758ADB68E30E90E05E90019B2A9"
+  }
+}

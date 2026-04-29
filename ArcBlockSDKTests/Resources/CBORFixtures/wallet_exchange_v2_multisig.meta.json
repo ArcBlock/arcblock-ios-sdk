@@ -1,0 +1,67 @@
+{
+  "name": "wallet_exchange_v2_multisig",
+  "type": "Transaction",
+  "notes": "ExchangeV2 with two signatures — exercises signaturesList repeated field. Primary signature on outer tx is empty (multi-sig path).",
+  "input": {
+    "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+    "nonce": 1717171717171,
+    "chainId": "beta",
+    "pk": {
+      "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+    },
+    "signatures": [
+      {
+        "signer": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+        "pk": {
+          "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+        },
+        "signature": {
+          "$bytes": "30aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      {
+        "signer": "z1cRPzp7te3W9tTMLrKJs4ss5U3JQ1TmPs3",
+        "pk": {
+          "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+        },
+        "signature": {
+          "$bytes": "30aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    ],
+    "itx": {
+      "typeUrl": "fg:t:exchange_v2",
+      "to": "z1djzQ7tYaSC2E183dxFMFScriZgvsrhQD1",
+      "sender": {
+        "value": {
+          "value": {
+            "$bytes": "0de0b6b3a7640000"
+          }
+        },
+        "assets": []
+      },
+      "receiver": {
+        "value": {
+          "value": {
+            "$bytes": "00"
+          }
+        },
+        "assets": [
+          "z5JLdXoaUbXn7K7rBrhAqLP4Y9AxZhyF3V1PQ"
+        ]
+      }
+    }
+  },
+  "cbor": {
+    "hex": "d9d9f7a60178237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c021b0000018fcf6904330364626574610458201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff10e82a30178237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c0258201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff103584030aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa30178237a316352507a7037746533573974544d4c724b4a733473733555334a5131546d5073330258201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff103584030aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0fa4007066673a743a65786368616e67655f76320178237a31646a7a5137745961534332453138336478464d46536372695a677673726851443102a101c2480de0b6b3a764000003a1028178257a354a4c64586f615562586e374b377242726841714c5034593941785a6879463356315051",
+    "base58": "z8Zx97h4rfMwwNh4ubAMw7Gcv7mf1eZLvTPDLEjCbn2oVvA2LJ1FJpG1qPUAn5nFZf992XzaMDkbUC6aNrZCoc2wyEg8RnWHsdA5ywFX6iTtrxjBggTsJta77bJHWxSrMHNwhiTs2GCgnbrgZRyvDpDNVz73a23bKyAEyy3amU5coKtDp7BvSgUmjxr87fbzhGumhtkgaduCT2Tsy3b1zU6NktuHUC8JrnBKMFcf3Uu9fRWH7uSUUC95WXS12ZGAuztLDYifeUikiroc23hMMSLeaUhgzvqk3t38uy5byg6Gi1twDdn2BLf7TcfmGvBueKeVmWbF94MRJsStfq9mBGRHrak1feeyWwAA57xkRoVZ61emxt7JFUKLbPXGCtMQGjr9K7AyRaiWfcvsMm4ktnjchYgxCVTUSDSbTHz68FBB1PFkr65X13PdMQZ2gEKUGRzWdTjH99RLLPKTMvAQQ3WrvcDqrNzUjEqfyQFVzxK3RvbmBUHh2ounMU7cM4rrptRxANjp1yRiUNPitQ9vsvkbFWkdaAfMhsBqEZMQYcpPUCfa4MT8rSfc99ubs8s5iD33XesUu8uDhjQM8gA5hVnneo9d6X6VFzcNn2Shf4B1wWXN5rzLtqeEG6jcVWMzfSDbEK6yCfkNDaLQYAS1NLMDaYY9EQDv",
+    "length": 491,
+    "txHash": "7F0B39EFA8F89BD5E2F471495F55C7B868247E64EB966FC21D7BC31BAFA4BDA2"
+  },
+  "protobuf": {
+    "hex": "0a237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c10b388a4fbfc311a046265746122201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff17289010a237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c12201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff11a4030aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7289010a237a316352507a7037746533573974544d4c724b4a733473733555334a5131546d50733312201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff11a4030aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7a750a1066673a743a65786368616e67655f763212610a237a31646a7a5137745961534332453138336478464d46536372695a6776737268514431120c0a0a0a080de0b6b3a76400001a2c0a030a010012257a354a4c64586f615562586e374b377242726841714c5034593941785a6879463356315051",
+    "base58": "zUfuNbv1kC3Q4hP1ZxUduHzw6jGY7cmuRGcUHRv6yk6qGefdxdiFgzfZ9nk94e4B7WbR1DLWA2Wq3EfhfzymocxUtXy53Na2mkS7r7TUHX5ECaYprCyhXmKfjWPE7Wm26q7wirvt6vbgCGZ7Pf2eAe8pWyhuMqB8N4x9449ASGfR9PHmHYbFHqCqVqDPXJXqeqb7oMAuavqccJ3Lb1C9H22xevLM3C5r7bBo7wAzhE5SD7yx3mU1suxuYJNoPD6gko8fcjdPnbQBFg9T9Fkr4CUbpYKUgMkpEHmtf6Byx2zvBPz5faXxEsJc5yqA626NAfyWnk6YGxEW3Atog9Em2T7FBfrdHZ4gommyPWZUtKMDcGx6tYDquNez5SNTbUtmYTsYzbbYywezNMhxJbiXBC9VJN7owVHjpRH7CiKW1XXQAzjLm4L7o3mAsKDvtgJLgnw7hPSArcGDcP6Mh5gGM4iCFyfmtWEZMyPfEBFRELrD66sJFqADE8PFYpiquevcVi2JTQYxgkFueBD8YMK7HBUW1Am2cCE5fgZW5SG3FGCycKruXPx2GTxrwiK9MDaem2nZKSNMTzurccHKyu4gyhHaUutwcKi4sCj6Nqzi3jZSHbXfB2iVS5wXQMzUYi25bVYQZFJpJnb9zRXrot8G",
+    "length": 483,
+    "txHash": "29B12EFA37371AE847EA6A784D21083C31A1540D69FDC3328CDF3EA77862E17A"
+  }
+}

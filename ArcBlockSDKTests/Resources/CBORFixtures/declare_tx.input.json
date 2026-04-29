@@ -1,0 +1,7 @@
+{
+  "type": "DeclareTx",
+  "data": {
+    "moniker": "alice",
+    "issuer": "z1alice"
+  }
+}

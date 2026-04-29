@@ -1,0 +1,37 @@
+{
+  "name": "wallet_transfer_v2_signed",
+  "type": "Transaction",
+  "notes": "Fully signed TransferV2 — the final wire shape broadcast to chain. Exercises both the outer Transaction.signature and the itx body round-trip.",
+  "input": {
+    "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+    "nonce": 1717171717171,
+    "chainId": "beta",
+    "pk": {
+      "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+    },
+    "signature": {
+      "$bytes": "30aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "itx": {
+      "typeUrl": "fg:t:transfer_v2",
+      "to": "z1djzQ7tYaSC2E183dxFMFScriZgvsrhQD1",
+      "value": {
+        "value": {
+          "$bytes": "0de0b6b3a7640000"
+        }
+      }
+    }
+  },
+  "cbor": {
+    "hex": "d9d9f7a60178237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c021b0000018fcf6904330364626574610458201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff10d584030aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0fa3007066673a743a7472616e736665725f76320178237a31646a7a5137745961534332453138336478464d46536372695a677673726851443102c2480de0b6b3a7640000",
+    "base58": "zHsxtMXDw5B5mjHDYDYRcURYgE61SD1rJfyc7pUzZER67XoKHy9VNp2XcedqgPtGSfr1q6t75tYPxAxq2b3bQPt6DYhWJa25Xs44f4CcvfWoCvSfWvuGWk9iiUKA3EJpcS8zRCkNXs8UEKuKpZHMuq8XZzifuxQCZaj7Sgy5qn4e8zJ1maTzadLujLML2zeSgeRfYeWiCH62XDw5UU7rrXBiXMMc9Naw1pzDAgdWEFZUrLgqKbh857GaGiegW2DpGP87K21kqEmVWr8wbtxJzQtfozMFu59PrRg3fVdjpubqQ3ScN9tRWyWSX9",
+    "length": 229,
+    "txHash": "1576CB1B0678B06106C38FD82C8757840561859C569D7F5BC6965AC8EF868A2A"
+  },
+  "protobuf": {
+    "hex": "0a237a315766475a48614c6b763136757067677671426850415431554b5a5a76644b65314c10b388a4fbfc311a046265746122201f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff16a4030aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7a450a1066673a743a7472616e736665725f763212310a237a31646a7a5137745961534332453138336478464d46536372695a6776737268514431120a0a080de0b6b3a7640000",
+    "base58": "z24iK6pRuo48m2cxai9Ccn4H4haE5z2XJ4hSzCeqRP5j9fb3xQp14fBqYC8gqSr2MoZL81LUUwUNM3oxwpVn2MYS1zJtatfpv7qYpteNwnMvPBMTbd8vnRDiK3wH2QCPrp8xikTc3vbwP5ewnmpKnWjXjZYwrz8Hhj76AxW7USiCjJsckD78dRQu2j6oRefegr9TEipJZjtN1qkX2Cnq54xyzLdsrs4v8piHzRkJxqNokeGTWgawzBUsVms4BeXomLoZPvgt7x4KVM1GRefsXGnfFDwPf7SyY33Xak5SShrHqz7",
+    "length": 221,
+    "txHash": "37045567D144599BBC7A19538FF966381679082056CD839E2D8DA4E831E15116"
+  }
+}

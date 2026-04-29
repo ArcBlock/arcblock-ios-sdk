@@ -1,0 +1,6 @@
+{
+  "type": "ConsumeAssetTx",
+  "data": {
+    "address": "z1consume"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+  "nonce": 1717171717171,
+  "chainId": "beta",
+  "pk": {
+    "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+  },
+  "itx": {
+    "typeUrl": "fg:t:transfer_v2",
+    "to": "z1djzQ7tYaSC2E183dxFMFScriZgvsrhQD1",
+    "value": {
+      "value": {
+        "$bytes": "0de0b6b3a7640000"
+      }
+    }
+  }
+}

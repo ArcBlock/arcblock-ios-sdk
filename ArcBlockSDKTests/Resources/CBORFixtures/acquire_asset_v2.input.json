@@ -1,0 +1,8 @@
+{
+  "type": "AcquireAssetV2Tx",
+  "data": {
+    "factory": "z1factory",
+    "address": "z1asset",
+    "assets": ["asset-one", "asset-two"]
+  }
+}
