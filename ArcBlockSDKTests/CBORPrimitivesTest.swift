@@ -108,6 +108,41 @@ class CBORPrimitivesTest: XCTestCase {
         XCTAssertEqual(decoded, v)
     }
 
+    func testRoundTripEmpties() throws {
+        // Empty containers: bytes / text / array / map all round-trip to
+        // their zero-length canonical heads.
+        let empties: [CBORValue] = [
+            .bytes(Data()),
+            .text(""),
+            .array([]),
+            .map([]),
+        ]
+        for v in empties {
+            let bytes = try CBOREncoder.encode(v)
+            let decoded = try CBORDecoder.decode(bytes)
+            XCTAssertEqual(decoded, v, "roundtrip empty \(v)")
+        }
+    }
+
+    func testRoundTripNestedArrayAndMap() throws {
+        let v: CBORValue = .array([
+            .array([.unsigned(1)]),
+            .map([
+                CBORMapPair(key: .text("a"), value: .array([.bool(true)])),
+            ]),
+        ])
+        let bytes = try CBOREncoder.encode(v)
+        let decoded = try CBORDecoder.decode(bytes)
+        XCTAssertEqual(decoded, v)
+    }
+
+    func testRoundTripTaggedOfTagged() throws {
+        let v: CBORValue = .tagged(1000, .tagged(500, .text("inner")))
+        let bytes = try CBOREncoder.encode(v)
+        let decoded = try CBORDecoder.decode(bytes)
+        XCTAssertEqual(decoded, v)
+    }
+
     func testRoundTripBoolNullUndefined() throws {
         for v in [CBORValue.bool(true), .bool(false), .null, .undefined] {
             let bytes = try CBOREncoder.encode(v)

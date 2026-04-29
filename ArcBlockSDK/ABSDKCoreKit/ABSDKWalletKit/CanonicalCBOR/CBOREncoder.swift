@@ -178,9 +178,10 @@ public enum CBOREncoder {
         }
     }
 
-    /// Public for tests + callers that need the canonical key order without
-    /// the surrounding map header.
-    public static func canonicalSort(_ pairs: [CBORMapPair]) throws -> [CBORMapPair] {
+    /// Sort a list of pairs by their canonical encoded-key order. Internal
+    /// to the codec — phase 2B will expose a friendlier wrapper if a real
+    /// caller materializes; until then we keep the public surface minimal.
+    static func canonicalSort(_ pairs: [CBORMapPair]) throws -> [CBORMapPair] {
         // Encode each key once, pair it with its value, sort by the encoded
         // bytes (length then lex), then drop the cached encoding. Per RFC
         // 8949 §4.2.1, byte order tie-breaks at equal length only.

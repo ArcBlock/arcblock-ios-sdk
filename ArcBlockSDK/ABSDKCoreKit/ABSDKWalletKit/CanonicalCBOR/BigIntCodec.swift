@@ -101,8 +101,8 @@ public enum BigIntCodec {
     public static func normalize(_ value: BigInt, kind: Kind) throws -> Repr {
         if value.signum() == 0 { return .omit }
         if value.signum() < 0 && kind == .bigUInt {
-            throw CanonicalCBORError.message(
-                "canonical-cbor: BigUint cannot encode negative BigInt"
+            throw CanonicalCBORError.valueOutOfRange(
+                "BigUint cannot encode negative BigInt"
             )
         }
         let negative = value.signum() < 0 && kind == .bigSInt

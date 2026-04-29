@@ -68,7 +68,7 @@ public indirect enum CBORValue: Equatable {
     /// produce `tag(2, h'')`, exactly as `tag(2, [])` is emitted by the
     /// reference TypeScript implementation when an explicit zero is asked
     /// for. The OCAP zero-omit policy lives one layer up — see
-    /// `BigIntCodec.normalizeForOmit`.
+    /// `BigIntCodec.normalize`.
     case bigUnsigned(BigUInt)
     /// CBOR tag 3 wrapped magnitude — the value is the *negative* integer
     /// encoded by the tag (i.e. the magnitude is `-1 - bytes` per RFC
@@ -94,16 +94,6 @@ public struct CBORMapPair: Equatable {
 // MARK: - Convenience constructors
 
 public extension CBORValue {
-    /// Build an integer value, choosing the narrowest CBOR head that fits.
-    /// Negative values that don't fit in `Int64` should use `.bigSigned`.
-    static func int(_ value: Int) -> CBORValue {
-        if value >= 0 {
-            return .unsigned(UInt64(value))
-        } else {
-            return .negative(Int64(value))
-        }
-    }
-
     /// Convenience for building a map from a Swift dictionary literal-style
     /// list of `(key, value)` tuples. Order is preserved exactly as supplied
     /// — the canonical encoder will sort before writing bytes.

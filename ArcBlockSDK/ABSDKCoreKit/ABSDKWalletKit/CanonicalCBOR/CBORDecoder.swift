@@ -126,6 +126,10 @@ public enum CBORDecoder {
         }
 
         mutating func readUInt(_ size: Int) throws -> UInt64 {
+            // Documents the contract: only called with 2 / 4 / 8 from the
+            // CBOR head decoder. A larger size would silently truncate the
+            // shift accumulator into UInt64.
+            precondition(size <= 8, "readUInt size must be <= 8")
             let bytes = try readBytes(size)
             var value: UInt64 = 0
             for b in bytes {
@@ -239,6 +243,13 @@ public enum CBORDecoder {
         /// so callers don't have to walk through `.tagged` for every
         /// magnitude. Self-describe and unknown tags pass through as
         /// `.tagged(_:_:)`.
+        ///
+        /// Intentionally non-`mutating`: the caller already consumed the
+        /// tag head and the inner value via `readValue()` before
+        /// dispatching here, so this function only inspects what's
+        /// already been read and never advances `idx`. If a future
+        /// contributor adds a byte read inside this function, convert it
+        /// to `mutating` (and audit call sites).
         private func mapTag(_ tag: UInt64, inner: CBORValue) throws -> CBORValue {
             if tag == CanonicalCBORConstants.tagPositiveBignum {
                 guard case let .bytes(bytes) = inner else {
