@@ -64,6 +64,27 @@ class CBORMessageBridgeTest: XCTestCase {
         return data
     }
 
+    /// Find the first byte offset where `actual` and `expected` differ and
+    /// return a human-readable summary. Used in cross-encoder failure
+    /// messages so a regression points straight at the bad byte.
+    private func firstDifferenceIndex(actual: Data, expected: Data) -> String {
+        let minLen = min(actual.count, expected.count)
+        for i in 0..<minLen {
+            if actual[actual.startIndex + i] != expected[expected.startIndex + i] {
+                return String(format:
+                    "at offset %d: expected 0x%02X, got 0x%02X (lengths exp=%d, act=%d)",
+                    i,
+                    expected[expected.startIndex + i],
+                    actual[actual.startIndex + i],
+                    expected.count, actual.count)
+            }
+        }
+        if actual.count != expected.count {
+            return "common prefix matches but lengths differ (exp=\(expected.count), act=\(actual.count))"
+        }
+        return "no byte difference detected"
+    }
+
     /// Resolve the test fixtures directory, preferring the bundle but
     /// falling back to the worktree path until phase 2.5 wiring lands.
     private func fixturesDir() -> URL? {
@@ -331,13 +352,21 @@ class CBORMessageBridgeTest: XCTestCase {
                         if actualCBOR == expectedCBOR && actualCBOR == cborBytes {
                             semanticPass += 1
                         } else {
+                            let diff = firstDifferenceIndex(
+                                actual: wireBytes, expected: expectedBytes
+                            )
                             failures.append(
-                                "\(spec.name): byte-diff AND not Equatable AND not CBOR-equivalent"
+                                "\(spec.name): byte-diff AND not Equatable AND not CBOR-equivalent — \(diff)"
                             )
                         }
                     }
                 } else {
-                    failures.append("\(spec.name): byte-diff for non-Transaction shape")
+                    let diff = firstDifferenceIndex(
+                        actual: wireBytes, expected: expectedBytes
+                    )
+                    failures.append(
+                        "\(spec.name): byte-diff for non-Transaction shape — \(diff)"
+                    )
                 }
             } catch {
                 failures.append("\(spec.name): threw \(error)")
@@ -346,8 +375,12 @@ class CBORMessageBridgeTest: XCTestCase {
 
         let total = fixtures.count
         let pass = bytePass + semanticPass
-        XCTAssertGreaterThanOrEqual(pass, 8,
-            "phase 3 exit gate requires ≥ 8/15 fixtures — got \(pass)/\(total)")
+        // Tighten from the original ≥ 8 floor to the full 15 — every
+        // vendored fixture currently passes by byte-or-semantic equality, so
+        // a regression to 14 should fail loudly. Phase-2.5 wiring will
+        // eventually validate this in CI.
+        XCTAssertEqual(pass, 15,
+            "phase 3 exit gate requires all 15 fixtures — got \(pass)/\(total)")
         XCTAssertTrue(failures.isEmpty,
             "fixture failures (\(failures.count)/\(total)):\n" +
             failures.joined(separator: "\n"))
@@ -401,6 +434,42 @@ class CBORMessageBridgeTest: XCTestCase {
         let bytes = try CanonicalCBOR.encode(tx)
         let decoded = try CanonicalCBOR.decode(bytes, as: Ocap_Transaction.self)
         XCTAssertEqual(decoded, tx)
+    }
+
+    // MARK: - Recursion depth guard
+
+    /// Adversarial input: a CBOR Transaction whose `itx` chains
+    /// `Any(fg:t:delegate)` → `DelegateTx.data (Any, id 15) (fg:t:delegate)`
+    /// → ... 40 levels deep. The decode path must throw
+    /// `recursionDepthExceeded`, NOT crash the test process.
+    func testRecursionDepthExceededOnDecodeThrows() throws {
+        func anyChain(depth: Int) -> CBORValue {
+            if depth == 0 {
+                return .map([
+                    CBORMapPair(key: .unsigned(0), value: .text("fg:t:delegate")),
+                    CBORMapPair(key: .unsigned(1), value: .text("z1leaf")),
+                ])
+            }
+            return .map([
+                CBORMapPair(key: .unsigned(0), value: .text("fg:t:delegate")),
+                CBORMapPair(key: .unsigned(1), value: .text("z1addr")),
+                CBORMapPair(key: .unsigned(15), value: anyChain(depth: depth - 1)),
+            ])
+        }
+        let txMap: CBORValue = .map([
+            CBORMapPair(key: .unsigned(1), value: .text("z1from")),
+            CBORMapPair(key: .unsigned(15), value: anyChain(depth: 40)),
+        ])
+        let bytes = try CanonicalCBOR.encodeRaw(txMap)
+        XCTAssertThrowsError(
+            try CanonicalCBOR.decode(bytes, as: Ocap_Transaction.self)
+        ) { error in
+            guard let cborErr = error as? CanonicalCBORError,
+                  case .recursionDepthExceeded = cborErr else {
+                XCTFail("expected recursionDepthExceeded, got \(error)")
+                return
+            }
+        }
     }
 
     func testRoundTripAccountMigrateTx() throws {

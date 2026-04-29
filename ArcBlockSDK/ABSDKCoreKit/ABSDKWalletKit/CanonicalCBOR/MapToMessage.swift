@@ -28,7 +28,19 @@ import SwiftProtobuf
 /// rather than parsing CBOR bytes, since canonical-cbor's outer
 /// encode/decode is a separate concern (handled by `CBOREncoder` /
 /// `CBORDecoder`).
+///
+/// Reverse direction (wire bytes → `CBORValue`) lives in `MessageToMap.swift`.
+/// The shared protobuf wire-format primitives (varint/fixed/tag writers,
+/// `WireReader`) live in `WireFormat.swift` so the two halves agree
+/// byte-for-byte.
 public enum MapToMessage {
+
+    /// Maximum recursion depth for nested message decoding. Matches
+    /// SwiftProtobuf's own default. Guards `buildWireBytes` / `emitField`
+    /// (which recurse on nested-message fields, including Any-inside-
+    /// Transaction-inside-Any-inside-…) against stack-blow attacks from
+    /// maliciously crafted CBOR input.
+    private static let maxDepth = 32
 
     /// Top-level: convert a `CBORValue.map` to wire bytes that
     /// `MessageType(serializedData:)` will accept. The `messageName` is
@@ -42,11 +54,16 @@ public enum MapToMessage {
                 "MapToMessage: expected CBOR map, got \(cborMap)"
             )
         }
-        return try buildWireBytes(messageName: messageName, pairs: pairs)
+        return try buildWireBytes(messageName: messageName, pairs: pairs, depth: 0)
     }
 
-    /// Internal: build wire bytes from an unwrapped pair list.
-    static func buildWireBytes(messageName: String, pairs: [CBORMapPair]) throws -> Data {
+    /// Internal: build wire bytes from an unwrapped pair list. `depth`
+    /// counts the number of nested-message frames currently open and is
+    /// checked against `maxDepth` to prevent stack-blow attacks.
+    static func buildWireBytes(messageName: String, pairs: [CBORMapPair], depth: Int) throws -> Data {
+        guard depth < maxDepth else {
+            throw CanonicalCBORError.recursionDepthExceeded(maxDepth)
+        }
         guard let descriptor = FieldResolver.messageDescriptor(messageName) else {
             throw CanonicalCBORError.message(
                 "MapToMessage: unknown message type \"\(messageName)\""
@@ -66,10 +83,15 @@ public enum MapToMessage {
         var out = Data()
         for (fieldId, value) in sortedPairs {
             guard let fieldInfo = fieldsById[fieldId] else {
-                // Unknown field: skip silently — preserves forward-compat.
+                // An unknown field id can only appear if the input is corrupt or forged
+                // (canonical encoders never emit fields outside the schema). We drop
+                // them rather than throw to preserve forward-compat with future schema
+                // additions deployed dapp-side ahead of the wallet's schema bundle.
+                // If hash determinism is critical at the call site, the caller should
+                // validate the input shape before reaching this code path.
                 continue
             }
-            try emitField(fieldInfo: fieldInfo, value: value, into: &out)
+            try emitField(fieldInfo: fieldInfo, value: value, into: &out, depth: depth)
         }
         return out
     }
@@ -79,7 +101,8 @@ public enum MapToMessage {
     static func emitField(
         fieldInfo: FieldResolver.FieldInfo,
         value: CBORValue,
-        into out: inout Data
+        into out: inout Data,
+        depth: Int
     ) throws {
         let typeName = fieldInfo.type
         let fieldId = fieldInfo.id
@@ -100,7 +123,8 @@ public enum MapToMessage {
                     fieldId: fieldId,
                     typeName: typeName,
                     value: elem,
-                    into: &out
+                    into: &out,
+                    depth: depth
                 )
             }
             return
@@ -109,7 +133,8 @@ public enum MapToMessage {
             fieldId: fieldId,
             typeName: typeName,
             value: value,
-            into: &out
+            into: &out,
+            depth: depth
         )
     }
 
@@ -117,7 +142,8 @@ public enum MapToMessage {
         fieldId: Int,
         typeName: String,
         value: CBORValue,
-        into out: inout Data
+        into out: inout Data,
+        depth: Int
     ) throws {
         // Scalars
         if let scalar = Scalars.ScalarType.from(typeName: typeName) {
@@ -127,16 +153,16 @@ public enum MapToMessage {
         // Enum (varint)
         if FieldResolver.isEnumType(typeName) {
             let n = try cborToUInt64(value)
-            writeTag(fieldId: fieldId, wireType: 0, into: &out)
-            writeVarint(n, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(n, into: &out)
             return
         }
         // BigUint / BigSint wrapper — accept the tagged-bignum and reverse
         // it into the wrapper's wire shape.
         if typeName == "BigUint" || typeName == "BigSint" {
             let inner = try buildBigIntWrapperWire(typeName: typeName, value: value)
-            writeTag(fieldId: fieldId, wireType: 2, into: &out)
-            writeVarint(UInt64(inner.count), into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.lengthDelimited, into: &out)
+            WireFormat.writeVarint(UInt64(inner.count), into: &out)
             out.append(inner)
             return
         }
@@ -148,29 +174,35 @@ public enum MapToMessage {
                 )
             }
             let inner = try buildTimestampWire(iso: iso)
-            writeTag(fieldId: fieldId, wireType: 2, into: &out)
-            writeVarint(UInt64(inner.count), into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.lengthDelimited, into: &out)
+            WireFormat.writeVarint(UInt64(inner.count), into: &out)
             out.append(inner)
             return
         }
         // Any — reverse the flat `{0: typeUrl, ...inner}` form to a
         // protobuf Any (`type_url = 1`, `value = 2`).
         if typeName == "google.protobuf.Any" || typeName == "Any" {
-            let inner = try buildAnyWire(value: value)
-            writeTag(fieldId: fieldId, wireType: 2, into: &out)
-            writeVarint(UInt64(inner.count), into: &out)
+            let inner = try buildAnyWire(value: value, depth: depth)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.lengthDelimited, into: &out)
+            WireFormat.writeVarint(UInt64(inner.count), into: &out)
             out.append(inner)
             return
         }
-        // Plain nested message — recurse.
+        // Plain nested message — recurse. The depth counter is incremented
+        // here because each nested message frame is exactly the kind of
+        // unbounded recursion `maxDepth` exists to cap.
         guard case let .map(innerPairs) = value else {
             throw CanonicalCBORError.typeMismatch(
                 "nested message \(typeName) expected CBOR map, got \(value)"
             )
         }
-        let inner = try buildWireBytes(messageName: typeName, pairs: innerPairs)
-        writeTag(fieldId: fieldId, wireType: 2, into: &out)
-        writeVarint(UInt64(inner.count), into: &out)
+        let inner = try buildWireBytes(
+            messageName: typeName,
+            pairs: innerPairs,
+            depth: depth + 1
+        )
+        WireFormat.writeTag(fieldId: fieldId, wireType: WireType.lengthDelimited, into: &out)
+        WireFormat.writeVarint(UInt64(inner.count), into: &out)
         out.append(inner)
     }
 
@@ -194,8 +226,8 @@ public enum MapToMessage {
                     "int field expected integer, got \(value)"
                 )
             }
-            writeTag(fieldId: fieldId, wireType: 0, into: &out)
-            writeVarint(n, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(n, into: &out)
         case .uint32, .uint64:
             let n: UInt64
             switch value {
@@ -206,8 +238,8 @@ public enum MapToMessage {
                     "uint field expected unsigned integer, got \(value)"
                 )
             }
-            writeTag(fieldId: fieldId, wireType: 0, into: &out)
-            writeVarint(n, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(n, into: &out)
         case .sint32, .sint64:
             let signed = try cborToInt64(value)
             let zigzag: UInt64
@@ -217,40 +249,40 @@ public enum MapToMessage {
                 // Standard zigzag: ((n << 1) ^ (n >> 63)) for 64-bit.
                 zigzag = UInt64(bitPattern: (signed << 1) ^ (signed >> 63))
             }
-            writeTag(fieldId: fieldId, wireType: 0, into: &out)
-            writeVarint(zigzag, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(zigzag, into: &out)
         case .fixed32:
             let n = try cborToUInt64(value)
-            writeTag(fieldId: fieldId, wireType: 5, into: &out)
-            writeFixed32(UInt32(truncatingIfNeeded: n), into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.fixed32, into: &out)
+            WireFormat.writeFixed32(UInt32(truncatingIfNeeded: n), into: &out)
         case .fixed64:
             let n = try cborToUInt64(value)
-            writeTag(fieldId: fieldId, wireType: 1, into: &out)
-            writeFixed64(n, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.fixed64, into: &out)
+            WireFormat.writeFixed64(n, into: &out)
         case .sfixed32:
             let signed = Int32(truncatingIfNeeded: try cborToInt64(value))
-            writeTag(fieldId: fieldId, wireType: 5, into: &out)
-            writeFixed32(UInt32(bitPattern: signed), into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.fixed32, into: &out)
+            WireFormat.writeFixed32(UInt32(bitPattern: signed), into: &out)
         case .sfixed64:
             let signed = try cborToInt64(value)
-            writeTag(fieldId: fieldId, wireType: 1, into: &out)
-            writeFixed64(UInt64(bitPattern: signed), into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.fixed64, into: &out)
+            WireFormat.writeFixed64(UInt64(bitPattern: signed), into: &out)
         case .float:
             guard case let .float32(f) = value else {
                 throw CanonicalCBORError.typeMismatch(
                     "float field expected float32, got \(value)"
                 )
             }
-            writeTag(fieldId: fieldId, wireType: 5, into: &out)
-            writeFixed32(f.bitPattern, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.fixed32, into: &out)
+            WireFormat.writeFixed32(f.bitPattern, into: &out)
         case .double:
             guard case let .float64(d) = value else {
                 throw CanonicalCBORError.typeMismatch(
                     "double field expected float64, got \(value)"
                 )
             }
-            writeTag(fieldId: fieldId, wireType: 1, into: &out)
-            writeFixed64(d.bitPattern, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.fixed64, into: &out)
+            WireFormat.writeFixed64(d.bitPattern, into: &out)
         case .bool:
             let b: Bool
             switch value {
@@ -261,8 +293,8 @@ public enum MapToMessage {
                     "bool field expected bool, got \(value)"
                 )
             }
-            writeTag(fieldId: fieldId, wireType: 0, into: &out)
-            writeVarint(b ? 1 : 0, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(b ? 1 : 0, into: &out)
         case .string:
             guard case let .text(s) = value else {
                 throw CanonicalCBORError.typeMismatch(
@@ -270,8 +302,8 @@ public enum MapToMessage {
                 )
             }
             let utf8 = Data(s.utf8)
-            writeTag(fieldId: fieldId, wireType: 2, into: &out)
-            writeVarint(UInt64(utf8.count), into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.lengthDelimited, into: &out)
+            WireFormat.writeVarint(UInt64(utf8.count), into: &out)
             out.append(utf8)
         case .bytes:
             guard case let .bytes(b) = value else {
@@ -279,13 +311,13 @@ public enum MapToMessage {
                     "bytes field expected bytes, got \(value)"
                 )
             }
-            writeTag(fieldId: fieldId, wireType: 2, into: &out)
-            writeVarint(UInt64(b.count), into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.lengthDelimited, into: &out)
+            WireFormat.writeVarint(UInt64(b.count), into: &out)
             out.append(b)
         case .enum:
             let n = try cborToUInt64(value)
-            writeTag(fieldId: fieldId, wireType: 0, into: &out)
-            writeVarint(n, into: &out)
+            WireFormat.writeTag(fieldId: fieldId, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(n, into: &out)
         }
     }
 
@@ -325,10 +357,13 @@ public enum MapToMessage {
             magnitude = uint64ToMinimalBytes(n)
         case let .negative(s):
             // Treat the raw negative as a magnitude-with-flag.
-            // RFC 8949 negative .negative(s) encodes -1 - s, but for
-            // wallet-side BigSint inputs we expect tag(3,...) form.
-            // Defensive: convert the magnitude to bytes.
-            let mag = UInt64(bitPattern: -s - 1)
+            // RFC 8949 §3.4.2 — major type 1 encodes -1 - n; the magnitude
+            // we want to put in the BigSint wrapper is therefore `-s - 1`.
+            // Guard against `s == Int64.min`: `-Int64.min` traps because
+            // `Int64.max == -Int64.min - 1`. Compute via wrapping
+            // arithmetic on the bit pattern (parallel to the phase-2A bug
+            // fix in 9f67d09).
+            let mag: UInt64 = (0 &- UInt64(bitPattern: s)) &- 1
             magnitude = uint64ToMinimalBytes(mag)
             minus = true
         default:
@@ -338,16 +373,12 @@ public enum MapToMessage {
         }
 
         // Strip leading zeros in the magnitude (BigUint canonical form).
+        // `stripLeadingZeros` returns `[0]` for an all-zero / empty input.
+        // The OCAP zero-fold convention is to write an empty byte string
+        // for a zero magnitude, so we preserve the existing empty-shape
+        // behavior here by skipping the strip on empty input.
         if !magnitude.isEmpty {
-            var start = 0
-            while start < magnitude.count - 1 && magnitude[magnitude.startIndex + start] == 0 {
-                start += 1
-            }
-            if start > 0 {
-                magnitude = magnitude.subdata(
-                    in: (magnitude.startIndex + start)..<magnitude.endIndex
-                )
-            }
+            magnitude = BigIntCodec.stripLeadingZeros(magnitude)
         }
 
         // Wrapper wire: field 1 = bytes magnitude (always present, even for
@@ -361,12 +392,12 @@ public enum MapToMessage {
         // in MessageToMap.buildMap (sentinel `.null`). At THIS layer (wire
         // emit) the caller has already decided to write the wrapper, so we
         // emit the magnitude bytes verbatim (might be empty).
-        writeTag(fieldId: 1, wireType: 2, into: &inner)
-        writeVarint(UInt64(magnitude.count), into: &inner)
+        WireFormat.writeTag(fieldId: 1, wireType: WireType.lengthDelimited, into: &inner)
+        WireFormat.writeVarint(UInt64(magnitude.count), into: &inner)
         inner.append(magnitude)
         if typeName == "BigSint" && minus {
-            writeTag(fieldId: 2, wireType: 0, into: &inner)
-            writeVarint(1, into: &inner)
+            WireFormat.writeTag(fieldId: 2, wireType: WireType.varint, into: &inner)
+            WireFormat.writeVarint(1, into: &inner)
         }
         return inner
     }
@@ -391,12 +422,12 @@ public enum MapToMessage {
         let (seconds, nanos) = try parseISO8601(iso)
         var out = Data()
         if seconds != 0 {
-            writeTag(fieldId: 1, wireType: 0, into: &out)
-            writeVarint(UInt64(bitPattern: seconds), into: &out)
+            WireFormat.writeTag(fieldId: 1, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(UInt64(bitPattern: seconds), into: &out)
         }
         if nanos != 0 {
-            writeTag(fieldId: 2, wireType: 0, into: &out)
-            writeVarint(UInt64(bitPattern: Int64(nanos)), into: &out)
+            WireFormat.writeTag(fieldId: 2, wireType: WireType.varint, into: &out)
+            WireFormat.writeVarint(UInt64(bitPattern: Int64(nanos)), into: &out)
         }
         return out
     }
@@ -496,8 +527,10 @@ public enum MapToMessage {
     // MARK: - Any
 
     /// Build wire bytes for `google.protobuf.Any` from the canonical-CBOR
-    /// flat shape `{0: typeUrl, ...innerFieldIds...}`.
-    static func buildAnyWire(value: CBORValue) throws -> Data {
+    /// flat shape `{0: typeUrl, ...innerFieldIds...}`. `depth` is the
+    /// caller's recursion frame count (an `Any` field counts as one frame
+    /// because it may contain another `Any`).
+    static func buildAnyWire(value: CBORValue, depth: Int = 0) throws -> Data {
         guard case let .map(pairs) = value else {
             throw CanonicalCBORError.typeMismatch(
                 "Any field expected CBOR map, got \(value)"
@@ -528,48 +561,28 @@ public enum MapToMessage {
         guard FieldResolver.fieldsForMessage(messageName) != nil else {
             throw CanonicalCBORError.unknownTypeUrl(typeUrl)
         }
-        let innerWire = try buildWireBytes(messageName: messageName, pairs: innerPairs)
+        let innerWire = try buildWireBytes(
+            messageName: messageName,
+            pairs: innerPairs,
+            depth: depth + 1
+        )
 
         var out = Data()
         // Field 1: type_url (string)
         let urlBytes = Data(typeUrl.utf8)
-        writeTag(fieldId: 1, wireType: 2, into: &out)
-        writeVarint(UInt64(urlBytes.count), into: &out)
+        WireFormat.writeTag(fieldId: 1, wireType: WireType.lengthDelimited, into: &out)
+        WireFormat.writeVarint(UInt64(urlBytes.count), into: &out)
         out.append(urlBytes)
         // Field 2: value (bytes)
-        writeTag(fieldId: 2, wireType: 2, into: &out)
-        writeVarint(UInt64(innerWire.count), into: &out)
+        WireFormat.writeTag(fieldId: 2, wireType: WireType.lengthDelimited, into: &out)
+        WireFormat.writeVarint(UInt64(innerWire.count), into: &out)
         out.append(innerWire)
         return out
     }
 
-    // MARK: - Wire-format writers
-
-    static func writeTag(fieldId: Int, wireType: UInt8, into out: inout Data) {
-        let tag = (UInt64(fieldId) << 3) | UInt64(wireType)
-        writeVarint(tag, into: &out)
-    }
-
-    static func writeVarint(_ value: UInt64, into out: inout Data) {
-        var v = value
-        while v >= 0x80 {
-            out.append(UInt8((v & 0x7f) | 0x80))
-            v >>= 7
-        }
-        out.append(UInt8(v & 0x7f))
-    }
-
-    static func writeFixed32(_ value: UInt32, into out: inout Data) {
-        for i in 0..<4 {
-            out.append(UInt8((value >> UInt32(i * 8)) & 0xff))
-        }
-    }
-
-    static func writeFixed64(_ value: UInt64, into out: inout Data) {
-        for i in 0..<8 {
-            out.append(UInt8((value >> UInt64(i * 8)) & 0xff))
-        }
-    }
+    // Wire-format writers (`writeTag` / `writeVarint` / `writeFixed32` /
+    // `writeFixed64`) live in `WireFormat.swift` (sibling source file) so
+    // they stay byte-for-byte aligned with `WireReader`.
 
     // MARK: - CBORValue → integer coercion
 

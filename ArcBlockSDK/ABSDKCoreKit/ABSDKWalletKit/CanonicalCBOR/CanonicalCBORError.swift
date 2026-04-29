@@ -51,6 +51,10 @@ public enum CanonicalCBORError: Error, CustomStringConvertible, Equatable {
     /// (`json` / `vc` / `fg:x:address`) and unknown-pass-through arrive in
     /// phases 4/5.
     case unknownTypeUrl(String)
+    /// The decode path nested deeper than the configured maximum (matches
+    /// SwiftProtobuf's own default of 32). Guards against stack-blow attacks
+    /// from maliciously crafted CBOR input.
+    case recursionDepthExceeded(Int)
 
     public var description: String {
         switch self {
@@ -65,6 +69,8 @@ public enum CanonicalCBORError: Error, CustomStringConvertible, Equatable {
         case .typeMismatch(let s): return "canonical-cbor: type mismatch — \(s)"
         case .unknownTypeUrl(let s):
             return "canonical-cbor: unknown typeUrl \"\(s)\" (phase 3 supports known OCAP typeUrls only)"
+        case .recursionDepthExceeded(let max):
+            return "canonical-cbor: recursion depth exceeded \(max)"
         }
     }
 }

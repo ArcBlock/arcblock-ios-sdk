@@ -131,22 +131,31 @@ public enum CanonicalCBOR {
             let cborValue = try CBORDecoder.decodeTopLevel(data)
             let messageName = MessageToMap.ocapName(of: type)
             let wireBytes: Data
-            switch messageName {
-            case "google.protobuf.Timestamp", "Timestamp":
+            // Suffix-matching is defensive against accidental name collisions
+            // outside OCAP (e.g. someone exporting a namespaced `…BigUint`
+            // type from another schema). `protoMessageName` for `Ocap_BigUint`
+            // is "ocap.BigUint" so suffix match works the same as the literal
+            // "BigUint" did before, and the `google.protobuf.Foo` checks
+            // accept either the fully qualified name or the bare suffix.
+            if messageName == "Timestamp"
+                || messageName.hasSuffix(".Timestamp") {
                 guard case let .text(iso) = cborValue else {
                     throw CanonicalCBORError.typeMismatch(
                         "Timestamp top-level expected ISO-8601 text"
                     )
                 }
                 wireBytes = try MapToMessage.buildTimestampWire(iso: iso)
-            case "google.protobuf.Any", "Any":
+            } else if messageName == "Any" || messageName.hasSuffix(".Any") {
                 wireBytes = try MapToMessage.buildAnyWire(value: cborValue)
-            case "BigUint", "BigSint":
+            } else if messageName == "BigUint" || messageName == "BigSint"
+                || messageName.hasSuffix(".BigUint")
+                || messageName.hasSuffix(".BigSint") {
                 wireBytes = try MapToMessage.buildBigIntWrapperWire(
-                    typeName: messageName,
+                    typeName: messageName.hasSuffix(".BigSint") || messageName == "BigSint"
+                        ? "BigSint" : "BigUint",
                     value: cborValue
                 )
-            default:
+            } else {
                 wireBytes = try MapToMessage.encodeToWireBytes(
                     messageName: messageName,
                     cborMap: cborValue

@@ -227,6 +227,25 @@ class CBORPrimitivesTest: XCTestCase {
         }
     }
 
+    func testBigIntCodecStripLeadingZeros() throws {
+        // Empty input collapses to a single zero byte (the canonical
+        // single-byte representation of zero).
+        XCTAssertEqual(BigIntCodec.stripLeadingZeros(Data()), Data([0]))
+        XCTAssertEqual(BigIntCodec.stripLeadingZeros(Data([0])), Data([0]))
+        XCTAssertEqual(BigIntCodec.stripLeadingZeros(Data([0, 0, 0])), Data([0]))
+        XCTAssertEqual(BigIntCodec.stripLeadingZeros(Data([0, 0, 1])), Data([1]))
+        XCTAssertEqual(
+            BigIntCodec.stripLeadingZeros(Data([0x12, 0x34])),
+            Data([0x12, 0x34])
+        )
+        // Trailing zeros in the magnitude must NOT be stripped — only the
+        // leading run is significant.
+        XCTAssertEqual(
+            BigIntCodec.stripLeadingZeros(Data([0, 0, 0xFF, 0])),
+            Data([0xFF, 0])
+        )
+    }
+
     // MARK: - Canonical key ordering (RFC 8949 §4.2.1)
 
     func testCanonicalKeyOrderIntegersByLengthThenLex() throws {

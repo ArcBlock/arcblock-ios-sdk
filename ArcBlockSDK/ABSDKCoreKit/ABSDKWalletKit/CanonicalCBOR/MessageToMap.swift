@@ -27,6 +27,10 @@ import SwiftProtobuf
 /// Mirrors Kotlin `TransactionToMap.messageToMap` but staying schema-driven
 /// rather than reflection-driven (the schema descriptor *is* our reflection
 /// surface).
+///
+/// Reverse direction (`CBORValue` → wire bytes) lives in `MapToMessage.swift`.
+/// The shared protobuf wire-format primitives (`WireReader`, varint/fixed/tag
+/// writers) live in `WireFormat.swift` so the two halves agree byte-for-byte.
 public enum MessageToMap {
 
     /// Top-level: convert any `SwiftProtobuf.Message` to a `CBORValue`
@@ -227,9 +231,8 @@ public enum MessageToMap {
         reader: inout WireReader
     ) throws -> CBORValue {
         // Packed repeated scalar uses length-delim wire type 2.
-        if fieldInfo.repeated && wireType == 2 && scalar.isInt
-            || fieldInfo.repeated && wireType == 2 && scalar.isFloat
-            || fieldInfo.repeated && wireType == 2 && scalar == .bool {
+        // Packed-repeated wire format only applies to scalar numeric/bool types.
+        if fieldInfo.repeated && wireType == 2 && (scalar.isInt || scalar.isFloat || scalar == .bool) {
             let length = try reader.readVarintAsInt()
             let endIdx = reader.idx + length
             var elems: [CBORValue] = []
@@ -474,117 +477,4 @@ public enum MessageToMap {
     }
 }
 
-// MARK: - Wire-format reader
-
-/// Minimal single-pass protobuf wire-format reader. Only the bits the
-/// schema-driven bridge needs — the heavy lifting (oneof, map, packed) is
-/// handled by walking schema metadata one level up.
-struct WireReader {
-    let data: Data
-    var idx: Int
-
-    init(data: Data) {
-        self.data = data
-        self.idx = data.startIndex
-    }
-
-    var isAtEnd: Bool { idx >= data.endIndex }
-
-    mutating func readByte() throws -> UInt8 {
-        guard idx < data.endIndex else {
-            throw CanonicalCBORError.malformedCBOR("unexpected end of wire bytes")
-        }
-        let b = data[idx]
-        idx = data.index(after: idx)
-        return b
-    }
-
-    /// Read a base-128 varint. Honors the proto3 limit of 10 bytes (groups
-    /// of 7 bits, top bit is continuation). 11+ bytes throws.
-    mutating func readVarint() throws -> UInt64 {
-        var result: UInt64 = 0
-        var shift: UInt64 = 0
-        for _ in 0..<10 {
-            let b = try readByte()
-            result |= UInt64(b & 0x7f) << shift
-            if b & 0x80 == 0 { return result }
-            shift += 7
-        }
-        throw CanonicalCBORError.malformedCBOR("varint exceeds 10 bytes")
-    }
-
-    /// Same as `readVarint` but converts to a non-negative `Int` for use
-    /// as a length. Throws on values > `Int.max`.
-    mutating func readVarintAsInt() throws -> Int {
-        let n = try readVarint()
-        guard let i = Int(exactly: n) else {
-            throw CanonicalCBORError.malformedCBOR(
-                "varint length \(n) exceeds Int.max"
-            )
-        }
-        return i
-    }
-
-    mutating func readFixed32() throws -> UInt32 {
-        var result: UInt32 = 0
-        for i in 0..<4 {
-            let b = try readByte()
-            result |= UInt32(b) << UInt32(i * 8)
-        }
-        return result
-    }
-
-    mutating func readFixed64() throws -> UInt64 {
-        var result: UInt64 = 0
-        for i in 0..<8 {
-            let b = try readByte()
-            result |= UInt64(b) << UInt64(i * 8)
-        }
-        return result
-    }
-
-    mutating func readLengthDelimited() throws -> Data {
-        let length = try readVarintAsInt()
-        guard length >= 0 else {
-            throw CanonicalCBORError.malformedCBOR("negative length")
-        }
-        guard idx + length <= data.endIndex else {
-            throw CanonicalCBORError.malformedCBOR(
-                "length-delim payload exceeds remaining bytes"
-            )
-        }
-        let slice = data.subdata(in: idx..<(idx + length))
-        idx += length
-        return slice
-    }
-
-    mutating func readTag() throws -> (fieldId: Int, wireType: UInt8) {
-        let tag = try readVarint()
-        let wireType = UInt8(tag & 0x07)
-        let fieldId = Int(tag >> 3)
-        return (fieldId, wireType)
-    }
-
-    mutating func skipField(wireType: UInt8) throws {
-        switch wireType {
-        case 0:
-            _ = try readVarint()
-        case 1:
-            _ = try readFixed64()
-        case 2:
-            _ = try readLengthDelimited()
-        case 5:
-            _ = try readFixed32()
-        case 3, 4:
-            // Group start/end are deprecated — we skip but don't track depth.
-            // OCAP messages never use groups, so this is just defensive.
-            throw CanonicalCBORError.malformedCBOR(
-                "group wire types not supported"
-            )
-        default:
-            throw CanonicalCBORError.malformedCBOR(
-                "unknown wire type \(wireType)"
-            )
-        }
-    }
-}
+// `WireReader` lives in WireFormat.swift (sibling source file).
