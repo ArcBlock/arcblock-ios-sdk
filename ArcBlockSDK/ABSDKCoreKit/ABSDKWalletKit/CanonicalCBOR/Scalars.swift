@@ -154,13 +154,13 @@ public enum Scalars {
     ///  - bytes: `Data` / `[UInt8]` / numeric-empty `String`.
     ///  - enum: zero / empty-string treated as default.
     public static func isProto3Default(_ value: Any?, type: ScalarType) -> Bool {
-        if value == nil { return true }
+        guard let unwrapped = value else { return true }
 
         if type.isInt {
-            return isIntDefault(value!)
+            return isIntDefault(unwrapped)
         }
         if type.isFloat {
-            return isFloatDefault(value!)
+            return isFloatDefault(unwrapped)
         }
         switch type {
         case .bool:

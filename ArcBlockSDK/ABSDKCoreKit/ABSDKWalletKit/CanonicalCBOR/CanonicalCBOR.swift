@@ -136,6 +136,10 @@ public struct CanonicalCBORDiagnosticEvent {
         case decodeFailure
         /// `encodeRaw` threw.
         case encodeFailure
+        /// `FieldResolver` could not load / parse the schema. Distinct from
+        /// decode/encode because the failure is structural (file missing,
+        /// JSON malformed) rather than a CBOR value being processed.
+        case schemaLoadFailure
     }
 
     public let kind: Kind

@@ -92,6 +92,11 @@ public enum FieldResolver {
 
     /// Whether the schema has been loaded (lazy-init).
     private static var initialized = false
+    /// Most recent load error, if any. Sticky: once `ensureLoaded()` fails
+    /// it does NOT re-attempt on every public lookup (which is on the hot
+    /// path). A manual `loadSchema(fromPath:)` clears this so callers can
+    /// recover after fixing the underlying cause.
+    private static var loadError: Error?
     /// Synchronizes the lazy-init across threads. Reads after init
     /// is complete are racy-safe because the dictionaries are never
     /// mutated again — but the init itself must be serialized.
@@ -108,12 +113,14 @@ public enum FieldResolver {
     /// nil; phase 2B keeps the surface tolerant.
     public static func fieldsForMessage(_ typeName: String) -> [FieldInfo]? {
         ensureLoaded()
+        if loadError != nil { return nil }
         return messages[typeName]?.fields
     }
 
     /// Full descriptor (fields + oneofs) for a message type.
     public static func messageDescriptor(_ typeName: String) -> MessageDescriptor? {
         ensureLoaded()
+        if loadError != nil { return nil }
         return messages[typeName]
     }
 
@@ -122,6 +129,7 @@ public enum FieldResolver {
     /// zero-valued enum members.
     public static func isEnumType(_ typeName: String) -> Bool {
         ensureLoaded()
+        if loadError != nil { return false }
         return enums[typeName] != nil
     }
 
@@ -129,6 +137,7 @@ public enum FieldResolver {
     /// (or the enum type) is unknown.
     public static func enumValue(_ typeName: String, member: String) -> Int? {
         ensureLoaded()
+        if loadError != nil { return nil }
         return enums[typeName]?[member]
     }
 
@@ -137,12 +146,14 @@ public enum FieldResolver {
     /// schema doesn't declare a remap — matches TS / Kotlin behavior.
     public static func toTypeUrl(_ messageName: String) -> String {
         ensureLoaded()
+        if loadError != nil { return messageName }
         return typeUrlByName[messageName] ?? messageName
     }
 
     /// Inverse of `toTypeUrl`. Returns input unchanged on miss.
     public static func fromTypeUrl(_ url: String) -> String {
         ensureLoaded()
+        if loadError != nil { return url }
         return nameByTypeUrl[url] ?? url
     }
 
@@ -168,9 +179,16 @@ public enum FieldResolver {
             // (CBOREncoder / CBORDecoder) still work without it. Log via
             // the diagnostic hook so wallet integrators notice during
             // staging instead of in production.
+            //
+            // Sticky failure: mark `initialized = true` and capture the
+            // error so subsequent `fieldsForMessage(_:)` calls short-circuit
+            // (return nil) without re-locking and re-trying on every hot-path
+            // lookup. A manual `loadSchema(fromPath:)` resets both.
+            initialized = true
+            loadError = error
             CanonicalCBOR.diagnosticHook?(
                 CanonicalCBORDiagnosticEvent(
-                    kind: .decodeFailure,
+                    kind: .schemaLoadFailure,
                     head16: Data(),
                     totalBytes: 0,
                     underlyingError: error
@@ -181,19 +199,41 @@ public enum FieldResolver {
 
     /// Override the schema file path. Intended for tests / smoke harnesses
     /// that run outside the framework bundle. Calling this resets the cache
-    /// so the next `ensureLoaded()` re-reads from `path`.
+    /// so the next `ensureLoaded()` re-reads from `path`. Also clears any
+    /// sticky `loadError` from a prior failed load so callers can recover
+    /// after fixing the underlying cause (e.g. writing the schema file).
+    ///
+    /// On failure: the error is re-thrown to the caller AND `loadError` is
+    /// captured so subsequent public lookups short-circuit to nil rather
+    /// than racing through `ensureLoaded()` with stale state.
     public static func loadSchema(fromPath path: String) throws {
         initLock.lock()
         defer { initLock.unlock() }
-        let url = URL(fileURLWithPath: path)
-        let data = try Data(contentsOf: url)
-        // Reset cache so a second call with a different path actually applies.
-        messages.removeAll()
-        enums.removeAll()
-        typeUrlByName.removeAll()
-        nameByTypeUrl.removeAll()
-        try parseAndIndex(data)
-        initialized = true
+        // Clear sticky failure state up-front so a manual retry path exists.
+        // If `Data(contentsOf:)` or parsing throws below, we capture it as a
+        // sticky failure (initialized=true, loadError set) before re-throwing
+        // so subsequent lookups return nil instead of attempting a bundle
+        // re-load via ensureLoaded().
+        loadError = nil
+        initialized = false
+        do {
+            let url = URL(fileURLWithPath: path)
+            let data = try Data(contentsOf: url)
+            try parseAndIndex(data)
+            initialized = true
+        } catch {
+            initialized = true
+            loadError = error
+            CanonicalCBOR.diagnosticHook?(
+                CanonicalCBORDiagnosticEvent(
+                    kind: .schemaLoadFailure,
+                    head16: Data(),
+                    totalBytes: 0,
+                    underlyingError: error
+                )
+            )
+            throw error
+        }
     }
 
     /// Returns the bundle-resolved schema bytes, or the explicit override
@@ -239,7 +279,12 @@ public enum FieldResolver {
 
     /// Parse a JSON `Data` into the message / enum / typeUrl tables.
     /// Throws on malformed JSON or a missing `nested.ocap.nested` root.
+    /// Idempotent — safe to call multiple times; clears prior state first.
     private static func parseAndIndex(_ data: Data) throws {
+        messages.removeAll()
+        enums.removeAll()
+        typeUrlByName.removeAll()
+        nameByTypeUrl.removeAll()
         let any = try JSONSerialization.jsonObject(with: data, options: [])
         guard let root = any as? [String: Any],
               let nested = root["nested"] as? [String: Any],

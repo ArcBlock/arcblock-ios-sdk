@@ -41,6 +41,7 @@ class CBORFixtureRoundTripTest: XCTestCase {
     /// fallback exists to keep the test runnable while the pbxproj
     /// resource wiring is in flight (phase 2.5). Once that lands the
     /// fallback can be removed.
+    // TODO(phase-2.5): remove this fallback once pbxproj wires Resources/CBORFixtures/ into the test bundle
     private func fixturePaths() -> [String] {
         let bundle = Bundle(for: type(of: self))
         if let urls = bundle.urls(
@@ -76,8 +77,8 @@ class CBORFixtureRoundTripTest: XCTestCase {
     /// emitting RFC 8949 §4.2.1 canonical output.
     func testFixtureSelfRoundTrip() throws {
         let paths = fixturePaths()
-        XCTAssertGreaterThanOrEqual(paths.count, 8,
-            "expected ≥ 8 vendored fixtures; found \(paths.count)")
+        XCTAssertEqual(paths.count, 15,
+            "expected 15 fixtures vendored — losing fixtures should be a hard failure")
 
         var failures: [String] = []
         for path in paths {

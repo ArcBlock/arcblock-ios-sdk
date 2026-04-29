@@ -35,6 +35,7 @@ class CBORSchemaUtilitiesTest: XCTestCase {
     /// Resolve the path to `ocap-spec.core.json`. Prefers the bundle
     /// resource (when phase-2.5 wiring is in place); falls back to the
     /// vendored worktree path so the tests run today.
+    // TODO(phase-2.5): remove this fallback once pbxproj wires Resources/ocap-spec.core.json into the test bundle
     private func schemaPath() -> String? {
         let bundle = Bundle(for: type(of: self))
         if let url = bundle.url(forResource: "ocap-spec.core", withExtension: "json") {
@@ -57,6 +58,27 @@ class CBORSchemaUtilitiesTest: XCTestCase {
             throw XCTSkip("ocap-spec.core.json not reachable; phase-2.5 wiring still pending")
         }
         try FieldResolver.loadSchema(fromPath: path)
+    }
+
+    // MARK: - Lifecycle
+
+    /// Reset `FieldResolver` to a known-good state so test order can't leak.
+    /// Tests that exercise the failure path (`testFieldResolverHandlesMalformedSchema`,
+    /// `testFieldResolverSchemaLoadFailureFiresHook`, etc.) leave the resolver
+    /// in a sticky-failure state; without this, a later test that assumes the
+    /// schema is loaded would silently see nil lookups.
+    override func setUp() {
+        super.setUp()
+        if let path = schemaPath() {
+            try? FieldResolver.loadSchema(fromPath: path)
+        }
+    }
+
+    /// Belt-and-braces cleanup so a test forgetting its `defer` doesn't leak
+    /// the diagnostic hook into the next test.
+    override func tearDown() {
+        CanonicalCBOR.diagnosticHook = nil
+        super.tearDown()
     }
 
     // MARK: - FieldResolver
@@ -108,6 +130,84 @@ class CBORSchemaUtilitiesTest: XCTestCase {
         try loadSchemaOrSkip()
         XCTAssertTrue(FieldResolver.isEnumType("StatusCode"))
         XCTAssertFalse(FieldResolver.isEnumType("Transaction"))
+    }
+
+    // MARK: - FieldResolver negative paths
+
+    func testFieldResolverReturnsNilForUnknownMessage() {
+        XCTAssertNil(FieldResolver.fieldsForMessage("DoesNotExist"))
+        XCTAssertNil(FieldResolver.fieldsForMessage(""))
+        XCTAssertNil(FieldResolver.fieldsForMessage("foo.bar.Baz"))
+    }
+
+    func testFieldResolverHandlesMalformedSchema() throws {
+        // Write a malformed JSON to a temp file, attempt loadSchema(fromPath:),
+        // assert it does NOT crash. Verify subsequent lookups return nil.
+        let tempURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("cbor-malformed.json")
+        try "{ this is not valid json".write(
+            to: tempURL, atomically: true, encoding: .utf8
+        )
+        defer { try? FileManager.default.removeItem(at: tempURL) }
+
+        XCTAssertThrowsError(try FieldResolver.loadSchema(fromPath: tempURL.path)) { error in
+            // Verify it's a meaningful error, not a crash.
+            XCTAssertNotNil(error)
+        }
+        XCTAssertNil(FieldResolver.fieldsForMessage("Transaction"))
+    }
+
+    func testFieldResolverRepeatedFlagDistinguishesShape() throws {
+        try loadSchemaOrSkip()
+        let fields = FieldResolver.fieldsForMessage("Transaction") ?? []
+        let byName = Dictionary(uniqueKeysWithValues: fields.map { ($0.name, $0) })
+        XCTAssertEqual(byName["from"]?.repeated, false, "from is a single field")
+        XCTAssertEqual(byName["signatures"]?.repeated, true, "signatures is repeated")
+    }
+
+    // MARK: - Schema-load failure semantics
+
+    func testFieldResolverSchemaLoadFailureFiresHook() {
+        var captured: CanonicalCBORDiagnosticEvent?
+        CanonicalCBOR.diagnosticHook = { ev in captured = ev }
+        defer { CanonicalCBOR.diagnosticHook = nil }
+
+        // Use a path that definitely doesn't exist — `loadSchema(fromPath:)`
+        // throws to the caller (since this is the explicit-path API), so the
+        // diagnostic hook fires from the lazy `ensureLoaded()` path. Force
+        // that by failing the explicit load AND then triggering a lookup.
+        XCTAssertThrowsError(
+            try FieldResolver.loadSchema(fromPath: "/nonexistent/cbor-test/path.json")
+        )
+        // Now `ensureLoaded()` runs (initialized was set false by the failed
+        // loadSchema call) — its bundle lookup will fail in the test runner,
+        // which fires the hook with .schemaLoadFailure.
+        _ = FieldResolver.fieldsForMessage("Transaction")
+        if let ev = captured {
+            XCTAssertEqual(ev.kind, .schemaLoadFailure)
+        } else {
+            XCTFail("schema-load failure hook did not fire")
+        }
+    }
+
+    func testFieldResolverSchemaLoadFailureIsSticky() {
+        var eventCount = 0
+        CanonicalCBOR.diagnosticHook = { _ in eventCount += 1 }
+        defer { CanonicalCBOR.diagnosticHook = nil }
+
+        // Force a failure first.
+        XCTAssertThrowsError(
+            try FieldResolver.loadSchema(fromPath: "/nonexistent/cbor-test/path.json")
+        )
+        _ = FieldResolver.fieldsForMessage("Transaction")
+        let countAfterFirstLookup = eventCount
+
+        // Subsequent lookups MUST NOT re-fire the hook (sticky failure).
+        _ = FieldResolver.fieldsForMessage("Transaction")
+        _ = FieldResolver.fieldsForMessage("TransferV2Tx")
+        _ = FieldResolver.isEnumType("StatusCode")
+        XCTAssertEqual(eventCount, countAfterFirstLookup,
+                       "sticky failure: hook should not fire on each lookup")
     }
 
     // MARK: - Scalars
