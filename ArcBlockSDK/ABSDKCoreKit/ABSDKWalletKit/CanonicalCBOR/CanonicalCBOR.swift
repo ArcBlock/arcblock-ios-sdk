@@ -169,7 +169,7 @@ public enum CanonicalCBOR {
             // SwiftProtobuf 1.27+ deprecates `serializedData:` in favor of
             // `serializedBytes:`. The new initializer is generic over any
             // `ContiguousBytes` so `Data` slots in unchanged.
-            return try M(serializedBytes: wireBytes)
+            return try M(serializedData: wireBytes)
         } catch {
             emit(kind: .decodeFailure, source: data, error: error)
             throw error

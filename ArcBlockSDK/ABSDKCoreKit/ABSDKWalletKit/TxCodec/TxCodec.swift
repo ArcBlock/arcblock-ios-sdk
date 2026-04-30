@@ -170,9 +170,9 @@ public enum TxCodec {
     /// Protobuf → CBOR. Parses the protobuf wire bytes into an
     /// `Ocap_Transaction` and re-encodes via the canonical-CBOR bridge.
     private static func protobufToCBOR(_ data: Data) throws -> Data {
-        // `serializedBytes:` is the SwiftProtobuf 1.27+ replacement for the
+        // `serializedData:` is the SwiftProtobuf 1.27+ replacement for the
         // deprecated `serializedData:` initializer; functionally equivalent.
-        let tx = try Ocap_Transaction(serializedBytes: data)
+        let tx = try Ocap_Transaction(serializedData: data)
         return try CanonicalCBOR.encode(tx)
     }
 }
