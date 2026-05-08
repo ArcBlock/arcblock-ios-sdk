@@ -8,7 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		016DEE3AB98DA013375EF0F5 /* Pods_ArcBlockSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */; };
+		038D91A757409E7024E822BA /* transfer_v2.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 10C894B53F3A55840D3C3DF2 /* transfer_v2.input.json */; };
+		07E682F15A73E0B118493461 /* wallet_stake_tx.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 04F7720FA135E2862803E21B /* wallet_stake_tx.input.json */; };
+		08E78A9623ACCC8C033F99DE /* CBOROpaqueAnyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A4932F22B8AE36B968B41F /* CBOROpaqueAnyTest.swift */; };
+		0D87311F3AA15BCA26A7ABE2 /* wallet_account_migrate_tx.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 116B0AF7A992903868174382 /* wallet_account_migrate_tx.cbor.bin */; };
+		101896472700BFE5BC15227A /* consume_asset.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3F5E4054AF90E743AB3E6 /* consume_asset.cbor.bin */; };
+		13BEC1C4873B3EFD92F649D9 /* wallet_acquire_asset_v3.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 542AE3835D25F5880F113E11 /* wallet_acquire_asset_v3.meta.json */; };
+		141A3E0D937C336741946A05 /* wallet_transfer_v2_signed.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 3786E51B6ED77D9EF0A0947A /* wallet_transfer_v2_signed.input.json */; };
+		183C2701E67250C0FF625F43 /* wallet_transfer_v3_multi_input.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = CD87C9898FDC167359AABEB9 /* wallet_transfer_v3_multi_input.cbor.bin */; };
 		1A4E5F1825FDF8EC00355545 /* SignVerifySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */; };
+		1A6C41B0F28C1A8CA990D232 /* Scalars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAA942A47CFBF1F926FBCE7 /* Scalars.swift */; };
 		1A76D281273CD96B00C4B25B /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D270273CD96B00C4B25B /* rpc.pb.swift */; };
 		1A76D282273CD96B00C4B25B /* tx.proto in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D271273CD96B00C4B25B /* tx.proto */; };
 		1A76D283273CD96B00C4B25B /* service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76D272273CD96B00C4B25B /* service.pb.swift */; };
@@ -38,6 +47,7 @@
 		1AA3D931273A6A7F00BA3CA0 /* InputSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA3D930273A6A7F00BA3CA0 /* InputSpec.swift */; };
 		1AB8FBAD26F0C10C00557DB6 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */; };
 		1AB8FBAF26F0C9E200557DB6 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */; };
+		23211D45B7019413DC9230B2 /* CBORDecodeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1490B807DC2E76ED406617F /* CBORDecodeOptions.swift */; };
 		27044788231E0052007BA477 /* BIP44Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044727231E0052007BA477 /* BIP44Utils.swift */; };
 		2704478F231E0052007BA477 /* MCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2704472F231E0052007BA477 /* MCrypto.swift */; };
 		27044790231E0052007BA477 /* DidHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044730231E0052007BA477 /* DidHelper.swift */; };
@@ -59,16 +69,68 @@
 		270447FE231E00AA007BA477 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270447FB231E00AA007BA477 /* PromiseKit.framework */; };
 		27044801231E01F4007BA477 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44020AC9F46009E1348 /* Nimble.framework */; };
 		27044802231E01F4007BA477 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CD44120AC9F46009E1348 /* Quick.framework */; };
+		3137D28D0C8DA46FCDCCC201 /* CBORMessageBridgeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FC565D0623DFAE7EA2FA9 /* CBORMessageBridgeTest.swift */; };
+		33888F3D0AA0A389AFCB76CB /* transaction_full.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 704810FB2B3721D26EA74939 /* transaction_full.cbor.bin */; };
+		358C82544279F14FA1A5AF1E /* WireFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D952629368B8CCDB51E42F /* WireFormat.swift */; };
+		3B5C101341B7A69CA11580A1 /* transaction_full.input.json in Resources */ = {isa = PBXBuildFile; fileRef = D82415D37CFE436C4D215E2B /* transaction_full.input.json */; };
+		3BE2147C62B851A935FB4C34 /* wallet_transfer_v3_single_input.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = C812B5EBFEBC9A95F297140E /* wallet_transfer_v3_single_input.cbor.bin */; };
+		4401D1C236FFA12183D5AF58 /* wallet_revoke_delegate_tx.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 87AED8D4D0B9501BDC169105 /* wallet_revoke_delegate_tx.cbor.bin */; };
+		47AEA467547B60933CA7A264 /* CBORPrimitivesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D23DC5EA4C2237E380D6CA /* CBORPrimitivesTest.swift */; };
+		504D70A04BF22413D7C8178B /* CBORFixtureRoundTripTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9D2A91727F903B237CA77 /* CBORFixtureRoundTripTest.swift */; };
 		5637BDE5274CA63A0076143F /* AmountSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5637BDE4274CA63A0076143F /* AmountSpec.swift */; };
 		5637BDE9274CD49E0076143F /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5637BDE8274CD49E0076143F /* Double+Extension.swift */; };
+		5649642EACC423523598801E /* CBOREncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C2E6CA903FADC8BFA04C6 /* CBOREncoder.swift */; };
 		56712D8729962D2D00690043 /* AESUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8629962D2D00690043 /* AESUtils.swift */; };
 		56712D8929962EF300690043 /* AESUtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8829962EF300690043 /* AESUtilsSpec.swift */; };
 		56712D8B2999D56B00690043 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8A2999D56B00690043 /* RSAUtils.swift */; };
 		56712D8D2999E30A00690043 /* RSAUtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56712D8C2999E30A00690043 /* RSAUtilsSpec.swift */; };
+		56CC9B1B0E19CCEF9CBBAE75 /* wallet_transfer_v2.input.json in Resources */ = {isa = PBXBuildFile; fileRef = F9D369B61C370C6C845AF6D1 /* wallet_transfer_v2.input.json */; };
 		56FC2D89299B96E0001665E6 /* SimpleASN1Writer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FC2D88299B96E0001665E6 /* SimpleASN1Writer.swift */; };
 		56FC2D95299BA17E001665E6 /* RSAPublicKeyExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FC2D94299BA17E001665E6 /* RSAPublicKeyExporter.swift */; };
 		56FC2D9A299BB50A001665E6 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FC2D99299BB50A001665E6 /* Asn1Parser.swift */; };
+		57F0298C2F62BC5986C91C6E /* TxCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05471EFD29BA84899CB870F3 /* TxCodec.swift */; };
+		5C630E6A8EC0D97CA7827D46 /* wallet_transfer_v3_multi_input.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = A7B2E1D5F6A9202E93840669 /* wallet_transfer_v3_multi_input.meta.json */; };
+		6A03F99B07332D0954712980 /* wallet_acquire_asset_v3.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 6C8EF38862B2A2FF38D5E62C /* wallet_acquire_asset_v3.input.json */; };
+		71F9735C0808183233B2A6CB /* DescriptorRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F495897196C798FC70DF51F2 /* DescriptorRegistry.swift */; };
 		7F6C849E17C35B9149440791 /* Pods_ArcBlockSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */; };
+		82461FCD968FAB4409D72910 /* declare_tx.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 30F6D5ACE5E1488ED6BD82C6 /* declare_tx.input.json */; };
+		82B83D230C0B2810C764D30C /* wallet_delegate_tx.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 1196509512AE7FA8FF236ED8 /* wallet_delegate_tx.input.json */; };
+		86EEA450265E0F2001E25B03 /* wallet_transfer_v3_single_input.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 067265B211A78231F528592E /* wallet_transfer_v3_single_input.meta.json */; };
+		89D5878593FC62A4933D8898 /* ocap-spec.core.json in Resources */ = {isa = PBXBuildFile; fileRef = AA9E7821D7C1D61378D12549 /* ocap-spec.core.json */; };
+		8DCF49380BFA75688A3725AF /* wallet_revoke_delegate_tx.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = D8FE13CA09D1BC8CDCBAFD42 /* wallet_revoke_delegate_tx.meta.json */; };
+		9120484642E86A1CE64CC2BB /* wallet_exchange_v2_multisig.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 6BAF4EC65F74CDFA02F00E60 /* wallet_exchange_v2_multisig.input.json */; };
+		930027DDD559CBCE53AEE97A /* CBORDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A486F6DB5BB698119317B913 /* CBORDecoder.swift */; };
+		9340E738A668378A7FACA7B5 /* wallet_transfer_v2.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 2A823027FF12BD2F308FB747 /* wallet_transfer_v2.meta.json */; };
+		9466144F96902D6744BEA0B7 /* transfer_v2.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = F73B2E4EC6655D7BAAF58FCD /* transfer_v2.cbor.bin */; };
+		99C5C3451E025DD5F9B3E1E0 /* declare_tx.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 6DD4ADE654F10C40DBB3A042 /* declare_tx.cbor.bin */; };
+		A0A68240A4726EA604FE2F7A /* wallet_acquire_asset_v3.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = EDD8E00AFC6F7A8879FA956E /* wallet_acquire_asset_v3.cbor.bin */; };
+		A4DD14458097691770158E26 /* wallet_transfer_v3_single_input.input.json in Resources */ = {isa = PBXBuildFile; fileRef = C5582A5191AF3E8C360F1A65 /* wallet_transfer_v3_single_input.input.json */; };
+		A54791E662B78109B70DC4F1 /* wallet_exchange_v2_multisig.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 09B31E8721E529018C042188 /* wallet_exchange_v2_multisig.cbor.bin */; };
+		B3FBC36F187FCFCE869D2D36 /* CanonicalCBOR.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55C911F315B558F08DDC8A1 /* CanonicalCBOR.swift */; };
+		B5F5A97A14ED69D594CF9A1C /* wallet_stake_tx.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0684CCC3FF093685400ED616 /* wallet_stake_tx.cbor.bin */; };
+		B71C9B8DCB2C9F85887FC922 /* wallet_stake_tx.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = D7BA006E8196B8A3FDEC6330 /* wallet_stake_tx.meta.json */; };
+		B9BFC60034BE687C6ADC0AA8 /* wallet_transfer_v3_multi_input.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 314A791627E60CFAA535CD76 /* wallet_transfer_v3_multi_input.input.json */; };
+		BA7414D3AEECCED23F0C36AA /* CanonicalCBORError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F95334EFBB972A994344C /* CanonicalCBORError.swift */; };
+		BCDB8FC37893F9F06B5E372D /* OpaqueAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4342C4CFD20947C760A6673 /* OpaqueAny.swift */; };
+		BCECD4C4A994AC180563939A /* acquire_asset_v2.input.json in Resources */ = {isa = PBXBuildFile; fileRef = F29B9D863BDD489E289B86FB /* acquire_asset_v2.input.json */; };
+		C1199CAF0E6FB7E50AF3BEE7 /* wallet_account_migrate_tx.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 41722679E807B739EF3CA7A6 /* wallet_account_migrate_tx.meta.json */; };
+		C4A838E198D160CCE2B5EB23 /* wallet_account_migrate_tx.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 158CA0FADB40682692EE3927 /* wallet_account_migrate_tx.input.json */; };
+		C744F52DEDF5F7D94658B744 /* CBORValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E506E853D7EEDDE0625A0797 /* CBORValue.swift */; };
+		C93F3B19D3AF1BD83A4EEE06 /* wallet_delegate_tx.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBB3708DA6A0287719C5E5B /* wallet_delegate_tx.meta.json */; };
+		C94515EBD12C28A08DB983FF /* wallet_revoke_delegate_tx.input.json in Resources */ = {isa = PBXBuildFile; fileRef = 2166D366B549DCE80E280728 /* wallet_revoke_delegate_tx.input.json */; };
+		C954928F75FBDD32EA079FB4 /* BigIntCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D79CDC658EE94030F3F17DA /* BigIntCodec.swift */; };
+		C9A04E8A45622FC2E2A5A96F /* wallet_transfer_v2_signed.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = BF8F862C12C1A56BB1965471 /* wallet_transfer_v2_signed.cbor.bin */; };
+		CD1AD3DA463D8F9CA947AB44 /* wallet_exchange_v2_multisig.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 0B8862E0DBBFF6E84EB006B5 /* wallet_exchange_v2_multisig.meta.json */; };
+		CE32F97C39B77ACADAA57590 /* consume_asset.input.json in Resources */ = {isa = PBXBuildFile; fileRef = A63BC23826D8D3314BA139CF /* consume_asset.input.json */; };
+		CEB8163AB7CF1A62B7B89744 /* SCHEMA_VERSION in Resources */ = {isa = PBXBuildFile; fileRef = DA8FE49A56B642B70C6D102F /* SCHEMA_VERSION */; };
+		D841D1EA00D387F9D50DF522 /* MessageToMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F5310FAC98C58BAA57A6B8 /* MessageToMap.swift */; };
+		D884709FC3D64DAADAAE4327 /* wallet_transfer_v2.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 892E8FF2C8A1FB55889D587F /* wallet_transfer_v2.cbor.bin */; };
+		E0597D0FAE62DA4D6B51046B /* FieldResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0AAACB96F24EBD9B619308 /* FieldResolver.swift */; };
+		E58574154F692A3C4E39E9BC /* wallet_transfer_v2_signed.meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 6DDA8B3A0B2DE468F6165AAE /* wallet_transfer_v2_signed.meta.json */; };
+		E59EFC20AA5F77196D8586DE /* wallet_delegate_tx.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = CD31DA019BE98FA7E539627D /* wallet_delegate_tx.cbor.bin */; };
+		EC964280FA41F018D1B3072C /* acquire_asset_v2.cbor.bin in Resources */ = {isa = PBXBuildFile; fileRef = 9D5E0331DD42750616A41B88 /* acquire_asset_v2.cbor.bin */; };
+		EE825182573AC44AC0493889 /* MapToMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A5E6645E5070C8C7866C3 /* MapToMessage.swift */; };
+		F2E6EC0408A982815C1BC395 /* CBORSchemaUtilitiesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03142C92D1BF67A63F21D392 /* CBORSchemaUtilitiesTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +157,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03142C92D1BF67A63F21D392 /* CBORSchemaUtilitiesTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBORSchemaUtilitiesTest.swift; sourceTree = "<group>"; };
+		04F7720FA135E2862803E21B /* wallet_stake_tx.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_stake_tx.input.json; sourceTree = "<group>"; };
+		05471EFD29BA84899CB870F3 /* TxCodec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TxCodec.swift; sourceTree = "<group>"; };
+		067265B211A78231F528592E /* wallet_transfer_v3_single_input.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v3_single_input.meta.json; sourceTree = "<group>"; };
+		0684CCC3FF093685400ED616 /* wallet_stake_tx.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_stake_tx.cbor.bin; sourceTree = "<group>"; };
+		09B31E8721E529018C042188 /* wallet_exchange_v2_multisig.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_exchange_v2_multisig.cbor.bin; sourceTree = "<group>"; };
+		0B8862E0DBBFF6E84EB006B5 /* wallet_exchange_v2_multisig.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_exchange_v2_multisig.meta.json; sourceTree = "<group>"; };
 		0E579D25758A89436D66F29D /* Pods-ArcBlockSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		10C894B53F3A55840D3C3DF2 /* transfer_v2.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = transfer_v2.input.json; sourceTree = "<group>"; };
+		116B0AF7A992903868174382 /* wallet_account_migrate_tx.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_account_migrate_tx.cbor.bin; sourceTree = "<group>"; };
+		1196509512AE7FA8FF236ED8 /* wallet_delegate_tx.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_delegate_tx.input.json; sourceTree = "<group>"; };
+		158CA0FADB40682692EE3927 /* wallet_account_migrate_tx.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_account_migrate_tx.input.json; sourceTree = "<group>"; };
+		164A5E6645E5070C8C7866C3 /* MapToMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapToMessage.swift; sourceTree = "<group>"; };
+		17B8ED715885F025DA179023 /* spec.md */ = {isa = PBXFileReference; includeInIndex = 1; path = spec.md; sourceTree = "<group>"; };
 		1A4E5F1725FDF8EC00355545 /* SignVerifySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignVerifySpec.swift; sourceTree = "<group>"; };
 		1A76D270273CD96B00C4B25B /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
 		1A76D271273CD96B00C4B25B /* tx.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = tx.proto; sourceTree = "<group>"; };
@@ -135,6 +210,9 @@
 		1AB8FBAA26F0BF5C00557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBAC26F0C10C00557DB6 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8FBAE26F0C9E200557DB6 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DBB3708DA6A0287719C5E5B /* wallet_delegate_tx.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_delegate_tx.meta.json; sourceTree = "<group>"; };
+		1FB3F5E4054AF90E743AB3E6 /* consume_asset.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = consume_asset.cbor.bin; sourceTree = "<group>"; };
+		2166D366B549DCE80E280728 /* wallet_revoke_delegate_tx.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_revoke_delegate_tx.input.json; sourceTree = "<group>"; };
 		270446F9231DECD6007BA477 /* web3swift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = web3swift.framework; path = Carthage/Build/iOS/web3swift.framework; sourceTree = "<group>"; };
 		270446FB231DECF6007BA477 /* secp256k1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = secp256k1.framework; path = Carthage/Build/iOS/secp256k1.framework; sourceTree = "<group>"; };
 		270446FD231DED19007BA477 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
@@ -169,7 +247,14 @@
 		279CD44020AC9F46009E1348 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		279CD44120AC9F46009E1348 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		2887CC851616970ABA85CE61 /* Pods-ArcBlockSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.debug.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		29D952629368B8CCDB51E42F /* WireFormat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WireFormat.swift; sourceTree = "<group>"; };
+		2A823027FF12BD2F308FB747 /* wallet_transfer_v2.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v2.meta.json; sourceTree = "<group>"; };
 		301F076836FA04A49FE48ED0 /* Pods-ArcBlockSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDKTests.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		30F6D5ACE5E1488ED6BD82C6 /* declare_tx.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = declare_tx.input.json; sourceTree = "<group>"; };
+		314A791627E60CFAA535CD76 /* wallet_transfer_v3_multi_input.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v3_multi_input.input.json; sourceTree = "<group>"; };
+		3786E51B6ED77D9EF0A0947A /* wallet_transfer_v2_signed.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v2_signed.input.json; sourceTree = "<group>"; };
+		41722679E807B739EF3CA7A6 /* wallet_account_migrate_tx.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_account_migrate_tx.meta.json; sourceTree = "<group>"; };
+		542AE3835D25F5880F113E11 /* wallet_acquire_asset_v3.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_acquire_asset_v3.meta.json; sourceTree = "<group>"; };
 		5637BDE4274CA63A0076143F /* AmountSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountSpec.swift; sourceTree = "<group>"; };
 		5637BDE8274CD49E0076143F /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		56712D8629962D2D00690043 /* AESUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AESUtils.swift; sourceTree = "<group>"; };
@@ -179,9 +264,49 @@
 		56FC2D88299B96E0001665E6 /* SimpleASN1Writer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleASN1Writer.swift; sourceTree = "<group>"; };
 		56FC2D94299BA17E001665E6 /* RSAPublicKeyExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAPublicKeyExporter.swift; sourceTree = "<group>"; };
 		56FC2D99299BB50A001665E6 /* Asn1Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asn1Parser.swift; sourceTree = "<group>"; };
+		5AAA942A47CFBF1F926FBCE7 /* Scalars.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Scalars.swift; sourceTree = "<group>"; };
+		683F95334EFBB972A994344C /* CanonicalCBORError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CanonicalCBORError.swift; sourceTree = "<group>"; };
+		6BAF4EC65F74CDFA02F00E60 /* wallet_exchange_v2_multisig.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_exchange_v2_multisig.input.json; sourceTree = "<group>"; };
+		6C8EF38862B2A2FF38D5E62C /* wallet_acquire_asset_v3.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_acquire_asset_v3.input.json; sourceTree = "<group>"; };
+		6DD4ADE654F10C40DBB3A042 /* declare_tx.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = declare_tx.cbor.bin; sourceTree = "<group>"; };
+		6DDA8B3A0B2DE468F6165AAE /* wallet_transfer_v2_signed.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v2_signed.meta.json; sourceTree = "<group>"; };
+		704810FB2B3721D26EA74939 /* transaction_full.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = transaction_full.cbor.bin; sourceTree = "<group>"; };
+		704FC565D0623DFAE7EA2FA9 /* CBORMessageBridgeTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBORMessageBridgeTest.swift; sourceTree = "<group>"; };
+		78A9D2A91727F903B237CA77 /* CBORFixtureRoundTripTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBORFixtureRoundTripTest.swift; sourceTree = "<group>"; };
+		7C8C2E6CA903FADC8BFA04C6 /* CBOREncoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBOREncoder.swift; sourceTree = "<group>"; };
+		7D79CDC658EE94030F3F17DA /* BigIntCodec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BigIntCodec.swift; sourceTree = "<group>"; };
 		814D216EBD3D3A7CFE8F49CC /* Pods_ArcBlockSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82F5310FAC98C58BAA57A6B8 /* MessageToMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageToMap.swift; sourceTree = "<group>"; };
+		87AED8D4D0B9501BDC169105 /* wallet_revoke_delegate_tx.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_revoke_delegate_tx.cbor.bin; sourceTree = "<group>"; };
+		892E8FF2C8A1FB55889D587F /* wallet_transfer_v2.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v2.cbor.bin; sourceTree = "<group>"; };
+		9D5E0331DD42750616A41B88 /* acquire_asset_v2.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = acquire_asset_v2.cbor.bin; sourceTree = "<group>"; };
+		A486F6DB5BB698119317B913 /* CBORDecoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBORDecoder.swift; sourceTree = "<group>"; };
+		A63BC23826D8D3314BA139CF /* consume_asset.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = consume_asset.input.json; sourceTree = "<group>"; };
+		A7B2E1D5F6A9202E93840669 /* wallet_transfer_v3_multi_input.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v3_multi_input.meta.json; sourceTree = "<group>"; };
+		AA9E7821D7C1D61378D12549 /* ocap-spec.core.json */ = {isa = PBXFileReference; includeInIndex = 1; path = "ocap-spec.core.json"; sourceTree = "<group>"; };
+		AC0AAACB96F24EBD9B619308 /* FieldResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FieldResolver.swift; sourceTree = "<group>"; };
 		B09429F51301BD05C8D20EB8 /* Pods_ArcBlockSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArcBlockSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF8F862C12C1A56BB1965471 /* wallet_transfer_v2_signed.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v2_signed.cbor.bin; sourceTree = "<group>"; };
+		C0A4932F22B8AE36B968B41F /* CBOROpaqueAnyTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBOROpaqueAnyTest.swift; sourceTree = "<group>"; };
+		C1490B807DC2E76ED406617F /* CBORDecodeOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBORDecodeOptions.swift; sourceTree = "<group>"; };
+		C5582A5191AF3E8C360F1A65 /* wallet_transfer_v3_single_input.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v3_single_input.input.json; sourceTree = "<group>"; };
+		C812B5EBFEBC9A95F297140E /* wallet_transfer_v3_single_input.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v3_single_input.cbor.bin; sourceTree = "<group>"; };
+		CD31DA019BE98FA7E539627D /* wallet_delegate_tx.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_delegate_tx.cbor.bin; sourceTree = "<group>"; };
+		CD87C9898FDC167359AABEB9 /* wallet_transfer_v3_multi_input.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v3_multi_input.cbor.bin; sourceTree = "<group>"; };
+		D4342C4CFD20947C760A6673 /* OpaqueAny.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OpaqueAny.swift; sourceTree = "<group>"; };
+		D4D23DC5EA4C2237E380D6CA /* CBORPrimitivesTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBORPrimitivesTest.swift; sourceTree = "<group>"; };
+		D7BA006E8196B8A3FDEC6330 /* wallet_stake_tx.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_stake_tx.meta.json; sourceTree = "<group>"; };
+		D82415D37CFE436C4D215E2B /* transaction_full.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = transaction_full.input.json; sourceTree = "<group>"; };
+		D8FE13CA09D1BC8CDCBAFD42 /* wallet_revoke_delegate_tx.meta.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_revoke_delegate_tx.meta.json; sourceTree = "<group>"; };
+		DA8FE49A56B642B70C6D102F /* SCHEMA_VERSION */ = {isa = PBXFileReference; includeInIndex = 1; path = SCHEMA_VERSION; sourceTree = "<group>"; };
 		DD3BBE505C0D8A3D5E1BD935 /* Pods-ArcBlockSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArcBlockSDK.release.xcconfig"; path = "Target Support Files/Pods-ArcBlockSDK/Pods-ArcBlockSDK.release.xcconfig"; sourceTree = "<group>"; };
+		E506E853D7EEDDE0625A0797 /* CBORValue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBORValue.swift; sourceTree = "<group>"; };
+		E55C911F315B558F08DDC8A1 /* CanonicalCBOR.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CanonicalCBOR.swift; sourceTree = "<group>"; };
+		EDD8E00AFC6F7A8879FA956E /* wallet_acquire_asset_v3.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_acquire_asset_v3.cbor.bin; sourceTree = "<group>"; };
+		F29B9D863BDD489E289B86FB /* acquire_asset_v2.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = acquire_asset_v2.input.json; sourceTree = "<group>"; };
+		F495897196C798FC70DF51F2 /* DescriptorRegistry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DescriptorRegistry.swift; sourceTree = "<group>"; };
+		F73B2E4EC6655D7BAAF58FCD /* transfer_v2.cbor.bin */ = {isa = PBXFileReference; includeInIndex = 1; path = transfer_v2.cbor.bin; sourceTree = "<group>"; };
+		F9D369B61C370C6C845AF6D1 /* wallet_transfer_v2.input.json */ = {isa = PBXFileReference; includeInIndex = 1; path = wallet_transfer_v2.input.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +339,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		099CA24D0CBEBFE4E8FFDE9E /* CanonicalCBOR */ = {
+			isa = PBXGroup;
+			children = (
+				683F95334EFBB972A994344C /* CanonicalCBORError.swift */,
+				7C8C2E6CA903FADC8BFA04C6 /* CBOREncoder.swift */,
+				C1490B807DC2E76ED406617F /* CBORDecodeOptions.swift */,
+				82F5310FAC98C58BAA57A6B8 /* MessageToMap.swift */,
+				A486F6DB5BB698119317B913 /* CBORDecoder.swift */,
+				5AAA942A47CFBF1F926FBCE7 /* Scalars.swift */,
+				29D952629368B8CCDB51E42F /* WireFormat.swift */,
+				D4342C4CFD20947C760A6673 /* OpaqueAny.swift */,
+				AC0AAACB96F24EBD9B619308 /* FieldResolver.swift */,
+				E55C911F315B558F08DDC8A1 /* CanonicalCBOR.swift */,
+				E506E853D7EEDDE0625A0797 /* CBORValue.swift */,
+				164A5E6645E5070C8C7866C3 /* MapToMessage.swift */,
+				7D79CDC658EE94030F3F17DA /* BigIntCodec.swift */,
+				51DB5D632D769A2AECCE4BDF /* Resources */,
+				EB66273D3EF40EB7E182D058 /* Spec */,
+			);
+			name = CanonicalCBOR;
+			path = CanonicalCBOR;
+			sourceTree = "<group>";
+		};
 		0BECC27AAEEEDA0981FF207D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +406,12 @@
 				5637BDE4274CA63A0076143F /* AmountSpec.swift */,
 				2704471E231DFF98007BA477 /* Info.plist */,
 				270447E1231E0060007BA477 /* ArcBlockSDKTests-Bridging-Header.h */,
+				C0A4932F22B8AE36B968B41F /* CBOROpaqueAnyTest.swift */,
+				D4D23DC5EA4C2237E380D6CA /* CBORPrimitivesTest.swift */,
+				03142C92D1BF67A63F21D392 /* CBORSchemaUtilitiesTest.swift */,
+				78A9D2A91727F903B237CA77 /* CBORFixtureRoundTripTest.swift */,
+				704FC565D0623DFAE7EA2FA9 /* CBORMessageBridgeTest.swift */,
+				ECB2AE11055992BA4F57EED6 /* Resources */,
 			);
 			path = ArcBlockSDKTests;
 			sourceTree = "<group>";
@@ -311,6 +465,8 @@
 				2704474A231E0052007BA477 /* TxHelper.swift */,
 				2704474B231E0052007BA477 /* TypeUrls.swift */,
 				2704474C231E0052007BA477 /* protobuf */,
+				099CA24D0CBEBFE4E8FFDE9E /* CanonicalCBOR */,
+				E45D8D2115C022777CCDF1C4 /* TxCodec */,
 			);
 			path = ABSDKWalletKit;
 			sourceTree = "<group>";
@@ -392,6 +548,64 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		51DB5D632D769A2AECCE4BDF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA9E7821D7C1D61378D12549 /* ocap-spec.core.json */,
+				DA8FE49A56B642B70C6D102F /* SCHEMA_VERSION */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		55925CEE80D990ABFEFE0695 /* CBORFixtures */ = {
+			isa = PBXGroup;
+			children = (
+				F73B2E4EC6655D7BAAF58FCD /* transfer_v2.cbor.bin */,
+				C5582A5191AF3E8C360F1A65 /* wallet_transfer_v3_single_input.input.json */,
+				41722679E807B739EF3CA7A6 /* wallet_account_migrate_tx.meta.json */,
+				1DBB3708DA6A0287719C5E5B /* wallet_delegate_tx.meta.json */,
+				704810FB2B3721D26EA74939 /* transaction_full.cbor.bin */,
+				04F7720FA135E2862803E21B /* wallet_stake_tx.input.json */,
+				C812B5EBFEBC9A95F297140E /* wallet_transfer_v3_single_input.cbor.bin */,
+				CD31DA019BE98FA7E539627D /* wallet_delegate_tx.cbor.bin */,
+				314A791627E60CFAA535CD76 /* wallet_transfer_v3_multi_input.input.json */,
+				158CA0FADB40682692EE3927 /* wallet_account_migrate_tx.input.json */,
+				10C894B53F3A55840D3C3DF2 /* transfer_v2.input.json */,
+				9D5E0331DD42750616A41B88 /* acquire_asset_v2.cbor.bin */,
+				892E8FF2C8A1FB55889D587F /* wallet_transfer_v2.cbor.bin */,
+				2166D366B549DCE80E280728 /* wallet_revoke_delegate_tx.input.json */,
+				6BAF4EC65F74CDFA02F00E60 /* wallet_exchange_v2_multisig.input.json */,
+				A63BC23826D8D3314BA139CF /* consume_asset.input.json */,
+				30F6D5ACE5E1488ED6BD82C6 /* declare_tx.input.json */,
+				A7B2E1D5F6A9202E93840669 /* wallet_transfer_v3_multi_input.meta.json */,
+				6DD4ADE654F10C40DBB3A042 /* declare_tx.cbor.bin */,
+				CD87C9898FDC167359AABEB9 /* wallet_transfer_v3_multi_input.cbor.bin */,
+				542AE3835D25F5880F113E11 /* wallet_acquire_asset_v3.meta.json */,
+				2A823027FF12BD2F308FB747 /* wallet_transfer_v2.meta.json */,
+				F9D369B61C370C6C845AF6D1 /* wallet_transfer_v2.input.json */,
+				6C8EF38862B2A2FF38D5E62C /* wallet_acquire_asset_v3.input.json */,
+				0B8862E0DBBFF6E84EB006B5 /* wallet_exchange_v2_multisig.meta.json */,
+				09B31E8721E529018C042188 /* wallet_exchange_v2_multisig.cbor.bin */,
+				067265B211A78231F528592E /* wallet_transfer_v3_single_input.meta.json */,
+				3786E51B6ED77D9EF0A0947A /* wallet_transfer_v2_signed.input.json */,
+				BF8F862C12C1A56BB1965471 /* wallet_transfer_v2_signed.cbor.bin */,
+				D82415D37CFE436C4D215E2B /* transaction_full.input.json */,
+				87AED8D4D0B9501BDC169105 /* wallet_revoke_delegate_tx.cbor.bin */,
+				1FB3F5E4054AF90E743AB3E6 /* consume_asset.cbor.bin */,
+				1196509512AE7FA8FF236ED8 /* wallet_delegate_tx.input.json */,
+				D7BA006E8196B8A3FDEC6330 /* wallet_stake_tx.meta.json */,
+				D8FE13CA09D1BC8CDCBAFD42 /* wallet_revoke_delegate_tx.meta.json */,
+				EDD8E00AFC6F7A8879FA956E /* wallet_acquire_asset_v3.cbor.bin */,
+				6DDA8B3A0B2DE468F6165AAE /* wallet_transfer_v2_signed.meta.json */,
+				116B0AF7A992903868174382 /* wallet_account_migrate_tx.cbor.bin */,
+				F29B9D863BDD489E289B86FB /* acquire_asset_v2.input.json */,
+				0684CCC3FF093685400ED616 /* wallet_stake_tx.cbor.bin */,
+			);
+			name = CBORFixtures;
+			path = CBORFixtures;
+			sourceTree = "<group>";
+		};
 		56FC2D90299B9F32001665E6 /* ASN1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,6 +614,34 @@
 				56FC2D94299BA17E001665E6 /* RSAPublicKeyExporter.swift */,
 			);
 			path = ASN1;
+			sourceTree = "<group>";
+		};
+		E45D8D2115C022777CCDF1C4 /* TxCodec */ = {
+			isa = PBXGroup;
+			children = (
+				05471EFD29BA84899CB870F3 /* TxCodec.swift */,
+				F495897196C798FC70DF51F2 /* DescriptorRegistry.swift */,
+			);
+			name = TxCodec;
+			path = TxCodec;
+			sourceTree = "<group>";
+		};
+		EB66273D3EF40EB7E182D058 /* Spec */ = {
+			isa = PBXGroup;
+			children = (
+				17B8ED715885F025DA179023 /* spec.md */,
+			);
+			name = Spec;
+			path = Spec;
+			sourceTree = "<group>";
+		};
+		ECB2AE11055992BA4F57EED6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				55925CEE80D990ABFEFE0695 /* CBORFixtures */,
+			);
+			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -431,8 +673,6 @@
 			dependencies = (
 			);
 			name = ArcBlockSDK;
-			packageProductDependencies = (
-			);
 			productName = ArcBlockSDK;
 			productReference = 2704470F231DFF97007BA477 /* ArcBlockSDK.framework */;
 			productType = "com.apple.product-type.framework";
@@ -485,8 +725,6 @@
 				Base,
 			);
 			mainGroup = 277E6B4D20A0DAB50054707E;
-			packageReferences = (
-			);
 			productRefGroup = 277E6B5A20A0DB160054707E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -503,6 +741,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AA3D92C273A58CA00BA3CA0 /* Localizable.string.strings in Resources */,
+				89D5878593FC62A4933D8898 /* ocap-spec.core.json in Resources */,
+				CEB8163AB7CF1A62B7B89744 /* SCHEMA_VERSION in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +750,46 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9466144F96902D6744BEA0B7 /* transfer_v2.cbor.bin in Resources */,
+				A4DD14458097691770158E26 /* wallet_transfer_v3_single_input.input.json in Resources */,
+				C1199CAF0E6FB7E50AF3BEE7 /* wallet_account_migrate_tx.meta.json in Resources */,
+				C93F3B19D3AF1BD83A4EEE06 /* wallet_delegate_tx.meta.json in Resources */,
+				33888F3D0AA0A389AFCB76CB /* transaction_full.cbor.bin in Resources */,
+				07E682F15A73E0B118493461 /* wallet_stake_tx.input.json in Resources */,
+				3BE2147C62B851A935FB4C34 /* wallet_transfer_v3_single_input.cbor.bin in Resources */,
+				E59EFC20AA5F77196D8586DE /* wallet_delegate_tx.cbor.bin in Resources */,
+				B9BFC60034BE687C6ADC0AA8 /* wallet_transfer_v3_multi_input.input.json in Resources */,
+				C4A838E198D160CCE2B5EB23 /* wallet_account_migrate_tx.input.json in Resources */,
+				038D91A757409E7024E822BA /* transfer_v2.input.json in Resources */,
+				EC964280FA41F018D1B3072C /* acquire_asset_v2.cbor.bin in Resources */,
+				D884709FC3D64DAADAAE4327 /* wallet_transfer_v2.cbor.bin in Resources */,
+				C94515EBD12C28A08DB983FF /* wallet_revoke_delegate_tx.input.json in Resources */,
+				9120484642E86A1CE64CC2BB /* wallet_exchange_v2_multisig.input.json in Resources */,
+				CE32F97C39B77ACADAA57590 /* consume_asset.input.json in Resources */,
+				82461FCD968FAB4409D72910 /* declare_tx.input.json in Resources */,
+				5C630E6A8EC0D97CA7827D46 /* wallet_transfer_v3_multi_input.meta.json in Resources */,
+				99C5C3451E025DD5F9B3E1E0 /* declare_tx.cbor.bin in Resources */,
+				183C2701E67250C0FF625F43 /* wallet_transfer_v3_multi_input.cbor.bin in Resources */,
+				13BEC1C4873B3EFD92F649D9 /* wallet_acquire_asset_v3.meta.json in Resources */,
+				9340E738A668378A7FACA7B5 /* wallet_transfer_v2.meta.json in Resources */,
+				56CC9B1B0E19CCEF9CBBAE75 /* wallet_transfer_v2.input.json in Resources */,
+				6A03F99B07332D0954712980 /* wallet_acquire_asset_v3.input.json in Resources */,
+				CD1AD3DA463D8F9CA947AB44 /* wallet_exchange_v2_multisig.meta.json in Resources */,
+				A54791E662B78109B70DC4F1 /* wallet_exchange_v2_multisig.cbor.bin in Resources */,
+				86EEA450265E0F2001E25B03 /* wallet_transfer_v3_single_input.meta.json in Resources */,
+				141A3E0D937C336741946A05 /* wallet_transfer_v2_signed.input.json in Resources */,
+				C9A04E8A45622FC2E2A5A96F /* wallet_transfer_v2_signed.cbor.bin in Resources */,
+				3B5C101341B7A69CA11580A1 /* transaction_full.input.json in Resources */,
+				4401D1C236FFA12183D5AF58 /* wallet_revoke_delegate_tx.cbor.bin in Resources */,
+				101896472700BFE5BC15227A /* consume_asset.cbor.bin in Resources */,
+				82B83D230C0B2810C764D30C /* wallet_delegate_tx.input.json in Resources */,
+				B71C9B8DCB2C9F85887FC922 /* wallet_stake_tx.meta.json in Resources */,
+				8DCF49380BFA75688A3725AF /* wallet_revoke_delegate_tx.meta.json in Resources */,
+				A0A68240A4726EA604FE2F7A /* wallet_acquire_asset_v3.cbor.bin in Resources */,
+				E58574154F692A3C4E39E9BC /* wallet_transfer_v2_signed.meta.json in Resources */,
+				0D87311F3AA15BCA26A7ABE2 /* wallet_account_migrate_tx.cbor.bin in Resources */,
+				BCECD4C4A994AC180563939A /* acquire_asset_v2.input.json in Resources */,
+				B5F5A97A14ED69D594CF9A1C /* wallet_stake_tx.cbor.bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,13 +826,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ArcBlockSDKTests/Pods-ArcBlockSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -628,6 +904,21 @@
 				1A89D11F28263F1B00BF8313 /* ed25519_fe.swift in Sources */,
 				56712D8B2999D56B00690043 /* RSAUtils.swift in Sources */,
 				270447A6231E0052007BA477 /* TypeUrls.swift in Sources */,
+				BA7414D3AEECCED23F0C36AA /* CanonicalCBORError.swift in Sources */,
+				5649642EACC423523598801E /* CBOREncoder.swift in Sources */,
+				23211D45B7019413DC9230B2 /* CBORDecodeOptions.swift in Sources */,
+				D841D1EA00D387F9D50DF522 /* MessageToMap.swift in Sources */,
+				930027DDD559CBCE53AEE97A /* CBORDecoder.swift in Sources */,
+				1A6C41B0F28C1A8CA990D232 /* Scalars.swift in Sources */,
+				358C82544279F14FA1A5AF1E /* WireFormat.swift in Sources */,
+				BCDB8FC37893F9F06B5E372D /* OpaqueAny.swift in Sources */,
+				E0597D0FAE62DA4D6B51046B /* FieldResolver.swift in Sources */,
+				B3FBC36F187FCFCE869D2D36 /* CanonicalCBOR.swift in Sources */,
+				C744F52DEDF5F7D94658B744 /* CBORValue.swift in Sources */,
+				EE825182573AC44AC0493889 /* MapToMessage.swift in Sources */,
+				C954928F75FBDD32EA079FB4 /* BigIntCodec.swift in Sources */,
+				57F0298C2F62BC5986C91C6E /* TxCodec.swift in Sources */,
+				71F9735C0808183233B2A6CB /* DescriptorRegistry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +935,11 @@
 				56712D8D2999E30A00690043 /* RSAUtilsSpec.swift in Sources */,
 				270447EC231E0061007BA477 /* BIP44UtilsSpec.swift in Sources */,
 				270447EF231E0061007BA477 /* DidHelperSpec.swift in Sources */,
+				08E78A9623ACCC8C033F99DE /* CBOROpaqueAnyTest.swift in Sources */,
+				47AEA467547B60933CA7A264 /* CBORPrimitivesTest.swift in Sources */,
+				F2E6EC0408A982815C1BC395 /* CBORSchemaUtilitiesTest.swift in Sources */,
+				504D70A04BF22413D7C8178B /* CBORFixtureRoundTripTest.swift in Sources */,
+				3137D28D0C8DA46FCDCCC201 /* CBORMessageBridgeTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
