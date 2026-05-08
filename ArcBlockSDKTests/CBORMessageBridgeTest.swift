@@ -161,7 +161,7 @@ class CBORMessageBridgeTest: XCTestCase {
         XCTAssertEqual(decoded.chainID, tx.chainID)
         XCTAssertEqual(decoded.itx.typeURL, "fg:t:transfer_v3")
 
-        let recoveredInner = try Ocap_TransferV3Tx(serializedBytes: decoded.itx.value)
+        let recoveredInner = try Ocap_TransferV3Tx(serializedData: decoded.itx.value)
         XCTAssertEqual(recoveredInner.inputs.count, 1)
         XCTAssertEqual(recoveredInner.outputs.count, 1)
         XCTAssertEqual(recoveredInner.inputs[0].owner,
@@ -264,7 +264,7 @@ class CBORMessageBridgeTest: XCTestCase {
 
         let cborBytes = try CanonicalCBOR.encode(tx)
         let decoded = try CanonicalCBOR.decode(cborBytes, as: Ocap_Transaction.self)
-        let recoveredInner = try Ocap_TransferV2Tx(serializedBytes: decoded.itx.value)
+        let recoveredInner = try Ocap_TransferV2Tx(serializedData: decoded.itx.value)
         XCTAssertTrue(recoveredInner.value.value.isEmpty,
                       "zero-magnitude BigUint round-trips as empty bytes")
         XCTAssertEqual(recoveredInner.to, "zReceiver")
@@ -325,7 +325,7 @@ class CBORMessageBridgeTest: XCTestCase {
                 if !FileManager.default.fileExists(atPath: metaPath) {
                     // No meta.json — just confirm the wire bytes parse.
                     if spec.schemaName == "Transaction" {
-                        _ = try Ocap_Transaction(serializedBytes: wireBytes)
+                        _ = try Ocap_Transaction(serializedData: wireBytes)
                     }
                     bytePass += 1
                     continue
@@ -340,8 +340,8 @@ class CBORMessageBridgeTest: XCTestCase {
                 if wireBytes == expectedBytes {
                     bytePass += 1
                 } else if spec.schemaName == "Transaction" {
-                    let actual = try Ocap_Transaction(serializedBytes: wireBytes)
-                    let expected = try Ocap_Transaction(serializedBytes: expectedBytes)
+                    let actual = try Ocap_Transaction(serializedData: wireBytes)
+                    let expected = try Ocap_Transaction(serializedData: expectedBytes)
                     if actual == expected {
                         semanticPass += 1
                     } else {
@@ -409,7 +409,7 @@ class CBORMessageBridgeTest: XCTestCase {
         let bytes = try CanonicalCBOR.encode(tx)
         let decoded = try CanonicalCBOR.decode(bytes, as: Ocap_Transaction.self)
         XCTAssertEqual(decoded, tx)
-        let recoveredStake = try Ocap_StakeTx(serializedBytes: decoded.itx.value)
+        let recoveredStake = try Ocap_StakeTx(serializedData: decoded.itx.value)
         XCTAssertEqual(recoveredStake, stake)
     }
 
@@ -421,8 +421,6 @@ class CBORMessageBridgeTest: XCTestCase {
         op.typeURL = "fg:t:transfer_v2"
         op.rules = ["rule1"]
         delegate.ops = [op]
-        delegate.deny = ["denied1"]
-        delegate.validUntil = 9999
 
         var anyMsg = Google_Protobuf_Any()
         anyMsg.typeURL = "fg:t:delegate"
