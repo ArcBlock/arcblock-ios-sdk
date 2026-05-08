@@ -1,0 +1,53 @@
+{
+  "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+  "nonce": 1717171717171,
+  "chainId": "beta",
+  "pk": {
+    "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+  },
+  "itx": {
+    "typeUrl": "fg:t:transfer_v3",
+    "inputs": [
+      {
+        "owner": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+        "tokens": [
+          {
+            "address": "z35n9XdpZXXcK1k5ifs8Ek6w6iR8mu3kDRQJi",
+            "value": "100000000"
+          }
+        ],
+        "assets": []
+      },
+      {
+        "owner": "z1cRPzp7te3W9tTMLrKJs4ss5U3JQ1TmPs3",
+        "tokens": [
+          {
+            "address": "z35nYp6MaAr3vvYZEH8hBhr1S1AXjqBKiDaFN",
+            "value": "50000000"
+          }
+        ],
+        "assets": [
+          "z5JLdXoaUbXn7K7rBrhAqLP4Y9AxZhyF3V1PQ"
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "owner": "z1djzQ7tYaSC2E183dxFMFScriZgvsrhQD1",
+        "tokens": [
+          {
+            "address": "z35n9XdpZXXcK1k5ifs8Ek6w6iR8mu3kDRQJi",
+            "value": "100000000"
+          },
+          {
+            "address": "z35nYp6MaAr3vvYZEH8hBhr1S1AXjqBKiDaFN",
+            "value": "50000000"
+          }
+        ],
+        "assets": [
+          "z5JLdXoaUbXn7K7rBrhAqLP4Y9AxZhyF3V1PQ"
+        ]
+      }
+    ]
+  }
+}

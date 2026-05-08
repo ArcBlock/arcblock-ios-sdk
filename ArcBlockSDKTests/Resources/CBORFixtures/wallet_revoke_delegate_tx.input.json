@@ -1,0 +1,17 @@
+{
+  "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+  "nonce": 1717171717171,
+  "chainId": "beta",
+  "pk": {
+    "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+  },
+  "itx": {
+    "typeUrl": "fg:t:revoke_delegate",
+    "address": "z1DelegateAddressExample00000000000000",
+    "to": "z1cRPzp7te3W9tTMLrKJs4ss5U3JQ1TmPs3",
+    "typeUrls": [
+      "fg:t:transfer_v3",
+      "fg:t:acquire_asset_v3"
+    ]
+  }
+}

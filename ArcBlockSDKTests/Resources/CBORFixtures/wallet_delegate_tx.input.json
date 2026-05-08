@@ -1,0 +1,22 @@
+{
+  "from": "z1WfGZHaLkv16upggvqBhPAT1UKZZvdKe1L",
+  "nonce": 1717171717171,
+  "chainId": "beta",
+  "pk": {
+    "$bytes": "1f3da92f9443ad4c789310c88d42e68f5439b3d86187de5de8ec90100614dff1"
+  },
+  "itx": {
+    "typeUrl": "fg:t:delegate",
+    "address": "z1DelegateAddressExample00000000000000",
+    "to": "z1cRPzp7te3W9tTMLrKJs4ss5U3JQ1TmPs3",
+    "ops": [
+      {
+        "typeUrl": "fg:t:transfer_v3",
+        "rules": [
+          "itx.to == \"z1djzQ7tYaSC2E183dxFMFScriZgvsrhQD1\"",
+          "chainId == \"beta\""
+        ]
+      }
+    ]
+  }
+}

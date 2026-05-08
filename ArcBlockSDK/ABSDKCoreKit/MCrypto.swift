@@ -64,7 +64,7 @@ public struct MCrypto {
                     return nil
                 } else {
                     // Fallback on earlier versions
-                    return Data.init(Ed25519.crypto_pk(Array(privateKey.bytes.prefix(32))))
+                    return Data.init(Ed25519.crypto_pk(Array(Array(privateKey).prefix(32))))
                 }
             }
 
@@ -81,7 +81,7 @@ public struct MCrypto {
                     guard let publicKey = privateKeyToPublicKey(privateKey: privateKey) else {
                         return nil
                     }
-                    Ed25519.crypto_sign(&signatureAndMessage, message.bytes, privateKey.bytes + publicKey.bytes)
+                    Ed25519.crypto_sign(&signatureAndMessage, Array(message), Array(privateKey) + Array(publicKey))
                     return Data.init(Array(signatureAndMessage.prefix(64)))
                 }
             }
@@ -94,8 +94,8 @@ public struct MCrypto {
                     return publicKey.isValidSignature(signature, for: message)
                 } else {
                     // Fallback on earlier versions
-                    let signatureAndMessage = signature.bytes + message.bytes
-                    return Ed25519.crypto_sign_open(signatureAndMessage, publicKey.bytes)
+                    let signatureAndMessage = Array(signature) + Array(message)
+                    return Ed25519.crypto_sign_open(signatureAndMessage, Array(publicKey))
                 }
             }
         }
@@ -129,7 +129,7 @@ public struct MCrypto {
 
                 var cSignature = secp256k1_ecdsa_signature()
 
-                guard secp256k1_ecdsa_sign(context, &cSignature, message.bytes, privateKey.bytes, secp256k1_nonce_function_default, nil) == 1 else {
+                guard secp256k1_ecdsa_sign(context, &cSignature, Array(message), Array(privateKey), secp256k1_nonce_function_default, nil) == 1 else {
                     return nil
                 }
 
@@ -154,12 +154,12 @@ public struct MCrypto {
                 var cSignature = secp256k1_ecdsa_signature()
                 var cPubkey = secp256k1_pubkey()
 
-                guard secp256k1_ecdsa_signature_parse_der(context, &cSignature, signature.bytes, signature.bytes.count) == 1,
-                      secp256k1_ec_pubkey_parse(context, &cPubkey, publicKey.bytes, publicKey.bytes.count) == 1 else {
+                guard secp256k1_ecdsa_signature_parse_der(context, &cSignature, Array(signature), Array(signature).count) == 1,
+                      secp256k1_ec_pubkey_parse(context, &cPubkey, Array(publicKey), Array(publicKey).count) == 1 else {
                     return false
                 }
 
-                if secp256k1_ecdsa_verify(context, &cSignature, message.bytes, &cPubkey) != 1 {
+                if secp256k1_ecdsa_verify(context, &cSignature, Array(message), &cPubkey) != 1 {
                     return false
                 }
 
@@ -175,11 +175,11 @@ public struct MCrypto {
                 }
                 
                 var publicKey = pkData
-                if publicKey.bytes.count == 65 {
+                if Array(publicKey).count == 65 {
                     publicKey.removeFirst()
                 }
                 
-                if publicKey.bytes.count != 64 {
+                if Array(publicKey).count != 64 {
                     return nil
                 }
                 
@@ -191,7 +191,7 @@ public struct MCrypto {
                 guard let pk = publicKey else {
                     return (nil, nil)
                 }
-                var stipped = pk.bytes
+                var stipped = Array(pk)
                 
                 if (stipped.count == 65) {
                     if (stipped[0] != 4) {
@@ -208,9 +208,9 @@ public struct MCrypto {
             }
             
             public static func verify(message: Data, signature: Data, publicKey: Data) -> Bool {
-                var newPk = publicKey.bytes
-                if publicKey.bytes.first != 0x04 && publicKey.bytes.count == 64 {
-                    var newData: [UInt8] = publicKey.bytes
+                var newPk = Array(publicKey)
+                if Array(publicKey).first != 0x04 && Array(publicKey).count == 64 {
+                    var newData: [UInt8] = Array(publicKey)
                     newData.insert(0x04, at: 0)
                     newPk = newData
                 }

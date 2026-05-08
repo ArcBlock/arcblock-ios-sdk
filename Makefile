@@ -7,6 +7,14 @@ build:
 	@echo "Building the software..."
 	@carthage build --platform ios --no-skip-current --cache-builds
 
+tests:
+	@echo "Running ArcBlockSDK tests..."
+	@xcodebuild test \
+	    -workspace ArcBlockSDK.xcworkspace \
+	    -scheme ArcBlockSDK \
+	    -destination 'platform=iOS Simulator,name=iPhone 15' \
+	    | xcpretty
+
 init: install dep
 	@echo "Initializing the repo..."
 
@@ -72,4 +80,4 @@ deploy: release
 
 include .makefiles/release.mk
 
-.PHONY: build init travis-init install dep pre-build post-build all test doc precommit travis clean watch run travis-deploy
+.PHONY: build tests init travis-init install dep pre-build post-build all test doc precommit travis clean watch run travis-deploy
