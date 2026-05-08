@@ -36,12 +36,11 @@ jobs:
         run: |
           bundle update
           pod install
-      - name: Build
+      - name: Build (Mac Catalyst)
         uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           workspace: ArcBlockSDK.xcworkspace
-          sdk: iphonesimulator
-          destination: "generic/platform=iOS Simulator"
+          destination: "platform=macOS,variant=Mac Catalyst"
           configuration: Debug
           scheme: ArcBlockSDK
           action: build
