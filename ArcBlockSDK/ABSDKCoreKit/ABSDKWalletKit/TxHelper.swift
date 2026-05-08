@@ -188,8 +188,12 @@ public class TxHelper {
     }
 
     public static func decodeTxString(txString: String) -> Ocap_Transaction? {
+        // Inbound dapp tx may be CBOR or protobuf-encoded; normalize before
+        // SwiftProtobuf parses it. `TxCodec.toProtobuf` is identity (zero-copy)
+        // when bytes are already protobuf.
         guard let transactionData = Data.init(multibaseEncoded: txString),
-            let transaction = try? Ocap_Transaction(serializedData: transactionData) else { return nil }
+            let protobufData = try? TxCodec.toProtobuf(transactionData),
+            let transaction = try? Ocap_Transaction(serializedData: protobufData) else { return nil }
         return transaction
     }
     
