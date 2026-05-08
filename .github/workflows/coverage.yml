@@ -17,6 +17,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Select Xcode 16.1
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.1'
+      - name: List available simulators
+        run: xcrun simctl list devices available
       - name: Install Dependency
         run: |
           bundle update
@@ -26,7 +32,7 @@ jobs:
         with:
           workspace: ArcBlockSDK.xcworkspace
           sdk: iphonesimulator
-          destination: "platform=iOS Simulator,name=iPad (10th generation)"
+          destination: "platform=iOS Simulator,name=iPhone 15"
           configuration: Debug
           scheme: ArcBlockSDK
           action: test
