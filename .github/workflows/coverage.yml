@@ -26,7 +26,7 @@ jobs:
         with:
           workspace: ArcBlockSDK.xcworkspace
           sdk: iphonesimulator
-          destination: "platform=iOS Simulator,name=iPhone 8"
+          destination: "platform=iOS Simulator,name=iPad (10th generation)"
           configuration: Debug
           scheme: ArcBlockSDK
           action: test
