@@ -40,6 +40,10 @@ For a quick start, please check our [Quick Start Guide](https://github.com/ArcBl
 
 If you want to be more flexible and use the SDK in a lower level, please check out [Data Binding](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/DataBinding.md), [Client](https://github.com/ArcBlock/arcblock-ios-sdk/blob/master/Client.md) and the [Class Reference](http://ios-docs.arcblock.io/)
 
+## Maintainers / Release
+
+Before cutting a new release or debugging CI, **read [`.github/RELEASE_RUNBOOK.md`](.github/RELEASE_RUNBOOK.md)** — it documents the publish pipeline, every known infra issue (GitHub runner image gaps, missing `ACCESS_TOKEN`, pbxproj-source drift, etc.), and the manual workarounds we currently use. Skip it and you will repeat ~6 rounds of CI failure.
+
 ## FAQ
 
 ### Q: What kind of things I can do with this SDK?
